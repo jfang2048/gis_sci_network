@@ -1,0 +1,787 @@
+{
+  "last_updated_utc": "2026-08-05T16:14:49Z",
+  "schema_version": 1,
+  "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
+  "tasks": [
+    {
+      "dependencies": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Repository bootstrap acceptance passed: CLI status, tests, and idempotent scaffold.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-001",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Repository bootstrap acceptance passed: CLI status, tests, and idempotent scaffold.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-001"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "State migration, atomic save, lock contention, transition history, logging, and staleness tests passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-002",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "State migration, atomic save, lock contention, transition history, logging, and staleness tests passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-001"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Both environment names, authenticated check, redaction, and secret scan passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-003",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Both environment names, authenticated check, redaction, and secret scan passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-001"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Typed validation, fixed defaults, semantic hashing, and manifest provenance tests passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-004",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Typed validation, fixed defaults, semantic hashing, and manifest provenance tests passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-004"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Frozen 249-code ISO coverage plus XK/Unknown conventions validated against UN M49 and tests.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-010",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Frozen 249-code ISO coverage plus XK/Unknown conventions validated against UN M49 and tests.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-003",
+        "GISNET-004"
+      ],
+      "history": [],
+      "id": "GISNET-011",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-010"
+      ],
+      "history": [],
+      "id": "GISNET-012",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-002",
+        "GISNET-003"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Mocked retry, authentication, rate-limit, parameter, timeout, and secret-safety checks passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-020",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Mocked retry, authentication, rate-limit, parameter, timeout, and secret-safety checks passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-020"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Stable non-secret keys, compressed raw JSON, metadata, checksum, and corruption quarantine tests passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-021",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Stable non-secret keys, compressed raw JSON, metadata, checksum, and corruption quarantine tests passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-020",
+        "GISNET-021"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "TODO",
+          "reason": "Implemented in the mandated first-run sequence.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:14:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Interruption/resume, last-page validation, completion skip, repeat, loop, and blocked-state tests passed.",
+          "run_id": "20260805T155753Z_nogit",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-022",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Interruption/resume, last-page validation, completion skip, repeat, loop, and blocked-state tests passed.",
+      "status_updated_at_utc": "2026-08-05T16:14:49Z"
+    },
+    {
+      "dependencies": [
+        "GISNET-020",
+        "GISNET-022"
+      ],
+      "history": [],
+      "id": "GISNET-023",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-020",
+        "GISNET-004"
+      ],
+      "history": [],
+      "id": "GISNET-030",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-030",
+        "GISNET-020"
+      ],
+      "history": [],
+      "id": "GISNET-031",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-031",
+        "GISNET-020"
+      ],
+      "history": [],
+      "id": "GISNET-032",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-032"
+      ],
+      "history": [],
+      "id": "GISNET-033",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-033"
+      ],
+      "history": [],
+      "id": "GISNET-034",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-033",
+        "GISNET-020"
+      ],
+      "history": [],
+      "id": "GISNET-040",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-023",
+        "GISNET-033",
+        "GISNET-040",
+        "GISNET-010"
+      ],
+      "history": [],
+      "id": "GISNET-041",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-041",
+        "GISNET-022"
+      ],
+      "history": [],
+      "id": "GISNET-042",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-042"
+      ],
+      "history": [],
+      "id": "GISNET-043",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-043"
+      ],
+      "history": [],
+      "id": "GISNET-044",
+      "priority": "P2",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-043"
+      ],
+      "history": [],
+      "id": "GISNET-050",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-050"
+      ],
+      "history": [],
+      "id": "GISNET-051",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-051"
+      ],
+      "history": [],
+      "id": "GISNET-052",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-010",
+        "GISNET-051"
+      ],
+      "history": [],
+      "id": "GISNET-053",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-012",
+        "GISNET-052",
+        "GISNET-053"
+      ],
+      "history": [],
+      "id": "GISNET-054",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-033",
+        "GISNET-043",
+        "GISNET-044"
+      ],
+      "history": [],
+      "id": "GISNET-060",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-050",
+        "GISNET-054",
+        "GISNET-060"
+      ],
+      "history": [],
+      "id": "GISNET-061",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-061"
+      ],
+      "history": [],
+      "id": "GISNET-062",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-061"
+      ],
+      "history": [],
+      "id": "GISNET-063",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-062",
+        "GISNET-063"
+      ],
+      "history": [],
+      "id": "GISNET-064",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-062",
+        "GISNET-053"
+      ],
+      "history": [],
+      "id": "GISNET-065",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-062",
+        "GISNET-063"
+      ],
+      "history": [],
+      "id": "GISNET-070",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-070"
+      ],
+      "history": [],
+      "id": "GISNET-071",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-070"
+      ],
+      "history": [],
+      "id": "GISNET-072",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-072"
+      ],
+      "history": [],
+      "id": "GISNET-073",
+      "priority": "P2",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-070"
+      ],
+      "history": [],
+      "id": "GISNET-074",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-062"
+      ],
+      "history": [],
+      "id": "GISNET-080",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-064",
+        "GISNET-071"
+      ],
+      "history": [],
+      "id": "GISNET-081",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-064",
+        "GISNET-071"
+      ],
+      "history": [],
+      "id": "GISNET-082",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-022",
+        "GISNET-043",
+        "GISNET-062"
+      ],
+      "history": [],
+      "id": "GISNET-083",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-065",
+        "GISNET-071"
+      ],
+      "history": [],
+      "id": "GISNET-090",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-065"
+      ],
+      "history": [],
+      "id": "GISNET-091",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-051",
+        "GISNET-064"
+      ],
+      "history": [],
+      "id": "GISNET-092",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-074",
+        "GISNET-071",
+        "GISNET-072"
+      ],
+      "history": [],
+      "id": "GISNET-093",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-064"
+      ],
+      "history": [],
+      "id": "GISNET-094",
+      "priority": "P2",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-090",
+        "GISNET-091",
+        "GISNET-092",
+        "GISNET-093"
+      ],
+      "history": [],
+      "id": "GISNET-095",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-082",
+        "GISNET-095"
+      ],
+      "history": [],
+      "id": "GISNET-100",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-065",
+        "GISNET-071",
+        "GISNET-072"
+      ],
+      "history": [],
+      "id": "GISNET-101",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-083",
+        "GISNET-095"
+      ],
+      "history": [],
+      "id": "GISNET-102",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-083"
+      ],
+      "history": [],
+      "id": "GISNET-103",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-100",
+        "GISNET-101",
+        "GISNET-102",
+        "GISNET-103"
+      ],
+      "history": [],
+      "id": "GISNET-104",
+      "priority": "P2",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-104"
+      ],
+      "history": [],
+      "id": "GISNET-110",
+      "priority": "OPTIONAL",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-104"
+      ],
+      "history": [],
+      "id": "GISNET-111",
+      "priority": "OPTIONAL",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-110",
+        "GISNET-111",
+        "GISNET-104"
+      ],
+      "history": [],
+      "id": "GISNET-112",
+      "priority": "OPTIONAL",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-104"
+      ],
+      "history": [],
+      "id": "GISNET-113",
+      "priority": "OPTIONAL",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    },
+    {
+      "dependencies": [
+        "GISNET-104"
+      ],
+      "history": [],
+      "id": "GISNET-114",
+      "priority": "OPTIONAL",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null
+    }
+  ]
+}

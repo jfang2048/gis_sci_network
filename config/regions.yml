@@ -1,0 +1,2014 @@
+schema_version: 1
+mapping_version: un-m49-retrieved-2026-08-05
+mapping_source: https://unstats.un.org/unsd/methodology/m49/overview/
+convention_note: Technical analytical convention based on UN M49; not a political statement about sovereignty or
+  borders.
+countries:
+- country_code: AD
+  country_name: Andorra
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AE
+  country_name: United Arab Emirates
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AF
+  country_name: Afghanistan
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AG
+  country_name: Antigua and Barbuda
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AI
+  country_name: Anguilla
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AL
+  country_name: Albania
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AM
+  country_name: Armenia
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AO
+  country_name: Angola
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AQ
+  country_name: Antarctica
+  macro_region: Unknown
+  subregion: Unknown
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AR
+  country_name: Argentina
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AS
+  country_name: American Samoa
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AT
+  country_name: Austria
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AU
+  country_name: Australia
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AW
+  country_name: Aruba
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AX
+  country_name: Åland Islands
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: AZ
+  country_name: Azerbaijan
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BA
+  country_name: Bosnia and Herzegovina
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BB
+  country_name: Barbados
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BD
+  country_name: Bangladesh
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BE
+  country_name: Belgium
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BF
+  country_name: Burkina Faso
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BG
+  country_name: Bulgaria
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BH
+  country_name: Bahrain
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BI
+  country_name: Burundi
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BJ
+  country_name: Benin
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BL
+  country_name: Saint Barthélemy
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BM
+  country_name: Bermuda
+  macro_region: Americas
+  subregion: Northern America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BN
+  country_name: Brunei Darussalam
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BO
+  country_name: Bolivia (Plurinational State of)
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BQ
+  country_name: Bonaire, Sint Eustatius and Saba
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BR
+  country_name: Brazil
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BS
+  country_name: Bahamas
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BT
+  country_name: Bhutan
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BV
+  country_name: Bouvet Island
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BW
+  country_name: Botswana
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BY
+  country_name: Belarus
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: BZ
+  country_name: Belize
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CA
+  country_name: Canada
+  macro_region: Americas
+  subregion: Northern America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CC
+  country_name: Cocos (Keeling) Islands
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CD
+  country_name: Democratic Republic of the Congo
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CF
+  country_name: Central African Republic
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CG
+  country_name: Congo
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CH
+  country_name: Switzerland
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CI
+  country_name: Côte d’Ivoire
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CK
+  country_name: Cook Islands
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CL
+  country_name: Chile
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CM
+  country_name: Cameroon
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CN
+  country_name: China
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CO
+  country_name: Colombia
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CR
+  country_name: Costa Rica
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CU
+  country_name: Cuba
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CV
+  country_name: Cabo Verde
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CW
+  country_name: Curaçao
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CX
+  country_name: Christmas Island
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: CY
+  country_name: Cyprus
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: CZ
+  country_name: Czechia
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DE
+  country_name: Germany
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DJ
+  country_name: Djibouti
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DK
+  country_name: Denmark
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DM
+  country_name: Dominica
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DO
+  country_name: Dominican Republic
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: DZ
+  country_name: Algeria
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: EC
+  country_name: Ecuador
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: EE
+  country_name: Estonia
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: EG
+  country_name: Egypt
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: EH
+  country_name: Western Sahara
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ER
+  country_name: Eritrea
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ES
+  country_name: Spain
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ET
+  country_name: Ethiopia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FI
+  country_name: Finland
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FJ
+  country_name: Fiji
+  macro_region: Oceania
+  subregion: Melanesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FK
+  country_name: Falkland Islands (Malvinas)
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FM
+  country_name: Micronesia (Federated States of)
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FO
+  country_name: Faroe Islands
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: FR
+  country_name: France
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GA
+  country_name: Gabon
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GB
+  country_name: United Kingdom of Great Britain and Northern Ireland
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GD
+  country_name: Grenada
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GE
+  country_name: Georgia
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GF
+  country_name: French Guiana
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GG
+  country_name: Guernsey
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GH
+  country_name: Ghana
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GI
+  country_name: Gibraltar
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GL
+  country_name: Greenland
+  macro_region: Americas
+  subregion: Northern America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GM
+  country_name: Gambia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GN
+  country_name: Guinea
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GP
+  country_name: Guadeloupe
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GQ
+  country_name: Equatorial Guinea
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GR
+  country_name: Greece
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GS
+  country_name: South Georgia and the South Sandwich Islands
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GT
+  country_name: Guatemala
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GU
+  country_name: Guam
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GW
+  country_name: Guinea-Bissau
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: GY
+  country_name: Guyana
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HK
+  country_name: China, Hong Kong Special Administrative Region
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HM
+  country_name: Heard Island and McDonald Islands
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HN
+  country_name: Honduras
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HR
+  country_name: Croatia
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HT
+  country_name: Haiti
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: HU
+  country_name: Hungary
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ID
+  country_name: Indonesia
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IE
+  country_name: Ireland
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IL
+  country_name: Israel
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IM
+  country_name: Isle of Man
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IN
+  country_name: India
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IO
+  country_name: British Indian Ocean Territory
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IQ
+  country_name: Iraq
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IR
+  country_name: Iran (Islamic Republic of)
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IS
+  country_name: Iceland
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: IT
+  country_name: Italy
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: JE
+  country_name: Jersey
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: JM
+  country_name: Jamaica
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: JO
+  country_name: Jordan
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: JP
+  country_name: Japan
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KE
+  country_name: Kenya
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KG
+  country_name: Kyrgyzstan
+  macro_region: Asia
+  subregion: Central Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KH
+  country_name: Cambodia
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KI
+  country_name: Kiribati
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KM
+  country_name: Comoros
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KN
+  country_name: Saint Kitts and Nevis
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KP
+  country_name: Democratic People's Republic of Korea
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KR
+  country_name: Republic of Korea
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KW
+  country_name: Kuwait
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KY
+  country_name: Cayman Islands
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: KZ
+  country_name: Kazakhstan
+  macro_region: Asia
+  subregion: Central Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: LA
+  country_name: Lao People's Democratic Republic
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LB
+  country_name: Lebanon
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LC
+  country_name: Saint Lucia
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LI
+  country_name: Liechtenstein
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LK
+  country_name: Sri Lanka
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LR
+  country_name: Liberia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LS
+  country_name: Lesotho
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LT
+  country_name: Lithuania
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LU
+  country_name: Luxembourg
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LV
+  country_name: Latvia
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: LY
+  country_name: Libya
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MA
+  country_name: Morocco
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MC
+  country_name: Monaco
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MD
+  country_name: Republic of Moldova
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ME
+  country_name: Montenegro
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MF
+  country_name: Saint Martin (French Part)
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MG
+  country_name: Madagascar
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MH
+  country_name: Marshall Islands
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MK
+  country_name: North Macedonia
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ML
+  country_name: Mali
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MM
+  country_name: Myanmar
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MN
+  country_name: Mongolia
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MO
+  country_name: China, Macao Special Administrative Region
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MP
+  country_name: Northern Mariana Islands
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MQ
+  country_name: Martinique
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MR
+  country_name: Mauritania
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MS
+  country_name: Montserrat
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MT
+  country_name: Malta
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MU
+  country_name: Mauritius
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MV
+  country_name: Maldives
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MW
+  country_name: Malawi
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MX
+  country_name: Mexico
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MY
+  country_name: Malaysia
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: MZ
+  country_name: Mozambique
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NA
+  country_name: Namibia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NC
+  country_name: New Caledonia
+  macro_region: Oceania
+  subregion: Melanesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NE
+  country_name: Niger
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NF
+  country_name: Norfolk Island
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NG
+  country_name: Nigeria
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NI
+  country_name: Nicaragua
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NL
+  country_name: Netherlands (Kingdom of the)
+  macro_region: Europe
+  subregion: Western Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: 'NO'
+  country_name: Norway
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NP
+  country_name: Nepal
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NR
+  country_name: Nauru
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NU
+  country_name: Niue
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: NZ
+  country_name: New Zealand
+  macro_region: Oceania
+  subregion: Australia and New Zealand
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: OM
+  country_name: Oman
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PA
+  country_name: Panama
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PE
+  country_name: Peru
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PF
+  country_name: French Polynesia
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PG
+  country_name: Papua New Guinea
+  macro_region: Oceania
+  subregion: Melanesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PH
+  country_name: Philippines
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PK
+  country_name: Pakistan
+  macro_region: Asia
+  subregion: Southern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PL
+  country_name: Poland
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PM
+  country_name: Saint Pierre and Miquelon
+  macro_region: Americas
+  subregion: Northern America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PN
+  country_name: Pitcairn
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PR
+  country_name: Puerto Rico
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PS
+  country_name: State of Palestine
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PT
+  country_name: Portugal
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PW
+  country_name: Palau
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: PY
+  country_name: Paraguay
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: QA
+  country_name: Qatar
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: RE
+  country_name: Réunion
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: RO
+  country_name: Romania
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: RS
+  country_name: Serbia
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: RU
+  country_name: Russian Federation
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: RW
+  country_name: Rwanda
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SA
+  country_name: Saudi Arabia
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SB
+  country_name: Solomon Islands
+  macro_region: Oceania
+  subregion: Melanesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SC
+  country_name: Seychelles
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SD
+  country_name: Sudan
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SE
+  country_name: Sweden
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SG
+  country_name: Singapore
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SH
+  country_name: Saint Helena
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SI
+  country_name: Slovenia
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SJ
+  country_name: Svalbard and Jan Mayen Islands
+  macro_region: Europe
+  subregion: Northern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SK
+  country_name: Slovakia
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SL
+  country_name: Sierra Leone
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SM
+  country_name: San Marino
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SN
+  country_name: Senegal
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SO
+  country_name: Somalia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SR
+  country_name: Suriname
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SS
+  country_name: South Sudan
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ST
+  country_name: Sao Tome and Principe
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SV
+  country_name: El Salvador
+  macro_region: Americas
+  subregion: Central America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SX
+  country_name: Sint Maarten (Dutch part)
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SY
+  country_name: Syrian Arab Republic
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: SZ
+  country_name: Eswatini
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TC
+  country_name: Turks and Caicos Islands
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TD
+  country_name: Chad
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TF
+  country_name: French Southern Territories
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TG
+  country_name: Togo
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TH
+  country_name: Thailand
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TJ
+  country_name: Tajikistan
+  macro_region: Asia
+  subregion: Central Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TK
+  country_name: Tokelau
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TL
+  country_name: Timor-Leste
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TM
+  country_name: Turkmenistan
+  macro_region: Asia
+  subregion: Central Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TN
+  country_name: Tunisia
+  macro_region: Africa
+  subregion: Northern Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TO
+  country_name: Tonga
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TR
+  country_name: Türkiye
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: TT
+  country_name: Trinidad and Tobago
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TV
+  country_name: Tuvalu
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: TW
+  country_name: Taiwan
+  macro_region: Asia
+  subregion: Eastern Asia
+  mapping_source: ISO 3166-1 code with explicit analytical override
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: UN M49 source table has no separate TW row; frozen ISO-code analytical convention.
+- country_code: TZ
+  country_name: United Republic of Tanzania
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: UA
+  country_name: Ukraine
+  macro_region: Europe
+  subregion: Eastern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: UG
+  country_name: Uganda
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: UM
+  country_name: United States Minor Outlying Islands
+  macro_region: Oceania
+  subregion: Micronesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: US
+  country_name: United States of America
+  macro_region: Americas
+  subregion: Northern America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: UY
+  country_name: Uruguay
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: UZ
+  country_name: Uzbekistan
+  macro_region: Asia
+  subregion: Central Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VA
+  country_name: Holy See
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VC
+  country_name: Saint Vincent and the Grenadines
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VE
+  country_name: Venezuela (Bolivarian Republic of)
+  macro_region: Americas
+  subregion: South America
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VG
+  country_name: British Virgin Islands
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VI
+  country_name: United States Virgin Islands
+  macro_region: Americas
+  subregion: Caribbean
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VN
+  country_name: Viet Nam
+  macro_region: Asia
+  subregion: Southeastern Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: VU
+  country_name: Vanuatu
+  macro_region: Oceania
+  subregion: Melanesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: WF
+  country_name: Wallis and Futuna Islands
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: WS
+  country_name: Samoa
+  macro_region: Oceania
+  subregion: Polynesia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: XK
+  country_name: Kosovo
+  macro_region: Europe
+  subregion: Southern Europe
+  mapping_source: Explicit analytical override registry
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: true
+  override_reason: User-assigned XK code is absent from ISO 3166-1 and UN M49; explicit QA convention.
+- country_code: YE
+  country_name: Yemen
+  macro_region: Asia
+  subregion: Western Asia
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: YT
+  country_name: Mayotte
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ZA
+  country_name: South Africa
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ZM
+  country_name: Zambia
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ZW
+  country_name: Zimbabwe
+  macro_region: Africa
+  subregion: Sub-Saharan Africa
+  mapping_source: United Nations Statistics Division M49 geographic regions
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''
+- country_code: ZZ
+  country_name: Unknown
+  macro_region: Unknown
+  subregion: Unknown
+  mapping_source: Fallback for unmapped source codes
+  mapping_version: un-m49-retrieved-2026-08-05
+  manual_override: false
+  override_reason: ''

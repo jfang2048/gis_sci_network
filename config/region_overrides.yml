@@ -1,0 +1,30 @@
+schema_version: 1
+convention: Technical analytical convention based on UN M49 groupings; assignments are not statements about sovereignty,
+  borders, or political status.
+overrides:
+- country_code: CY
+  macro_region: Asia
+  subregion: Western Asia
+  reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: KZ
+  macro_region: Asia
+  subregion: Central Asia
+  reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: RU
+  macro_region: Europe
+  subregion: Eastern Europe
+  reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: TR
+  macro_region: Asia
+  subregion: Western Asia
+  reason: Frozen analytical convention follows the UN M49 placement.
+- country_code: TW
+  country_name: Taiwan
+  macro_region: Asia
+  subregion: Eastern Asia
+  reason: UN M49 source table has no separate TW row; frozen ISO-code analytical convention.
+- country_code: XK
+  country_name: Kosovo
+  macro_region: Europe
+  subregion: Southern Europe
+  reason: User-assigned XK code is absent from ISO 3166-1 and UN M49; explicit QA convention.

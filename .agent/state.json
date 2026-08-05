@@ -1,0 +1,31 @@
+{
+  "active_run_id": null,
+  "blocked_task_ids": [],
+  "completed_task_ids": [
+    "GISNET-001",
+    "GISNET-002",
+    "GISNET-003",
+    "GISNET-004",
+    "GISNET-010",
+    "GISNET-020",
+    "GISNET-021",
+    "GISNET-022"
+  ],
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "region_overrides": "df1e5876cf694c53db4ce763514b354ae854b324a74f56c81ec3221a4a5a35b3",
+    "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e"
+  },
+  "current_task_id": null,
+  "dataset_manifests": {
+    "country_regions": ".agent/manifests/country_regions.json"
+  },
+  "download_checkpoints": {},
+  "last_successful_run_id": "20260805T155753Z_nogit",
+  "last_updated_utc": "2026-08-05T16:14:49Z",
+  "project_version": "0.1.0",
+  "schema_version": 1,
+  "source_versions": {
+    "un_m49": "un-m49-retrieved-2026-08-05"
+  }
+}
