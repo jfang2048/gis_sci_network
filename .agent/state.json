@@ -26,7 +26,8 @@
     "GISNET-051",
     "GISNET-053",
     "GISNET-052",
-    "GISNET-054"
+    "GISNET-054",
+    "GISNET-044"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -65,19 +66,23 @@
     "topic_candidates": ".agent/manifests/topic_candidates.json",
     "topic_registry": ".agent/manifests/topic_registry.json",
     "topic_work_samples": ".agent/manifests/topic_work_samples.json",
+    "work_ambiguous_version_candidates": ".agent/manifests/work_ambiguous_version_candidates.json",
+    "work_duplicate_doi_diagnostics": ".agent/manifests/work_duplicate_doi_diagnostics.json",
     "work_institutions_extracted": ".agent/manifests/work_institutions_extracted.json",
     "work_institutions_unresolved": ".agent/manifests/work_institutions_unresolved.json",
     "work_malformed": ".agent/manifests/work_malformed.json",
     "work_topics": ".agent/manifests/work_topics.json",
     "work_type_profile": ".agent/manifests/work_type_profile.json",
+    "work_version_diagnostics": ".agent/manifests/work_version_diagnostics.json",
+    "work_version_diagnostics_summary": ".agent/manifests/work_version_diagnostics_summary.json",
     "works": ".agent/manifests/works.json",
     "works_normalization_summary": ".agent/manifests/works_normalization_summary.json"
   },
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T210344Z_e222ecdc5744",
-  "last_updated_utc": "2026-08-05T21:06:29Z",
+  "last_successful_run_id": "20260805T210713Z_bb56b30e5c51",
+  "last_updated_utc": "2026-08-05T21:10:13Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

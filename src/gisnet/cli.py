@@ -32,6 +32,7 @@ from gisnet.corpus.validation import (
     write_annotation_sheet,
     write_boundary_artifacts,
 )
+from gisnet.corpus.versions import build_version_diagnostics, write_version_artifacts
 from gisnet.corpus.work_types import (
     load_work_type_policy,
     profile_work_types,
@@ -359,6 +360,31 @@ def build_parser() -> argparse.ArgumentParser:
         "--summary", default="data/reference/institution_hierarchy_summary.json", type=Path
     )
     build_hierarchy.set_defaults(handler=_build_hierarchy)
+
+    diagnose_versions = subparsers.add_parser(
+        "diagnose-versions", help="build exact-DOI and conservative possible-version diagnostics"
+    )
+    _add_pipeline_arguments(diagnose_versions)
+    diagnose_versions.add_argument("--works", default="data/processed/works.parquet", type=Path)
+    diagnose_versions.add_argument(
+        "--output", default="data/processed/work_version_diagnostics.parquet", type=Path
+    )
+    diagnose_versions.add_argument(
+        "--duplicate-dois",
+        default="data/processed/work_duplicate_doi_diagnostics.parquet",
+        type=Path,
+    )
+    diagnose_versions.add_argument(
+        "--ambiguous",
+        default="data/processed/work_ambiguous_version_candidates.parquet",
+        type=Path,
+    )
+    diagnose_versions.add_argument(
+        "--summary", default="data/reference/work_version_diagnostics_summary.json", type=Path
+    )
+    diagnose_versions.add_argument("--duckdb-memory-limit", default="4GB")
+    diagnose_versions.add_argument("--duckdb-threads", default=1, type=int)
+    diagnose_versions.set_defaults(handler=_diagnose_versions)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1254,6 +1280,51 @@ def _build_hierarchy(args: argparse.Namespace) -> int:
         f"Built {summary['hierarchy_row_count']} hierarchy rows; explicit collapses="
         f"{summary['explicit_collapse_count']}, relationship candidates="
         f"{summary['relationship_candidate_count']}."
+    )
+    return 0
+
+
+def _diagnose_versions(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would diagnose DOI/version families for {args.works}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-044"):
+            summary = build_version_diagnostics(
+                args.works,
+                diagnostics_path=args.output,
+                duplicate_doi_path=args.duplicate_dois,
+                ambiguous_path=args.ambiguous,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli diagnose-versions "
+                f"--works {args.works} --duckdb-memory-limit {args.duckdb_memory_limit} "
+                f"--duckdb-threads {args.duckdb_threads} --resume"
+            )
+            write_version_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "work_version_diagnostics",
+                "work_duplicate_doi_diagnostics",
+                "work_ambiguous_version_candidates",
+                "work_version_diagnostics_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Work version diagnostics failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Diagnosed {summary['work_count']} Works; exact DOI families="
+        f"{summary['exact_doi_family_count']}, ambiguous possible families="
+        f"{summary['ambiguous_possible_family_count']}."
     )
     return 0
 

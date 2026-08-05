@@ -1,0 +1,18 @@
+{
+  "all_versions_sensitivity_count": 1176947,
+  "ambiguous_possible_family_count": 10679,
+  "ambiguous_possible_family_member_count": 22208,
+  "exact_doi_family_count": 763,
+  "exact_doi_family_member_count": 1527,
+  "excluded_duplicate_representative_count": 764,
+  "generated_at_utc": "2026-08-05T21:09:52.957737Z",
+  "logical_input_hash": "9b486a4eef476821f6a7964b84c0dc7362ab7de27518b5f594bc7c9d39acd1d4",
+  "outputs": {
+    "work_ambiguous_version_candidates": "data/processed/work_ambiguous_version_candidates.parquet",
+    "work_duplicate_doi_diagnostics": "data/processed/work_duplicate_doi_diagnostics.parquet",
+    "work_version_diagnostics": "data/processed/work_version_diagnostics.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "work-version-diagnostics-2026-08-05-v1",
+  "work_count": 1176947
+}

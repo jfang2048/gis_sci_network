@@ -755,3 +755,38 @@ a rule ID, reason, and provenance.
 ### Exact next action
 
 Task: GISNET-044 — Build version-family and DOI diagnostics.
+
+## Run 20260805T210713Z_bb56b30e5c51
+
+Started UTC: 2026-08-05T21:07:13Z
+Ended UTC: 2026-08-05T21:10:13Z
+Task: GISNET-044
+Initial git status: Clean on `main` at `bb56b30` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Preserve all source Works while deterministically selecting representatives for exact normalized DOI
+duplicates and flagging title-only preprint/publication candidates as ambiguous rather than guessed.
+
+### Work completed
+
+- Added normalized DOI diagnostics and exact DOI family identifiers.
+- Added conservative title-fingerprint candidates limited to preprint/published records within 3 years.
+- Selected one deterministic representative only inside exact DOI families.
+- Kept title-only candidates independent and included every record in the all-versions sensitivity.
+
+### Validation results
+
+- Source and diagnostic Works: 1,176,947 each; no raw Work was deleted.
+- Exact DOI families: 763 containing 1,527 records; exactly one representative per family.
+- Non-representative exact DOI duplicates: 764.
+- Ambiguous possible title families: 10,679 containing 22,208 independently retained records.
+- All-versions sensitivity rows: 1,176,947.
+- Repeated outputs were byte-identical; peak RSS was below 1 GB.
+- Main diagnostic SHA-256: `b7513426f53faea357c615a4a44c40c1b95c4d86d170aba2c2fd8400e1461a4e`.
+- Ruff format/check passed; strict mypy passed; pytest passed (76 tests).
+
+### Exact next action
+
+Task: GISNET-060 — Build Strict and Broad work sets.
