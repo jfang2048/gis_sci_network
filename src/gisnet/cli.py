@@ -40,6 +40,7 @@ from gisnet.corpus.work_types import (
 from gisnet.geography import load_region_registry, write_mapping_csv
 from gisnet.institutions.extract import extract_work_institutions, write_extraction_artifacts
 from gisnet.institutions.geography import apply_institution_geography, write_geography_artifacts
+from gisnet.institutions.hierarchy import build_institution_hierarchy, write_hierarchy_artifacts
 from gisnet.institutions.master import build_institution_master, write_institution_master_artifacts
 from gisnet.institutions.overrides import InstitutionOverrideRegistry
 from gisnet.institutions.types import (
@@ -334,6 +335,30 @@ def build_parser() -> argparse.ArgumentParser:
     enrich_institutions.add_argument("--ror-dump-version")
     enrich_institutions.add_argument("--max-ror-lookups", type=int, default=0)
     enrich_institutions.set_defaults(handler=_enrich_institutions)
+
+    build_hierarchy = subparsers.add_parser(
+        "build-hierarchy", help="build comparable organization and explicit-rule umbrella views"
+    )
+    _add_pipeline_arguments(build_hierarchy)
+    build_hierarchy.add_argument(
+        "--institutions", default="data/processed/institutions_ror.parquet", type=Path
+    )
+    build_hierarchy.add_argument(
+        "--institution-overrides", default="config/institution_overrides.csv", type=Path
+    )
+    build_hierarchy.add_argument(
+        "--output", default="data/processed/institution_hierarchy.parquet", type=Path
+    )
+    build_hierarchy.add_argument(
+        "--audit", default="data/processed/institution_canonicalization_audit.parquet", type=Path
+    )
+    build_hierarchy.add_argument(
+        "--candidates", default="data/processed/institution_hierarchy_candidates.parquet", type=Path
+    )
+    build_hierarchy.add_argument(
+        "--summary", default="data/reference/institution_hierarchy_summary.json", type=Path
+    )
+    build_hierarchy.set_defaults(handler=_build_hierarchy)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1177,6 +1202,58 @@ def _enrich_institutions(args: argparse.Namespace) -> int:
         f"ROR records={summary['record_count']}/{summary['unique_valid_ror_id_count']}; "
         f"enriched={summary['status_counts'].get('enriched', 0)}, "
         f"missing-id={summary['status_counts'].get('missing_ror_id', 0)}."
+    )
+    return 0
+
+
+def _build_hierarchy(args: argparse.Namespace) -> int:
+    try:
+        overrides = InstitutionOverrideRegistry.load(args.institution_overrides)
+    except (OSError, ValueError) as exc:
+        print(f"Institution-hierarchy inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(
+            f"Would build organization and umbrella views from {args.institutions} using "
+            f"{len(overrides.rules)} explicit rules; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-054"):
+            summary = build_institution_hierarchy(
+                args.institutions,
+                overrides,
+                hierarchy_path=args.output,
+                audit_path=args.audit,
+                candidates_path=args.candidates,
+            )
+            command = (
+                "python -m gisnet.cli build-hierarchy "
+                f"--institutions {args.institutions} --output {args.output} --resume"
+            )
+            write_hierarchy_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                overrides_path=args.institution_overrides,
+                command=command,
+            )
+            for name in (
+                "institution_hierarchy",
+                "institution_canonicalization_audit",
+                "institution_hierarchy_candidates",
+                "institution_hierarchy_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"Institution hierarchy failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['hierarchy_row_count']} hierarchy rows; explicit collapses="
+        f"{summary['explicit_collapse_count']}, relationship candidates="
+        f"{summary['relationship_candidate_count']}."
     )
     return 0
 

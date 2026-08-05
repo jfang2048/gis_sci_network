@@ -715,3 +715,43 @@ versioned local ROR dump without changing the normalized schema.
 ### Exact next action
 
 Task: GISNET-054 — Build organization and umbrella views.
+
+## Run 20260805T210344Z_e222ecdc5744
+
+Started UTC: 2026-08-05T21:03:44Z
+Ended UTC: 2026-08-05T21:06:29Z
+Task: GISNET-054
+Initial git status: Clean on `main` at `e222ecd` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build comparable original-organization and umbrella mappings while prohibiting undocumented
+federated-system collapse and retaining all lineage/parent evidence for audit.
+
+### Work completed
+
+- Added two hierarchy rows per institution with original and canonical IDs.
+- Applied only cycle-safe explicit collapse/replace rules; the current registry contains none.
+- Crosswalked available ROR parent IDs back to stable source institutions where possible.
+- Preserved 8,971 relationship candidates as review evidence rather than auto-collapsing them.
+- Added canonicalization rule and hierarchy-candidate audit Parquet datasets.
+
+### Validation results
+
+- Organization rows: 46,812 unique institutions; umbrella rows: 46,812 unique institutions.
+- Explicit collapses: 0; undocumented automatic collapses: 0; cycles: 0.
+- Candidate evidence rows: 8,971; no-parent-evidence rows: 37,841.
+- Repeated outputs were byte-identical.
+- Hierarchy SHA-256: `06b69aa1ffba4e8f5efce2cf02241d700c8c8cb8fb96959be3f17227892cf85e`.
+- Ruff format/check passed; strict mypy passed; pytest passed (75 tests).
+
+### Decisions made
+
+Lineage and parent relationships are evidence, not sufficient authority to merge large federated
+organizations. Every future umbrella collapse must be added to the versioned override registry with
+a rule ID, reason, and provenance.
+
+### Exact next action
+
+Task: GISNET-044 — Build version-family and DOI diagnostics.

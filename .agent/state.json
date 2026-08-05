@@ -25,7 +25,8 @@
     "GISNET-050",
     "GISNET-051",
     "GISNET-053",
-    "GISNET-052"
+    "GISNET-052",
+    "GISNET-054"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -45,9 +46,13 @@
     "corpus_boundary_validation": ".agent/manifests/corpus_boundary_validation.json",
     "country_regions": ".agent/manifests/country_regions.json",
     "download_plan": ".agent/manifests/download_plan.json",
+    "institution_canonicalization_audit": ".agent/manifests/institution_canonicalization_audit.json",
     "institution_extraction_summary": ".agent/manifests/institution_extraction_summary.json",
     "institution_geography_qa": ".agent/manifests/institution_geography_qa.json",
     "institution_geography_summary": ".agent/manifests/institution_geography_summary.json",
+    "institution_hierarchy": ".agent/manifests/institution_hierarchy.json",
+    "institution_hierarchy_candidates": ".agent/manifests/institution_hierarchy_candidates.json",
+    "institution_hierarchy_summary": ".agent/manifests/institution_hierarchy_summary.json",
     "institution_master_summary": ".agent/manifests/institution_master_summary.json",
     "institution_metadata_qa": ".agent/manifests/institution_metadata_qa.json",
     "institution_ror_qa": ".agent/manifests/institution_ror_qa.json",
@@ -71,8 +76,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T205824Z_0d202a0c53cf",
-  "last_updated_utc": "2026-08-05T21:03:12Z",
+  "last_successful_run_id": "20260805T210344Z_e222ecdc5744",
+  "last_updated_utc": "2026-08-05T21:06:29Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
