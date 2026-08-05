@@ -1,0 +1,17 @@
+{
+  "distinct_institution_count": 46812,
+  "generated_at_utc": "2026-08-05T20:45:12.238628Z",
+  "input_work_count": 1176947,
+  "logical_input_hash": "cc72d663fa71e3559ac5585a3a719a8112ef19f643de9601ab791ede89ba3e94",
+  "max_year": 2025,
+  "min_year": 2010,
+  "outputs": {
+    "work_institutions_extracted": "data/processed/work_institutions_extracted.parquet",
+    "work_institutions_unresolved": "data/processed/work_institutions_unresolved.parquet"
+  },
+  "resolved_work_count": 1176944,
+  "schema_version": 1,
+  "stage_version": "work-institution-extraction-2026-08-05-v1",
+  "unresolved_work_count": 3,
+  "work_institution_count": 2404676
+}

@@ -468,3 +468,73 @@ excluded from the public Git repository; tracked plans and OpenAlex links provid
 ### Exact next action
 
 Task: GISNET-050 — Extract distinct institutions per work. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T204015Z_9b5ea9a2f9b3
+
+Started UTC: 2026-08-05T20:40:15Z
+Ended UTC: 2026-08-05T20:45:52Z
+Task: GISNET-050
+Initial git status: Clean on `main` at `9b5ea9a` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Extract distinct institutions from every normalized Work authorship while preserving source
+metadata and raw affiliation strings, and explicitly retain Works without resolved institutions.
+
+### Work completed
+
+- Added streaming PyArrow extraction with bounded batches and atomic Parquet replacement.
+- Deduplicated repeated author assertions to one row per Work and institution.
+- Preserved source ROR, name, country, type, lineage, and raw affiliation strings.
+- Added a schema-valid unresolved-Work QA dataset and shared Parquet validation/manifest helpers.
+- Added the `extract-institutions` CLI and documented its reproduction command.
+
+### Files changed
+
+- `.agent/{RUNLOG.md,backlog.json,state.json}`
+- `.agent/manifests/{institution_extraction_summary,work_institutions_extracted,work_institutions_unresolved}.json`
+- `README.md`, `data/reference/institution_extraction_summary.json`
+- `src/gisnet/{cli.py,dataset.py}`, `src/gisnet/institutions/extract.py`
+- `tests/unit/test_extract_institutions.py`
+- Ignored local Parquet outputs under `data/processed/`
+
+### Commands executed
+
+- Full required run-start repository, backlog, state, README, and lock inspection.
+- Synthetic targeted tests, Ruff, strict mypy, full pytest, CLI dry run, and status checks.
+- Two full forced extractions plus SHA-256 comparison and independent sample reconciliation.
+
+### Validation results
+
+- Input Works: 1,176,947; resolved Works: 1,176,944; unresolved Works: 3.
+- Work-institution rows: 2,404,676 with 2,404,676 unique compound keys.
+- Distinct source institutions: 46,812; years: 2010 through 2025.
+- Independent deterministic sample: 25/25 Work institution sets reconciled.
+- Repeated full output SHA-256 values were byte-identical.
+- Maximum extraction RSS: 1,115,268 KB; no memory pressure occurred.
+- Ruff format/check: passed. Strict mypy over 31 source files: passed. Pytest: 70 passed.
+
+### Data and configuration hashes
+
+- Extracted Work institutions: `96a2543d0208920f53af314c69558a86a195b93e555021b08702f623d12c53b3`
+- Unresolved Work institutions: `1593eab9c9174774180983ba63a9bb588040bf726f12353803ce6c36c75798eb`
+- Logical input hash: `cc72d663fa71e3559ac5585a3a719a8112ef19f643de9601ab791ede89ba3e94`
+
+### Checkpoints written
+
+- `.agent/state.json`, `.agent/backlog.json`, and three dataset manifests.
+
+### Failures or blockers
+
+No unresolved blocker. Three Works contain authorships but no valid source institution ID and remain
+in the explicit unresolved QA dataset; no name-based institution guess was made.
+
+### Decisions made
+
+Raw affiliation strings are unioned and sorted per Work-institution row. Source stable IDs remain
+the only identity keys; names are labels only.
+
+### Exact next action
+
+Task: GISNET-051 — Build institution master table. Command: `uv run python -m gisnet.cli next-task`.

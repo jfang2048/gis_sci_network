@@ -38,6 +38,7 @@ from gisnet.corpus.work_types import (
     write_work_type_profile,
 )
 from gisnet.geography import load_region_registry, write_mapping_csv
+from gisnet.institutions.extract import extract_work_institutions, write_extraction_artifacts
 from gisnet.institutions.types import (
     load_institution_type_policy,
     profile_institution_types,
@@ -75,7 +76,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "extract-institutions",
     "enrich-institutions",
     "build-corpus",
     "build-edges",
@@ -238,6 +238,27 @@ def build_parser() -> argparse.ArgumentParser:
     normalize_works.add_argument("--duckdb-memory-limit", default="6GB")
     normalize_works.add_argument("--duckdb-threads", default=1, type=int)
     normalize_works.set_defaults(handler=_normalize_works)
+
+    extract_institutions = subparsers.add_parser(
+        "extract-institutions", help="extract distinct institution assertions from Work authorships"
+    )
+    _add_pipeline_arguments(extract_institutions)
+    extract_institutions.add_argument("--works", default="data/processed/works.parquet", type=Path)
+    extract_institutions.add_argument(
+        "--extracted",
+        default="data/processed/work_institutions_extracted.parquet",
+        type=Path,
+    )
+    extract_institutions.add_argument(
+        "--unresolved",
+        default="data/processed/work_institutions_unresolved.parquet",
+        type=Path,
+    )
+    extract_institutions.add_argument(
+        "--summary", default="data/reference/institution_extraction_summary.json", type=Path
+    )
+    extract_institutions.add_argument("--batch-size", default=2000, type=int)
+    extract_institutions.set_defaults(handler=_extract_institutions)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -873,6 +894,61 @@ def _normalize_works(args: argparse.Namespace) -> int:
         f"{summary['work_topic_count']} work-Topic rows; "
         f"duplicate source occurrences={summary['duplicate_source_occurrence_count']}, "
         f"malformed={summary['malformed_record_count']}."
+    )
+    return 0
+
+
+def _extract_institutions(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValueError) as exc:
+        print(f"Institution-extraction inputs failed: {exc}", file=sys.stderr)
+        return 2
+    start_year = args.start_year or project.analysis.start_year
+    end_year = args.end_year or project.analysis.end_year
+    if args.dry_run:
+        print(
+            f"Would extract distinct institution assertions from {args.works} for "
+            f"{start_year}-{end_year}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-050"):
+            summary = extract_work_institutions(
+                args.works,
+                extracted_path=args.extracted,
+                unresolved_path=args.unresolved,
+                start_year=start_year,
+                end_year=end_year,
+                batch_size=args.batch_size,
+                force=args.force,
+            )
+            command = (
+                "python -m gisnet.cli extract-institutions "
+                f"--works {args.works} --extracted {args.extracted} "
+                f"--unresolved {args.unresolved} --resume"
+            )
+            write_extraction_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "work_institutions_extracted",
+                "work_institutions_unresolved",
+                "institution_extraction_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"Institution extraction failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Extracted {summary['work_institution_count']} distinct Work-institution rows across "
+        f"{summary['resolved_work_count']} Works; unresolved Works="
+        f"{summary['unresolved_work_count']}."
     )
     return 0
 
