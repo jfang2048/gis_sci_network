@@ -1,0 +1,22 @@
+{
+  "aggregate_core_edge_count": 57495,
+  "coordinate_bounds": {
+    "maximum_x": 1.4487896692580038,
+    "maximum_y": 1.449939112929239,
+    "minimum_x": -1.4483314349814866,
+    "minimum_y": -1.4488762751784527
+  },
+  "core_institution_count": 500,
+  "core_size": 500,
+  "fallback_institution_count": 24552,
+  "generated_at_utc": "2026-08-05T22:28:11.863534Z",
+  "institution_count": 25052,
+  "layout_method": "seeded_fruchterman_reingold_core_plus_sha256_annulus_fallback",
+  "logical_input_hash": "24012200faf34e2e3aea72747f0306257c2a20f083b7b094ddb84592d985430f",
+  "outputs": {
+    "network_layout": "data/processed/network_layout.parquet"
+  },
+  "random_seed": 20250805,
+  "schema_version": 1,
+  "stage_version": "fixed-aggregate-layout-2026-08-05-v1"
+}

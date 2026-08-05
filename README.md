@@ -68,6 +68,7 @@ uv run python -m gisnet.cli compute-edge-intensity --resume
 uv run python -m gisnet.cli build-graphs --resume
 uv run python -m gisnet.cli compute-metrics --resume
 uv run python -m gisnet.cli detect-communities --resume
+uv run python -m gisnet.cli build-layout --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

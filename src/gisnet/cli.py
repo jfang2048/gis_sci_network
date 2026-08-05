@@ -97,6 +97,7 @@ from gisnet.validation.reproducibility import (
     verify_reproducibility,
     write_reproducibility_artifact,
 )
+from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "match-communities",
@@ -614,6 +615,21 @@ def build_parser() -> argparse.ArgumentParser:
     communities.add_argument("--duckdb-memory-limit", default="4GB")
     communities.add_argument("--duckdb-threads", default=1, type=int)
     communities.set_defaults(handler=_detect_communities)
+
+    layout = subparsers.add_parser(
+        "build-layout", help="build one fixed aggregate network layout for all annual views"
+    )
+    _add_pipeline_arguments(layout)
+    layout.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    layout.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    layout.add_argument("--output", default="data/processed/network_layout.parquet", type=Path)
+    layout.add_argument(
+        "--summary", default="data/reference/network_layout_summary.json", type=Path
+    )
+    layout.add_argument("--core-size", default=500, type=int)
+    layout.add_argument("--duckdb-memory-limit", default="4GB")
+    layout.add_argument("--duckdb-threads", default=1, type=int)
+    layout.set_defaults(handler=_build_layout)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2053,6 +2069,51 @@ def _detect_communities(args: argparse.Namespace) -> int:
     print(
         f"Detected communities for {summary['community_node_row_count']} node-years at "
         f"{len(summary['resolutions'])} resolutions."
+    )
+    return 0
+
+
+def _build_layout(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Layout configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would build a fixed aggregate layout from {args.edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-074"):
+            summary = build_fixed_layout(
+                args.edges,
+                args.nodes,
+                output_path=args.output,
+                random_seed=project.random_seed,
+                core_size=args.core_size,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-layout "
+                f"--edges {args.edges} --nodes {args.nodes} --core-size {args.core_size} --resume"
+            )
+            write_layout_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("network_layout", "network_layout_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Fixed layout build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built fixed coordinates for {summary['institution_count']} institutions; "
+        f"core={summary['core_institution_count']}, "
+        f"fallback={summary['fallback_institution_count']}."
     )
     return 0
 

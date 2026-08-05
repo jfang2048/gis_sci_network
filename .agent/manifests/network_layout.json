@@ -1,0 +1,45 @@
+{
+  "checksum_sha256": "6eaf9611cd74d338a9f1a9a6ddb362bc07f5e6e118741bd28a9c034cc4a8a1b0",
+  "column_count": 16,
+  "command": "python -m gisnet.cli build-layout --edges data/processed/edges_year.parquet --nodes data/processed/nodes_year.parquet --core-size 500 --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:28:11.906226Z",
+  "dataset_name": "network_layout",
+  "git_commit": "f33c622b141a",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "active_year_count": 0,
+    "aggregate_fractional_strength": 0,
+    "core_corpus_view": 0,
+    "core_hierarchy_view": 0,
+    "core_rank": 24552,
+    "core_size_parameter": 0,
+    "country_code": 0,
+    "display_name": 0,
+    "institution_id": 0,
+    "is_core": 0,
+    "layout_method": 0,
+    "layout_version": 0,
+    "macro_region": 0,
+    "random_seed": 0,
+    "x": 0,
+    "y": 0
+  },
+  "primary_key": [
+    "institution_id"
+  ],
+  "row_count": 25052,
+  "run_id": "20260805T222616Z_f33c622b141a",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/edges_year.json",
+    ".agent/manifests/nodes_year.json"
+  ],
+  "source_versions": {
+    "layout_policy": "fixed-aggregate-layout-2026-08-05-v1"
+  },
+  "status": "valid"
+}

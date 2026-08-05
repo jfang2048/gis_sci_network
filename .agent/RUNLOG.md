@@ -1178,3 +1178,36 @@ multi-resolution sensitivity.
 ### Exact next action
 
 Task: GISNET-074 — Build fixed network layout.
+
+
+## Run 20260805T222616Z_f33c622b141a
+
+Started UTC: 2026-08-05T22:26:16Z
+Ended UTC: 2026-08-05T22:28:33Z
+Task: GISNET-074
+Initial git status: Clean on `main` at `f33c622` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Compute one reproducible full-period network layout and deterministic positions for every low-frequency
+or newly appearing institution so annual views never jump independently.
+
+### Work completed
+
+- Built a 500-node aggregate Broad/organization core ranked by full-period fractional strength.
+- Computed one seeded Fruchterman-Reingold layout from deterministic initial coordinates.
+- Assigned all remaining institutions SHA-256-derived annulus fallback positions.
+- Stored layout method/version, seed, core rank, threshold, and aggregate activity metadata.
+
+### Validation results
+
+- Institutions with coordinates: 25,052; core: 500; fallback: 24,552.
+- Non-finite coordinates: 0; primary key duplicates: 0.
+- Repeated layout SHA-256: `6eaf9611cd74d338a9f1a9a6ddb362bc07f5e6e118741bd28a9c034cc4a8a1b0`.
+- Runtime 0.93 seconds; peak RSS about 188 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (90 tests).
+
+### Exact next action
+
+Task: GISNET-081 — Audit top institutions and edges.

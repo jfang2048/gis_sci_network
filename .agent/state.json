@@ -38,7 +38,8 @@
     "GISNET-064",
     "GISNET-070",
     "GISNET-071",
-    "GISNET-072"
+    "GISNET-072",
+    "GISNET-074"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -90,6 +91,8 @@
     "institutions": ".agent/manifests/institutions.json",
     "institutions_geographic": ".agent/manifests/institutions_geographic.json",
     "institutions_ror": ".agent/manifests/institutions_ror.json",
+    "network_layout": ".agent/manifests/network_layout.json",
+    "network_layout_summary": ".agent/manifests/network_layout_summary.json",
     "network_metrics_summary": ".agent/manifests/network_metrics_summary.json",
     "nodes_year": ".agent/manifests/nodes_year.json",
     "raw_works_download_status": ".agent/manifests/raw_works_download_status.json",
@@ -120,8 +123,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T222147Z_ab740b3c7847",
-  "last_updated_utc": "2026-08-05T22:25:54Z",
+  "last_successful_run_id": "20260805T222616Z_f33c622b141a",
+  "last_updated_utc": "2026-08-05T22:28:33Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

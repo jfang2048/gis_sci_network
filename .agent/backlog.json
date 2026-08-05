@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T22:25:54Z",
+  "last_updated_utc": "2026-08-05T22:28:33Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -941,12 +941,27 @@
       "dependencies": [
         "GISNET-070"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T22:26:16Z",
+          "from": "TODO",
+          "reason": "Computing one seeded aggregate-core layout with deterministic fallback positions for all other institutions.",
+          "run_id": "20260805T222616Z_f33c622b141a",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:28:33Z",
+          "from": "IN_PROGRESS",
+          "reason": "Fixed-core, fallback-coordinate, reproducibility, and finiteness acceptance checks passed.",
+          "run_id": "20260805T222616Z_f33c622b141a",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-074",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Fixed-core, fallback-coordinate, reproducibility, and finiteness acceptance checks passed.",
+      "status_updated_at_utc": "2026-08-05T22:28:33Z"
     },
     {
       "dependencies": [
