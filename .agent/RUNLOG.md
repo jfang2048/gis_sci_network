@@ -1143,3 +1143,38 @@ large-graph betweenness fallback.
 ### Exact next action
 
 Task: GISNET-072 — Detect annual communities.
+
+
+## Run 20260805T222147Z_ab740b3c7847
+
+Started UTC: 2026-08-05T22:21:47Z
+Ended UTC: 2026-08-05T22:25:54Z
+Task: GISNET-072
+Initial git status: Clean on `main` at `ab740b3` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Detect deterministic weighted annual Leiden communities, preserve isolate semantics, and report
+multi-resolution sensitivity.
+
+### Work completed
+
+- Added weighted Leiden modularity communities at resolutions 0.5, 1.0, and 1.5.
+- Stabilized labels by the lexical minimum institution ID in each community.
+- Assigned every non-isolated node at the primary resolution; isolated nodes remain explicit nulls.
+- Stored modularity, resolution, algorithm, seed, community sizes, and small-graph status.
+
+### Validation results
+
+- Community node rows: 501,890; non-isolated nodes without a community: 0.
+- Explicit isolated rows: 64,114; incorrectly assigned isolates: 0.
+- Sensitivity rows: 192 across 3 resolutions; modularity values all within valid range.
+- Repeated primary SHA-256: `855d1bcc7a3555a140290c26dba6f2e10ad1c9642e7be3b4dd657a6e69f80c23`.
+- Repeated sensitivity SHA-256: `97d5db3a66bbe98dd865c1f9647e426588d5ec68858599d7466e07c247e838c6`.
+- Runtime 24.24 seconds; peak RSS about 315 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (89 tests).
+
+### Exact next action
+
+Task: GISNET-074 — Build fixed network layout.

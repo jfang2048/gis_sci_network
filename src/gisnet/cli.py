@@ -50,6 +50,7 @@ from gisnet.institutions.types import (
     profile_institution_types,
     write_institution_type_profile,
 )
+from gisnet.network.communities import build_annual_communities, write_community_artifacts
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
 from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_artifacts
@@ -98,7 +99,6 @@ from gisnet.validation.reproducibility import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "detect-communities",
     "match-communities",
     "build-figures",
     "build-dashboard-data",
@@ -593,6 +593,27 @@ def build_parser() -> argparse.ArgumentParser:
     metrics.add_argument("--duckdb-memory-limit", default="4GB")
     metrics.add_argument("--duckdb-threads", default=1, type=int)
     metrics.set_defaults(handler=_compute_metrics)
+
+    communities = subparsers.add_parser(
+        "detect-communities", help="detect deterministic annual weighted Leiden communities"
+    )
+    _add_pipeline_arguments(communities)
+    communities.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    communities.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    communities.add_argument(
+        "--output", default="data/processed/communities_year.parquet", type=Path
+    )
+    communities.add_argument(
+        "--sensitivity",
+        default="data/processed/community_sensitivity_year.parquet",
+        type=Path,
+    )
+    communities.add_argument(
+        "--summary", default="data/reference/community_detection_summary.json", type=Path
+    )
+    communities.add_argument("--duckdb-memory-limit", default="4GB")
+    communities.add_argument("--duckdb-threads", default=1, type=int)
+    communities.set_defaults(handler=_detect_communities)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1984,6 +2005,54 @@ def _compute_metrics(args: argparse.Namespace) -> int:
     print(
         f"Computed {summary['node_metric_row_count']} node-year and "
         f"{summary['graph_metric_row_count']} graph-year metric rows."
+    )
+    return 0
+
+
+def _detect_communities(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Community configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would detect annual communities from {args.edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-072"):
+            summary = build_annual_communities(
+                args.edges,
+                args.nodes,
+                communities_path=args.output,
+                sensitivity_path=args.sensitivity,
+                random_seed=project.random_seed,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli detect-communities "
+                f"--edges {args.edges} --nodes {args.nodes} --resume"
+            )
+            write_community_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "communities_year",
+                "community_sensitivity_year",
+                "community_detection_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Community detection failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Detected communities for {summary['community_node_row_count']} node-years at "
+        f"{len(summary['resolutions'])} resolutions."
     )
     return 0
 
