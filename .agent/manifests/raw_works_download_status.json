@@ -1,0 +1,43 @@
+{
+  "checksum_sha256": "1fa81c82248c7397e9fc9c46d78b831f10c66c593b0f56e3f00239bcc80bf891",
+  "column_count": 14,
+  "command": "python -m gisnet.cli download-works --plan data/reference/download_plan.json --status data/reference/raw_works_download_status.json --resume",
+  "config_hashes": {
+    "download": "7e186b630bd73d2011aa287f22fc6dd35a4e3e3ab4020f4a69525138ecf278ef",
+    "download_plan": "daa15e88b05d2fec70417f9b74038f433aa5c44e0e1976a6e298d3cc74c5efd3"
+  },
+  "created_at_utc": "2026-08-05T18:29:26.281606Z",
+  "dataset_name": "raw_works_download_status",
+  "git_commit": "7ca228c8350a",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "actual_page_count": 0,
+    "actual_result_count_including_duplicates": 0,
+    "failure_type": 336,
+    "first_retrieved_at_utc": 0,
+    "last_retrieved_at_utc": 0,
+    "predicted_page_count": 0,
+    "predicted_result_count": 0,
+    "query_id": 0,
+    "raw_page_checksums_validated": 0,
+    "source_updated_date_max": 0,
+    "source_updated_date_min": 0,
+    "status": 0,
+    "status_reason": 0,
+    "updated_at_utc": 0
+  },
+  "primary_key": [
+    "query_id"
+  ],
+  "row_count": 336,
+  "run_id": "20260805T172632Z_7ca228c8350a",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/download_plan.json"
+  ],
+  "source_versions": {
+    "openalex_works": "retrieved-2026-08-05"
+  },
+  "status": "valid"
+}

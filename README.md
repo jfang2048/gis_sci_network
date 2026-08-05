@@ -49,6 +49,7 @@ uv run python -m gisnet.cli profile-institution-types --resume
 uv run python -m gisnet.cli profile-work-types --resume
 uv run python -m gisnet.cli plan-download --dry-run
 uv run python -m gisnet.cli plan-download --resume
+uv run python -m gisnet.cli download-works --resume --workers 4
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

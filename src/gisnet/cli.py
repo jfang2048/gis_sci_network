@@ -50,6 +50,11 @@ from gisnet.openalex.client import (
     RateLimitError,
     ResponseError,
 )
+from gisnet.openalex.downloader import (
+    execute_download_plan,
+    load_download_plan,
+    write_download_status_manifest,
+)
 from gisnet.openalex.planner import (
     build_query_plan,
     load_download_planner_config,
@@ -68,7 +73,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "download-works",
     "normalize-works",
     "extract-institutions",
     "enrich-institutions",
@@ -196,6 +200,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--skip-preview", action="store_true", help="write a validated plan without API counts"
     )
     plan_download.set_defaults(handler=_plan_download)
+
+    download_works = subparsers.add_parser(
+        "download-works", help="execute the saved plan into validated raw cache pages"
+    )
+    _add_pipeline_arguments(download_works)
+    download_works.add_argument("--plan", default="data/reference/download_plan.json", type=Path)
+    download_works.add_argument(
+        "--status", default="data/reference/raw_works_download_status.json", type=Path
+    )
+    download_works.add_argument("--download-config", default="config/download.yml", type=Path)
+    download_works.add_argument("--max-queries", type=int)
+    download_works.add_argument("--workers", type=int, default=4)
+    download_works.set_defaults(handler=_download_works)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -708,6 +725,68 @@ def _plan_download(args: argparse.Namespace) -> int:
         f"estimated bulk cost USD={plan['estimated_bulk_cost_usd']}."
     )
     return 0
+
+
+def _download_works(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        plan = load_download_plan(args.plan)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Raw-work download inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        predicted_pages = plan.get("predicted_request_count")
+        print(
+            f"Would execute {plan['query_count']} resumable query shards and approximately "
+            f"{predicted_pages} raw pages; no request or write performed."
+        )
+        return 0
+    if not get_openalex_api_key():
+        print("Raw-work download requires an OpenAlex API key.", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-042"):
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                payload = execute_download_plan(
+                    plan,
+                    client,
+                    cache,
+                    checkpoint_directory=project.openalex.checkpoint_directory,
+                    status_path=args.status,
+                    resume=args.resume or not args.force,
+                    force=args.force,
+                    max_queries=args.max_queries,
+                    workers=args.workers,
+                )
+            command = (
+                "python -m gisnet.cli download-works "
+                f"--plan {args.plan} --status {args.status} --resume"
+            )
+            write_download_status_manifest(
+                payload,
+                status_path=args.status,
+                plan_path=args.plan,
+                download_config_path=args.download_config,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest(
+                "raw_works_download_status",
+                ".agent/manifests/raw_works_download_status.json",
+            )
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Raw-work download failed safely: {exc}", file=sys.stderr)
+        return 3
+    counts = payload["status_counts"]
+    print(
+        f"Raw-work download status={payload['status']}; complete={counts['complete']}, "
+        f"blocked={counts['blocked']}, failed={counts['failed']}; "
+        f"pages={payload['actual_page_count']}, "
+        f"records including duplicates={payload['actual_result_count_including_duplicates']}."
+    )
+    return 0 if payload["status"] == "complete" else 4
 
 
 def _resolve_run_id(value: str | None) -> str:

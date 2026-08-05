@@ -64,3 +64,14 @@ records including shard duplicates, 7,975 bulk page requests, and USD 7.975 unde
 per-page planning assumption. Duplicate coverage is intentional; normalization must deduplicate by
 OpenAlex Work ID and retain all source query IDs. These are preview estimates, not observed corpus
 counts or a spending authorization.
+
+
+## 2026-08-05 — Raw Works acquisition
+
+The saved plan was executed without transformation into 7,978 validated compressed raw pages.
+All 336 query checkpoints completed and yielded 1,561,250 records including expected cross-shard
+duplicates, exactly matching the count-preview result volume. The three-page difference from the
+preview estimate occurs when cursor pagination requires a terminal empty page after a full
+200-record page. Raw response cache and page checkpoints remain local ignored runtime state;
+the tracked status artifact and manifest preserve aggregate provenance but do not claim the raw
+cache can be reconstructed without re-downloading it.

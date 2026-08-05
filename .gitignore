@@ -19,3 +19,5 @@ data/raw/
 data/interim/
 data/cache/
 outputs/private/
+
+.agent/checkpoints/openalex/

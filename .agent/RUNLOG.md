@@ -325,3 +325,65 @@ as a unique corpus count. No source identifiers, human labels, or corrections we
 ### Exact next action
 
 Task: GISNET-042 — Download raw Works. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T172632Z_7ca228c8350a
+
+Started UTC: 2026-08-05T17:26:32Z
+Ended UTC: 2026-08-05T18:30:21Z
+Task: GISNET-042
+Initial git status: Clean on `main` at `7ca228c`.
+Final git status: Clean after the required local commit (verified at run end).
+
+### Objective
+
+Execute the validated bulk query plan into raw, checksummed, resumable OpenAlex Works pages
+without transforming source records or persisting the credential.
+
+### Work completed
+
+- Added plan-driven `download-works` orchestration over the existing cursor paginator and cache.
+- Persisted query/page checkpoints atomically and a 336-row aggregate acquisition status artifact.
+- Recorded page retrieval times plus minimum/maximum source `updated_date` values per query.
+- Added bounded four-query concurrency after safely interrupting and resuming a slower sequential
+  run; the completed-query checkpoints and the partially completed current query were not replayed.
+- Completed all 336 queries and validated every compressed page checksum.
+- Kept the 1.6 GB raw cache and its dependent page checkpoints as ignored local runtime data.
+
+### Validation results
+
+- Query states: complete=336, blocked=0, failed=0, non-terminal=0.
+- Raw pages: 7,978; all checksums validated.
+- Returned records including expected shard duplicates: 1,561,250, exactly matching preview volume.
+- Observed source update-date range: 2025-07-23 through 2026-08-05.
+- Resume test: a seven-page one-query run was resumed; a later interrupted 26-query sequential run
+  resumed with four workers and did not replay completed pages.
+- Ruff format/check: passed. Strict mypy: passed. Pytest: 67 passed.
+- Repository and local-data credential-value scan: clean.
+
+### Data and configuration hashes
+
+- Raw-work download status SHA-256: `1fa81c82248c7397e9fc9c46d78b831f10c66c593b0f56e3f00239bcc80bf891`
+- Raw-work status manifest SHA-256: `8f825ccac30ed30c905df36423c39cca122a289792031fc998fcc4885b2ec9da`
+
+### Checkpoints written
+
+- `.agent/checkpoints/openalex/*.json` (ignored local runtime state)
+- `data/cache/openalex/pages/**` (ignored local raw pages and metadata)
+- `data/reference/raw_works_download_status.json`
+- `.agent/manifests/raw_works_download_status.json`
+- `.agent/state.json` and `.agent/backlog.json`
+
+### Failures or blockers
+
+No unresolved blocker. The initial sequential process was terminated after an atomic checkpoint to
+improve throughput; its stale lock was safely recognized from the dead local PID and quarantined.
+The resume completed all work. The source reported 1,036 requests remaining after acquisition.
+
+### Decisions made
+
+Raw bodies are not transformed by acquisition. The three-page excess over the 7,975 preview-page
+estimate reflects terminal cursor pages after full 200-record pages, not extra records.
+
+### Exact next action
+
+Task: GISNET-043 — Normalize Works. Command: `uv run python -m gisnet.cli next-task`.
