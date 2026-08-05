@@ -100,6 +100,7 @@ from gisnet.validation.reproducibility import (
 )
 from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
+from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix_artifacts
 from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
 _NOT_IMPLEMENTED_COMMANDS = (
@@ -705,6 +706,22 @@ def build_parser() -> argparse.ArgumentParser:
     figures.add_argument("--duckdb-memory-limit", default="4GB")
     figures.add_argument("--duckdb-threads", default=1, type=int)
     figures.set_defaults(handler=_build_figures)
+
+    matrix = subparsers.add_parser(
+        "build-matrix", help="build stable region matrices and geographic drilldown tables"
+    )
+    _add_pipeline_arguments(matrix)
+    matrix.add_argument("--flows", default="data/processed/region_flows_year.parquet", type=Path)
+    matrix.add_argument(
+        "--output", default="data/processed/collaboration_matrix_year.parquet", type=Path
+    )
+    matrix.add_argument("--figure", default="figures/region_matrix.svg", type=Path)
+    matrix.add_argument(
+        "--summary", default="data/reference/collaboration_matrix_summary.json", type=Path
+    )
+    matrix.add_argument("--duckdb-memory-limit", default="4GB")
+    matrix.add_argument("--duckdb-threads", default=1, type=int)
+    matrix.set_defaults(handler=_build_matrix)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2307,6 +2324,40 @@ def _build_figures(args: argparse.Namespace) -> int:
         print(f"Trend figure build failed safely: {exc}", file=sys.stderr)
         return 3
     print(f"Built {summary['trend_row_count']} annual trend rows and two publication SVG figures.")
+    return 0
+
+
+def _build_matrix(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would build collaboration matrices from {args.flows}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-091"):
+            summary = build_collaboration_matrix(
+                args.flows,
+                output_path=args.output,
+                figure_path=args.figure,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-matrix --resume"
+            write_matrix_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("collaboration_matrix_year", "collaboration_matrix_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Collaboration matrix failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['matrix_and_drilldown_row_count']} matrix/drilldown rows; "
+        f"reconciliation failures={summary['reconciliation_failure_count']}."
+    )
     return 0
 
 

@@ -1,0 +1,20 @@
+{
+  "generated_at_utc": "2026-08-05T22:40:55.533596Z",
+  "geographic_levels": [
+    "macro_region",
+    "subregion",
+    "country"
+  ],
+  "latest_figure_year": 2025,
+  "logical_input_hash": "d267f3a7b989a0141c0da19a9bbc87de7670e44e0f968fb7b57fe226f96372a1",
+  "matrix_and_drilldown_row_count": 97762,
+  "outputs": {
+    "collaboration_matrix_year": "data/processed/collaboration_matrix_year.parquet",
+    "region_matrix_svg": "figures/region_matrix.svg"
+  },
+  "reconciled_group_count": 192,
+  "reconciliation_failure_count": 0,
+  "schema_version": 1,
+  "sparse_cell_semantics": "absent row is missing/no observed flow, never an imputed zero",
+  "stage_version": "region-collaboration-matrix-2026-08-05-v1"
+}

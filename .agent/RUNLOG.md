@@ -1314,3 +1314,35 @@ axes, units, corpus, hierarchy, counting method, and year policy.
 ### Exact next action
 
 Task: GISNET-091 — Build region collaboration matrix.
+
+
+## Run 20260805T223905Z_a2ab7184c141
+
+Started UTC: 2026-08-05T22:39:05Z
+Ended UTC: 2026-08-05T22:41:25Z
+Task: GISNET-091
+Initial git status: Clean on `main` at `a2ab718` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build stable annual region matrices plus country and subregion drilldowns with all counting fields,
+exact companion values, stable ordering, and explicit missing-versus-zero semantics.
+
+### Work completed
+
+- Added stable alphabetical source/target order at macro-region, subregion, and country levels.
+- Preserved full counts, fractional counts, normalized shares, exact Work/pair counts, and samples.
+- Labelled observed cells and documented absent rows as missing/no observed flow, never imputed zero.
+- Exported a latest-year Broad/organization macro-region SVG with an exact-value companion table.
+
+### Validation results
+
+- Matrix/drilldown rows: 97,762; reconciled annual/view/level groups: 192; failures: 0.
+- Matrix data SHA-256: `9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77`.
+- Matrix SVG SHA-256: `5b8b52cbbf0ce494cd90b678ecca75ba4c6a14cdab25f609621592d65bb39c0e`.
+- Ruff format/check passed; strict mypy passed; pytest passed (94 tests).
+
+### Exact next action
+
+Task: GISNET-092 — Build geographic collaboration map.
