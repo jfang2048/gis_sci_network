@@ -134,3 +134,98 @@ See `.agent/decisions.md`. No OpenAlex IDs, Topic IDs, counts, or research resul
 ### Exact next action
 
 Task: GISNET-030 — Seed Topic discovery terms. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T165015Z_278d69c
+
+Started UTC: 2026-08-05T16:50:15Z
+Ended UTC: 2026-08-05T17:05:38Z
+Task: GISNET-030 through GISNET-033
+Initial git status: Clean on `main` at `278d69c`.
+Final git status: Clean after the required local commit (verified at run end).
+
+### Objective
+
+Create a source-ID-independent GIS discovery specification, retrieve real OpenAlex Topic
+candidates, sample works for every candidate, and freeze an evidence-backed provisional registry.
+
+### Work completed
+
+- Added all 25 required discovery terms, grouped as Strict or Broad candidates with rationales.
+- Executed 25 bounded Topic searches and cached raw responses without credentials.
+- Stored 40 real, deduplicated Topic IDs with hierarchy, lexical/rank evidence, query traces,
+  retrieval timestamps, and zero-result records for six terms.
+- Retrieved 240 deterministic work samples: three year strata times two citation strata for
+  every candidate; stored only abstract availability rather than abstract content.
+- Generated `outputs/reports/topic_review.md` with metadata and supporting works.
+- Classified every candidate with a reason and method family; froze 6 Strict, 23 Broad
+  (including Strict), 7 uncertain, and 10 excluded Topics as provisional.
+- Verified repeated cached runs produce identical candidate, sample, and report checksums.
+
+### Files changed
+
+- `.agent/backlog.json`
+- `.agent/decisions.md`
+- `.agent/manifests/topic_candidates.json`
+- `.agent/manifests/topic_registry.json`
+- `.agent/manifests/topic_work_samples.json`
+- `.agent/state.json`
+- `README.md`
+- `config/discovery_terms.yml`
+- `config/topic_decisions.yml`
+- `config/topic_registry.yml`
+- `data/reference/topic_candidates.json`
+- `outputs/reports/topic_review.md`
+- `src/gisnet/artifacts.py`
+- `src/gisnet/cli.py`
+- `src/gisnet/corpus/topics.py`
+- `tests/unit/test_topic_discovery.py`
+- `data/interim/topic_work_samples.json` (ignored generated evidence)
+- `data/cache/openalex/pages/**` (ignored compressed raw response cache)
+
+### Commands executed
+
+- Full run-start repository, state, backlog, README, AGENTS, run-log, and environment inspection.
+- Live schema probes for OpenAlex Topics and Works using the redacting client.
+- `uv run python -m gisnet.cli discover-topics --dry-run` and live `--resume` execution.
+- `uv run python -m gisnet.cli sample-topic-works --dry-run` and live `--resume` execution.
+- Two cached discovery/sampling reruns with SHA-256 equality assertions.
+- `uv run python -m gisnet.cli freeze-topics --dry-run` and live freeze execution.
+- Ruff format/check, strict mypy, pytest with coverage, registry invariants, and secret scan.
+
+### Validation results
+
+- Discovery terms: 25 unique terms with both candidate scopes and non-empty rationales.
+- Candidate Topics: 40 unique real-format IDs; every candidate traces to a search term.
+- Topic samples: 240 unique Topic/work pairs, six per Topic, years 2010–2025;
+  120 low-citation and 120 high-citation samples; no Topic lacks evidence.
+- Registry: Strict subset of Broad; all 40 Topics have a reason; uncertain excluded from primary.
+- Ruff: passed. Strict mypy: passed. Pytest: 50 passed. Secret scan: clean.
+
+### Data and configuration hashes
+
+- Topic candidates SHA-256: `1af9d8f427af722f35db09cb6eba4e91c0e23809c4c969a39b8c0ad60c49017d`
+- Topic work samples SHA-256: `e1d2a177506ae8d6897928f87f16032cdfd1005af0d128058be5cc3f3721a417`
+- Topic registry SHA-256: `7d33972d1002697d44904a2fccade6a42464384bee00184cd737c182f23469d5`
+- Frozen logical registry hash: `5138d5b0c1e2a147b026e99071149086932d8f2f7f821492ffe75d19d2cb75e6`
+
+### Checkpoints written
+
+- `.agent/state.json` and `.agent/backlog.json`
+- `.agent/manifests/topic_candidates.json`
+- `.agent/manifests/topic_work_samples.json`
+- `.agent/manifests/topic_registry.json`
+- OpenAlex response cache entries for all successful bounded queries
+
+### Failures or blockers
+
+No unresolved blocker. Six discovery terms produced zero direct Topic matches; the audit records
+those outcomes and no Topic ID was guessed. No rate-limit or authentication failure occurred.
+
+### Decisions made
+
+The registry is explicitly labelled provisional. See `.agent/decisions.md` and
+`config/topic_decisions.yml` for the full evidence boundary and reasons.
+
+### Exact next action
+
+Task: GISNET-011 — Profile institution types. Command: `uv run python -m gisnet.cli next-task`.

@@ -1,0 +1,2216 @@
+{
+  "candidate_count": 40,
+  "candidates": [
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the use of remote sensing technology, particularly MODIS and Landsat data, for monitoring vegetation dynamics, phenology, and biomass estimation in response to global change and climate variability. The papers also explore the application of machine learning techniques for land cover classification and the assessment of ecological responses to environmental change.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Remote sensing",
+          "term_id": "remote_sensing"
+        }
+      ],
+      "discovery_term_ids": [
+        "remote_sensing"
+      ],
+      "display_name": "Remote Sensing in Agriculture",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Remote Sensing",
+        "Vegetation Monitoring",
+        "Phenology",
+        "MODIS",
+        "Landsat",
+        "NDVI",
+        "Global Change",
+        "Climate",
+        "Biomass Estimation",
+        "Machine Learning"
+      ],
+      "raw_record_hash": "a1a635be284d4bc1914a17c4e76066919cc3b27cc5b04298c09ec7de63ca3d79",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2303",
+      "subfield_name": "Ecology",
+      "topic_id": "T10111",
+      "works_count": 135462
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the advancements and applications of Global Navigation Satellite Systems (GNSS), including topics such as precise point positioning, reference frame modeling, atmospheric effects, orbit determination, tropospheric delay modeling, ambiguity resolution, multi-GNSS experiments, and receiver antennas.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "geodesy_positioning",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "GNSS",
+          "term_id": "gnss"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "geodesy_positioning",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Positioning",
+          "term_id": "positioning"
+        }
+      ],
+      "discovery_term_ids": [
+        "gnss",
+        "positioning"
+      ],
+      "display_name": "GNSS positioning and interference",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Global Navigation Satellite Systems",
+        "GNSS",
+        "Precise Point Positioning",
+        "Reference Frame",
+        "Atmospheric Effects",
+        "Orbit Determination",
+        "Tropospheric Delay",
+        "Ambiguity Resolution",
+        "Multi-GNSS Experiment",
+        "Receiver Antennas"
+      ],
+      "raw_record_hash": "b22a49f6eb05b96d5fbd209fa63220c69fbe6d44dc6b0eb0ca4f7fe93fe3b241",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2202",
+      "subfield_name": "Aerospace Engineering",
+      "topic_id": "T10655",
+      "works_count": 73848
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the collection, analysis, and utilization of Volunteered Geographic Information (VGI) and geospatial crowdsourcing. It explores topics such as participatory GIS, OpenStreetMap, citizen science, spatial data infrastructure, web-based GIS, crowdsourced mapping, geovisualization, and the semantic web.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "core_gis",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Geographic information systems",
+          "term_id": "geographic_information_systems"
+        },
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "cartography_geovisualization",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Geovisualization",
+          "term_id": "geovisualization"
+        },
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "spatial_data_infrastructure",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Spatial data infrastructure",
+          "term_id": "spatial_data_infrastructure"
+        }
+      ],
+      "discovery_term_ids": [
+        "geographic_information_systems",
+        "geovisualization",
+        "spatial_data_infrastructure"
+      ],
+      "display_name": "Geographic Information Systems Studies",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/33",
+      "field_name": "Social Sciences",
+      "keywords": [
+        "Volunteered Geographic Information",
+        "Geospatial Crowdsourcing",
+        "Participatory GIS",
+        "OpenStreetMap",
+        "Citizen Science",
+        "Spatial Data Infrastructure",
+        "Web-based GIS",
+        "Crowdsourced Mapping",
+        "Geovisualization",
+        "Semantic Web"
+      ],
+      "raw_record_hash": "625d7573d9a2511926eb468c482131ddb96450a8daf71c9ec96210f7adf6b28b",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3305",
+      "subfield_name": "Geography, Planning and Development",
+      "topic_id": "T10757",
+      "works_count": 118655
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate",
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers represents advances in digital soil mapping techniques, including the use of geostatistics, remote sensing, spectroscopy, and machine learning for mapping and predicting soil properties. The focus is on spatial interpolation, global soil information, and the application of these techniques for soil security and terrain analysis.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "spatial_statistics",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Geostatistics",
+          "term_id": "geostatistics"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geoai",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Spatial machine learning",
+          "term_id": "spatial_machine_learning"
+        }
+      ],
+      "discovery_term_ids": [
+        "geostatistics",
+        "spatial_machine_learning"
+      ],
+      "display_name": "Soil Geostatistics and Mapping",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Digital Soil Mapping",
+        "Geostatistics",
+        "Remote Sensing",
+        "Soil Properties",
+        "Spectroscopy",
+        "Spatial Interpolation",
+        "Machine Learning",
+        "Soil Security",
+        "Global Soil Information",
+        "Terrain Analysis"
+      ],
+      "raw_record_hash": "fa0bf913a3467b86c5086e1c5c419eabf5f66cb3cf97507780e3ca57396eeed5",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2305",
+      "subfield_name": "Environmental Engineering",
+      "topic_id": "T10770",
+      "works_count": 69368
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers explores the spatial economics and agglomeration theory, focusing on topics such as agglomeration economies, urbanization, economic geography, regional development, transportation, city size distribution, human capital externalities, polycentric urban regions, and industrial clusters.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "spatial_analysis",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Spatial analysis",
+          "term_id": "spatial_analysis"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_analysis"
+      ],
+      "display_name": "Regional Economics and Spatial Analysis",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/20",
+      "field_name": "Economics, Econometrics and Finance",
+      "keywords": [
+        "Agglomeration Economies",
+        "Urbanization",
+        "Economic Geography",
+        "Spatial Structure",
+        "Regional Development",
+        "Transportation",
+        "City Size Distribution",
+        "Human Capital Externalities",
+        "Polycentric Urban Regions",
+        "Industrial Clusters"
+      ],
+      "raw_record_hash": "a5f5982b10053b0a29874bf310c5c7345c0bf98ebe21088eac1cb7a8200283be",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2002",
+      "subfield_name": "Economics and Econometrics",
+      "topic_id": "T11014",
+      "works_count": 47155
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the use of Lidar remote sensing technology for mapping and assessing various forest attributes such as carbon stocks, aboveground biomass, tree height, and canopy structure at global and regional scales. The papers cover techniques like airborne and terrestrial laser scanning, data fusion, individual tree detection, and biomass estimation, highlighting the importance of Lidar in sustainable forest management and ecological research.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Remote sensing",
+          "term_id": "remote_sensing"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "LiDAR",
+          "term_id": "lidar"
+        }
+      ],
+      "discovery_term_ids": [
+        "lidar",
+        "remote_sensing"
+      ],
+      "display_name": "Remote Sensing and LiDAR Applications",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Lidar Remote Sensing",
+        "Forest Carbon Stocks",
+        "Aboveground Biomass",
+        "Tree Height Estimation",
+        "Global Forest Mapping",
+        "Airborne Laser Scanning",
+        "Terrestrial Laser Scanning",
+        "Forest Inventory",
+        "Biomass Estimation",
+        "Canopy Structure"
+      ],
+      "raw_record_hash": "1bf40be29fecf64cbe4299cb3726b9c714671b5dfaa64a2f9fd1a098e08026bf",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2305",
+      "subfield_name": "Environmental Engineering",
+      "topic_id": "T11164",
+      "works_count": 110454
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate",
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the analysis, modeling, and visualization of urban street networks using methods such as Space Syntax and spatial analysis. It explores topics such as street centrality, pedestrian movement, network structure, urban morphology, and spatial cognition in relation to city form and design. The research also delves into the integration of geographic information systems (GIS) for understanding the spatial dynamics of urban environments.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.366667,
+          "method_family": "core_gis",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Geographic information systems",
+          "term_id": "geographic_information_systems"
+        },
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "spatial_analysis",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Spatial analysis",
+          "term_id": "spatial_analysis"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "urban_spatial_modelling",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Urban spatial modelling",
+          "term_id": "urban_spatial_modelling"
+        }
+      ],
+      "discovery_term_ids": [
+        "geographic_information_systems",
+        "spatial_analysis",
+        "urban_spatial_modelling"
+      ],
+      "display_name": "Urban Design and Spatial Analysis",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Space Syntax",
+        "Street Networks",
+        "Urban Morphology",
+        "Spatial Analysis",
+        "Network Structure",
+        "Space Semantics",
+        "Pedestrian Movement",
+        "City Form",
+        "Spatial Cognition",
+        "Geographic Information System"
+      ],
+      "raw_record_hash": "2c4af7c03189fa359cd50dde7c781b587049ef7d8d45828e93d3ad375554931f",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2215",
+      "subfield_name": "Building and Construction",
+      "topic_id": "T12325",
+      "works_count": 59383
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate",
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on map projections, geodesy algorithms, and their applications in cartography and spatial analysis. It covers topics such as georeferencing, equal-area projections, celestial navigation, historical maps, spatial distortion, coordinate transformation, and spherical geometry.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "cartography_geovisualization",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Cartography",
+          "term_id": "cartography"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geodesy_positioning",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Geodesy",
+          "term_id": "geodesy"
+        }
+      ],
+      "discovery_term_ids": [
+        "cartography",
+        "geodesy"
+      ],
+      "display_name": "Historical Geography and Cartography",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 1.15,
+      "field_id": "https://openalex.org/fields/33",
+      "field_name": "Social Sciences",
+      "keywords": [
+        "Map Projections",
+        "Geodesy",
+        "Cartography",
+        "Georeferencing",
+        "Equal-Area Projections",
+        "Celestial Navigation",
+        "Historical Maps",
+        "Spatial Distortion",
+        "Coordinate Transformation",
+        "Spherical Geometry"
+      ],
+      "raw_record_hash": "cfa6b31e790684e019b5318cab407474aa82c5eea5f0a92b53d46399c5ab051b",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3305",
+      "subfield_name": "Geography, Planning and Development",
+      "topic_id": "T13854",
+      "works_count": 110760
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the advances in hyperspectral image analysis, remote sensing, and classification. It covers topics such as deep learning, change detection, spectral unmixing, feature extraction, and object-based analysis for remote sensing applications.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Remote sensing",
+          "term_id": "remote_sensing"
+        }
+      ],
+      "discovery_term_ids": [
+        "remote_sensing"
+      ],
+      "display_name": "Remote-Sensing Image Classification",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.075,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Hyperspectral",
+        "Image Analysis",
+        "Remote Sensing",
+        "Classification",
+        "Deep Learning",
+        "Change Detection",
+        "Spectral Unmixing",
+        "Feature Extraction",
+        "Object-Based Analysis",
+        "Support Vector Machines"
+      ],
+      "raw_record_hash": "b5cb86b9bd1f157e59d644e1e3539e13aff6fb391d9041a51d4ef8d9a4bf38fb",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2214",
+      "subfield_name": "Media Technology",
+      "topic_id": "T10689",
+      "works_count": 67320
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 3,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the application and development of spatial shift-share analysis in understanding economic changes, regional employment trends, tourism competitiveness, and industrial structure evolution. It also explores the dynamics of regional growth and the use of spatial econometrics to analyze regional disparities in economic development.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 1.0,
+          "method_family": "spatial_analysis",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Spatial analysis",
+          "term_id": "spatial_analysis"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_analysis"
+      ],
+      "display_name": "Regional Economic and Spatial Analysis",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 1.05,
+      "field_id": "https://openalex.org/fields/20",
+      "field_name": "Economics, Econometrics and Finance",
+      "keywords": [
+        "Spatial Shift-Share Analysis",
+        "Economic Development",
+        "Regional Employment",
+        "Tourism Competitiveness",
+        "Structural Decomposition",
+        "Regional Disparity",
+        "Industrial Structure",
+        "Dynamic Analysis",
+        "Spatial Econometrics",
+        "Regional Growth"
+      ],
+      "raw_record_hash": "c13ca2b8379fa4dab82e0c66cdf8813e11d96e62ce2236c3492e53e750ff0fb8",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2002",
+      "subfield_name": "Economics and Econometrics",
+      "topic_id": "T14051",
+      "works_count": 71947
+    },
+    {
+      "best_lexical_score": 1.0,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the remote sensing of soil moisture using satellite observations, data assimilation techniques, and hydrological modeling. It explores the spatial variability, temporal dynamics, and validation of soil moisture measurements at global scales. The research aims to improve our understanding of soil moisture patterns and their implications for water resource management.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 1.0,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Remote sensing",
+          "term_id": "remote_sensing"
+        }
+      ],
+      "discovery_term_ids": [
+        "remote_sensing"
+      ],
+      "display_name": "Soil Moisture and Remote Sensing",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 1.0375,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Remote Sensing",
+        "Soil Moisture",
+        "Satellite Observations",
+        "Data Assimilation",
+        "Hydrological Modeling",
+        "Global Monitoring",
+        "Microwave Retrieval",
+        "Spatial Variability",
+        "Temporal Dynamics",
+        "Validation"
+      ],
+      "raw_record_hash": "42c7545008050b0f645f8eb3b7add8cecaa3c4e940c971405b89e6b0498e183b",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2305",
+      "subfield_name": "Environmental Engineering",
+      "topic_id": "T11312",
+      "works_count": 358943
+    },
+    {
+      "best_lexical_score": 0.8,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the geometric processing and accuracy assessment of remote sensing imagery, particularly from high-resolution satellite sensors. Topics include rational function models, orthorectification, DEM generation, sensor calibration, and geopositioning accuracy.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.8,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Photogrammetry",
+          "term_id": "photogrammetry"
+        }
+      ],
+      "discovery_term_ids": [
+        "photogrammetry"
+      ],
+      "display_name": "Satellite Image Processing and Photogrammetry",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.95,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Remote Sensing",
+        "Geometric Processing",
+        "Satellite Imagery",
+        "High-Resolution Sensors",
+        "Rational Function Model",
+        "Orthorectification",
+        "DEM Generation",
+        "Sensor Calibration",
+        "Stereo Imagery",
+        "Geopositioning Accuracy"
+      ],
+      "raw_record_hash": "982bca500ef5cb03ab8e3f2cce2a38a5139ba6e1840ab0feb68f187e3a6a195c",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2212",
+      "subfield_name": "Ocean Engineering",
+      "topic_id": "T12983",
+      "works_count": 321248
+    },
+    {
+      "best_lexical_score": 0.875,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on spatial econometrics and spatial data analysis, covering topics such as panel data models, spatial autocorrelation, geographically weighted regression, dynamic panel data models, spatial statistics, spatial dependence, spatial modeling, network autocorrelation, and local statistics.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.875,
+          "method_family": "spatial_analysis",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Spatial analysis",
+          "term_id": "spatial_analysis"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_analysis"
+      ],
+      "display_name": "Spatial and Panel Data Analysis",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 0.9125,
+      "field_id": "https://openalex.org/fields/20",
+      "field_name": "Economics, Econometrics and Finance",
+      "keywords": [
+        "Spatial Econometrics",
+        "Panel Data Models",
+        "Spatial Autocorrelation",
+        "Geographically Weighted Regression",
+        "Dynamic Panel Data Models",
+        "Spatial Statistics",
+        "Spatial Dependence",
+        "Spatial Modeling",
+        "Network Autocorrelation",
+        "Local Statistics"
+      ],
+      "raw_record_hash": "d05c064cd06190bfb9567ef96ab10b0733054d0810dee0c5028545c2cbb4e488",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2002",
+      "subfield_name": "Economics and Econometrics",
+      "topic_id": "T11911",
+      "works_count": 31193
+    },
+    {
+      "best_lexical_score": 0.8,
+      "best_search_rank": 5,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers explores the dynamics of ocean surface waves, their interaction with wind, and the associated phenomena such as rogue waves, tropical cyclones, and Langmuir turbulence. It covers topics such as wave modeling, wind stress, satellite altimetry, and the impact of surface waves on air-sea interaction.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.8,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Remote sensing",
+          "term_id": "remote_sensing"
+        }
+      ],
+      "discovery_term_ids": [
+        "remote_sensing"
+      ],
+      "display_name": "Ocean Waves and Remote Sensing",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.83,
+      "field_id": "https://openalex.org/fields/19",
+      "field_name": "Earth and Planetary Sciences",
+      "keywords": [
+        "Ocean Waves",
+        "Wind Stress",
+        "Wave Climate",
+        "Rogue Waves",
+        "Tropical Cyclones",
+        "Wave Modeling",
+        "Surface Turbulence",
+        "Satellite Altimetry",
+        "Langmuir Turbulence",
+        "Air-Sea Interaction"
+      ],
+      "raw_record_hash": "d54c618628664b4da9575470e8d00fd0faa473a34c3e1e2145a7cefc3a490752",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1910",
+      "subfield_name": "Oceanography",
+      "topic_id": "T11061",
+      "works_count": 64841
+    },
+    {
+      "best_lexical_score": 0.725,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on sustainable urban development and planning, with an emphasis on topics such as transferable development rights, sustainability, urban regeneration, public-private partnerships, economic evaluation, cultural heritage, spatial decision support systems, multi-criteria analysis, real estate market dynamics, and land use. The papers explore various models, methodologies, and case studies related to managing growth, land-use control, energy efficiency, historical building preservation, and the economic and environmental impacts of urban development.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.325,
+          "method_family": "environmental_spatial_modelling",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Spatial environmental modelling",
+          "term_id": "spatial_environmental_modelling"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.725,
+          "method_family": "urban_spatial_modelling",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Urban spatial modelling",
+          "term_id": "urban_spatial_modelling"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_environmental_modelling",
+        "urban_spatial_modelling"
+      ],
+      "display_name": "Urban Planning and Valuation",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.7625,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Transferable Development Rights",
+        "Sustainability",
+        "Urban Regeneration",
+        "Public-Private Partnerships",
+        "Economic Evaluation",
+        "Cultural Heritage",
+        "Spatial Decision Support System",
+        "Multi-Criteria Analysis",
+        "Real Estate Market",
+        "Land Use"
+      ],
+      "raw_record_hash": "05deef00f26951f1ccc21f4351b6eb83fa22bac28e3369be2614885ab8f2b340",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2308",
+      "subfield_name": "Management, Monitoring, Policy and Law",
+      "topic_id": "T13920",
+      "works_count": 58456
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers explores the multifaceted aspects of internet users' information privacy concerns, including the impact of online social networks, personalization paradox, data privacy, surveillance, trust, and the implications for e-commerce transactions and location-based services.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "location_based_services",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Location-based services",
+          "term_id": "location_based_services"
+        }
+      ],
+      "discovery_term_ids": [
+        "location_based_services"
+      ],
+      "display_name": "Privacy, Security, and Data Protection",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 0.6,
+      "field_id": "https://openalex.org/fields/33",
+      "field_name": "Social Sciences",
+      "keywords": [
+        "Privacy Concerns",
+        "Online Social Networks",
+        "Information Disclosure",
+        "Personalization Paradox",
+        "Data Privacy",
+        "Surveillance",
+        "Online Behavior",
+        "Trust",
+        "E-commerce Transactions",
+        "Location-Based Services"
+      ],
+      "raw_record_hash": "529f9d1ae00b777dabbc3bc1281fee77a361f82dcf5ffc61c09af9a469a1de64",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3312",
+      "subfield_name": "Sociology and Political Science",
+      "topic_id": "T11045",
+      "works_count": 72384
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on advancements in optical atomic clock technology, including frequency metrology, stability evaluation, and quantum metrology. It also explores applications in geodesy and the study of fundamental constants.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geodesy_positioning",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Geodesy",
+          "term_id": "geodesy"
+        }
+      ],
+      "discovery_term_ids": [
+        "geodesy"
+      ],
+      "display_name": "Advanced Frequency and Time Standards",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.6,
+      "field_id": "https://openalex.org/fields/31",
+      "field_name": "Physics and Astronomy",
+      "keywords": [
+        "Optical Clocks",
+        "Atomic Clocks",
+        "Frequency Metrology",
+        "Lattice Clocks",
+        "Frequency Comparison",
+        "Stability Evaluation",
+        "Quantum Metrology",
+        "Frequency Transfer",
+        "Geodesy",
+        "Fundamental Constants"
+      ],
+      "raw_record_hash": "d90792d0cf6d98d10c13360c11f0460d79d21d56e3a0cba29e8f32de33fc53dd",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3107",
+      "subfield_name": "Atomic and Molecular Physics, and Optics",
+      "topic_id": "T12004",
+      "works_count": 240599
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the evolution, capabilities, and applications of CubeSats and small satellites in various missions, including Earth observation, space technology development, educational purposes, and spacecraft system engineering. It covers topics such as mission design, thermal analysis, nanosatellites, and the use of CubeSats for scientific research and exploration.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "remote_sensing_earth_observation",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Earth observation",
+          "term_id": "earth_observation"
+        }
+      ],
+      "discovery_term_ids": [
+        "earth_observation"
+      ],
+      "display_name": "Spacecraft Design and Technology",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.6,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "CubeSat",
+        "small satellite",
+        "spacecraft",
+        "mission design",
+        "thermal analysis",
+        "nanosatellite",
+        "educational",
+        "space technology",
+        "Earth observation",
+        "system engineering"
+      ],
+      "raw_record_hash": "27ce78256ac01d5bdc3711d176d02a645c71d45223286a24e432d60aa83bda21",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2202",
+      "subfield_name": "Aerospace Engineering",
+      "topic_id": "T12449",
+      "works_count": 82013
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the regulation of chromatin structure and function, including topics such as histone modifications, transcriptional regulation, enhancers, DNA elements, 3D genome organization, and nucleosome positioning. The research covers a wide range of molecular mechanisms involved in controlling gene expression and epigenetic processes.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geodesy_positioning",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Positioning",
+          "term_id": "positioning"
+        }
+      ],
+      "discovery_term_ids": [
+        "positioning"
+      ],
+      "display_name": "Genomics and Chromatin Dynamics",
+      "domain_id": "https://openalex.org/domains/1",
+      "domain_name": "Life Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/13",
+      "field_name": "Biochemistry, Genetics and Molecular Biology",
+      "keywords": [
+        "Chromatin",
+        "Transcription",
+        "Histone Modifications",
+        "Epigenetics",
+        "Gene Regulation",
+        "Enhancers",
+        "DNA Elements",
+        "3D Genome Organization",
+        "Transcription Factors",
+        "Nucleosome Positioning"
+      ],
+      "raw_record_hash": "3b488d5686f85d376079e465cd8b51d72aa70583c278075499925b03ad9889c2",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1312",
+      "subfield_name": "Molecular Biology",
+      "topic_id": "T10222",
+      "works_count": 95234
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the analysis, reconstruction, and representation of three-dimensional shapes using deep learning techniques, point clouds, and mesh processing. It covers topics such as 3D classification, segmentation, object recognition, shape reconstruction from single images, surface parameterization, mesh deformation, and texture mapping.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Point clouds",
+          "term_id": "point_clouds"
+        }
+      ],
+      "discovery_term_ids": [
+        "point_clouds"
+      ],
+      "display_name": "3D Shape Modeling and Analysis",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Deep Learning",
+        "Point Clouds",
+        "3D Reconstruction",
+        "Mesh Segmentation",
+        "Shape Representation",
+        "Neural Radiance Fields",
+        "Surface Parameterization",
+        "Mesh Deformation",
+        "Texture Mapping",
+        "Point Set Surfaces"
+      ],
+      "raw_record_hash": "bead664b38c1115551613c33f6f51c9c54361fd6e5295afd603d1aded09ec05e",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2206",
+      "subfield_name": "Computational Mechanics",
+      "topic_id": "T10719",
+      "works_count": 49783
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers explores the advancements in 3D geospatial modelling techniques, including photogrammetry, UAV and terrestrial laser scanning, structure from motion, and their applications in geoscience, cultural heritage, and remote sensing. The focus is on accurate 3D reconstruction, point cloud generation, and digital preservation of natural and cultural heritage sites.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Photogrammetry",
+          "term_id": "photogrammetry"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.35,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Point clouds",
+          "term_id": "point_clouds"
+        }
+      ],
+      "discovery_term_ids": [
+        "photogrammetry",
+        "point_clouds"
+      ],
+      "display_name": "3D Surveying and Cultural Heritage",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/19",
+      "field_name": "Earth and Planetary Sciences",
+      "keywords": [
+        "Photogrammetry",
+        "UAV",
+        "Terrestrial Laser Scanning",
+        "Structure from Motion",
+        "Geospatial Applications",
+        "Digital Heritage",
+        "Point Clouds",
+        "3D Reconstruction",
+        "Cultural Heritage",
+        "Remote Sensing"
+      ],
+      "raw_record_hash": "be24dd51fd6df06147ee9d240c6b54a1adacf9aee4dd2bc944a95680fd6fd832",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1907",
+      "subfield_name": "Geology",
+      "topic_id": "T11211",
+      "works_count": 132133
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers covers a wide range of advances in time-of-flight imaging techniques, including laser ranging, single-photon detection, lidar systems, and non-line-of-sight imaging. The papers discuss applications such as 3D imaging, depth sensing, and photon counting in various scenarios.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "LiDAR",
+          "term_id": "lidar"
+        }
+      ],
+      "discovery_term_ids": [
+        "lidar"
+      ],
+      "display_name": "Advanced Optical Sensing Technologies",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/31",
+      "field_name": "Physics and Astronomy",
+      "keywords": [
+        "Time-of-Flight",
+        "Laser Ranging",
+        "Single-Photon Detection",
+        "3D Imaging",
+        "Range Camera",
+        "Lidar",
+        "Photon Counting",
+        "CMOS Sensor",
+        "Depth Sensing",
+        "Non-Line-of-Sight Imaging"
+      ],
+      "raw_record_hash": "963d7afee0ff1f8f5270b27f0b43884f8189e55457809424f01f2cfbf54dcf90",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3105",
+      "subfield_name": "Instrumentation",
+      "topic_id": "T12153",
+      "works_count": 63473
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the applications and integration of 3D city models, including topics such as CityGML, BIM-GIS integration, indoor navigation, cadastral systems, urban development, spatial data management, energy simulation, building information modeling, and land administration.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "urban_spatial_modelling",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Urban spatial modelling",
+          "term_id": "urban_spatial_modelling"
+        }
+      ],
+      "discovery_term_ids": [
+        "urban_spatial_modelling"
+      ],
+      "display_name": "3D Modeling in Geospatial Applications",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "CityGML",
+        "BIM-GIS Integration",
+        "Indoor Navigation",
+        "Cadastral Systems",
+        "Urban Development",
+        "Spatial Data Management",
+        "Energy Simulation",
+        "Building Information Modeling",
+        "Geospatial Environments",
+        "Land Administration"
+      ],
+      "raw_record_hash": "629cf92b77d36acf0a0eabbc74816abcd9997d08431cc0ecf9ea74d5690f5d3e",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2215",
+      "subfield_name": "Building and Construction",
+      "topic_id": "T12698",
+      "works_count": 63238
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers explores the intersection of architectural geometry, artistic representation, and mathematical theory, focusing on topics such as perspective, Renaissance art, historical cartography, anamorphic images, gothic architecture, and proportional analysis. It delves into the application of geometric principles in architectural design and the representation of cultural heritage through visual practices.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "cartography_geovisualization",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Cartography",
+          "term_id": "cartography"
+        }
+      ],
+      "discovery_term_ids": [
+        "cartography"
+      ],
+      "display_name": "Architecture and Art History Studies",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/12",
+      "field_name": "Arts and Humanities",
+      "keywords": [
+        "Architectural Geometry",
+        "Artistic Representation",
+        "Perspective",
+        "Mathematical Theory",
+        "Renaissance Art",
+        "Historical Cartography",
+        "Anamorphic Images",
+        "Gothic Architecture",
+        "Proportional Analysis",
+        "Cultural Heritage"
+      ],
+      "raw_record_hash": "8db93f11cd9f32d5e2ecbf152d7cdf13bffc09fe8bf9d0dbb06114759ec6a70f",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1213",
+      "subfield_name": "Visual Arts and Performing Arts",
+      "topic_id": "T13133",
+      "works_count": 92719
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on statistical computing and data analysis using the R language. It covers a wide range of topics including statistical analysis, data visualization, parallel computing, time series analysis, spatial data, machine learning, geospatial analysis, statistical modeling, and big data.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geoai",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Spatial machine learning",
+          "term_id": "spatial_machine_learning"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_machine_learning"
+      ],
+      "display_name": "Data Analysis with R",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.525,
+      "field_id": "https://openalex.org/fields/17",
+      "field_name": "Computer Science",
+      "keywords": [
+        "R language",
+        "statistical analysis",
+        "data visualization",
+        "parallel computing",
+        "time series analysis",
+        "spatial data",
+        "machine learning",
+        "geospatial analysis",
+        "statistical modeling",
+        "big data"
+      ],
+      "raw_record_hash": "9cd286959a8cd78209229b2eea6cc469a9800d6da71ca26d3cf46cb9881067a9",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1702",
+      "subfield_name": "Artificial Intelligence",
+      "topic_id": "T13398",
+      "works_count": 262334
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "broad_candidate",
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on wireless indoor localization techniques and systems, covering topics such as RF-based positioning, inertial sensors, WiFi fingerprinting, ultra-wideband signals, mobile positioning, and RSSI-based localization. The research explores various methods for accurately estimating the location of devices within indoor environments, with applications in smart homes, pedestrian navigation, activity recognition, and IoT services.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.366667,
+          "method_family": "location_based_services",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Location-based services",
+          "term_id": "location_based_services"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geodesy_positioning",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Positioning",
+          "term_id": "positioning"
+        }
+      ],
+      "discovery_term_ids": [
+        "location_based_services",
+        "positioning"
+      ],
+      "display_name": "Indoor and Outdoor Localization Technologies",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.5,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Indoor Localization",
+        "Wireless Sensor Networks",
+        "RF-Based Positioning",
+        "Inertial Sensors",
+        "WiFi Fingerprinting",
+        "Ultra-Wideband Signals",
+        "Location Estimation",
+        "Mobile Positioning",
+        "RSSI-Based Localization",
+        "Indoor Tracking"
+      ],
+      "raw_record_hash": "6ebd2cc206f1d6c0561eb5ee29ecba8661c34ac0af0e2e10fe4a6d3637d4d98b",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2208",
+      "subfield_name": "Electrical and Electronic Engineering",
+      "topic_id": "T10326",
+      "works_count": 81424
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 3,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the use of digital data sources such as search engine queries, social media content, and internet usage patterns for disease surveillance, tracking epidemics, and early detection of infectious diseases. It also explores the application of tools like Google Trends and Geographic Information Systems in public health informatics for monitoring and analyzing epidemiological patterns.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "core_gis",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Geographic information systems",
+          "term_id": "geographic_information_systems"
+        }
+      ],
+      "discovery_term_ids": [
+        "geographic_information_systems"
+      ],
+      "display_name": "Data-Driven Disease Surveillance",
+      "domain_id": "https://openalex.org/domains/4",
+      "domain_name": "Health Sciences",
+      "evidence_score": 0.5,
+      "field_id": "https://openalex.org/fields/27",
+      "field_name": "Medicine",
+      "keywords": [
+        "Digital Epidemiology",
+        "Disease Surveillance",
+        "Internet-based Surveillance",
+        "Google Trends",
+        "Social Media Analysis",
+        "Infectious Disease Tracking",
+        "Syndromic Surveillance",
+        "Geographic Information Systems",
+        "Public Health Informatics",
+        "Epidemic Detection"
+      ],
+      "raw_record_hash": "a3cd9a0b292b4bfb476356f5ae305141232b92edc1fdc9ace88229b2032b96fe",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2713",
+      "subfield_name": "Epidemiology",
+      "topic_id": "T11819",
+      "works_count": 49447
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 3,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the use of remote sensing techniques, such as LiDAR and satellite imagery, in archaeological research and cultural heritage preservation. The papers cover topics such as aerial survey, machine learning for feature detection, detection of looting activities, and the use of digital elevation models for understanding historical landscapes.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "LiDAR",
+          "term_id": "lidar"
+        }
+      ],
+      "discovery_term_ids": [
+        "lidar"
+      ],
+      "display_name": "Archaeological Research and Protection",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.5,
+      "field_id": "https://openalex.org/fields/19",
+      "field_name": "Earth and Planetary Sciences",
+      "keywords": [
+        "Archaeology",
+        "Remote Sensing",
+        "LiDAR",
+        "Satellite Imagery",
+        "Cultural Heritage",
+        "Aerial Survey",
+        "Machine Learning",
+        "Digital Elevation Model",
+        "Looting Detection",
+        "Historical Landscape"
+      ],
+      "raw_record_hash": "79c54426c297d8e4aadc75140cd6efe6e0f3c8c6596562fbb510a6273d830174",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1912",
+      "subfield_name": "Space and Planetary Science",
+      "topic_id": "T12364",
+      "works_count": 108761
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on mechanical ventilation strategies, including lower tidal volumes, positive end-expiratory pressure, and prone positioning, for the management of acute lung injury and acute respiratory distress syndrome (ARDS). It also covers topics such as noninvasive ventilation, high-flow oxygen therapy, and diaphragm dysfunction in the context of respiratory failure.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geodesy_positioning",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Positioning",
+          "term_id": "positioning"
+        }
+      ],
+      "discovery_term_ids": [
+        "positioning"
+      ],
+      "display_name": "Respiratory Support and Mechanisms",
+      "domain_id": "https://openalex.org/domains/4",
+      "domain_name": "Health Sciences",
+      "evidence_score": 0.4875,
+      "field_id": "https://openalex.org/fields/27",
+      "field_name": "Medicine",
+      "keywords": [
+        "Mechanical Ventilation",
+        "Acute Lung Injury",
+        "Acute Respiratory Distress Syndrome",
+        "Ventilator-induced Lung Injury",
+        "Positive End-Expiratory Pressure",
+        "Noninvasive Ventilation",
+        "Tidal Volume",
+        "Prone Positioning",
+        "High-flow Oxygen Therapy",
+        "Diaphragm Dysfunction"
+      ],
+      "raw_record_hash": "8bc675fb39409ffb99758330690f1dbd63b90deda61b49c3584d3e4d3beb0307",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2740",
+      "subfield_name": "Pulmonary and Respiratory Medicine",
+      "topic_id": "T10322",
+      "works_count": 151131
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers explores the intersection of environmental justice, racial capitalism, and urban development, focusing on the inequalities in exposure to environmental hazards and the impact on human health. It delves into topics such as brownfield redevelopment, community engagement, and the use of geographic information systems to assess environmental inequality. The cluster also discusses the implications for sustainability and the global movements advocating for environmental justice.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "core_gis",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Geographic information systems",
+          "term_id": "geographic_information_systems"
+        }
+      ],
+      "discovery_term_ids": [
+        "geographic_information_systems"
+      ],
+      "display_name": "Environmental Justice and Health Disparities",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 0.4875,
+      "field_id": "https://openalex.org/fields/33",
+      "field_name": "Social Sciences",
+      "keywords": [
+        "Environmental Justice",
+        "Inequality",
+        "Urban Development",
+        "Racial Capitalism",
+        "Health Disparities",
+        "Sustainability",
+        "Brownfield Redevelopment",
+        "Geographic Information Systems",
+        "Community Engagement",
+        "Global Movements"
+      ],
+      "raw_record_hash": "e5624d40d865b357be60566bc4d834bf38a89e84989356bd931b53e76ad858ff",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/3312",
+      "subfield_name": "Sociology and Political Science",
+      "topic_id": "T12259",
+      "works_count": 31536
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the application of topological data analysis in various scientific and engineering domains. It covers topics such as persistent homology, shape analysis, statistical topology, machine learning, and spatial data.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.125,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Point clouds",
+          "term_id": "point_clouds"
+        },
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geoai",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Spatial machine learning",
+          "term_id": "spatial_machine_learning"
+        }
+      ],
+      "discovery_term_ids": [
+        "point_clouds",
+        "spatial_machine_learning"
+      ],
+      "display_name": "Topological and Geometric Data Analysis",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.4875,
+      "field_id": "https://openalex.org/fields/17",
+      "field_name": "Computer Science",
+      "keywords": [
+        "Persistent Homology",
+        "Topological Methods",
+        "Data Analysis",
+        "Complex Networks",
+        "Shape Analysis",
+        "Statistical Topology",
+        "Morse Theory",
+        "Point Cloud Data",
+        "Machine Learning",
+        "Spatial Data"
+      ],
+      "raw_record_hash": "4cd239cfca67e2b8ec55ac9064553fab759fe62b490f3a5962b1dd72f6b7b1d9",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1703",
+      "subfield_name": "Computational Theory and Mathematics",
+      "topic_id": "T12536",
+      "works_count": 41510
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 5,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the analysis of traffic safety, driver behavior, and injury severity in road accidents. It covers topics such as crash prediction models, risk factors for traffic accidents, pedestrian safety, spatial analysis of road accidents, and the impact of traffic congestion on road safety.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.45,
+          "method_family": "spatial_analysis",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Spatial analysis",
+          "term_id": "spatial_analysis"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_analysis"
+      ],
+      "display_name": "Traffic and Road Safety",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.48,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "Traffic Accidents",
+        "Driver Behavior",
+        "Injury Severity",
+        "Road Safety",
+        "Pedestrian Safety",
+        "Crash Prediction Models",
+        "Risk Factors",
+        "Spatial Analysis",
+        "Traffic Congestion",
+        "Simulation Models"
+      ],
+      "raw_record_hash": "3319d8694f841e9bb3cf346f3da517d7e9d63646d81ae0f5ac8a552e091d6e6b",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2213",
+      "subfield_name": "Safety, Risk, Reliability and Quality",
+      "topic_id": "T10370",
+      "works_count": 98195
+    },
+    {
+      "best_lexical_score": 0.45,
+      "best_search_rank": 5,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers covers a wide range of topics related to artificial intelligence, expert systems, machine learning, control systems, fault diagnosis, ontology, and spatial information. It explores applications such as wavelet analysis, bioenergy, small business strategies, and multidisciplinary design optimization. The papers also delve into topics like language, logic, fluid mechanics, and marine data services.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.45,
+          "method_family": "geoai",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Spatial machine learning",
+          "term_id": "spatial_machine_learning"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_machine_learning"
+      ],
+      "display_name": "Advanced Computational Techniques and Applications",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.48,
+      "field_id": "https://openalex.org/fields/17",
+      "field_name": "Computer Science",
+      "keywords": [
+        "Expert Systems",
+        "Wavelet Analysis",
+        "Machine Learning",
+        "Ontology",
+        "Control Systems",
+        "Fault Diagnosis",
+        "Semantic Knowledge Base",
+        "Spatial Information",
+        "Data Integration",
+        "Intelligent Systems"
+      ],
+      "raw_record_hash": "7af2b38a39ac4ca2e26d43713f0ae92652111f55d0310c4f79b4ea84c7afbdcc",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1702",
+      "subfield_name": "Artificial Intelligence",
+      "topic_id": "T13734",
+      "works_count": 180082
+    },
+    {
+      "best_lexical_score": 0.366667,
+      "best_search_rank": 3,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the use of multiscale acoustic and machine learning techniques for mapping and classifying the seafloor, including habitat classification, bathymetry data analysis, geoacoustic inversion, and the study of marine sediments. The research covers a wide range of topics related to underwater acoustics and the application of advanced technologies for understanding and visualizing the spatial ecology of the seafloor.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.366667,
+          "method_family": "geoai",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Spatial machine learning",
+          "term_id": "spatial_machine_learning"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_machine_learning"
+      ],
+      "display_name": "Underwater Acoustics Research",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.416667,
+      "field_id": "https://openalex.org/fields/19",
+      "field_name": "Earth and Planetary Sciences",
+      "keywords": [
+        "Seafloor Mapping",
+        "Acoustic Techniques",
+        "Habitat Classification",
+        "Bathymetry Data",
+        "Multibeam Sonar",
+        "Machine Learning",
+        "Geoacoustic Inversion",
+        "Benthic Habitat",
+        "Marine Sediments",
+        "Underwater Acoustics"
+      ],
+      "raw_record_hash": "c39d1976ed0bcd17d4e2be361689b94278757237c631e0d29f229644c8bd0755",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1910",
+      "subfield_name": "Oceanography",
+      "topic_id": "T11698",
+      "works_count": 99051
+    },
+    {
+      "best_lexical_score": 0.225,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on Simultaneous Localization and Mapping (SLAM) techniques, including visual odometry, 3D mapping, and graph optimization for mobile robots and autonomous systems. It covers various aspects such as monocular SLAM, RGB-D cameras, point cloud processing, and real-time implementation for accurate localization and mapping.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.225,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Point clouds",
+          "term_id": "point_clouds"
+        }
+      ],
+      "discovery_term_ids": [
+        "point_clouds"
+      ],
+      "display_name": "Robotics and Sensor-Based Localization",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.375,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "SLAM",
+        "3D Mapping",
+        "Visual Odometry",
+        "Robotics",
+        "Localization",
+        "Point Cloud",
+        "Monocular SLAM",
+        "RGB-D Cameras",
+        "Graph Optimization",
+        "Mobile Robots"
+      ],
+      "raw_record_hash": "9c078a46b7c3fc826f24d188ac83a5bd1be0cf8eb5e5d8b7336125d8387acf35",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2202",
+      "subfield_name": "Aerospace Engineering",
+      "topic_id": "T10191",
+      "works_count": 94245
+    },
+    {
+      "best_lexical_score": 0.2,
+      "best_search_rank": 2,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the application and development of Multi-Criteria Decision Making (MCDM) methods, including Analytic Hierarchy Process (AHP), Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS), and various fuzzy set theories. The papers cover topics such as group decision making, supplier selection, environmental decision making, and the use of Geographic Information Systems (GIS) in decision analysis.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.2,
+          "method_family": "core_gis",
+          "rank_score": 0.5,
+          "search_rank": 2,
+          "term": "Geographic information systems",
+          "term_id": "geographic_information_systems"
+        }
+      ],
+      "discovery_term_ids": [
+        "geographic_information_systems"
+      ],
+      "display_name": "Multi-Criteria Decision Making",
+      "domain_id": "https://openalex.org/domains/2",
+      "domain_name": "Social Sciences",
+      "evidence_score": 0.275,
+      "field_id": "https://openalex.org/fields/18",
+      "field_name": "Decision Sciences",
+      "keywords": [
+        "Analytic Hierarchy Process",
+        "TOPSIS",
+        "Fuzzy Sets",
+        "Group Decision Making",
+        "Supplier Selection",
+        "MCDM Methods",
+        "Intuitionistic Fuzzy Sets",
+        "Environmental Decision Making",
+        "GIS-based Decision Analysis",
+        "Belief Functions"
+      ],
+      "raw_record_hash": "c6190044a5f81da5f5e4aba529af980e99f03762b7b4d3713e32dc472e244184",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1803",
+      "subfield_name": "Management Science and Operations Research",
+      "topic_id": "T10050",
+      "works_count": 96069
+    },
+    {
+      "best_lexical_score": 0.125,
+      "best_search_rank": 1,
+      "candidate_scopes": [
+        "strict_candidate"
+      ],
+      "description": "This cluster of papers focuses on the mining, analysis, and querying of GPS trajectories and moving object data. It covers topics such as trajectory clustering, skyline computation, similarity search, top-k query processing, probabilistic databases, location prediction, and semantic trajectory modeling.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "strict_candidate",
+          "lexical_score": 0.125,
+          "method_family": "spatial_databases",
+          "rank_score": 1.0,
+          "search_rank": 1,
+          "term": "Spatial database",
+          "term_id": "spatial_database"
+        }
+      ],
+      "discovery_term_ids": [
+        "spatial_database"
+      ],
+      "display_name": "Data Management and Algorithms",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.275,
+      "field_id": "https://openalex.org/fields/17",
+      "field_name": "Computer Science",
+      "keywords": [
+        "Trajectory Data Mining",
+        "GPS Trajectories",
+        "Skyline Operator",
+        "Similarity Search",
+        "Spatial Databases",
+        "Top-k Query Processing",
+        "Probabilistic Databases",
+        "Location Prediction",
+        "Clustering Algorithms",
+        "Semantic Trajectories"
+      ],
+      "raw_record_hash": "4ae1e1b39a4e5b656021d91141b9aae57337b024af477627c065cd1e4aa8e579",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1711",
+      "subfield_name": "Signal Processing",
+      "topic_id": "T11106",
+      "works_count": 95878
+    },
+    {
+      "best_lexical_score": 0.2,
+      "best_search_rank": 3,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on geological modeling, uncertainty analysis, and visualization techniques in the field of geoscience. It explores methods for integrating multi-source data, addressing conceptual uncertainty, and incorporating stochastic modeling in 3D geological models. The papers also discuss the application of geological modeling in hydrogeological assessments and urban development, emphasizing the importance of accurate spatial representation and visualization of geological structures.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.2,
+          "method_family": "urban_spatial_modelling",
+          "rank_score": 0.333333,
+          "search_rank": 3,
+          "term": "Urban spatial modelling",
+          "term_id": "urban_spatial_modelling"
+        }
+      ],
+      "discovery_term_ids": [
+        "urban_spatial_modelling"
+      ],
+      "display_name": "Geological Modeling and Analysis",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.25,
+      "field_id": "https://openalex.org/fields/19",
+      "field_name": "Earth and Planetary Sciences",
+      "keywords": [
+        "Geological Modeling",
+        "Uncertainty Analysis",
+        "3D Visualization",
+        "Data Integration",
+        "Structural Interpretation",
+        "Geospatial Knowledge",
+        "Stochastic Modeling",
+        "Geological Mapping",
+        "Hydrogeological Assessment",
+        "GIS-based Modeling"
+      ],
+      "raw_record_hash": "aab1a40dbd2e009e6007e1c44ad08796ed01e54da387a3816045dab2fb12d689",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/1906",
+      "subfield_name": "Geochemistry and Petrology",
+      "topic_id": "T13067",
+      "works_count": 131831
+    },
+    {
+      "best_lexical_score": 0.1,
+      "best_search_rank": 4,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the integration of 5G networks with broadcasting systems, including technologies such as Layered Division Multiplexing, ATSC 3.0, LTE, SDR, SDN, Massive MIMO, and Cloud Transmission. It also explores spectrum coexistence and optimization for efficient point-to-multipoint transmissions.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.1,
+          "method_family": "photogrammetry_point_clouds",
+          "rank_score": 0.25,
+          "search_rank": 4,
+          "term": "Point clouds",
+          "term_id": "point_clouds"
+        }
+      ],
+      "discovery_term_ids": [
+        "point_clouds"
+      ],
+      "display_name": "Telecommunications and Broadcasting Technologies",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.1375,
+      "field_id": "https://openalex.org/fields/22",
+      "field_name": "Engineering",
+      "keywords": [
+        "5G",
+        "Broadcasting",
+        "Layered Division Multiplexing",
+        "ATSC 3.0",
+        "LTE",
+        "SDR",
+        "SDN",
+        "Massive MIMO",
+        "Cloud Transmission",
+        "Spectrum Coexistence"
+      ],
+      "raw_record_hash": "ffe2ff720b18c43d93f537008aafd25c0a4bb56d4dad12a0a066b56a7c0844ef",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2214",
+      "subfield_name": "Media Technology",
+      "topic_id": "T13905",
+      "works_count": 31734
+    },
+    {
+      "best_lexical_score": 0.0,
+      "best_search_rank": 5,
+      "candidate_scopes": [
+        "broad_candidate"
+      ],
+      "description": "This cluster of papers focuses on the application of stable isotopes in trophic ecology, including estimating trophic position, analyzing food webs, conducting isotope analysis for ecological studies, exploring carbon and nitrogen dynamics, and investigating terrestrial-aquatic linkages. The papers cover a wide range of topics such as Bayesian mixing models, diet reconstruction, and ecosystem structure.",
+      "discovery_evidence": [
+        {
+          "candidate_scope": "broad_candidate",
+          "lexical_score": 0.0,
+          "method_family": "geodesy_positioning",
+          "rank_score": 0.2,
+          "search_rank": 5,
+          "term": "Positioning",
+          "term_id": "positioning"
+        }
+      ],
+      "discovery_term_ids": [
+        "positioning"
+      ],
+      "display_name": "Isotope Analysis in Ecology",
+      "domain_id": "https://openalex.org/domains/3",
+      "domain_name": "Physical Sciences",
+      "evidence_score": 0.03,
+      "field_id": "https://openalex.org/fields/23",
+      "field_name": "Environmental Science",
+      "keywords": [
+        "Stable Isotopes",
+        "Trophic Position",
+        "Food Web",
+        "Isotope Analysis",
+        "Ecological Studies",
+        "Carbon and Nitrogen",
+        "Ecosystem Structure",
+        "Bayesian Mixing Models",
+        "Diet Reconstruction",
+        "Terrestrial-Aquatic Linkages"
+      ],
+      "raw_record_hash": "f5525b02b23675ad90291fcb6bf8dccaaa258f81b1bb7cebe6862e6651b367f6",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "source_version": "OpenAlex Topics API retrieved 2026-08-05",
+      "subfield_id": "https://openalex.org/subfields/2303",
+      "subfield_name": "Ecology",
+      "topic_id": "T12073",
+      "works_count": 80176
+    }
+  ],
+  "discovery_registry_version": "discovery-terms-2026-08-05",
+  "discovery_terms_hash": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
+  "generated_at_utc": "2026-08-05T16:57:22.676603Z",
+  "query_summaries": [
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:16.532682Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "GIScience",
+      "term_id": "gisci"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:17.088167Z",
+      "returned_count": 5,
+      "source_match_count": 13,
+      "term": "Geographic information systems",
+      "term_id": "geographic_information_systems"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:17.622488Z",
+      "returned_count": 5,
+      "source_match_count": 31,
+      "term": "Spatial analysis",
+      "term_id": "spatial_analysis"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:18.171566Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Geostatistics",
+      "term_id": "geostatistics"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:18.375680Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "Geocomputation",
+      "term_id": "geocomputation"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:18.580873Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Spatial database",
+      "term_id": "spatial_database"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:18.745083Z",
+      "returned_count": 2,
+      "source_match_count": 2,
+      "term": "Cartography",
+      "term_id": "cartography"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:18.991015Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Geovisualization",
+      "term_id": "geovisualization"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:19.146546Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Spatial data infrastructure",
+      "term_id": "spatial_data_infrastructure"
+    },
+    {
+      "candidate_scope": "strict_candidate",
+      "retrieved_at": "2026-08-05T16:57:19.401436Z",
+      "returned_count": 2,
+      "source_match_count": 2,
+      "term": "Location-based services",
+      "term_id": "location_based_services"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:19.585390Z",
+      "returned_count": 5,
+      "source_match_count": 49,
+      "term": "Remote sensing",
+      "term_id": "remote_sensing"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:19.745037Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Earth observation",
+      "term_id": "earth_observation"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:19.913986Z",
+      "returned_count": 2,
+      "source_match_count": 2,
+      "term": "Photogrammetry",
+      "term_id": "photogrammetry"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:20.073518Z",
+      "returned_count": 3,
+      "source_match_count": 3,
+      "term": "LiDAR",
+      "term_id": "lidar"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:20.426024Z",
+      "returned_count": 5,
+      "source_match_count": 5,
+      "term": "Point clouds",
+      "term_id": "point_clouds"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:20.630478Z",
+      "returned_count": 2,
+      "source_match_count": 2,
+      "term": "Geodesy",
+      "term_id": "geodesy"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:20.777675Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "GNSS",
+      "term_id": "gnss"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:21.123771Z",
+      "returned_count": 5,
+      "source_match_count": 12,
+      "term": "Positioning",
+      "term_id": "positioning"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:21.347027Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "GeoAI",
+      "term_id": "geoai"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:21.550488Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "Geospatial artificial intelligence",
+      "term_id": "geospatial_artificial_intelligence"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:21.809372Z",
+      "returned_count": 5,
+      "source_match_count": 5,
+      "term": "Spatial machine learning",
+      "term_id": "spatial_machine_learning"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:22.061933Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "Digital twin geospatial methods",
+      "term_id": "digital_twin_geospatial"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:22.215460Z",
+      "returned_count": 1,
+      "source_match_count": 1,
+      "term": "Spatial environmental modelling",
+      "term_id": "spatial_environmental_modelling"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:22.473002Z",
+      "returned_count": 4,
+      "source_match_count": 4,
+      "term": "Urban spatial modelling",
+      "term_id": "urban_spatial_modelling"
+    },
+    {
+      "candidate_scope": "broad_candidate",
+      "retrieved_at": "2026-08-05T16:57:22.676603Z",
+      "returned_count": 0,
+      "source_match_count": 0,
+      "term": "Mobility and transport spatial modelling",
+      "term_id": "mobility_transport_spatial_modelling"
+    }
+  ],
+  "registry_status": "candidate",
+  "schema_version": 1
+}

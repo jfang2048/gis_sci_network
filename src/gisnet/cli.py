@@ -12,21 +12,38 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from gisnet.config import config_file_hash, load_project_config
+from gisnet.corpus.topics import (
+    discover_candidate_topics,
+    freeze_topic_registry,
+    load_candidate_payload,
+    load_discovery_terms,
+    load_topic_decisions,
+    sample_candidate_works,
+    write_candidate_artifact,
+    write_frozen_topic_registry,
+    write_sample_artifacts,
+)
 from gisnet.geography import load_region_registry, write_mapping_csv
+from gisnet.openalex.cache import RawResponseCache
 from gisnet.openalex.client import (
     AuthenticationError,
     NetworkError,
     OpenAlexClient,
+    OpenAlexError,
     RateLimitError,
     ResponseError,
 )
 from gisnet.secrets import get_openalex_api_key
-from gisnet.state import BacklogStore, InvalidStateError, ProjectStateStore, TaskStatus
+from gisnet.state import (
+    BacklogStore,
+    InvalidStateError,
+    ProjectStateStore,
+    RunLock,
+    TaskStatus,
+    make_run_id,
+)
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "discover-topics",
-    "sample-topic-works",
-    "freeze-topics",
     "plan-download",
     "download-works",
     "normalize-works",
@@ -76,6 +93,34 @@ def build_parser() -> argparse.ArgumentParser:
         "--write-csv", default=None, type=Path, help="atomically regenerate the reference CSV"
     )
     regions.set_defaults(handler=_validate_regions)
+
+    discover = subparsers.add_parser(
+        "discover-topics", help="search OpenAlex for evidence-ranked candidate Topics"
+    )
+    _add_pipeline_arguments(discover)
+    discover.add_argument("--terms", default="config/discovery_terms.yml", type=Path)
+    discover.add_argument("--output", default="data/reference/topic_candidates.json", type=Path)
+    discover.add_argument("--max-results-per-term", default=5, type=int)
+    discover.set_defaults(handler=_discover_topics)
+
+    sample = subparsers.add_parser(
+        "sample-topic-works", help="retrieve deterministic work evidence for every candidate"
+    )
+    _add_pipeline_arguments(sample)
+    sample.add_argument("--candidates", default="data/reference/topic_candidates.json", type=Path)
+    sample.add_argument("--output", default="data/interim/topic_work_samples.json", type=Path)
+    sample.add_argument("--report", default="outputs/reports/topic_review.md", type=Path)
+    sample.set_defaults(handler=_sample_topic_works)
+
+    freeze = subparsers.add_parser(
+        "freeze-topics", help="merge candidate metadata, sample evidence, and reviewed decisions"
+    )
+    _add_pipeline_arguments(freeze)
+    freeze.add_argument("--candidates", default="data/reference/topic_candidates.json", type=Path)
+    freeze.add_argument("--samples", default="data/interim/topic_work_samples.json", type=Path)
+    freeze.add_argument("--decisions", default="config/topic_decisions.yml", type=Path)
+    freeze.add_argument("--output", default="config/topic_registry.yml", type=Path)
+    freeze.set_defaults(handler=_freeze_topics)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -205,6 +250,171 @@ def _validate_regions(args: argparse.Namespace) -> int:
     if args.write_csv:
         print(f"Wrote validated CSV: {args.write_csv}")
     return 0
+
+
+def _discover_topics(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        terms = load_discovery_terms(args.terms)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Topic discovery configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would issue {len(terms.terms)} bounded Topic searches and write {args.output}.")
+        return 0
+    if not get_openalex_api_key():
+        print(
+            "Topic discovery requires an OpenAlex API key; offline tasks remain available.",
+            file=sys.stderr,
+        )
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-031"):
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                payload = discover_candidate_topics(
+                    terms,
+                    client,
+                    cache,
+                    max_results_per_term=args.max_results_per_term,
+                    force=args.force,
+                )
+            command = (
+                "python -m gisnet.cli discover-topics "
+                f"--terms {args.terms} --output {args.output} "
+                f"--max-results-per-term {args.max_results_per_term}"
+            )
+            write_candidate_artifact(
+                payload,
+                path=args.output,
+                run_id=run_id,
+                terms_path=args.terms,
+                command=command,
+            )
+            _register_manifest("topic_candidates", ".agent/manifests/topic_candidates.json")
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Topic discovery failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(f"Discovered {payload['candidate_count']} unique candidate Topics in {args.output}.")
+    return 0
+
+
+def _sample_topic_works(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        candidates = load_candidate_payload(args.candidates)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Topic sampling inputs failed validation: {exc}", file=sys.stderr)
+        return 2
+    candidate_count = len(candidates.get("candidates", []))
+    if args.dry_run:
+        print(
+            f"Would issue at most {candidate_count * 6} bounded work-sample requests "
+            f"and write {args.output}."
+        )
+        return 0
+    if not get_openalex_api_key():
+        print(
+            "Topic sampling requires an OpenAlex API key; inputs were not changed.", file=sys.stderr
+        )
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-032"):
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                samples = sample_candidate_works(candidates, client, cache, force=args.force)
+            command = (
+                "python -m gisnet.cli sample-topic-works "
+                f"--candidates {args.candidates} --output {args.output} --report {args.report}"
+            )
+            write_sample_artifacts(
+                candidates,
+                samples,
+                path=args.output,
+                report_path=args.report,
+                run_id=run_id,
+                candidate_manifest=".agent/manifests/topic_candidates.json",
+                command=command,
+            )
+            _register_manifest("topic_work_samples", ".agent/manifests/topic_work_samples.json")
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Topic sampling failed safely: {exc}", file=sys.stderr)
+        return 3
+    insufficient = sum(
+        review["review_status"] == "insufficient_sample_data" for review in samples["topic_reviews"]
+    )
+    print(
+        f"Stored {samples['sample_count']} work samples for {candidate_count} Topics; "
+        f"insufficient={insufficient}."
+    )
+    print(f"Review report: {args.report}")
+    return 0
+
+
+def _freeze_topics(args: argparse.Namespace) -> int:
+    try:
+        candidates = load_candidate_payload(args.candidates)
+        samples = load_candidate_payload(args.samples)
+        decisions = load_topic_decisions(args.decisions)
+        registry = freeze_topic_registry(candidates, samples, decisions)
+    except (OSError, ValidationError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Topic freeze inputs failed validation: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(
+            f"Validated {len(registry['topics'])} Topic decisions: "
+            f"strict={len(registry['strict_topic_ids'])}, "
+            f"broad={len(registry['broad_topic_ids'])}, "
+            f"uncertain={len(registry['uncertain_topic_ids'])}."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-033"):
+            command = (
+                "python -m gisnet.cli freeze-topics "
+                f"--candidates {args.candidates} --samples {args.samples} "
+                f"--decisions {args.decisions} --output {args.output}"
+            )
+            write_frozen_topic_registry(
+                registry,
+                path=args.output,
+                run_id=run_id,
+                decisions_path=args.decisions,
+                command=command,
+            )
+            _register_manifest("topic_registry", ".agent/manifests/topic_registry.json")
+    except (OSError, ValueError) as exc:
+        print(f"Topic freeze failed safely: {exc}", file=sys.stderr)
+        return 3
+    limitation = (
+        "provisional; no human review" if registry["review_status"] == "provisional" else "reviewed"
+    )
+    print(
+        f"Frozen {len(registry['topics'])} Topics to {args.output}; "
+        f"strict={len(registry['strict_topic_ids'])}, broad={len(registry['broad_topic_ids'])}; "
+        f"status={limitation}."
+    )
+    return 0
+
+
+def _resolve_run_id(value: str | None) -> str:
+    if value:
+        return value
+    try:
+        active = ProjectStateStore().load().active_run_id
+    except InvalidStateError:
+        active = None
+    return active or make_run_id()
+
+
+def _register_manifest(dataset_name: str, manifest_path: str) -> None:
+    store = ProjectStateStore()
+    state = store.load()
+    state.dataset_manifests[dataset_name] = manifest_path
+    store.save(state)
 
 
 def _not_implemented(args: argparse.Namespace) -> int:

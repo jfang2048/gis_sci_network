@@ -1,0 +1,167 @@
+schema_version: 1
+decision_version: provisional-ai-2026-08-05-v1
+review_status: provisional
+review_note: >-
+  AI review of OpenAlex Topic metadata and 240 sampled works. No human review has occurred;
+  uncertain Topics are excluded from primary results and retained for sensitivity analysis.
+decisions:
+  - topic_id: T10050
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Multi-criteria decision making is the primary subject; GIS is only one application.
+  - topic_id: T10111
+    corpus_membership: broad_only
+    method_family: remote_sensing_earth_observation
+    decision_reason: Remote sensing for vegetation, land cover, and agricultural monitoring is central.
+  - topic_id: T10191
+    corpus_membership: broad_only
+    method_family: geospatial_computer_vision
+    decision_reason: SLAM, 3D mapping, localization, and point-cloud processing fit the Broad view.
+  - topic_id: T10222
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Positioning refers to nucleosomes and 3D genomes, not geospatial positioning.
+  - topic_id: T10322
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Positioning refers to patient posture in respiratory medicine.
+  - topic_id: T10326
+    corpus_membership: broad_only
+    method_family: geodesy_positioning
+    decision_reason: Indoor and outdoor device localization is an explicit positioning methodology.
+  - topic_id: T10370
+    corpus_membership: broad_only
+    method_family: mobility_transport
+    decision_reason: Road-safety and crash models include explicit transport spatial analysis.
+  - topic_id: T10655
+    corpus_membership: broad_only
+    method_family: geodesy_positioning
+    decision_reason: GNSS positioning, reference frames, orbit determination, and error modelling are central.
+  - topic_id: T10689
+    corpus_membership: broad_only
+    method_family: remote_sensing_earth_observation
+    decision_reason: Remote-sensing image classification and spectral processing are central.
+  - topic_id: T10719
+    corpus_membership: uncertain
+    method_family: photogrammetry_point_clouds
+    decision_reason: Point-cloud processing is present, but sampled work is dominated by generic 3D vision.
+  - topic_id: T10757
+    corpus_membership: strict
+    method_family: core_gis
+    decision_reason: GIS, VGI, spatial data infrastructure, web GIS, and geovisualization are central.
+  - topic_id: T10770
+    corpus_membership: strict
+    method_family: spatial_statistics
+    decision_reason: Geostatistics, spatial interpolation, and digital soil mapping are core methods.
+  - topic_id: T11014
+    corpus_membership: broad_only
+    method_family: urban_spatial_modelling
+    decision_reason: Spatial economics and agglomeration modelling fit the Broad applied-spatial boundary.
+  - topic_id: T11045
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Information privacy is primary and location-based services are a secondary example.
+  - topic_id: T11061
+    corpus_membership: broad_only
+    method_family: environmental_spatial_modelling
+    decision_reason: Ocean-wave modelling and satellite observation fit broad Earth-system spatial research.
+  - topic_id: T11106
+    corpus_membership: strict
+    method_family: spatial_databases
+    decision_reason: Trajectory mining, moving-object queries, spatial search, and location prediction are central.
+  - topic_id: T11164
+    corpus_membership: broad_only
+    method_family: photogrammetry_point_clouds
+    decision_reason: LiDAR, laser scanning, data fusion, canopy mapping, and biomass estimation are central.
+  - topic_id: T11211
+    corpus_membership: broad_only
+    method_family: photogrammetry_point_clouds
+    decision_reason: Photogrammetry, UAV surveys, laser scanning, and geospatial 3D reconstruction are central.
+  - topic_id: T11312
+    corpus_membership: broad_only
+    method_family: remote_sensing_earth_observation
+    decision_reason: Satellite soil-moisture retrieval and spatial validation are central.
+  - topic_id: T11698
+    corpus_membership: broad_only
+    method_family: environmental_spatial_modelling
+    decision_reason: Seafloor mapping, bathymetry, habitat classification, and spatial ecology are central.
+  - topic_id: T11819
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Digital epidemiology is primary and GIS is only a surveillance tool.
+  - topic_id: T11911
+    corpus_membership: strict
+    method_family: spatial_statistics
+    decision_reason: Spatial econometrics, autocorrelation, GWR, spatial dependence, and local statistics are central.
+  - topic_id: T12004
+    corpus_membership: uncertain
+    method_family: geodesy_positioning
+    decision_reason: Optical clocks are primary; geodetic applications are real but secondary.
+  - topic_id: T12073
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Positioning means trophic position in isotope ecology, not spatial positioning.
+  - topic_id: T12153
+    corpus_membership: uncertain
+    method_family: photogrammetry_point_clouds
+    decision_reason: LiDAR and ranging are present, but the Topic is dominated by general optical sensing hardware.
+  - topic_id: T12259
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Environmental justice and health disparity are primary; GIS is an assessment tool.
+  - topic_id: T12325
+    corpus_membership: strict
+    method_family: spatial_analysis
+    decision_reason: Space syntax, network centrality, spatial cognition, and GIS-based urban analysis are central.
+  - topic_id: T12364
+    corpus_membership: broad_only
+    method_family: remote_sensing_earth_observation
+    decision_reason: LiDAR, satellite imagery, aerial survey, and feature detection are central methods.
+  - topic_id: T12449
+    corpus_membership: uncertain
+    method_family: remote_sensing_earth_observation
+    decision_reason: Earth observation occurs, but general CubeSat and spacecraft engineering dominate.
+  - topic_id: T12536
+    corpus_membership: uncertain
+    method_family: spatial_analysis
+    decision_reason: Topological and geometric analysis may be spatial, but much sampled work is domain-general.
+  - topic_id: T12698
+    corpus_membership: broad_only
+    method_family: digital_twins
+    decision_reason: 3D city models, CityGML, BIM-GIS integration, and indoor spatial systems are central.
+  - topic_id: T12983
+    corpus_membership: broad_only
+    method_family: photogrammetry_point_clouds
+    decision_reason: Photogrammetric geometry, orthorectification, DEM generation, and geopositioning are central.
+  - topic_id: T13067
+    corpus_membership: broad_only
+    method_family: environmental_spatial_modelling
+    decision_reason: Explicit 3D geological spatial modelling and uncertainty analysis are central.
+  - topic_id: T13133
+    corpus_membership: uncertain
+    method_family: cartography_geovisualization
+    decision_reason: Historical cartography is relevant, but architecture and art history dominate the Topic.
+  - topic_id: T13398
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: R statistical computing is primary and geospatial analysis is one of many applications.
+  - topic_id: T13734
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: The Topic is generic multidisciplinary computation with weak spatial evidence.
+  - topic_id: T13854
+    corpus_membership: strict
+    method_family: cartography_geovisualization
+    decision_reason: Map projections, georeferencing, coordinate transformation, and cartography are central.
+  - topic_id: T13905
+    corpus_membership: excluded
+    method_family: not_applicable
+    decision_reason: Point-to-multipoint telecommunications caused the match; no geospatial point clouds are central.
+  - topic_id: T13920
+    corpus_membership: uncertain
+    method_family: urban_spatial_modelling
+    decision_reason: Spatial planning is present, but valuation, governance, and heritage themes are broad.
+  - topic_id: T14051
+    corpus_membership: broad_only
+    method_family: spatial_statistics
+    decision_reason: Spatial shift-share and spatial econometric analysis are central but application-specific.

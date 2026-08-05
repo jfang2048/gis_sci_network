@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T16:14:49Z",
+  "last_updated_utc": "2026-08-05T17:04:43Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -244,47 +244,107 @@
         "GISNET-020",
         "GISNET-004"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:50:23Z",
+          "from": "TODO",
+          "reason": "Continuing highest-priority unblocked task.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:56:48Z",
+          "from": "IN_PROGRESS",
+          "reason": "All 25 required terms are versioned, grouped, justified, source-ID independent, and validated.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-030",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "All 25 required terms are versioned, grouped, justified, source-ID independent, and validated.",
+      "status_updated_at_utc": "2026-08-05T16:56:48Z"
     },
     {
       "dependencies": [
         "GISNET-030",
         "GISNET-020"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:56:48Z",
+          "from": "TODO",
+          "reason": "Beginning live evidence-ranked OpenAlex Topic discovery.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T16:58:21Z",
+          "from": "IN_PROGRESS",
+          "reason": "Searched all 25 terms, stored 40 real deduplicated Topic IDs with ranking evidence, timestamps, raw cache, and zero-result audit.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-031",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Searched all 25 terms, stored 40 real deduplicated Topic IDs with ranking evidence, timestamps, raw cache, and zero-result audit.",
+      "status_updated_at_utc": "2026-08-05T16:58:21Z"
     },
     {
       "dependencies": [
         "GISNET-031",
         "GISNET-020"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T16:58:21Z",
+          "from": "TODO",
+          "reason": "Beginning deterministic year/citation-stratified work sampling for every candidate.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T17:03:49Z",
+          "from": "IN_PROGRESS",
+          "reason": "Stored 240 deterministic high/low-citation samples across three year strata for all 40 candidates; generated review report and manifests.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-032",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Stored 240 deterministic high/low-citation samples across three year strata for all 40 candidates; generated review report and manifests.",
+      "status_updated_at_utc": "2026-08-05T17:03:49Z"
     },
     {
       "dependencies": [
         "GISNET-032"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T17:03:49Z",
+          "from": "TODO",
+          "reason": "Freezing conservative provisional decisions from metadata and sampled-work evidence.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T17:04:43Z",
+          "from": "IN_PROGRESS",
+          "reason": "All 40 candidates have evidence-backed reasons and provisional decisions; Strict is a subset of Broad and uncertain Topics remain sensitivity-only.",
+          "run_id": "20260805T165015Z_278d69c",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-033",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "All 40 candidates have evidence-backed reasons and provisional decisions; Strict is a subset of Broad and uncertain Topics remain sensitivity-only.",
+      "status_updated_at_utc": "2026-08-05T17:04:43Z"
     },
     {
       "dependencies": [

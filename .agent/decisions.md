@@ -26,3 +26,12 @@ manifests, and logs remove or redact credential parameters.
 Raw response bodies use deterministic gzip encoding. Non-secret request metadata and
 checksums are stored separately. A cursor advances only after the compressed page and
 metadata both validate and the checkpoint is atomically replaced.
+
+## 2026-08-05 — Provisional Topic boundary
+
+OpenAlex Topic searches returned 40 unique candidates from the 25 required source-ID-free
+terms. Six terms returned no direct source match; those zero-result searches remain in the
+candidate audit rather than being replaced with invented IDs. Each candidate received six
+deterministic work samples across three year and two citation strata. The resulting registry
+contains 6 Strict Topics and 23 Broad Topics (including Strict), with 7 uncertain Topics held
+outside primary results. All decisions remain provisional until human review.

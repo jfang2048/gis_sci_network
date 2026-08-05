@@ -41,7 +41,17 @@ uv run python -m gisnet.cli status
 uv run python -m gisnet.cli next-task
 uv run python -m gisnet.cli check-env
 uv run python -m gisnet.cli validate-regions
+uv run python -m gisnet.cli discover-topics --resume
+uv run python -m gisnet.cli sample-topic-works --resume
+uv run python -m gisnet.cli freeze-topics
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
 quality gates unless explicitly selected.
+
+## Topic registry status
+
+`config/topic_registry.yml` is currently a **provisional, AI-reviewed** registry backed
+by candidate metadata and deterministic sampled-work evidence in
+`outputs/reports/topic_review.md`. No human review is implied. Uncertain Topics are
+excluded from primary Strict and Broad results and retained for sensitivity analysis.

@@ -1,0 +1,128 @@
+schema_version: 1
+registry_version: discovery-terms-2026-08-05
+terms:
+  - term_id: gisci
+    term: GIScience
+    candidate_scope: strict_candidate
+    method_family: core_gis
+    rationale: Canonical name for the scientific study of geographic information.
+  - term_id: geographic_information_systems
+    term: Geographic information systems
+    candidate_scope: strict_candidate
+    method_family: core_gis
+    rationale: Canonical systems-oriented phrase for the strict GIS corpus.
+  - term_id: spatial_analysis
+    term: Spatial analysis
+    candidate_scope: strict_candidate
+    method_family: spatial_analysis
+    rationale: Core analytical methods for spatial patterns and relationships.
+  - term_id: geostatistics
+    term: Geostatistics
+    candidate_scope: strict_candidate
+    method_family: spatial_statistics
+    rationale: Core spatial-statistical modelling and interpolation methods.
+  - term_id: geocomputation
+    term: Geocomputation
+    candidate_scope: strict_candidate
+    method_family: geocomputation
+    rationale: Computational methods developed specifically for geographic problems.
+  - term_id: spatial_database
+    term: Spatial database
+    candidate_scope: strict_candidate
+    method_family: spatial_databases
+    rationale: Storage, indexing, and querying of explicitly spatial data.
+  - term_id: cartography
+    term: Cartography
+    candidate_scope: strict_candidate
+    method_family: cartography_geovisualization
+    rationale: Map design, representation, and cartographic communication.
+  - term_id: geovisualization
+    term: Geovisualization
+    candidate_scope: strict_candidate
+    method_family: cartography_geovisualization
+    rationale: Interactive and analytical visualization of geographic information.
+  - term_id: spatial_data_infrastructure
+    term: Spatial data infrastructure
+    candidate_scope: strict_candidate
+    method_family: spatial_data_infrastructure
+    rationale: Standards, services, and institutions for sharing geospatial data.
+  - term_id: location_based_services
+    term: Location-based services
+    candidate_scope: strict_candidate
+    method_family: location_based_services
+    rationale: Information services whose central method depends on user or object location.
+  - term_id: remote_sensing
+    term: Remote sensing
+    candidate_scope: broad_candidate
+    method_family: remote_sensing_earth_observation
+    rationale: Primary Earth-observation evidence source in the Broad Geospatial corpus.
+  - term_id: earth_observation
+    term: Earth observation
+    candidate_scope: broad_candidate
+    method_family: remote_sensing_earth_observation
+    rationale: Satellite and airborne observation of Earth systems and land surfaces.
+  - term_id: photogrammetry
+    term: Photogrammetry
+    candidate_scope: broad_candidate
+    method_family: photogrammetry_point_clouds
+    rationale: Measurement and reconstruction from overlapping imagery.
+  - term_id: lidar
+    term: LiDAR
+    candidate_scope: broad_candidate
+    method_family: photogrammetry_point_clouds
+    rationale: Active sensing and derived three-dimensional geospatial measurement.
+  - term_id: point_clouds
+    term: Point clouds
+    candidate_scope: broad_candidate
+    method_family: photogrammetry_point_clouds
+    rationale: Processing and analysis of georeferenced three-dimensional point observations.
+  - term_id: geodesy
+    term: Geodesy
+    candidate_scope: broad_candidate
+    method_family: geodesy_positioning
+    rationale: Measurement and modelling of Earth's geometry and reference systems.
+  - term_id: gnss
+    term: GNSS
+    candidate_scope: broad_candidate
+    method_family: geodesy_positioning
+    rationale: Global navigation satellite systems used for geospatial positioning.
+  - term_id: positioning
+    term: Positioning
+    candidate_scope: broad_candidate
+    method_family: geodesy_positioning
+    rationale: Candidate discovery for spatial positioning; generic matches require review.
+  - term_id: geoai
+    term: GeoAI
+    candidate_scope: broad_candidate
+    method_family: geoai
+    rationale: Artificial-intelligence methods explicitly designed for geospatial data.
+  - term_id: geospatial_artificial_intelligence
+    term: Geospatial artificial intelligence
+    candidate_scope: broad_candidate
+    method_family: geoai
+    rationale: Expanded canonical phrase for GeoAI Topic discovery.
+  - term_id: spatial_machine_learning
+    term: Spatial machine learning
+    candidate_scope: broad_candidate
+    method_family: geoai
+    rationale: Machine-learning methods that explicitly model spatial structure.
+  - term_id: digital_twin_geospatial
+    term: Digital twin geospatial methods
+    candidate_scope: broad_candidate
+    method_family: digital_twins
+    rationale: Digital-twin research with explicit geographic or spatial methodology.
+  - term_id: spatial_environmental_modelling
+    term: Spatial environmental modelling
+    candidate_scope: broad_candidate
+    method_family: environmental_spatial_modelling
+    rationale: Environmental models whose central contribution is explicitly spatial.
+  - term_id: urban_spatial_modelling
+    term: Urban spatial modelling
+    candidate_scope: broad_candidate
+    method_family: urban_spatial_modelling
+    rationale: Explicit spatial methods for urban systems and built environments.
+  - term_id: mobility_transport_spatial_modelling
+    term: Mobility and transport spatial modelling
+    candidate_scope: broad_candidate
+    method_family: mobility_transport
+    rationale: Explicit spatial methods for mobility networks and transport systems.

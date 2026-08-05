@@ -1,0 +1,46 @@
+{
+  "checksum_sha256": "1af9d8f427af722f35db09cb6eba4e91c0e23809c4c969a39b8c0ad60c49017d",
+  "column_count": 20,
+  "command": "python -m gisnet.cli discover-topics --terms config/discovery_terms.yml --output data/reference/topic_candidates.json --max-results-per-term 5",
+  "config_hashes": {
+    "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f"
+  },
+  "created_at_utc": "2026-08-05T17:03:41.533561Z",
+  "dataset_name": "topic_candidates",
+  "git_commit": "278d69cc8e5e",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "best_lexical_score": 0,
+    "best_search_rank": 0,
+    "candidate_scopes": 0,
+    "description": 0,
+    "discovery_evidence": 0,
+    "discovery_term_ids": 0,
+    "display_name": 0,
+    "domain_id": 0,
+    "domain_name": 0,
+    "evidence_score": 0,
+    "field_id": 0,
+    "field_name": 0,
+    "keywords": 0,
+    "raw_record_hash": 0,
+    "retrieved_at": 0,
+    "source_version": 0,
+    "subfield_id": 0,
+    "subfield_name": 0,
+    "topic_id": 0,
+    "works_count": 0
+  },
+  "primary_key": [
+    "topic_id"
+  ],
+  "row_count": 40,
+  "run_id": "20260805T165015Z_278d69c",
+  "schema_version": 1,
+  "source_manifests": [],
+  "source_versions": {
+    "openalex_topics": "retrieved-2026-08-05"
+  },
+  "status": "valid"
+}
