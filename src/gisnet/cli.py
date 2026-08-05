@@ -52,6 +52,7 @@ from gisnet.institutions.types import (
 )
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
+from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_artifacts
 from gisnet.network.intensity import build_edge_intensity, write_intensity_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.work_institutions import (
@@ -553,6 +554,24 @@ def build_parser() -> argparse.ArgumentParser:
     intensity.add_argument("--duckdb-memory-limit", default="4GB")
     intensity.add_argument("--duckdb-threads", default=1, type=int)
     intensity.set_defaults(handler=_compute_edge_intensity)
+
+    graphs = subparsers.add_parser(
+        "build-graphs", help="build annual weighted undirected graph catalogues"
+    )
+    _add_pipeline_arguments(graphs)
+    graphs.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    graphs.add_argument(
+        "--institution-outputs",
+        default="data/processed/institution_outputs_year.parquet",
+        type=Path,
+    )
+    graphs.add_argument("--output", default="data/processed/graph_summary_year.parquet", type=Path)
+    graphs.add_argument(
+        "--catalogue", default="data/reference/annual_graph_catalogue.json", type=Path
+    )
+    graphs.add_argument("--duckdb-memory-limit", default="4GB")
+    graphs.add_argument("--duckdb-threads", default=1, type=int)
+    graphs.set_defaults(handler=_build_graphs)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1854,6 +1873,49 @@ def _compute_edge_intensity(args: argparse.Namespace) -> int:
     print(
         f"Computed intensity/persistence for {summary['edge_year_count']} annual edges; "
         f"invalid persistence={invalid_persistence}."
+    )
+    return 0
+
+
+def _build_graphs(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Graph configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would build annual graph catalogues from {args.edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-070"):
+            summary = build_annual_graph_catalogue(
+                args.edges,
+                args.institution_outputs,
+                summary_path=args.output,
+                minimum_fractional_weight=project.network.minimum_fractional_weight,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-graphs "
+                f"--edges {args.edges} --institution-outputs {args.institution_outputs} --resume"
+            )
+            write_graph_artifacts(
+                summary,
+                catalogue_path=args.catalogue,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("graph_summary_year", "annual_graph_catalogue"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Annual graph build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['graph_count']} annual graph catalogues with "
+        f"{summary['isolated_output_node_count']} retained isolated node observations."
     )
     return 0
 

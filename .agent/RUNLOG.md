@@ -1074,3 +1074,36 @@ persistence, explicit incomplete-window flags, and a clearly non-primary visuali
 ### Exact next action
 
 Task: GISNET-070 — Build annual graph objects.
+
+
+## Run 20260805T220304Z_dc5b846462a0
+
+Started UTC: 2026-08-05T22:03:04Z
+Ended UTC: 2026-08-05T22:05:24Z
+Task: GISNET-070
+Initial git status: Clean on `main` at `dc5b846` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build reproducible annual weighted-undirected graph catalogues with node/edge attributes, configured
+filters, lightweight serialization, and retained output-producing isolates.
+
+### Work completed
+
+- Added 64 annual corpus/hierarchy graph catalogue rows backed by processed node and edge tables.
+- Recorded full/fractional weights, node/edge keys, source paths, and non-mutating filter semantics.
+- Counted active and isolated output-producing nodes plus configured edge filters.
+
+### Validation results
+
+- Graphs: 64; node observations: 501,890; edge observations: 2,999,736.
+- Retained isolated output-node observations: 64,114; minimum per graph: 716.
+- Every active-plus-isolated node count reconciles exactly with the node table.
+- Repeated graph-summary SHA-256: `f3c68d3f09198266fdaf90834a315e02da23f4bfa71c67270b1933d2572328f3`.
+- Runtime 2.25 seconds; peak RSS about 170 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (87 tests).
+
+### Exact next action
+
+Task: GISNET-071 — Compute node and graph metrics.

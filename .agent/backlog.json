@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T22:02:30Z",
+  "last_updated_utc": "2026-08-05T22:05:24Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -852,12 +852,27 @@
         "GISNET-062",
         "GISNET-063"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T22:03:05Z",
+          "from": "TODO",
+          "reason": "Building reproducible annual weighted graph catalogues and count reconciliation.",
+          "run_id": "20260805T220304Z_dc5b846462a0",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:05:24Z",
+          "from": "IN_PROGRESS",
+          "reason": "All annual graph count, isolate-retention, filter, and reproducibility checks passed.",
+          "run_id": "20260805T220304Z_dc5b846462a0",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-070",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "All annual graph count, isolate-retention, filter, and reproducibility checks passed.",
+      "status_updated_at_utc": "2026-08-05T22:05:24Z"
     },
     {
       "dependencies": [

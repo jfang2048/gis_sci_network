@@ -1,0 +1,29 @@
+{
+  "edge_observation_count": 2999736,
+  "generated_at_utc": "2026-08-05T22:05:00.657894Z",
+  "graph_count": 64,
+  "graph_representation": {
+    "available_weights": [
+      "full_count",
+      "fractional_count"
+    ],
+    "default_weight": "fractional_count",
+    "edge_source": "data/processed/edges_year.parquet",
+    "filters": {
+      "minimum_weight": "fractional_count >= configured threshold",
+      "primary_institutions": "analytical_scope = 'primary'"
+    },
+    "node_source": "data/processed/institution_outputs_year.parquet",
+    "stored_data_mutated_by_filters": false,
+    "type": "weighted undirected"
+  },
+  "isolated_output_node_count": 64114,
+  "logical_input_hash": "cd8d2e51bdb8dc7a441262c1b962359b5515a1b4e7bf4b6e152087e5b38a2d17",
+  "minimum_isolated_output_nodes_per_graph": 716,
+  "node_observation_count": 501890,
+  "outputs": {
+    "graph_summary_year": "data/processed/graph_summary_year.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "annual-graph-catalogue-2026-08-05-v1"
+}
