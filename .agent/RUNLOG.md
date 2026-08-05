@@ -900,3 +900,38 @@ record full and fractional contributions, diagnose consortium sizes, and aggrega
 ### Exact next action
 
 Task: GISNET-063 — Build institutional output tables.
+
+## Run 20260805T212957Z_f63b2e618d7f
+
+Started UTC: 2026-08-05T21:29:57Z
+Ended UTC: 2026-08-05T21:33:03Z
+Task: GISNET-063
+Initial git status: Clean on `main` at `f63b2e6` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Compute annual institutional full and fractional output plus international/cross-region shares while
+retaining institutions that produce included output but never form an edge.
+
+### Work completed
+
+- Added annual node outputs for both corpora and hierarchy views.
+- Counted full output and `1/k` fractional output using distinct primary-scope institutions per Work.
+- Added collaborative, singleton, international, and cross-region work counts and shares.
+- Added annual full/fractional reconciliation and explicit zero-edge node counts.
+
+### Validation results
+
+- Node-year rows: 501,890; eligible Work-view-year combinations: 2,321,132.
+- Eligible Work-institution rows: 4,360,954; summed node work counts reconcile exactly.
+- Maximum annual fractional reconciliation error: `7.72e-10` over large summed totals.
+- Output-producing zero-edge node-year rows retained: 64,114.
+- International and cross-region shares remain within [0, 1].
+- Repeated outputs were byte-identical; peak RSS about 0.8 GB.
+- Node output SHA-256: `2126f253148415c3493f89d520fd6e5752860154d063d5ba9e537fc16a24435d`.
+- Ruff format/check passed; strict mypy passed; pytest passed (80 tests).
+
+### Exact next action
+
+Task: GISNET-065 — Build region and country flows.

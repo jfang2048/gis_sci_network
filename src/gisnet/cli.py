@@ -51,6 +51,7 @@ from gisnet.institutions.types import (
     write_institution_type_profile,
 )
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
+from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
     write_work_institution_artifacts,
@@ -464,6 +465,28 @@ def build_parser() -> argparse.ArgumentParser:
     build_edges.add_argument("--duckdb-memory-limit", default="4GB")
     build_edges.add_argument("--duckdb-threads", default=1, type=int)
     build_edges.set_defaults(handler=_build_edges)
+
+    build_outputs = subparsers.add_parser(
+        "build-outputs", help="build annual institutional full/fractional output tables"
+    )
+    _add_pipeline_arguments(build_outputs)
+    build_outputs.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    build_outputs.add_argument(
+        "--output", default="data/processed/institution_outputs_year.parquet", type=Path
+    )
+    build_outputs.add_argument(
+        "--reconciliation",
+        default="data/processed/institution_output_reconciliation.parquet",
+        type=Path,
+    )
+    build_outputs.add_argument(
+        "--summary", default="data/reference/institution_outputs_summary.json", type=Path
+    )
+    build_outputs.add_argument("--duckdb-memory-limit", default="4GB")
+    build_outputs.add_argument("--duckdb-threads", default=1, type=int)
+    build_outputs.set_defaults(handler=_build_outputs)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1557,6 +1580,60 @@ def _build_edges(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['work_edge_count']} Work-edge contributions and "
         f"{summary['annual_edge_count']} annual edges."
+    )
+    return 0
+
+
+def _build_outputs(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Output configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            f"Would build {corpora} x {hierarchies} institutional outputs from "
+            f"{args.work_institutions}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-063"):
+            summary = build_institution_outputs(
+                args.work_institutions,
+                outputs_year_path=args.output,
+                reconciliation_path=args.reconciliation,
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-outputs "
+                f"--work-institutions {args.work_institutions} --corpus {args.corpus} "
+                f"--hierarchy {args.hierarchy} --resume"
+            )
+            write_output_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "institution_outputs_year",
+                "institution_output_reconciliation",
+                "institution_outputs_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Institutional outputs failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['node_year_count']} node-year outputs; zero-edge output rows="
+        f"{summary['zero_edge_output_node_year_count']}."
     )
     return 0
 

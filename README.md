@@ -60,6 +60,7 @@ uv run python -m gisnet.cli diagnose-versions --resume
 uv run python -m gisnet.cli build-corpus --resume
 uv run python -m gisnet.cli build-work-institutions --resume
 uv run python -m gisnet.cli build-edges --resume
+uv run python -m gisnet.cli build-outputs --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
