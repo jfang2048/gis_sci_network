@@ -48,7 +48,8 @@
     "GISNET-093",
     "GISNET-095",
     "GISNET-102",
-    "GISNET-100"
+    "GISNET-100",
+    "GISNET-101"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -78,6 +79,8 @@
     "corpus_topic_family_counts": ".agent/manifests/corpus_topic_family_counts.json",
     "country_regions": ".agent/manifests/country_regions.json",
     "dashboard_bundle_summary": ".agent/manifests/dashboard_bundle_summary.json",
+    "data_dictionary_summary": ".agent/manifests/data_dictionary_summary.json",
+    "data_provenance_report": ".agent/manifests/data_provenance_report.json",
     "download_plan": ".agent/manifests/download_plan.json",
     "edge_arithmetic_validation": ".agent/manifests/edge_arithmetic_validation.json",
     "edge_intensity_summary": ".agent/manifests/edge_intensity_summary.json",
@@ -119,6 +122,7 @@
     "network_view_summary": ".agent/manifests/network_view_summary.json",
     "nodes_year": ".agent/manifests/nodes_year.json",
     "pipeline_run_summary": ".agent/manifests/pipeline_run_summary.json",
+    "public_data_dictionary": ".agent/manifests/public_data_dictionary.json",
     "raw_works_download_status": ".agent/manifests/raw_works_download_status.json",
     "region_flow_reconciliation": ".agent/manifests/region_flow_reconciliation.json",
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
@@ -153,8 +157,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T231322Z_9a192813a964",
-  "last_updated_utc": "2026-08-05T23:17:03Z",
+  "last_successful_run_id": "20260805T231756Z_8a7cb2e8de39",
+  "last_updated_utc": "2026-08-05T23:22:22Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

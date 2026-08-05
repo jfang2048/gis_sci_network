@@ -1519,3 +1519,36 @@ figures, and manifests without inventing measurements.
 ### Exact next action
 
 Task: GISNET-101 — Generate data dictionary and provenance report.
+
+
+## Run 20260805T231756Z_8a7cb2e8de39
+
+Started UTC: 2026-08-05T23:17:56Z
+Ended UTC: 2026-08-05T23:22:08Z
+Task: GISNET-101
+Initial git status: Clean on `main` at `8a7cb2e` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Document every released table column plus primary keys, null semantics, lineage, configuration and
+code hashes, and known quality issues without leaking a key or private path.
+
+### Work completed
+
+- Generated machine-readable JSON and human-readable Markdown dictionaries.
+- Documented all 11 public aggregate/thresholded tables and 271 table-column entries.
+- Recorded source manifests, upstream manifests, configuration/source-version hashes, code commits,
+  transformation commands, exact public hashes, row counts, and primary keys.
+- Recorded actual null counts and explicit null semantics, plus a known issue for every table.
+
+### Validation results
+
+- Released/documented tables: 11/11; primary keys: 11/11; source manifests: 11/11.
+- Every Parquet hash and row count matches public metadata; every primary key is unique.
+- Dictionary/report/manifest hashes match; private key/path findings: 0.
+- Ruff format/check passed; strict mypy passed; pytest passed (104 tests).
+
+### Exact next action
+
+Task: GISNET-103 — Add CI and local quality gate.

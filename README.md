@@ -77,6 +77,8 @@ uv run python -m gisnet.cli build-map-data --resume
 uv run python -m gisnet.cli build-network-view --resume
 uv run python -m gisnet.cli build-dashboard-data --resume
 uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume
+uv run python -m gisnet.cli report --resume
+uv run python -m gisnet.cli build-data-dictionary --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
@@ -104,6 +106,10 @@ explorer, Topic-family comparisons, methods, and data-quality metadata. See
 
 The generated research methods and limitations are documented in
 [`outputs/reports/methodology.md`](outputs/reports/methodology.md).
+Every public table column, primary key, null semantic, lineage path, configuration hash,
+code hash, and known issue is documented in
+[`outputs/reports/data_dictionary.md`](outputs/reports/data_dictionary.md), with a
+machine-readable companion at [`data/reference/data_dictionary.json`](data/reference/data_dictionary.json).
 
 ## Topic registry status
 

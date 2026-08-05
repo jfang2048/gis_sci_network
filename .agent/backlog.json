@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T23:17:03Z",
+  "last_updated_utc": "2026-08-05T23:22:08Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1252,12 +1252,27 @@
         "GISNET-071",
         "GISNET-072"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T23:17:56Z",
+          "from": "TODO",
+          "reason": "Generating complete public-table column dictionaries and manifest-linked provenance with privacy validation.",
+          "run_id": "20260805T231756Z_8a7cb2e8de39",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T23:22:08Z",
+          "from": "IN_PROGRESS",
+          "reason": "Documented every column, key, null semantic, lineage path, hash, and known issue for all 11 public release tables.",
+          "run_id": "20260805T231756Z_8a7cb2e8de39",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-101",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Documented every column, key, null semantic, lineage path, hash, and known issue for all 11 public release tables.",
+      "status_updated_at_utc": "2026-08-05T23:22:08Z"
     },
     {
       "dependencies": [

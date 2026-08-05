@@ -1,0 +1,2518 @@
+{
+  "column_entry_count": 271,
+  "data_version": "gisnet-0.1.0-2026-08-05",
+  "dictionary_version": "public-data-dictionary-2026-08-05-v1",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v1",
+  "privacy_policy": "No API key, raw response, or private local path is included.",
+  "schema_version": 1,
+  "table_count": 11,
+  "tables": [
+    {
+      "code_commit": "0994927dc1b8",
+      "column_count": 24,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of nodes in the annual graph or public view.",
+          "name": "node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of undirected edges in the annual graph or public view.",
+          "name": "edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Observed edges divided by possible undirected edges.",
+          "name": "density",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Arithmetic mean annual node degree.",
+          "name": "mean_degree",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Arithmetic mean annual full-count node strength.",
+          "name": "mean_full_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Arithmetic mean annual fractional node strength.",
+          "name": "mean_fractional_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of connected components in the annual graph.",
+          "name": "connected_component_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Share of nodes in the largest connected component.",
+          "name": "largest_connected_component_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Primary-resolution Leiden partition modularity.",
+          "name": "modularity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Leiden resolution associated with stored modularity.",
+          "name": "modularity_resolution",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Categorical assortativity by macro-region.",
+          "name": "macro_region_assortativity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Categorical assortativity by country.",
+          "name": "country_assortativity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Share of annual edges joining different macro-regions.",
+          "name": "cross_region_edge_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Share of weight on cross-region edges.",
+          "name": "cross_region_fractional_weight_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Edges present this year but absent in the preceding year.",
+          "name": "new_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Edges present in both this and the preceding year.",
+          "name": "continuing_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Prior-year edges absent in the current year.",
+          "name": "disappearing_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Exact or cutoff weighted shortest-path method used for betweenness.",
+          "name": "betweenness_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of graph vertices included by the betweenness method.",
+          "name": "betweenness_sample_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Maximum path length for approximated betweenness; null when exact.",
+          "name": "betweenness_cutoff",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Deterministic random seed for the graph computation.",
+          "name": "random_seed",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual graph-level topology, connectivity, mixing, and turnover metrics.",
+      "known_data_quality_issue": "Betweenness uses the disclosed cutoff approximation for large graphs.",
+      "path": "dashboard/data/graph_metrics.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view"
+      ],
+      "row_count": 64,
+      "sha256": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84",
+      "source_manifest": ".agent/manifests/graph_metrics_year.json",
+      "source_manifests": [
+        ".agent/manifests/edges_year.json",
+        ".agent/manifests/institution_outputs_year.json",
+        ".agent/manifests/graph_summary_year.json"
+      ],
+      "source_versions": {
+        "network_metrics_policy": "network-metrics-2026-08-05-v1"
+      },
+      "table": "graph_metrics",
+      "transformation_command": "python -m gisnet.cli compute-metrics --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume"
+    },
+    {
+      "code_commit": "a5680002cdf2",
+      "column_count": 13,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "All annual nodes before coordinate filtering.",
+          "name": "total_node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Annual nodes with source-provided coordinates.",
+          "name": "coordinate_node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "All annual edges before coordinate filtering.",
+          "name": "total_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Annual edges whose two endpoints have sourced coordinates.",
+          "name": "coordinate_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Coordinate-complete edges retained by the default display limit.",
+          "name": "selected_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Annual nodes without sourced coordinates.",
+          "name": "missing_coordinate_node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Annual edges lacking one or both endpoint coordinates.",
+          "name": "missing_coordinate_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Coordinate-complete nodes divided by all annual nodes.",
+          "name": "node_coordinate_coverage_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Documented maximum edges displayed by default per view.",
+          "name": "default_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Documented maximum nodes displayed by default per view.",
+          "name": "default_node_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual sourced-coordinate coverage and default map display limits.",
+      "known_data_quality_issue": "Coordinate coverage is sparse; missing coordinates are never imputed.",
+      "path": "dashboard/data/map_coverage.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view"
+      ],
+      "row_count": 64,
+      "sha256": "80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8",
+      "source_manifest": ".agent/manifests/map_coverage_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json"
+      ],
+      "source_versions": {
+        "map_data_policy": "geographic-map-data-2026-08-05-v1"
+      },
+      "table": "map_coverage",
+      "transformation_command": "python -m gisnet.cli build-map-data --resume"
+    },
+    {
+      "code_commit": "a5680002cdf2",
+      "column_count": 46,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "name": "source_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "name": "target_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: institution display name for an undirected edge endpoint.",
+          "name": "source_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: institution display name for an undirected edge endpoint.",
+          "name": "target_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "source_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "target_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "source_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "target_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen country name for an undirected edge endpoint.",
+          "name": "source_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen country name for an undirected edge endpoint.",
+          "name": "target_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "source_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "target_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct source Work identifiers contributing to the row.",
+          "name": "distinct_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Contributing Works at or above the consortium warning size.",
+          "name": "large_consortium_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Contributing Works excluded by the configured size policy.",
+          "name": "excluded_threshold_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Largest distinct-institution count among contributing Works.",
+          "name": "maximum_consortium_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Sorted distinct configured Topic families observed on contributing Works.",
+          "name": "topic_families",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Deterministic bounded sample of contributing source Work identifiers.",
+          "name": "work_ids_sample",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Number of distinct Topic families contributing to the row.",
+          "name": "distinct_topic_family_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Active years in the fixed-denominator trailing three-year window.",
+          "name": "active_years_3y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int8"
+        },
+        {
+          "description": "Active years in the fixed-denominator trailing five-year window.",
+          "name": "active_years_5y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int8"
+        },
+        {
+          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "source_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "target_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight divided by geometric-mean institutional output.",
+          "name": "normalized_intensity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Active-year share in the trailing three-year window.",
+          "name": "persistence_3y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Active-year share in the trailing five-year window.",
+          "name": "persistence_5y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "True before a complete three-year history is available.",
+          "name": "persistence_3y_incomplete_window",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "True before a complete five-year history is available.",
+          "name": "persistence_5y_incomplete_window",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Non-primary composite used only to rank edges for display.",
+          "name": "visualization_score",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Always false; guards against scientific interpretation.",
+          "name": "visualization_score_is_primary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Stored description of the display-ranking calculation.",
+          "name": "visualization_score_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: source-provided institution latitude; never imputed.",
+          "name": "source_latitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Source endpoint value: source-provided institution longitude; never imputed.",
+          "name": "source_longitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Target endpoint value: source-provided institution latitude; never imputed.",
+          "name": "target_latitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Target endpoint value: source-provided institution longitude; never imputed.",
+          "name": "target_longitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Source endpoint value: configured analytical institution type for an edge endpoint.",
+          "name": "source_institution_type",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: configured analytical institution type for an edge endpoint.",
+          "name": "target_institution_type",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable unordered source/target macro-region pair label.",
+          "name": "macro_region_pair",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "One-based rank under the default edge display policy.",
+          "name": "default_edge_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Documented maximum edges displayed by default per view.",
+          "name": "default_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored description of the default display threshold.",
+          "name": "default_threshold_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Top display-ranked collaboration edges whose endpoints have sourced coordinates.",
+      "known_data_quality_issue": "This thresholded map extract is not the complete annual edge table.",
+      "path": "dashboard/data/map_edges.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_id",
+        "target_id"
+      ],
+      "row_count": 574,
+      "sha256": "eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84",
+      "source_manifest": ".agent/manifests/map_edges_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json"
+      ],
+      "source_versions": {
+        "map_data_policy": "geographic-map-data-2026-08-05-v1"
+      },
+      "table": "map_edges",
+      "transformation_command": "python -m gisnet.cli build-map-data --resume"
+    },
+    {
+      "code_commit": "a5680002cdf2",
+      "column_count": 37,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable source institution identifier used as the node key.",
+          "name": "institution_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-linked Research Organization Registry identifier, when available.",
+          "name": "ror_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source country code associated with the institution.",
+          "name": "country_code",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen country or territory display name.",
+          "name": "country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style subregion analytical grouping.",
+          "name": "subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Configured analytical category for the source institution type.",
+          "name": "institution_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the row is in focal or retained contextual geographic scope.",
+          "name": "analytical_scope",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided institution latitude; never imputed.",
+          "name": "latitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided institution longitude; never imputed.",
+          "name": "longitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Distinct primary-corpus Works affiliated with the institution.",
+          "name": "work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institutional Work output under the stored fractional allocation.",
+          "name": "fractional_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Distinct Works containing more than one institution.",
+          "name": "collaborative_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works containing only this institution.",
+          "name": "single_institution_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works with institutions from multiple countries.",
+          "name": "international_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works with institutions from multiple macro-regions.",
+          "name": "cross_region_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "International Works divided by collaborative Works.",
+          "name": "international_collaboration_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Cross-region Works divided by collaborative Works.",
+          "name": "cross_region_collaboration_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct institutional partners in the annual graph.",
+          "name": "degree",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Sum of incident full-count collaboration edge weights.",
+          "name": "full_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Sum of incident fractional collaboration edge weights.",
+          "name": "fractional_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored weighted betweenness centrality under the disclosed method.",
+          "name": "betweenness",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Exact or cutoff weighted shortest-path method used for betweenness.",
+          "name": "betweenness_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of graph vertices included by the betweenness method.",
+          "name": "betweenness_sample_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Maximum path length for approximated betweenness; null when exact.",
+          "name": "betweenness_cutoff",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Deterministic random seed recorded for the centrality computation.",
+          "name": "betweenness_seed",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Weighted PageRank centrality normalized within the annual graph.",
+          "name": "pagerank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Documented cross-community/cross-region bridging indicator.",
+          "name": "bridge_score",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct partner countries.",
+          "name": "partner_country_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of distinct partner macro-regions.",
+          "name": "partner_region_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "One-based rank under the default node display policy.",
+          "name": "default_node_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Documented maximum nodes displayed by default per view.",
+          "name": "default_node_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Statement that coordinates are source-provided and never imputed.",
+          "name": "coordinate_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual institution metrics for nodes with source-provided coordinates.",
+      "known_data_quality_issue": "Absence means unavailable sourced coordinates, not an absent institution.",
+      "path": "dashboard/data/map_nodes.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "institution_id"
+      ],
+      "row_count": 890,
+      "sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96",
+      "source_manifest": ".agent/manifests/map_nodes_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json"
+      ],
+      "source_versions": {
+        "map_data_policy": "geographic-map-data-2026-08-05-v1"
+      },
+      "table": "map_nodes",
+      "transformation_command": "python -m gisnet.cli build-map-data --resume"
+    },
+    {
+      "code_commit": "a2ab7184c141",
+      "column_count": 16,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Matrix level: macro_region, subregion, or country.",
+          "name": "geographic_level",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable first endpoint label of the undirected geographic cell.",
+          "name": "source_geography",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable second endpoint label of the undirected geographic cell.",
+          "name": "target_geography",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct source Work identifiers contributing to the row.",
+          "name": "distinct_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct source institution pairs contributing to the row.",
+          "name": "distinct_institution_pair_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Deterministic bounded sample of contributing source Work identifiers.",
+          "name": "work_ids_sample",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Fractional cell weight divided by the applicable annual total.",
+          "name": "normalized_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stable display order for the source geography.",
+          "name": "source_order",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stable display order for the target geography.",
+          "name": "target_order",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Explicit observed/missing semantic label for the matrix cell.",
+          "name": "cell_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Statement defining an absent sparse matrix row.",
+          "name": "absent_cell_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Sparse macro-region, subregion, and country collaboration matrix cells.",
+      "known_data_quality_issue": "An absent row is missing/no observed flow, never an imputed zero.",
+      "path": "dashboard/data/matrix.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "geographic_level",
+        "source_geography",
+        "target_geography"
+      ],
+      "row_count": 97762,
+      "sha256": "9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77",
+      "source_manifest": ".agent/manifests/collaboration_matrix_year.json",
+      "source_manifests": [
+        ".agent/manifests/region_flows_year.json"
+      ],
+      "source_versions": {
+        "matrix_policy": "region-collaboration-matrix-2026-08-05-v1"
+      },
+      "table": "matrix",
+      "transformation_command": "python -m gisnet.cli build-matrix --resume"
+    },
+    {
+      "code_commit": "30b845728146",
+      "column_count": 13,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of nodes in the annual graph or public view.",
+          "name": "node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Display name of the highest fractional-strength node in the view.",
+          "name": "top_institution",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Fractional strength of the reported top institution.",
+          "name": "top_fractional_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Nodes with annual degree zero.",
+          "name": "isolated_node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of undirected edges in the annual graph or public view.",
+          "name": "edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Edges joining institutions in different macro-regions.",
+          "name": "cross_region_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Lowest fractional weight among displayed edges.",
+          "name": "visible_minimum_fractional_weight",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Generated plain-language accessibility summary for the annual view.",
+          "name": "summary_text",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Statement that coordinates are source-provided and never imputed.",
+          "name": "coordinate_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Documented maximum edges displayed by default per view.",
+          "name": "default_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Plain-language annual summaries and visible network thresholds.",
+      "known_data_quality_issue": "Counts describe the fixed-layout public view, not every raw affiliation.",
+      "path": "dashboard/data/network_accessibility.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view"
+      ],
+      "row_count": 64,
+      "sha256": "b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b",
+      "source_manifest": ".agent/manifests/network_accessibility_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/network_layout.json"
+      ],
+      "source_versions": {
+        "network_view_policy": "fixed-layout-network-view-2026-08-05-v1"
+      },
+      "table": "network_accessibility",
+      "transformation_command": "python -m gisnet.cli build-network-view --resume"
+    },
+    {
+      "code_commit": "30b845728146",
+      "column_count": 44,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "name": "source_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "name": "target_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: institution display name for an undirected edge endpoint.",
+          "name": "source_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: institution display name for an undirected edge endpoint.",
+          "name": "target_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "source_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "target_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "source_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "target_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen country name for an undirected edge endpoint.",
+          "name": "source_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen country name for an undirected edge endpoint.",
+          "name": "target_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "source_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "target_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct source Work identifiers contributing to the row.",
+          "name": "distinct_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Contributing Works at or above the consortium warning size.",
+          "name": "large_consortium_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Contributing Works excluded by the configured size policy.",
+          "name": "excluded_threshold_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Largest distinct-institution count among contributing Works.",
+          "name": "maximum_consortium_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Sorted distinct configured Topic families observed on contributing Works.",
+          "name": "topic_families",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Deterministic bounded sample of contributing source Work identifiers.",
+          "name": "work_ids_sample",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Number of distinct Topic families contributing to the row.",
+          "name": "distinct_topic_family_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Active years in the fixed-denominator trailing three-year window.",
+          "name": "active_years_3y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int8"
+        },
+        {
+          "description": "Active years in the fixed-denominator trailing five-year window.",
+          "name": "active_years_5y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int8"
+        },
+        {
+          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "source_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "target_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight divided by geometric-mean institutional output.",
+          "name": "normalized_intensity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Active-year share in the trailing three-year window.",
+          "name": "persistence_3y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Active-year share in the trailing five-year window.",
+          "name": "persistence_5y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "True before a complete three-year history is available.",
+          "name": "persistence_3y_incomplete_window",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "True before a complete five-year history is available.",
+          "name": "persistence_5y_incomplete_window",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Non-primary composite used only to rank edges for display.",
+          "name": "visualization_score",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Always false; guards against scientific interpretation.",
+          "name": "visualization_score_is_primary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Stored description of the display-ranking calculation.",
+          "name": "visualization_score_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: seeded aggregate-layout horizontal coordinate reused across years.",
+          "name": "source_x",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Source endpoint value: seeded aggregate-layout vertical coordinate reused across years.",
+          "name": "source_y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Target endpoint value: seeded aggregate-layout horizontal coordinate reused across years.",
+          "name": "target_x",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Target endpoint value: seeded aggregate-layout vertical coordinate reused across years.",
+          "name": "target_y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "One-based rank under the default edge display policy.",
+          "name": "default_edge_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Documented maximum edges displayed by default per view.",
+          "name": "default_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored description of the default edge-width field.",
+          "name": "edge_width_encoding",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored description of the default edge-color field.",
+          "name": "edge_color_encoding",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Top fixed-layout core edges with weights, persistence, details, and coordinates.",
+      "known_data_quality_issue": "Limited to the top 1,000 edges per view by a non-primary display score.",
+      "path": "dashboard/data/network_edges.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_id",
+        "target_id"
+      ],
+      "row_count": 64000,
+      "sha256": "df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c",
+      "source_manifest": ".agent/manifests/network_view_edges_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/network_layout.json"
+      ],
+      "source_versions": {
+        "network_view_policy": "fixed-layout-network-view-2026-08-05-v1"
+      },
+      "table": "network_edges",
+      "transformation_command": "python -m gisnet.cli build-network-view --resume"
+    },
+    {
+      "code_commit": "30b845728146",
+      "column_count": 42,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable source institution identifier used as the node key.",
+          "name": "institution_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-linked Research Organization Registry identifier, when available.",
+          "name": "ror_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source country code associated with the institution.",
+          "name": "country_code",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen country or territory display name.",
+          "name": "country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style subregion analytical grouping.",
+          "name": "subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Configured analytical category for the source institution type.",
+          "name": "institution_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the row is in focal or retained contextual geographic scope.",
+          "name": "analytical_scope",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided institution latitude; never imputed.",
+          "name": "latitude",
+          "null_count": 31102,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided institution longitude; never imputed.",
+          "name": "longitude",
+          "null_count": 31102,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Distinct primary-corpus Works affiliated with the institution.",
+          "name": "work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institutional Work output under the stored fractional allocation.",
+          "name": "fractional_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Distinct Works containing more than one institution.",
+          "name": "collaborative_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works containing only this institution.",
+          "name": "single_institution_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works with institutions from multiple countries.",
+          "name": "international_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct Works with institutions from multiple macro-regions.",
+          "name": "cross_region_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "International Works divided by collaborative Works.",
+          "name": "international_collaboration_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Cross-region Works divided by collaborative Works.",
+          "name": "cross_region_collaboration_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct institutional partners in the annual graph.",
+          "name": "degree",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Sum of incident full-count collaboration edge weights.",
+          "name": "full_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Sum of incident fractional collaboration edge weights.",
+          "name": "fractional_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored weighted betweenness centrality under the disclosed method.",
+          "name": "betweenness",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Exact or cutoff weighted shortest-path method used for betweenness.",
+          "name": "betweenness_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of graph vertices included by the betweenness method.",
+          "name": "betweenness_sample_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Maximum path length for approximated betweenness; null when exact.",
+          "name": "betweenness_cutoff",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Deterministic random seed recorded for the centrality computation.",
+          "name": "betweenness_seed",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Weighted PageRank centrality normalized within the annual graph.",
+          "name": "pagerank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Documented cross-community/cross-region bridging indicator.",
+          "name": "bridge_score",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct partner countries.",
+          "name": "partner_country_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of distinct partner macro-regions.",
+          "name": "partner_region_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Seeded aggregate-layout horizontal coordinate reused across years.",
+          "name": "x",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Seeded aggregate-layout vertical coordinate reused across years.",
+          "name": "y",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Rank in the full-period aggregate visualization core.",
+          "name": "core_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Stable annual primary-resolution community label; isolates are explicit.",
+          "name": "community_id",
+          "null_count": 188,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Number of nodes assigned to the labelled annual community.",
+          "name": "community_size",
+          "null_count": 188,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "int64"
+        },
+        {
+          "description": "Stored description of the default node-size field.",
+          "name": "node_size_encoding",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored description of the default node-color field.",
+          "name": "node_color_encoding",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored description of the fixed node-coordinate encoding.",
+          "name": "coordinate_encoding",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Fixed-coordinate annual core-node metrics and primary communities.",
+      "known_data_quality_issue": "The public visualization core is thresholded to 500 aggregate nodes.",
+      "path": "dashboard/data/network_nodes.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "institution_id"
+      ],
+      "row_count": 31486,
+      "sha256": "1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b",
+      "source_manifest": ".agent/manifests/network_view_nodes_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/network_layout.json"
+      ],
+      "source_versions": {
+        "network_view_policy": "fixed-layout-network-view-2026-08-05-v1"
+      },
+      "table": "network_nodes",
+      "transformation_command": "python -m gisnet.cli build-network-view --resume"
+    },
+    {
+      "code_commit": "a4b38b01c735",
+      "column_count": 13,
+      "columns": [
+        {
+          "description": "Stable sensitivity-comparison identifier.",
+          "name": "comparison_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Human-readable sensitivity question.",
+          "name": "comparison",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Metric compared between the baseline and alternative.",
+          "name": "metric",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Label for the primary/baseline analytical choice.",
+          "name": "baseline_label",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Label for the alternative analytical choice.",
+          "name": "alternative_label",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Measured metric value under the baseline choice.",
+          "name": "baseline_value",
+          "null_count": 1,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Measured metric value under the alternative choice.",
+          "name": "alternative_value",
+          "null_count": 1,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Absolute alternative-minus-baseline metric difference.",
+          "name": "absolute_difference",
+          "null_count": 1,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Absolute difference divided by the baseline magnitude.",
+          "name": "absolute_relative_change",
+          "null_count": 1,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Whether change meets the documented major-change rule.",
+          "name": "major_change",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Stored threshold rule used to set major_change.",
+          "name": "major_change_rule",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Availability/completion state of the sensitivity comparison.",
+          "name": "status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Always false; alternatives never replace primary results.",
+          "name": "primary_result_overwritten",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Required alternative-definition comparisons and change flags.",
+      "known_data_quality_issue": "One reviewed-registry comparison is explicitly unavailable.",
+      "path": "dashboard/data/sensitivity.parquet",
+      "primary_key": [
+        "comparison_id"
+      ],
+      "row_count": 8,
+      "sha256": "eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257",
+      "source_manifest": ".agent/manifests/sensitivity_matrix.json",
+      "source_manifests": [
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/edges_year.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/work_corpus.json"
+      ],
+      "source_versions": {
+        "sensitivity_policy": "required-sensitivity-matrix-2026-08-05-v1"
+      },
+      "table": "sensitivity",
+      "transformation_command": "python -m gisnet.cli run-sensitivity --resume"
+    },
+    {
+      "code_commit": "30b845728146",
+      "column_count": 9,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Configured Topic-family label.",
+          "name": "topic_family",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of visible fixed-layout edges in the aggregate.",
+          "name": "visible_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Sum of edge-level distinct Work counts; not globally deduplicated.",
+          "name": "edge_work_count_sum",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Statement delimiting the public Topic aggregate coverage.",
+          "name": "coverage_note",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Topic-family aggregates derived from the visible fixed-layout edge core.",
+      "known_data_quality_issue": "Topic decisions are provisional and the table covers visible edges only.",
+      "path": "dashboard/data/topics.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "topic_family"
+      ],
+      "row_count": 826,
+      "sha256": "d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9",
+      "source_manifest": ".agent/manifests/network_view_edges_year.json",
+      "source_manifests": [
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/network_layout.json"
+      ],
+      "source_versions": {
+        "network_view_policy": "fixed-layout-network-view-2026-08-05-v1"
+      },
+      "table": "topics",
+      "transformation_command": "python -m gisnet.cli build-network-view --resume"
+    },
+    {
+      "code_commit": "148a236ad06f",
+      "column_count": 14,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "source_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "name": "target_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable unordered macro-region pair display label.",
+          "name": "region_pair",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "True when both geographic endpoints are the same macro-region.",
+          "name": "is_intra_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Fractional cell weight divided by the applicable annual total.",
+          "name": "normalized_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct source Work identifiers contributing to the row.",
+          "name": "distinct_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct source institution pairs contributing to the row.",
+          "name": "distinct_institution_pair_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Complete-year status label.",
+          "name": "year_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Human-readable statement of stored counting units.",
+          "name": "units_note",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual macro-region collaboration trend series for complete calendar years.",
+      "known_data_quality_issue": "The last included year is 2025; partial 2026 observations are excluded.",
+      "path": "dashboard/data/trends.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_region",
+        "target_region"
+      ],
+      "row_count": 384,
+      "sha256": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820",
+      "source_manifest": ".agent/manifests/trend_series_year.json",
+      "source_manifests": [
+        ".agent/manifests/region_flows_year.json",
+        ".agent/manifests/graph_metrics_year.json"
+      ],
+      "source_versions": {
+        "trend_figure_policy": "annual-region-trends-2026-08-05-v1"
+      },
+      "table": "trends",
+      "transformation_command": "python -m gisnet.cli build-figures --resume"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "column_entry_count": 271,
+  "dictionary_sha256": "794003169eec80ba06e61dcee4f8a7b7461c9ecec29791a07ead3007fa6dd36b",
+  "documented_table_count": 11,
+  "generated_at_utc": "2026-08-05T23:22:22.022810Z",
+  "logical_input_hash": "89eafceb6936f9ea61fc3c08c9fa790d761cf5ab284a8823d4e0517a51b1b03e",
+  "outputs": {
+    "machine_readable_dictionary": "data/reference/data_dictionary.json",
+    "provenance_report": "outputs/reports/data_dictionary.md"
+  },
+  "private_path_or_key_count": 0,
+  "released_table_count": 11,
+  "report_sha256": "e077acba01c920552c538d373811f332c4a1f407eca179bcbe174af193e511b9",
+  "schema_version": 1,
+  "stage_version": "public-data-dictionary-2026-08-05-v1",
+  "tables_with_known_issue_notes": 11,
+  "tables_with_primary_keys": 11,
+  "tables_with_source_manifests": 11
+}

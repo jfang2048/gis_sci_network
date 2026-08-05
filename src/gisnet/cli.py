@@ -83,6 +83,10 @@ from gisnet.openalex.planner import (
     write_query_plan,
 )
 from gisnet.pipeline import DEFAULT_STAGES, run_pipeline, write_pipeline_artifact
+from gisnet.reporting.data_dictionary import (
+    build_public_data_dictionary,
+    write_data_dictionary_artifacts,
+)
 from gisnet.reporting.methodology import build_methodology_report, write_methodology_artifacts
 from gisnet.ror.enrich import enrich_institutions_with_ror, write_ror_artifacts
 from gisnet.secrets import get_openalex_api_key
@@ -815,6 +819,22 @@ def build_parser() -> argparse.ArgumentParser:
         "--summary", default="data/reference/methodology_report_summary.json", type=Path
     )
     report.set_defaults(handler=_build_methodology_report)
+
+    dictionary = subparsers.add_parser(
+        "build-data-dictionary",
+        help="document every public table column and its manifest provenance",
+    )
+    _add_pipeline_arguments(dictionary)
+    dictionary.add_argument("--data-directory", default="dashboard/data", type=Path)
+    dictionary.add_argument("--metadata", default="dashboard/data/metadata.json", type=Path)
+    dictionary.add_argument(
+        "--dictionary", default="data/reference/data_dictionary.json", type=Path
+    )
+    dictionary.add_argument("--report", default="outputs/reports/data_dictionary.md", type=Path)
+    dictionary.add_argument(
+        "--summary", default="data/reference/data_dictionary_summary.json", type=Path
+    )
+    dictionary.set_defaults(handler=_build_data_dictionary)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2675,6 +2695,45 @@ def _build_methodology_report(args: argparse.Namespace) -> int:
     print(
         f"Generated {summary['present_section_count']} methodology sections and "
         f"validated {summary['figure_count']} processed-data figures."
+    )
+    return 0
+
+
+def _build_data_dictionary(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would document every public table in {args.data_directory}.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    command = "python -m gisnet.cli build-data-dictionary --resume"
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-101"):
+            summary = build_public_data_dictionary(
+                data_directory=args.data_directory,
+                metadata_path=args.metadata,
+                output_json=args.dictionary,
+                output_markdown=args.report,
+            )
+            write_data_dictionary_artifacts(
+                summary,
+                summary_path=args.summary,
+                dictionary_path=args.dictionary,
+                report_path=args.report,
+                run_id=run_id,
+                project_path=args.config,
+                command=command,
+            )
+            for name in (
+                "public_data_dictionary",
+                "data_provenance_report",
+                "data_dictionary_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        print(f"Data dictionary failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Documented {summary['documented_table_count']} released tables and "
+        f"{summary['column_entry_count']} table-column entries."
     )
     return 0
 
