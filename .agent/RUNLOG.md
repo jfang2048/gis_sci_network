@@ -1452,3 +1452,37 @@ global filters, explicit limitations, integrity metadata, and a one-command loca
 ### Exact next action
 
 Task: GISNET-102 — Create end-to-end pipeline command.
+
+
+## Run 20260805T230723Z_9b794d2fe028
+
+Started UTC: 2026-08-05T23:07:23Z
+Ended UTC: 2026-08-05T23:12:20Z
+Task: GISNET-102
+Initial git status: Clean on `main` at `9b794d2` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Create a single resumable command that validates and builds every required stage, selectively
+rebuilds stale branches, stops safely, and never deletes valid raw data.
+
+### Work completed
+
+- Added a 35-stage manifest-aware orchestrator covering source definition through dashboard data.
+- Validates output hashes, configuration hashes, source-manifest ordering, and dashboard bundle hashes.
+- Skips valid stages, rebuilds only stale dependency branches, and always resumes raw downloads.
+- Stops on the first failed/unvalidated stage and prints an exact `--resume` recovery command.
+- Records a validated pipeline summary without deleting any valid raw page.
+
+### Validation results
+
+- Repeated complete run validated and skipped all 35 stages; unnecessary stage executions: 0.
+- End-to-end validation runtime: 1.34 seconds; peak RSS about 119 MiB; no swap.
+- Unit tests cover changed outputs/configs, newer dependencies, dry runs, forced derived rebuilds,
+  download resume/no-force behavior, safe failure, and exact recovery output.
+- Ruff format/check passed; strict mypy passed; pytest passed (102 tests).
+
+### Exact next action
+
+Task: GISNET-103 — Add CI and local quality gate.

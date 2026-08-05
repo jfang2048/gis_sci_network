@@ -76,10 +76,16 @@ uv run python -m gisnet.cli build-matrix --resume
 uv run python -m gisnet.cli build-map-data --resume
 uv run python -m gisnet.cli build-network-view --resume
 uv run python -m gisnet.cli build-dashboard-data --resume
+uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
 quality gates unless explicitly selected.
+
+The end-to-end command validates every output and provenance manifest before deciding
+whether to skip or rebuild a stage. Incomplete downloads always resume, stale derived
+branches rebuild in dependency order, valid raw pages are never deleted, and a failure
+prints the exact recovery command.
 
 ## View the dashboard
 

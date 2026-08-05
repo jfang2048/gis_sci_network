@@ -82,6 +82,7 @@ from gisnet.openalex.planner import (
     validate_query_plan,
     write_query_plan,
 )
+from gisnet.pipeline import DEFAULT_STAGES, run_pipeline, write_pipeline_artifact
 from gisnet.ror.enrich import enrich_institutions_with_ror, write_ror_artifacts
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
@@ -108,7 +109,6 @@ from gisnet.visualization.trends import build_annual_trends, write_trend_artifac
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "match-communities",
-    "run-pipeline",
     "report",
 )
 
@@ -798,6 +798,13 @@ def build_parser() -> argparse.ArgumentParser:
     dashboard_data.add_argument("--duckdb-memory-limit", default="4GB")
     dashboard_data.add_argument("--duckdb-threads", default=1, type=int)
     dashboard_data.set_defaults(handler=_build_dashboard_data)
+
+    pipeline = subparsers.add_parser(
+        "run-pipeline", help="validate and resume the complete manifest-aware pipeline"
+    )
+    _add_pipeline_arguments(pipeline)
+    pipeline.add_argument("--output", default="data/reference/pipeline_run_summary.json", type=Path)
+    pipeline.set_defaults(handler=_run_pipeline)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2567,6 +2574,58 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['table_count']} dashboard tables with {summary['row_count']} rows; "
         "ordinary viewing makes zero API requests."
+    )
+    return 0
+
+
+def _run_pipeline(args: argparse.Namespace) -> int:
+    run_id = _resolve_run_id(args.run_id)
+    config = load_project_config(args.config)
+    start_year = args.start_year or config.analysis.start_year
+    end_year = args.end_year or config.analysis.end_year
+    summary = run_pipeline(
+        stages=DEFAULT_STAGES,
+        runner=main,
+        run_id=run_id,
+        config_path=args.config,
+        start_year=start_year,
+        end_year=end_year,
+        corpus=args.corpus,
+        hierarchy=args.hierarchy,
+        resume=args.resume,
+        force=args.force,
+        dry_run=args.dry_run,
+    )
+    for stage in summary["stages"]:
+        print(f"{stage['status']}: {stage['stage']} ({stage['reason']})")
+    if args.dry_run:
+        return 0
+    command = (
+        "python -m gisnet.cli run-pipeline "
+        f"--start-year {start_year} --end-year {end_year} "
+        f"--corpus {args.corpus} --hierarchy {args.hierarchy} --resume"
+    )
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-102"):
+            write_pipeline_artifact(
+                summary,
+                path=args.output,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            _register_manifest("pipeline_run_summary", ".agent/manifests/pipeline_run_summary.json")
+    except (OSError, ValueError) as exc:
+        print(f"Pipeline summary write failed safely: {exc}", file=sys.stderr)
+        return 3
+    if not summary["success"]:
+        print(f"Pipeline stopped safely at {summary['failed_stage']}.", file=sys.stderr)
+        print(f"Next recovery command: {summary['recovery_command']}", file=sys.stderr)
+        return 3
+    counts = summary["status_counts"]
+    print(
+        f"Pipeline complete: {counts.get('skipped_valid', 0)} valid stages skipped; "
+        f"{sum(value for key, value in counts.items() if key != 'skipped_valid')} stages executed."
     )
     return 0
 

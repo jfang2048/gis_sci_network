@@ -46,7 +46,8 @@
     "GISNET-091",
     "GISNET-092",
     "GISNET-093",
-    "GISNET-095"
+    "GISNET-095",
+    "GISNET-102"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -114,6 +115,7 @@
     "network_view_nodes_year": ".agent/manifests/network_view_nodes_year.json",
     "network_view_summary": ".agent/manifests/network_view_summary.json",
     "nodes_year": ".agent/manifests/nodes_year.json",
+    "pipeline_run_summary": ".agent/manifests/pipeline_run_summary.json",
     "raw_works_download_status": ".agent/manifests/raw_works_download_status.json",
     "region_flow_reconciliation": ".agent/manifests/region_flow_reconciliation.json",
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
@@ -148,8 +150,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T225409Z_7d66d92f0419",
-  "last_updated_utc": "2026-08-05T23:04:33Z",
+  "last_successful_run_id": "20260805T230723Z_9b794d2fe028",
+  "last_updated_utc": "2026-08-05T23:12:20Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
