@@ -1107,3 +1107,39 @@ filters, lightweight serialization, and retained output-producing isolates.
 ### Exact next action
 
 Task: GISNET-071 — Compute node and graph metrics.
+
+
+## Run 20260805T220601Z_0994927dc1b8
+
+Started UTC: 2026-08-05T22:06:01Z
+Ended UTC: 2026-08-05T22:21:26Z
+Task: GISNET-071
+Initial git status: Clean on `main` at `0994927` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Compute required node centrality and annual graph metrics with a deterministic, documented
+large-graph betweenness fallback.
+
+### Work completed
+
+- Added degree, full/fractional strength, PageRank, weighted betweenness, bridge score, and partner diversity.
+- Added density, component structure, modularity, assortativity, cross-region shares, and edge churn.
+- Used exact weighted betweenness through 10,000 nodes and deterministic cutoff-3 weighted paths above it.
+- Added igraph as the graph-analysis dependency and stored method, sample, cutoff, and seed metadata.
+
+### Validation results
+
+- Node metric rows: 501,890; graph metric rows: 64; approximate graphs: 18.
+- PageRank maximum annual-sum error: `3.48e-14`; metric range violations: 0.
+- Density range: `0.000949` to `0.001587`; modularity range: `0.5845` to `0.7589`.
+- Node output SHA-256: `d9b30a025c8d160a215428a4f487ad32c12cc3a6e7e5fc62bfa4560b908d425c`.
+- Graph output SHA-256: `81fbb254c3a53c8fc51315705c27c3fd6d6b347b382801cd0f0f6977e3ae5295`.
+- Runtime 7m27s; peak RSS about 639 MiB.
+- An initial atomic run exposed exact/approx cutoff schema mismatch; no incomplete output survived, and a mixed-mode regression test now covers it.
+- Ruff format/check passed; strict mypy passed; pytest passed (88 tests).
+
+### Exact next action
+
+Task: GISNET-072 — Detect annual communities.

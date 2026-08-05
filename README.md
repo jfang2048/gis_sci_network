@@ -66,6 +66,7 @@ uv run python -m gisnet.cli validate
 uv run python -m gisnet.cli verify-reproducibility
 uv run python -m gisnet.cli compute-edge-intensity --resume
 uv run python -m gisnet.cli build-graphs --resume
+uv run python -m gisnet.cli compute-metrics --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

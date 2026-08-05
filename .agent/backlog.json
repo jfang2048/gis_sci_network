@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T22:05:24Z",
+  "last_updated_utc": "2026-08-05T22:21:26Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -878,12 +878,27 @@
       "dependencies": [
         "GISNET-070"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T22:06:02Z",
+          "from": "TODO",
+          "reason": "Computing required node centrality and annual graph metrics with deterministic large-graph fallback metadata.",
+          "run_id": "20260805T220601Z_0994927dc1b8",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:21:26Z",
+          "from": "IN_PROGRESS",
+          "reason": "Synthetic and real-data node/graph metric range, join, fallback, and reconciliation checks passed.",
+          "run_id": "20260805T220601Z_0994927dc1b8",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-071",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Synthetic and real-data node/graph metric range, join, fallback, and reconciliation checks passed.",
+      "status_updated_at_utc": "2026-08-05T22:21:26Z"
     },
     {
       "dependencies": [

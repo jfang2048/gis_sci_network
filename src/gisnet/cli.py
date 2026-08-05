@@ -54,6 +54,7 @@ from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
 from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_artifacts
 from gisnet.network.intensity import build_edge_intensity, write_intensity_artifacts
+from gisnet.network.metrics import build_network_metrics, write_metric_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
@@ -97,7 +98,6 @@ from gisnet.validation.reproducibility import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "compute-metrics",
     "detect-communities",
     "match-communities",
     "build-figures",
@@ -572,6 +572,27 @@ def build_parser() -> argparse.ArgumentParser:
     graphs.add_argument("--duckdb-memory-limit", default="4GB")
     graphs.add_argument("--duckdb-threads", default=1, type=int)
     graphs.set_defaults(handler=_build_graphs)
+
+    metrics = subparsers.add_parser(
+        "compute-metrics", help="compute annual node centrality and graph metrics"
+    )
+    _add_pipeline_arguments(metrics)
+    metrics.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    metrics.add_argument(
+        "--institution-outputs",
+        default="data/processed/institution_outputs_year.parquet",
+        type=Path,
+    )
+    metrics.add_argument("--nodes-output", default="data/processed/nodes_year.parquet", type=Path)
+    metrics.add_argument(
+        "--graphs-output", default="data/processed/graph_metrics_year.parquet", type=Path
+    )
+    metrics.add_argument(
+        "--summary", default="data/reference/network_metrics_summary.json", type=Path
+    )
+    metrics.add_argument("--duckdb-memory-limit", default="4GB")
+    metrics.add_argument("--duckdb-threads", default=1, type=int)
+    metrics.set_defaults(handler=_compute_metrics)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1916,6 +1937,53 @@ def _build_graphs(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['graph_count']} annual graph catalogues with "
         f"{summary['isolated_output_node_count']} retained isolated node observations."
+    )
+    return 0
+
+
+def _compute_metrics(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Metric configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would compute annual network metrics from {args.edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-071"):
+            summary = build_network_metrics(
+                args.edges,
+                args.institution_outputs,
+                nodes_metrics_path=args.nodes_output,
+                graph_metrics_path=args.graphs_output,
+                approximate_betweenness_threshold=(
+                    project.network.approximate_betweenness_threshold
+                ),
+                random_seed=project.random_seed,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli compute-metrics "
+                f"--edges {args.edges} --institution-outputs {args.institution_outputs} --resume"
+            )
+            write_metric_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("nodes_year", "graph_metrics_year", "network_metrics_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Network metric computation failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Computed {summary['node_metric_row_count']} node-year and "
+        f"{summary['graph_metric_row_count']} graph-year metric rows."
     )
     return 0
 

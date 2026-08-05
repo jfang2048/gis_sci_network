@@ -1,0 +1,17 @@
+{
+  "approximate_betweenness_graph_count": 18,
+  "generated_at_utc": "2026-08-05T22:20:47.602825Z",
+  "graph_metric_row_count": 64,
+  "large_graph_betweenness_method": "igraph weighted shortest paths with cutoff=3",
+  "large_graph_betweenness_sample_size": "all vertices; path length limited to 3",
+  "logical_input_hash": "3d8b13e0981dfd0ab99c735aec2a8c96661dc66e3bc59f91a1f3c497d20711e5",
+  "maximum_pagerank_sum_error": 3.47499806707674e-14,
+  "node_metric_row_count": 501890,
+  "outputs": {
+    "graph_metrics_year": "data/processed/graph_metrics_year.parquet",
+    "nodes_year": "data/processed/nodes_year.parquet"
+  },
+  "random_seed": 20250805,
+  "schema_version": 1,
+  "stage_version": "network-metrics-2026-08-05-v1"
+}

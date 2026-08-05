@@ -13,6 +13,7 @@ authors = [{ name = "GIS Collaboration Network contributors" }]
 dependencies = [
   "duckdb>=1.2,<2",
   "httpx>=0.27,<1",
+  "igraph>=0.11,<2",
   "pyarrow>=18,<22",
   "pydantic>=2.8,<3",
   "pydantic-settings>=2.4,<3",
