@@ -98,6 +98,7 @@ from gisnet.validation.reproducibility import (
     verify_reproducibility,
     write_reproducibility_artifact,
 )
+from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
 
 _NOT_IMPLEMENTED_COMMANDS = (
@@ -662,6 +663,30 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--duckdb-memory-limit", default="4GB")
     audit.add_argument("--duckdb-threads", default=1, type=int)
     audit.set_defaults(handler=_audit_top_entities)
+
+    sensitivity = subparsers.add_parser(
+        "run-sensitivity", help="run the required eight-comparison sensitivity matrix"
+    )
+    _add_pipeline_arguments(sensitivity)
+    sensitivity.add_argument(
+        "--graph-metrics", default="data/processed/graph_metrics_year.parquet", type=Path
+    )
+    sensitivity.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    sensitivity.add_argument("--work-edges", default="data/processed/work_edges.parquet", type=Path)
+    sensitivity.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    sensitivity.add_argument(
+        "--work-corpus", default="data/processed/work_corpus.parquet", type=Path
+    )
+    sensitivity.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
+    sensitivity.add_argument(
+        "--output", default="data/processed/sensitivity_matrix.parquet", type=Path
+    )
+    sensitivity.add_argument(
+        "--summary", default="data/reference/sensitivity_summary.json", type=Path
+    )
+    sensitivity.add_argument("--duckdb-memory-limit", default="4GB")
+    sensitivity.add_argument("--duckdb-threads", default=1, type=int)
+    sensitivity.set_defaults(handler=_run_sensitivity)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2189,6 +2214,47 @@ def _audit_top_entities(args: argparse.Namespace) -> int:
     print(
         f"Audited {summary['institution_audit_row_count']} institutions and "
         f"{summary['edge_audit_row_count']} cross-region edges."
+    )
+    return 0
+
+
+def _run_sensitivity(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(
+            f"Would build the sensitivity matrix from {args.graph_metrics}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-082"):
+            summary = build_sensitivity_matrix(
+                args.graph_metrics,
+                args.edges,
+                args.work_edges,
+                args.nodes,
+                args.work_corpus,
+                args.topic_registry,
+                output_path=args.output,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli run-sensitivity --resume"
+            write_sensitivity_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("sensitivity_matrix", "sensitivity_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Sensitivity matrix failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Completed {summary['completed_comparison_count']} of "
+        f"{summary['comparison_count']} sensitivity comparisons; "
+        f"major changes={summary['major_change_count']}."
     )
     return 0
 

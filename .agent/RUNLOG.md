@@ -1246,3 +1246,36 @@ canonicalization provenance without altering raw or canonical data.
 ### Exact next action
 
 Task: GISNET-082 — Run required sensitivity matrix.
+
+
+## Run 20260805T223245Z_a4b38b01c735
+
+Started UTC: 2026-08-05T22:32:45Z
+Ended UTC: 2026-08-05T22:35:05Z
+Task: GISNET-082
+Initial git status: Clean on `main` at `a4b38b0` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Run all eight required sensitivity comparisons, store machine-readable results, highlight material
+changes, and never overwrite a primary scientific output.
+
+### Work completed
+
+- Compared corpus, counting method, hierarchy, annual/rolling windows, consortium policy, institution scope, and preprint policy.
+- Recorded the reviewed-Topic-registry comparison as unavailable because no human-reviewed registry exists.
+- Applied a documented 20% absolute-relative-change flag and retained all alternatives separately.
+
+### Validation results
+
+- Required comparisons represented: 8; completed: 7; explicitly unavailable: 1.
+- Major-change flags: 3 (corpus boundary, counting units, and annual versus rolling window).
+- Primary results overwritten: 0.
+- Sensitivity matrix SHA-256: `b2f8f59bbe44bf3f26e4b552455cf90761dbeb643829586cd30cc8b341b46f7d`.
+- Runtime 1.30 seconds; peak RSS about 465 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (92 tests).
+
+### Exact next action
+
+Task: GISNET-090 — Build annual trend figures.

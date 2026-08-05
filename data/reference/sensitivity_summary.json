@@ -1,0 +1,15 @@
+{
+  "comparison_count": 8,
+  "completed_comparison_count": 7,
+  "generated_at_utc": "2026-08-05T22:34:33.113778Z",
+  "logical_input_hash": "72521029a487aeecd8b0ed1d65f4c247c0b13f97a21bd63678781ad929e0a59b",
+  "major_change_count": 3,
+  "major_change_threshold": 0.2,
+  "outputs": {
+    "sensitivity_matrix": "data/processed/sensitivity_matrix.parquet"
+  },
+  "primary_result_overwritten": false,
+  "schema_version": 1,
+  "stage_version": "required-sensitivity-matrix-2026-08-05-v1",
+  "unavailable_comparison_count": 1
+}
