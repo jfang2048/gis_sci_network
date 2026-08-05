@@ -13,6 +13,7 @@ import duckdb
 from pydantic import ValidationError
 
 from gisnet.config import config_file_hash, load_project_config, load_yaml
+from gisnet.corpus.build import build_work_corpus, write_corpus_artifacts
 from gisnet.corpus.normalize import normalize_raw_works, write_normalization_artifacts
 from gisnet.corpus.topics import (
     discover_candidate_topics,
@@ -82,7 +83,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "build-corpus",
     "build-edges",
     "compute-metrics",
     "build-region-flows",
@@ -385,6 +385,35 @@ def build_parser() -> argparse.ArgumentParser:
     diagnose_versions.add_argument("--duckdb-memory-limit", default="4GB")
     diagnose_versions.add_argument("--duckdb-threads", default=1, type=int)
     diagnose_versions.set_defaults(handler=_diagnose_versions)
+
+    build_corpus = subparsers.add_parser(
+        "build-corpus", help="materialize Strict, Broad, and sensitivity Work memberships"
+    )
+    _add_pipeline_arguments(build_corpus)
+    build_corpus.add_argument("--works", default="data/processed/works.parquet", type=Path)
+    build_corpus.add_argument(
+        "--work-topics", default="data/processed/work_topics.parquet", type=Path
+    )
+    build_corpus.add_argument(
+        "--versions", default="data/processed/work_version_diagnostics.parquet", type=Path
+    )
+    build_corpus.add_argument("--work-types", default="config/work_types.yml", type=Path)
+    build_corpus.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
+    build_corpus.add_argument("--output", default="data/processed/work_corpus.parquet", type=Path)
+    build_corpus.add_argument(
+        "--annual-counts", default="data/processed/corpus_annual_counts.parquet", type=Path
+    )
+    build_corpus.add_argument(
+        "--topic-family-counts",
+        default="data/processed/corpus_topic_family_counts.parquet",
+        type=Path,
+    )
+    build_corpus.add_argument(
+        "--summary", default="data/reference/work_corpus_summary.json", type=Path
+    )
+    build_corpus.add_argument("--duckdb-memory-limit", default="4GB")
+    build_corpus.add_argument("--duckdb-threads", default=1, type=int)
+    build_corpus.set_defaults(handler=_build_corpus)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1325,6 +1354,59 @@ def _diagnose_versions(args: argparse.Namespace) -> int:
         f"Diagnosed {summary['work_count']} Works; exact DOI families="
         f"{summary['exact_doi_family_count']}, ambiguous possible families="
         f"{summary['ambiguous_possible_family_count']}."
+    )
+    return 0
+
+
+def _build_corpus(args: argparse.Namespace) -> int:
+    try:
+        policy = load_work_type_policy(args.work_types)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Corpus policy failed validation: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would build Strict/Broad corpus flags for {args.works}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-060"):
+            summary = build_work_corpus(
+                args.works,
+                args.work_topics,
+                args.versions,
+                policy,
+                corpus_path=args.output,
+                annual_counts_path=args.annual_counts,
+                topic_family_counts_path=args.topic_family_counts,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-corpus "
+                f"--works {args.works} --work-topics {args.work_topics} --resume"
+            )
+            write_corpus_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                topic_registry_path=args.topic_registry,
+                work_type_path=args.work_types,
+                command=command,
+            )
+            for name in (
+                "work_corpus",
+                "corpus_annual_counts",
+                "corpus_topic_family_counts",
+                "work_corpus_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Corpus construction failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Corpus Works={summary['work_count']}; strict={summary['strict_primary_count']}, "
+        f"broad={summary['broad_primary_count']}."
     )
     return 0
 

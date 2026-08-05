@@ -57,6 +57,7 @@ uv run python -m gisnet.cli apply-geography --resume
 uv run python -m gisnet.cli enrich-institutions --ror-mode cache --resume
 uv run python -m gisnet.cli build-hierarchy --resume
 uv run python -m gisnet.cli diagnose-versions --resume
+uv run python -m gisnet.cli build-corpus --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

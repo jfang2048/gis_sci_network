@@ -790,3 +790,39 @@ duplicates and flagging title-only preprint/publication candidates as ambiguous 
 ### Exact next action
 
 Task: GISNET-060 — Build Strict and Broad work sets.
+
+## Run 20260805T211051Z_fcaa2412d46c
+
+Started UTC: 2026-08-05T21:10:51Z
+Ended UTC: 2026-08-05T21:14:32Z
+Task: GISNET-060
+Initial git status: Clean on `main` at `fcaa241` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Apply the frozen Topic and work-type policies to every normalized Work and materialize reconciled
+Strict, Broad, and sensitivity memberships with machine-readable exclusion reasons.
+
+### Work completed
+
+- Built per-Work Strict/Broad Topic, work-type, version-representative, and sensitivity flags.
+- Preserved every normalized Work and added separate Strict/Broad exclusion-reason arrays.
+- Added annual corpus counts and deduplicated annual Topic method-family counts.
+- Added primary, preprint, expanded, all-version, and uncertain-Topic sensitivity variants.
+
+### Validation results
+
+- Work rows preserved: 1,176,947 across complete years 2010–2025.
+- Strict primary: 190,205; Broad primary: 1,005,606; Strict-not-Broad errors: 0.
+- Strict/Broad excluded Works without a reason: 0 / 0.
+- Annual Strict and Broad counts reconcile exactly to Work flags.
+- Preprint sensitivity: Strict 199,960; Broad 1,044,196.
+- Expanded sensitivity: Strict 227,220; Broad 1,148,119.
+- Repeated outputs were byte-identical; peak RSS about 1.5 GB.
+- Main corpus SHA-256: `d850c15ff3c200260c286ef1824e270615b024fff3c96a037b60272b22474955`.
+- Ruff format/check passed; strict mypy passed; pytest passed (77 tests).
+
+### Exact next action
+
+Task: GISNET-061 — Build normalized work-institution tables.

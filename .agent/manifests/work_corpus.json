@@ -1,0 +1,64 @@
+{
+  "checksum_sha256": "d850c15ff3c200260c286ef1824e270615b024fff3c96a037b60272b22474955",
+  "column_count": 32,
+  "command": "python -m gisnet.cli build-corpus --works data/processed/works.parquet --work-topics data/processed/work_topics.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377",
+    "work_types": "c3f641eff35e4e90c1a24da98286422619e64ba692059479ff4338e078c573ff"
+  },
+  "created_at_utc": "2026-08-05T21:14:12.046792Z",
+  "dataset_name": "work_corpus",
+  "git_commit": "fcaa2412d46c",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "ambiguous_possible_family": 0,
+    "broad_all_versions_sensitivity": 0,
+    "broad_exclusion_reasons": 0,
+    "broad_expanded_sensitivity": 196,
+    "broad_preprint_sensitivity": 0,
+    "broad_primary": 0,
+    "doi": 112727,
+    "has_broad_topic": 0,
+    "has_strict_topic": 0,
+    "has_uncertain_topic": 0,
+    "is_paratext": 0,
+    "is_recommended_primary_representative": 0,
+    "is_retracted": 203,
+    "method_families": 0,
+    "primary_representative_work_id": 0,
+    "primary_topic_id": 0,
+    "primary_topic_name": 0,
+    "publication_date": 0,
+    "publication_year": 0,
+    "strict_all_versions_sensitivity": 0,
+    "strict_exclusion_reasons": 0,
+    "strict_expanded_sensitivity": 62,
+    "strict_preprint_sensitivity": 0,
+    "strict_primary": 0,
+    "title": 203,
+    "uncertain_topic_sensitivity": 0,
+    "version_family_id": 0,
+    "work_id": 0,
+    "work_type": 0,
+    "work_type_expanded_sensitivity": 0,
+    "work_type_preprint_sensitivity": 0,
+    "work_type_primary": 0
+  },
+  "primary_key": [
+    "work_id"
+  ],
+  "row_count": 1176947,
+  "run_id": "20260805T211051Z_fcaa2412d46c",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/works.json",
+    ".agent/manifests/work_topics.json",
+    ".agent/manifests/work_version_diagnostics.json"
+  ],
+  "source_versions": {
+    "corpus_policy": "work-corpus-membership-2026-08-05-v1"
+  },
+  "status": "valid"
+}

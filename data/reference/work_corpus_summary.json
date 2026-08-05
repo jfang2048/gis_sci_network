@@ -1,0 +1,21 @@
+{
+  "broad_expanded_sensitivity_count": 1148119,
+  "broad_missing_exclusion_reason_count": 0,
+  "broad_preprint_sensitivity_count": 1044196,
+  "broad_primary_count": 1005606,
+  "generated_at_utc": "2026-08-05T21:14:11.502191Z",
+  "logical_input_hash": "f4c79714289c3588fcae4dabf6f411bb477093263c790ac093b296e5ca85f37f",
+  "outputs": {
+    "corpus_annual_counts": "data/processed/corpus_annual_counts.parquet",
+    "corpus_topic_family_counts": "data/processed/corpus_topic_family_counts.parquet",
+    "work_corpus": "data/processed/work_corpus.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "work-corpus-membership-2026-08-05-v1",
+  "strict_expanded_sensitivity_count": 227220,
+  "strict_missing_exclusion_reason_count": 0,
+  "strict_not_broad_error_count": 0,
+  "strict_preprint_sensitivity_count": 199960,
+  "strict_primary_count": 190205,
+  "work_count": 1176947
+}

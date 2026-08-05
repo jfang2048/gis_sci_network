@@ -1,0 +1,47 @@
+{
+  "checksum_sha256": "89acfc20340607241591c44a20c8b859b8d76bd100ed91451776876ed0585f79",
+  "column_count": 15,
+  "command": "python -m gisnet.cli build-corpus --works data/processed/works.parquet --work-topics data/processed/work_topics.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377",
+    "work_types": "c3f641eff35e4e90c1a24da98286422619e64ba692059479ff4338e078c573ff"
+  },
+  "created_at_utc": "2026-08-05T21:14:11.550301Z",
+  "dataset_name": "work_corpus_summary",
+  "git_commit": "fcaa2412d46c",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "broad_expanded_sensitivity_count": 0,
+    "broad_missing_exclusion_reason_count": 0,
+    "broad_preprint_sensitivity_count": 0,
+    "broad_primary_count": 0,
+    "generated_at_utc": 0,
+    "logical_input_hash": 0,
+    "outputs": 0,
+    "schema_version": 0,
+    "stage_version": 0,
+    "strict_expanded_sensitivity_count": 0,
+    "strict_missing_exclusion_reason_count": 0,
+    "strict_not_broad_error_count": 0,
+    "strict_preprint_sensitivity_count": 0,
+    "strict_primary_count": 0,
+    "work_count": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260805T211051Z_fcaa2412d46c",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/works.json",
+    ".agent/manifests/work_topics.json",
+    ".agent/manifests/work_version_diagnostics.json"
+  ],
+  "source_versions": {
+    "corpus_policy": "work-corpus-membership-2026-08-05-v1"
+  },
+  "status": "valid"
+}
