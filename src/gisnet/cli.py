@@ -51,6 +51,7 @@ from gisnet.institutions.types import (
     write_institution_type_profile,
 )
 from gisnet.network.communities import build_annual_communities, write_community_artifacts
+from gisnet.network.continuity import build_community_continuity, write_continuity_artifacts
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
 from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_artifacts
@@ -112,7 +113,7 @@ from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix
 from gisnet.visualization.network_view import build_network_view, write_network_view_artifacts
 from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
-_NOT_IMPLEMENTED_COMMANDS = ("match-communities",)
+_NOT_IMPLEMENTED_COMMANDS: tuple[str, ...] = ()
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -622,6 +623,32 @@ def build_parser() -> argparse.ArgumentParser:
     communities.add_argument("--duckdb-memory-limit", default="4GB")
     communities.add_argument("--duckdb-threads", default=1, type=int)
     communities.set_defaults(handler=_detect_communities)
+
+    continuity = subparsers.add_parser(
+        "match-communities", help="match adjacent-year communities and assign continuity IDs"
+    )
+    _add_pipeline_arguments(continuity)
+    continuity.add_argument(
+        "--communities", default="data/processed/communities_year.parquet", type=Path
+    )
+    continuity.add_argument(
+        "--continuity-output",
+        default="data/processed/community_continuity_year.parquet",
+        type=Path,
+    )
+    continuity.add_argument(
+        "--transitions-output",
+        default="data/processed/community_transitions_year.parquet",
+        type=Path,
+    )
+    continuity.add_argument(
+        "--summary", default="data/reference/community_continuity_summary.json", type=Path
+    )
+    continuity.add_argument("--confident-match-threshold", default=0.25, type=float)
+    continuity.add_argument("--event-overlap-threshold", default=0.10, type=float)
+    continuity.add_argument("--duckdb-memory-limit", default="2GB")
+    continuity.add_argument("--duckdb-threads", default=1, type=int)
+    continuity.set_defaults(handler=_match_communities)
 
     layout = subparsers.add_parser(
         "build-layout", help="build one fixed aggregate network layout for all annual views"
@@ -2278,6 +2305,49 @@ def _detect_communities(args: argparse.Namespace) -> int:
     return 0
 
 
+def _match_communities(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would match adjacent-year communities from {args.communities}.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    command = "python -m gisnet.cli match-communities --resume"
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-073"):
+            summary = build_community_continuity(
+                args.communities,
+                continuity_output=args.continuity_output,
+                transitions_output=args.transitions_output,
+                confident_match_threshold=args.confident_match_threshold,
+                event_overlap_threshold=args.event_overlap_threshold,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            write_continuity_artifacts(
+                summary,
+                summary_path=args.summary,
+                continuity_path=args.continuity_output,
+                transitions_path=args.transitions_output,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "community_continuity_year",
+                "community_transitions_year",
+                "community_continuity_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Community continuity failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Matched {summary['selected_match_count']} adjacent-year communities; "
+        f"uncertain={summary['uncertain_match_count']}, "
+        f"transition rows={summary['transition_row_count']}."
+    )
+    return 0
+
+
 def _build_layout(args: argparse.Namespace) -> int:
     try:
         project = load_project_config(args.config)
@@ -2577,6 +2647,8 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "network_accessibility": "data/processed/network_accessibility_year.parquet",
         "graph_metrics": "data/processed/graph_metrics_year.parquet",
         "sensitivity": "data/processed/sensitivity_matrix.parquet",
+        "community_continuity": "data/processed/community_continuity_year.parquet",
+        "community_transitions": "data/processed/community_transitions_year.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

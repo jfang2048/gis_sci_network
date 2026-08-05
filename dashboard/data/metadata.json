@@ -1,18 +1,29 @@
 {
   "data_version": "gisnet-0.1.0-2026-08-05",
-  "generated_at_utc": "2026-08-05T23:00:56.857106Z",
+  "generated_at_utc": "2026-08-05T23:32:14.387203Z",
   "known_limitations": [
     "Institution coordinates are sparse and never imputed.",
     "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
     "The Topic registry is provisional and has not received human review.",
     "2025 is the last complete calendar year; no partial 2026 data are included.",
-    "Visualization score is non-primary and used only to rank visible edges."
+    "Visualization score is non-primary and used only to rank visible edges.",
+    "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-05-v1",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v2",
   "public_snapshot": true,
   "schema_version": 1,
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
   "tables": {
+    "community_continuity": {
+      "path": "dashboard/data/community_continuity.parquet",
+      "row_count": 11930,
+      "sha256": "bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f"
+    },
+    "community_transitions": {
+      "path": "dashboard/data/community_transitions.parquet",
+      "row_count": 51585,
+      "sha256": "101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec"
+    },
     "graph_metrics": {
       "path": "dashboard/data/graph_metrics.parquet",
       "row_count": 64,

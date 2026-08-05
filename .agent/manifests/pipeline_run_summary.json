@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "794cd58639ca66d737e6aefcf17cbc16bd3b97e528c317af127a8786bb5fa666",
+  "checksum_sha256": "be37535f26f42f00af38f6b5bb8cde92fc0050ded2c2b21e8245fbf8ff108c94",
   "column_count": 4,
   "command": "python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T23:11:11.191887Z",
+  "created_at_utc": "2026-08-05T23:32:24.504236Z",
   "dataset_name": "pipeline_run_summary",
-  "git_commit": "9b794d2fe028",
+  "git_commit": "b19cda5eed1e",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -19,8 +19,8 @@
   "primary_key": [
     "stage"
   ],
-  "row_count": 35,
-  "run_id": "20260805T230723Z_9b794d2fe028",
+  "row_count": 36,
+  "run_id": "20260805T232636Z_b19cda5eed1e",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/country_regions.json",
@@ -68,6 +68,8 @@
     ".agent/manifests/graph_metrics_year.json",
     ".agent/manifests/communities_year.json",
     ".agent/manifests/community_sensitivity_year.json",
+    ".agent/manifests/community_continuity_year.json",
+    ".agent/manifests/community_transitions_year.json",
     ".agent/manifests/network_layout.json",
     ".agent/manifests/top_institution_audit.json",
     ".agent/manifests/top_edge_audit.json",

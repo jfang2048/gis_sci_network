@@ -14,7 +14,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-05-v1"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-05-v2"
 
 
 def build_dashboard_bundle(
@@ -37,6 +37,8 @@ def build_dashboard_bundle(
         "network_accessibility",
         "graph_metrics",
         "sensitivity",
+        "community_continuity",
+        "community_transitions",
     }
     missing = required.difference(sources)
     if missing:
@@ -157,6 +159,22 @@ def build_dashboard_bundle(
             {"comparison_id", "comparison", "status", "major_change"},
             None,
         ),
+        "community_continuity": (
+            ["year", "corpus_view", "hierarchy_view", "annual_community_id"],
+            {"year", "annual_community_id", "continuity_id", "match_status"},
+            "year",
+        ),
+        "community_transitions": (
+            [
+                "transition_year",
+                "corpus_view",
+                "hierarchy_view",
+                "previous_community_key",
+                "current_community_key",
+            ],
+            {"transition_year", "event_type", "assignment_selected", "jaccard_overlap"},
+            "transition_year",
+        ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],
             {"year", "topic_family", "full_count", "fractional_count"},
@@ -194,6 +212,7 @@ def build_dashboard_bundle(
             "The Topic registry is provisional and has not received human review.",
             "2025 is the last complete calendar year; no partial 2026 data are included.",
             "Visualization score is non-primary and used only to rank visible edges.",
+            "Community continuity matches below Jaccard 0.25 are explicitly uncertain.",
         ],
     }
     _validate_public_metadata(payload)
@@ -257,6 +276,8 @@ def write_dashboard_artifact(
             ".agent/manifests/collaboration_matrix_year.json",
             ".agent/manifests/map_nodes_year.json",
             ".agent/manifests/network_view_nodes_year.json",
+            ".agent/manifests/community_continuity_year.json",
+            ".agent/manifests/community_transitions_year.json",
         ],
         command=command,
     )

@@ -50,7 +50,8 @@
     "GISNET-102",
     "GISNET-100",
     "GISNET-101",
-    "GISNET-103"
+    "GISNET-103",
+    "GISNET-073"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -73,8 +74,11 @@
     "collaboration_matrix_summary": ".agent/manifests/collaboration_matrix_summary.json",
     "collaboration_matrix_year": ".agent/manifests/collaboration_matrix_year.json",
     "communities_year": ".agent/manifests/communities_year.json",
+    "community_continuity_summary": ".agent/manifests/community_continuity_summary.json",
+    "community_continuity_year": ".agent/manifests/community_continuity_year.json",
     "community_detection_summary": ".agent/manifests/community_detection_summary.json",
     "community_sensitivity_year": ".agent/manifests/community_sensitivity_year.json",
+    "community_transitions_year": ".agent/manifests/community_transitions_year.json",
     "corpus_annual_counts": ".agent/manifests/corpus_annual_counts.json",
     "corpus_boundary_validation": ".agent/manifests/corpus_boundary_validation.json",
     "corpus_topic_family_counts": ".agent/manifests/corpus_topic_family_counts.json",
@@ -158,8 +162,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T232303Z_f4f2f835a9b4",
-  "last_updated_utc": "2026-08-05T23:24:14Z",
+  "last_successful_run_id": "20260805T232636Z_b19cda5eed1e",
+  "last_updated_utc": "2026-08-05T23:36:15Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

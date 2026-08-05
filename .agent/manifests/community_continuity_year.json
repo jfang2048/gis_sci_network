@@ -1,0 +1,44 @@
+{
+  "checksum_sha256": "93f64c0b4741b83457ebf5772dd9f4ca7cbe9ee25a7dd881f33033833a340d8e",
+  "column_count": 13,
+  "command": "python -m gisnet.cli match-communities --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T23:30:52.111914Z",
+  "dataset_name": "community_continuity_year",
+  "git_commit": "b19cda5eed1e",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "annual_community_id": 0,
+    "assignment_algorithm": 0,
+    "community_size": 0,
+    "continuity_id": 0,
+    "corpus_view": 0,
+    "hierarchy_view": 0,
+    "jaccard_overlap": 9031,
+    "low_overlap_uncertain": 0,
+    "match_status": 0,
+    "overlap_intersection_count": 9031,
+    "overlap_union_count": 9031,
+    "previous_community_id": 9031,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "annual_community_id"
+  ],
+  "row_count": 11930,
+  "run_id": "20260805T232636Z_b19cda5eed1e",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/communities_year.json"
+  ],
+  "source_versions": {
+    "community_continuity": "jaccard-community-continuity-2026-08-05-v1"
+  },
+  "status": "valid"
+}

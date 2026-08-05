@@ -2,9 +2,9 @@
   "failed_stage": null,
   "raw_data_deleted": false,
   "recovery_command": null,
-  "run_id": "20260805T230723Z_9b794d2fe028",
+  "run_id": "20260805T232636Z_b19cda5eed1e",
   "schema_version": 1,
-  "stage_count": 35,
+  "stage_count": 36,
   "stages": [
     {
       "command": "uv run python -m gisnet.cli validate-regions --write-csv data/reference/country_regions.csv",
@@ -13,212 +13,218 @@
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli profile-institution-types --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli profile-institution-types --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "profile-institution-types",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli discover-topics --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli discover-topics --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "discover-topics",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli sample-topic-works --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli sample-topic-works --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "sample-topic-works",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli freeze-topics --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli freeze-topics --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "freeze-topics",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli validate-corpus-boundary --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli validate-corpus-boundary --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "validate-corpus-boundary",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli profile-work-types --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli profile-work-types --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "profile-work-types",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli plan-download --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli plan-download --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "plan-download",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli download-works --workers 4 --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli download-works --workers 4 --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "download-works",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli normalize-works --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli normalize-works --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "normalize-works",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli extract-institutions --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli extract-institutions --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "extract-institutions",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-institutions --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-institutions --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-institutions",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli apply-geography --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli apply-geography --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "apply-geography",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli enrich-institutions --ror-mode cache --max-ror-lookups 0 --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli enrich-institutions --ror-mode cache --max-ror-lookups 0 --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "enrich-institutions",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-hierarchy --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-hierarchy --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-hierarchy",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli diagnose-versions --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli diagnose-versions --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "diagnose-versions",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-corpus --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-corpus --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-corpus",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-work-institutions --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-work-institutions --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-work-institutions",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-edges --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-edges --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-edges",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-outputs --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-outputs --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-outputs",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-region-flows --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-region-flows --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-region-flows",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli validate --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli validate --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "validate",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli verify-reproducibility --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli verify-reproducibility --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "verify-reproducibility",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli compute-edge-intensity --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli compute-edge-intensity --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "compute-edge-intensity",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-graphs --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-graphs --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-graphs",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli compute-metrics --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli compute-metrics --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "compute-metrics",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli detect-communities --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli detect-communities --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "detect-communities",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-layout --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli match-communities --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "reason": "all manifests, configurations, sources, and hashes are valid",
+      "stage": "match-communities",
+      "status": "skipped_valid"
+    },
+    {
+      "command": "uv run python -m gisnet.cli build-layout --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-layout",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli audit-top-entities --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli audit-top-entities --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "audit-top-entities",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli run-sensitivity --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli run-sensitivity --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "run-sensitivity",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-figures --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-figures --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-figures",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-matrix --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-matrix --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-matrix",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-map-data --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-map-data --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-map-data",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-network-view --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-network-view --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-network-view",
       "status": "skipped_valid"
     },
     {
-      "command": "uv run python -m gisnet.cli build-dashboard-data --config config/project.yml --run-id 20260805T230723Z_9b794d2fe028 --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "command": "uv run python -m gisnet.cli build-dashboard-data --config config/project.yml --run-id 20260805T232636Z_b19cda5eed1e --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
       "reason": "all manifests, configurations, sources, and hashes are valid",
       "stage": "build-dashboard-data",
       "status": "skipped_valid"
     }
   ],
   "status_counts": {
-    "skipped_valid": 35
+    "skipped_valid": 36
   },
   "success": true
 }

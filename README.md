@@ -68,6 +68,7 @@ uv run python -m gisnet.cli compute-edge-intensity --resume
 uv run python -m gisnet.cli build-graphs --resume
 uv run python -m gisnet.cli compute-metrics --resume
 uv run python -m gisnet.cli detect-communities --resume
+uv run python -m gisnet.cli match-communities --resume
 uv run python -m gisnet.cli build-layout --resume
 uv run python -m gisnet.cli audit-top-entities --resume
 uv run python -m gisnet.cli run-sensitivity --resume

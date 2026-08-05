@@ -1,12 +1,84 @@
 # Public Data Dictionary and Provenance
 
 Data version: `gisnet-0.1.0-2026-08-05`
-Methods version: `public-dashboard-bundle-2026-08-05-v1`
-Released tables: 11
-Documented table-column entries: 271
+Methods version: `public-dashboard-bundle-2026-08-05-v2`
+Released tables: 13
+Documented table-column entries: 305
 
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
+
+## `community_continuity`
+
+Annual community labels linked to stable longitudinal continuity IDs.
+
+- Path: `dashboard/data/community_continuity.parquet`
+- Rows: 11,930
+- Primary key: `year, corpus_view, hierarchy_view, annual_community_id`
+- SHA-256: `bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f`
+- Direct source manifest: `.agent/manifests/community_continuity_year.json`
+- Source manifests: `.agent/manifests/communities_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"community_continuity": "jaccard-community-continuity-2026-08-05-v1"}`
+- Code commit: `b19cda5eed1e`
+- Transformation: `python -m gisnet.cli match-communities --resume`
+- Known issue: Matches below Jaccard 0.25 are retained but explicitly uncertain.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `annual_community_id` | `string` | Annual Leiden label; not assumed stable between calendar years. | Not null in this public release. | 0 |
+| `continuity_id` | `string` | Deterministic longitudinal ID inherited through selected annual matches. | Not null in this public release. | 0 |
+| `community_size` | `int64` | Number of nodes assigned to the labelled annual community. | Not null in this public release. | 0 |
+| `previous_community_id` | `string` | Matched prior-year annual community label, when selected. | Null means the source or derived value is unavailable; it is not coerced to zero. | 9,031 |
+| `overlap_intersection_count` | `int64` | Institutions shared by selected prior/current communities. | Null means the source or derived value is unavailable; it is not coerced to zero. | 9,031 |
+| `overlap_union_count` | `int64` | Distinct institutions in the selected prior/current community union. | Null means the source or derived value is unavailable; it is not coerced to zero. | 9,031 |
+| `jaccard_overlap` | `double` | Intersection divided by union for an adjacent-year community pair. | Null means the source or derived value is unavailable; it is not coerced to zero. | 9,031 |
+| `match_status` | `string` | First-year, continued, uncertain-match, or birth continuity state. | Not null in this public release. | 0 |
+| `low_overlap_uncertain` | `bool` | True when a selected match is below the confidence threshold. | Not null in this public release. | 0 |
+| `assignment_algorithm` | `string` | Documented deterministic one-to-one community assignment rule. | Not null in this public release. | 0 |
+
+## `community_transitions`
+
+Adjacent-year overlap assignments and split/merge/birth/death events.
+
+- Path: `dashboard/data/community_transitions.parquet`
+- Rows: 51,585
+- Primary key: `transition_year, corpus_view, hierarchy_view, previous_community_key, current_community_key`
+- SHA-256: `101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec`
+- Direct source manifest: `.agent/manifests/community_transitions_year.json`
+- Source manifests: `.agent/manifests/communities_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"community_continuity": "jaccard-community-continuity-2026-08-05-v1"}`
+- Code commit: `b19cda5eed1e`
+- Transformation: `python -m gisnet.cli match-communities --resume`
+- Known issue: Minor positive overlaps are retained separately from event-threshold links.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `transition_year` | `int64` | Current year in an adjacent-year community comparison. | Not null in this public release. | 0 |
+| `previous_year` | `int64` | Previous year in an adjacent-year community comparison. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `previous_community_id` | `string` | Matched prior-year annual community label, when selected. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,302 |
+| `current_community_id` | `string` | Current-year annual community label, when present. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,317 |
+| `previous_community_key` | `string` | Non-null primary-key surrogate for prior community or birth. | Not null in this public release. | 0 |
+| `current_community_key` | `string` | Non-null primary-key surrogate for current community or disappearance. | Not null in this public release. | 0 |
+| `previous_continuity_id` | `string` | Continuity ID attached to the prior annual community, when present. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,302 |
+| `current_continuity_id` | `string` | Continuity ID attached to the current annual community, when present. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,317 |
+| `intersection_count` | `int64` | Institutions shared by the adjacent-year community pair. | Not null in this public release. | 0 |
+| `union_count` | `int64` | Distinct institutions in the adjacent-year community pair union. | Null means the source or derived value is unavailable; it is not coerced to zero. | 16,619 |
+| `jaccard_overlap` | `double` | Intersection divided by union for an adjacent-year community pair. | Null means the source or derived value is unavailable; it is not coerced to zero. | 16,619 |
+| `assignment_selected` | `bool` | Whether the pair was selected by one-to-one continuity assignment. | Not null in this public release. | 0 |
+| `low_overlap_uncertain` | `bool` | True when a selected match is below the confidence threshold. | Not null in this public release. | 0 |
+| `previous_overlap_degree` | `int64` | Meaningful current-year overlaps from the prior community. | Not null in this public release. | 0 |
+| `current_overlap_degree` | `int64` | Meaningful prior-year overlaps into the current community. | Not null in this public release. | 0 |
+| `event_type` | `string` | Continuation, split, merge, birth, disappearance, complex, or minor overlap. | Not null in this public release. | 0 |
+| `assignment_algorithm` | `string` | Documented deterministic one-to-one community assignment rule. | Not null in this public release. | 0 |
+| `confident_match_threshold` | `double` | Jaccard threshold below which selected matches are uncertain. | Not null in this public release. | 0 |
+| `event_overlap_threshold` | `double` | Jaccard threshold used to classify split and merge links. | Not null in this public release. | 0 |
 
 ## `graph_metrics`
 

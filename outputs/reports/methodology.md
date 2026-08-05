@@ -36,7 +36,7 @@ Bibliographic Works, authorships, institutions, Topics, and source identifiers c
 Raw pages are cached with checksums and query IDs before normalization; the completed acquisition
 contains only source-provided identifiers. ROR is an optional source for cached institution
 enrichment, and UN Statistics Division M49 is the source for the geographic convention. Ordinary
-dashboard viewing uses 11 processed public tables and makes
+dashboard viewing uses 13 processed public tables and makes
 no OpenAlex or ROR request.
 
 ## 5. Institution resolution
@@ -72,6 +72,10 @@ use `igraph weighted shortest paths with cutoff=3` and disclose that approximati
 use seed 20250805. Leiden resolutions are
 0.5, 1.0, 1.5; 1.0 is primary. Persistence uses
 fixed-denominator trailing windows of 3 and 5 years and flags incomplete early windows.
+Adjacent-year communities use `deterministic greedy one-to-one assignment by descending Jaccard, intersection, then annual community IDs`. Matches below Jaccard
+0.25 are uncertain; the release records
+1,501 such matches plus explicit split, merge, birth, and
+disappearance event rows.
 Visualization score is not a primary scientific metric; it only ranks edges for display.
 
 ## 8. Validation
@@ -147,6 +151,7 @@ Unknown rather than being guessed.
 - Edges: `data/reference/collaboration_edges_summary.json`
 - Metrics: `data/reference/network_metrics_summary.json`
 - Communities: `data/reference/community_detection_summary.json`
+- Community continuity: `data/reference/community_continuity_summary.json`
 - Sensitivity: `data/reference/sensitivity_summary.json`
 - Reproducibility: `data/reference/reproducibility_validation.json`
 - Figures: `data/reference/annual_trends_summary.json` and

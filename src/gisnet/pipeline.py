@@ -250,6 +250,19 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
         ),
     ),
     PipelineStage(
+        "match-communities",
+        (
+            _output(
+                "community_continuity_year",
+                "data/processed/community_continuity_year.parquet",
+            ),
+            _output(
+                "community_transitions_year",
+                "data/processed/community_transitions_year.parquet",
+            ),
+        ),
+    ),
+    PipelineStage(
         "build-layout",
         (_output("network_layout", "data/processed/network_layout.parquet"),),
     ),

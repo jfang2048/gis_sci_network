@@ -1,5 +1,5 @@
 {
-  "checksum_sha256": "115804f7c06a6ed989fa21ed649e3e9c5bb7fc1bc2398bff327ec3ef34d000cf",
+  "checksum_sha256": "a21d72791888b9d89cf6de0a87f4bc6bc0011300081ebbea88a63fd56146b985",
   "column_count": 14,
   "command": "python -m gisnet.cli report --resume",
   "config_hashes": {
@@ -7,9 +7,9 @@
     "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e",
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
   },
-  "created_at_utc": "2026-08-05T23:16:32.900146Z",
+  "created_at_utc": "2026-08-05T23:32:15.023478Z",
   "dataset_name": "methodology_report_summary",
-  "git_commit": "9a192813a964",
+  "git_commit": "b19cda5eed1e",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -32,13 +32,14 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T231322Z_9a192813a964",
+  "run_id": "20260805T232636Z_b19cda5eed1e",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_corpus_summary.json",
     ".agent/manifests/collaboration_edges_summary.json",
     ".agent/manifests/network_metrics_summary.json",
     ".agent/manifests/community_detection_summary.json",
+    ".agent/manifests/community_continuity_summary.json",
     ".agent/manifests/sensitivity_summary.json",
     ".agent/manifests/geographic_map_summary.json",
     ".agent/manifests/dashboard_bundle_summary.json",

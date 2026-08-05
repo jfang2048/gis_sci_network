@@ -19,6 +19,7 @@ SUMMARY_PATHS: dict[str, Path] = {
     "edges": Path("data/reference/collaboration_edges_summary.json"),
     "metrics": Path("data/reference/network_metrics_summary.json"),
     "communities": Path("data/reference/community_detection_summary.json"),
+    "continuity": Path("data/reference/community_continuity_summary.json"),
     "sensitivity": Path("data/reference/sensitivity_summary.json"),
     "map": Path("data/reference/geographic_map_summary.json"),
     "dashboard": Path("data/reference/dashboard_bundle_summary.json"),
@@ -106,6 +107,7 @@ def render_methodology(
     edges = summaries["edges"]
     metrics = summaries["metrics"]
     communities = summaries["communities"]
+    continuity = summaries["continuity"]
     sensitivity = summaries["sensitivity"]
     map_summary = summaries["map"]
     reproducibility = summaries["reproducibility"]
@@ -193,6 +195,10 @@ use `{metrics["large_graph_betweenness_method"]}` and disclose that approximatio
 use seed {metrics["random_seed"]}. Leiden resolutions are
 {", ".join(str(value) for value in communities["resolutions"])}; 1.0 is primary. Persistence uses
 fixed-denominator trailing windows of {persistence} years and flags incomplete early windows.
+Adjacent-year communities use `{continuity["assignment_algorithm"]}`. Matches below Jaccard
+{continuity["confident_match_threshold"]:.2f} are uncertain; the release records
+{continuity["uncertain_match_count"]:,} such matches plus explicit split, merge, birth, and
+disappearance event rows.
 Visualization score is not a primary scientific metric; it only ranks edges for display.
 
 ## 8. Validation
@@ -268,6 +274,7 @@ Unknown rather than being guessed.
 - Edges: `data/reference/collaboration_edges_summary.json`
 - Metrics: `data/reference/network_metrics_summary.json`
 - Communities: `data/reference/community_detection_summary.json`
+- Community continuity: `data/reference/community_continuity_summary.json`
 - Sensitivity: `data/reference/sensitivity_summary.json`
 - Reproducibility: `data/reference/reproducibility_validation.json`
 - Figures: `data/reference/annual_trends_summary.json` and

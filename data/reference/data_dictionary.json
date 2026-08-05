@@ -1,12 +1,343 @@
 {
-  "column_entry_count": 271,
+  "column_entry_count": 305,
   "data_version": "gisnet-0.1.0-2026-08-05",
   "dictionary_version": "public-data-dictionary-2026-08-05-v1",
-  "methods_version": "public-dashboard-bundle-2026-08-05-v1",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v2",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 11,
+  "table_count": 13,
   "tables": [
+    {
+      "code_commit": "b19cda5eed1e",
+      "column_count": 13,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Annual Leiden label; not assumed stable between calendar years.",
+          "name": "annual_community_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Deterministic longitudinal ID inherited through selected annual matches.",
+          "name": "continuity_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of nodes assigned to the labelled annual community.",
+          "name": "community_size",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Matched prior-year annual community label, when selected.",
+          "name": "previous_community_id",
+          "null_count": 9031,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Institutions shared by selected prior/current communities.",
+          "name": "overlap_intersection_count",
+          "null_count": 9031,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct institutions in the selected prior/current community union.",
+          "name": "overlap_union_count",
+          "null_count": 9031,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "int64"
+        },
+        {
+          "description": "Intersection divided by union for an adjacent-year community pair.",
+          "name": "jaccard_overlap",
+          "null_count": 9031,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "First-year, continued, uncertain-match, or birth continuity state.",
+          "name": "match_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "True when a selected match is below the confidence threshold.",
+          "name": "low_overlap_uncertain",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Documented deterministic one-to-one community assignment rule.",
+          "name": "assignment_algorithm",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual community labels linked to stable longitudinal continuity IDs.",
+      "known_data_quality_issue": "Matches below Jaccard 0.25 are retained but explicitly uncertain.",
+      "path": "dashboard/data/community_continuity.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "annual_community_id"
+      ],
+      "row_count": 11930,
+      "sha256": "bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f",
+      "source_manifest": ".agent/manifests/community_continuity_year.json",
+      "source_manifests": [
+        ".agent/manifests/communities_year.json"
+      ],
+      "source_versions": {
+        "community_continuity": "jaccard-community-continuity-2026-08-05-v1"
+      },
+      "table": "community_continuity",
+      "transformation_command": "python -m gisnet.cli match-communities --resume"
+    },
+    {
+      "code_commit": "b19cda5eed1e",
+      "column_count": 21,
+      "columns": [
+        {
+          "description": "Current year in an adjacent-year community comparison.",
+          "name": "transition_year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Previous year in an adjacent-year community comparison.",
+          "name": "previous_year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Matched prior-year annual community label, when selected.",
+          "name": "previous_community_id",
+          "null_count": 8302,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Current-year annual community label, when present.",
+          "name": "current_community_id",
+          "null_count": 8317,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Non-null primary-key surrogate for prior community or birth.",
+          "name": "previous_community_key",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Non-null primary-key surrogate for current community or disappearance.",
+          "name": "current_community_key",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Continuity ID attached to the prior annual community, when present.",
+          "name": "previous_continuity_id",
+          "null_count": 8302,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Continuity ID attached to the current annual community, when present.",
+          "name": "current_continuity_id",
+          "null_count": 8317,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Institutions shared by the adjacent-year community pair.",
+          "name": "intersection_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct institutions in the adjacent-year community pair union.",
+          "name": "union_count",
+          "null_count": 16619,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "int64"
+        },
+        {
+          "description": "Intersection divided by union for an adjacent-year community pair.",
+          "name": "jaccard_overlap",
+          "null_count": 16619,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Whether the pair was selected by one-to-one continuity assignment.",
+          "name": "assignment_selected",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "True when a selected match is below the confidence threshold.",
+          "name": "low_overlap_uncertain",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Meaningful current-year overlaps from the prior community.",
+          "name": "previous_overlap_degree",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Meaningful prior-year overlaps into the current community.",
+          "name": "current_overlap_degree",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Continuation, split, merge, birth, disappearance, complex, or minor overlap.",
+          "name": "event_type",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Documented deterministic one-to-one community assignment rule.",
+          "name": "assignment_algorithm",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Jaccard threshold below which selected matches are uncertain.",
+          "name": "confident_match_threshold",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Jaccard threshold used to classify split and merge links.",
+          "name": "event_overlap_threshold",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Adjacent-year overlap assignments and split/merge/birth/death events.",
+      "known_data_quality_issue": "Minor positive overlaps are retained separately from event-threshold links.",
+      "path": "dashboard/data/community_transitions.parquet",
+      "primary_key": [
+        "transition_year",
+        "corpus_view",
+        "hierarchy_view",
+        "previous_community_key",
+        "current_community_key"
+      ],
+      "row_count": 51585,
+      "sha256": "101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec",
+      "source_manifest": ".agent/manifests/community_transitions_year.json",
+      "source_manifests": [
+        ".agent/manifests/communities_year.json"
+      ],
+      "source_versions": {
+        "community_continuity": "jaccard-community-continuity-2026-08-05-v1"
+      },
+      "table": "community_transitions",
+      "transformation_command": "python -m gisnet.cli match-communities --resume"
+    },
     {
       "code_commit": "0994927dc1b8",
       "column_count": 24,

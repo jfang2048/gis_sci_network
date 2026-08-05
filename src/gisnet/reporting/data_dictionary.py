@@ -17,6 +17,26 @@ from gisnet.manifest import DatasetManifest
 _STAGE_VERSION = "public-data-dictionary-2026-08-05-v1"
 
 TABLES: dict[str, dict[str, Any]] = {
+    "community_continuity": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view", "annual_community_id"],
+        "source_manifest": ".agent/manifests/community_continuity_year.json",
+        "description": "Annual community labels linked to stable longitudinal continuity IDs.",
+        "known_issue": "Matches below Jaccard 0.25 are retained but explicitly uncertain.",
+    },
+    "community_transitions": {
+        "primary_key": [
+            "transition_year",
+            "corpus_view",
+            "hierarchy_view",
+            "previous_community_key",
+            "current_community_key",
+        ],
+        "source_manifest": ".agent/manifests/community_transitions_year.json",
+        "description": "Adjacent-year overlap assignments and split/merge/birth/death events.",
+        "known_issue": (
+            "Minor positive overlaps are retained separately from event-threshold links."
+        ),
+    },
     "graph_metrics": {
         "primary_key": ["year", "corpus_view", "hierarchy_view"],
         "source_manifest": ".agent/manifests/graph_metrics_year.json",
@@ -243,6 +263,34 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "summary_text": "Generated plain-language accessibility summary for the annual view.",
     "top_institution": "Display name of the highest fractional-strength node in the view.",
     "top_fractional_strength": "Fractional strength of the reported top institution.",
+    "annual_community_id": "Annual Leiden label; not assumed stable between calendar years.",
+    "continuity_id": "Deterministic longitudinal ID inherited through selected annual matches.",
+    "previous_community_id": "Matched prior-year annual community label, when selected.",
+    "current_community_id": "Current-year annual community label, when present.",
+    "overlap_intersection_count": "Institutions shared by selected prior/current communities.",
+    "overlap_union_count": "Distinct institutions in the selected prior/current community union.",
+    "jaccard_overlap": "Intersection divided by union for an adjacent-year community pair.",
+    "match_status": "First-year, continued, uncertain-match, or birth continuity state.",
+    "low_overlap_uncertain": "True when a selected match is below the confidence threshold.",
+    "assignment_algorithm": "Documented deterministic one-to-one community assignment rule.",
+    "transition_year": "Current year in an adjacent-year community comparison.",
+    "previous_year": "Previous year in an adjacent-year community comparison.",
+    "previous_community_key": "Non-null primary-key surrogate for prior community or birth.",
+    "current_community_key": (
+        "Non-null primary-key surrogate for current community or disappearance."
+    ),
+    "previous_continuity_id": "Continuity ID attached to the prior annual community, when present.",
+    "current_continuity_id": (
+        "Continuity ID attached to the current annual community, when present."
+    ),
+    "intersection_count": "Institutions shared by the adjacent-year community pair.",
+    "union_count": "Distinct institutions in the adjacent-year community pair union.",
+    "assignment_selected": "Whether the pair was selected by one-to-one continuity assignment.",
+    "previous_overlap_degree": "Meaningful current-year overlaps from the prior community.",
+    "current_overlap_degree": "Meaningful prior-year overlaps into the current community.",
+    "event_type": "Continuation, split, merge, birth, disappearance, complex, or minor overlap.",
+    "confident_match_threshold": "Jaccard threshold below which selected matches are uncertain.",
+    "event_overlap_threshold": "Jaccard threshold used to classify split and merge links.",
 }
 
 

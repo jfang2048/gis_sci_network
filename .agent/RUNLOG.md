@@ -1584,3 +1584,36 @@ skip external-network tests by default.
 ### Exact next action
 
 Task: GISNET-073 — Match communities across years.
+
+
+## Run 20260805T232636Z_b19cda5eed1e
+
+Started UTC: 2026-08-05T23:26:36Z
+Ended UTC: 2026-08-05T23:36:15Z
+Task: GISNET-073
+Initial git status: Clean on `main` at `b19cda5` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Match adjacent-year annual communities without treating annual numeric labels as stable, record structural events, and publish continuity data for dashboard use.
+
+### Work completed
+
+- Added deterministic adjacent-year Jaccard matching and one-to-one assignment with stable continuity IDs.
+- Recorded continuation, split, merge, birth, disappearance, and minor-overlap events.
+- Flagged selected overlaps below 0.25 as uncertain and documented the thresholds and algorithm.
+- Added continuity to the 36-stage resumable pipeline, public data bundle, dashboard network/data-quality views, methodology, and data dictionary.
+
+### Validation results
+
+- Synthetic split, merge, birth, disappearance, low-overlap, and unchanged-repeat tests pass.
+- Real outputs: 11,930 community-year rows and 51,585 transition rows; unique annual-community primary key.
+- Public bundle: 13 tables, 259,637 rows, 4.8 MiB; every published hash and row count matches metadata.
+- Repeated pipeline run validated and skipped all 36 stages; unnecessary executions: 0.
+- Ruff lint/format passed; strict mypy passed; pytest passed (108 tests); Streamlit AppTest passed all 8 pages.
+- Tracked/untracked release candidate privacy scan found no token, private key, or private home path.
+
+### Exact next action
+
+Task: GISNET-094 — Build institution-pair explorer.

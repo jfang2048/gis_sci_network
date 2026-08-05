@@ -87,6 +87,8 @@ network_accessibility = load_table("network_accessibility")
 graph_metrics = load_table("graph_metrics")
 sensitivity = load_table("sensitivity")
 topics = load_table("topics")
+community_continuity = load_table("community_continuity")
+community_transitions = load_table("community_transitions")
 
 if graph_metrics.empty:
     st.error("The dashboard snapshot is incomplete: graph metrics are unavailable.")
@@ -324,6 +326,15 @@ elif page == "Institutional network":
     st.header("Fixed-layout institutional network")
     nodes = filtered_view(network_nodes, year, corpus, hierarchy)
     edges = filtered_view(network_edges, year, corpus, hierarchy)
+    continuity = filtered_view(community_continuity, year, corpus, hierarchy).rename(
+        columns={"annual_community_id": "community_id"}
+    )
+    if not continuity.empty:
+        nodes = nodes.merge(
+            continuity[["community_id", "continuity_id", "low_overlap_uncertain"]],
+            on="community_id",
+            how="left",
+        )
     if country != "All":
         nodes = nodes.loc[nodes["country_name"] == country]
     if subregion != "All":
@@ -342,7 +353,9 @@ elif page == "Institutional network":
         edges = edges.loc[edges["large_consortium_work_count"] == 0]
     available_metrics = ("work_count", "degree", "fractional_strength", "pagerank")
     size_metric = st.selectbox("Node-size metric", available_metrics, index=2)
-    color_metric = st.radio("Node color", ("macro_region", "community_id"), horizontal=True)
+    color_metric = st.radio(
+        "Node color", ("macro_region", "community_id", "continuity_id"), horizontal=True
+    )
     minimum = float(edges[weight_column].quantile(0.5)) if not edges.empty else 0.0
     minimum_weight = st.number_input(
         f"Minimum {counting.lower()} edge weight",
@@ -573,5 +586,32 @@ elif page == "Data quality":
         show_empty("No coverage row exists for this view.")
     else:
         st.dataframe(coverage, width="stretch", hide_index=True)
+    st.subheader("Community continuity")
+    continuity_view = filtered_view(community_continuity, year, corpus, hierarchy)
+    transition_view = community_transitions.loc[
+        (community_transitions["transition_year"] == year)
+        & (community_transitions["corpus_view"] == corpus)
+        & (community_transitions["hierarchy_view"] == hierarchy)
+    ].copy()
+    if continuity_view.empty:
+        show_empty("No community continuity rows exist for this view.")
+    else:
+        columns = st.columns(3)
+        columns[0].metric("Continuity IDs", continuity_view["continuity_id"].nunique())
+        columns[1].metric("Uncertain matches", int(continuity_view["low_overlap_uncertain"].sum()))
+        columns[2].metric("Transition events", len(transition_view))
+        if not transition_view.empty:
+            st.dataframe(
+                transition_view["event_type"]
+                .value_counts()
+                .rename_axis("event_type")
+                .reset_index(),
+                width="stretch",
+                hide_index=True,
+            )
+        st.caption(
+            "Continuity uses deterministic adjacent-year Jaccard assignment; "
+            "selected matches below 0.25 are explicitly uncertain."
+        )
     st.subheader("Version and integrity metadata")
     st.json(metadata)

@@ -1,0 +1,30 @@
+{
+  "assignment_algorithm": "deterministic greedy one-to-one assignment by descending Jaccard, intersection, then annual community IDs",
+  "confident_match_threshold": 0.25,
+  "continuity_row_count": 11930,
+  "continuity_sha256": "93f64c0b4741b83457ebf5772dd9f4ca7cbe9ee25a7dd881f33033833a340d8e",
+  "event_counts": {
+    "birth": 8229,
+    "continuation": 1899,
+    "disappearance": 8252,
+    "merge": 183,
+    "merge_disappearance": 65,
+    "minor_overlap": 32623,
+    "split": 212,
+    "split_birth": 73,
+    "split_merge": 49
+  },
+  "event_overlap_threshold": 0.1,
+  "generated_at_utc": "2026-08-05T23:30:52.073364Z",
+  "logical_input_hash": "ded5ea27d7991c1013ce9522a7820ea225050e9972a0c61c4d45c2dd5e173266",
+  "outputs": {
+    "community_continuity_year": "data/processed/community_continuity_year.parquet",
+    "community_transitions_year": "data/processed/community_transitions_year.parquet"
+  },
+  "schema_version": 1,
+  "selected_match_count": 2899,
+  "stage_version": "jaccard-community-continuity-2026-08-05-v1",
+  "transition_row_count": 51585,
+  "transitions_sha256": "4e76c90e049378bd8dedb430c5c37ca6d7f5bd63f9ce3463c67547de64039636",
+  "uncertain_match_count": 1501
+}

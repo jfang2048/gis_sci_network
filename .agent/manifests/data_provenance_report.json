@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "e077acba01c920552c538d373811f332c4a1f407eca179bcbe174af193e511b9",
+  "checksum_sha256": "46e7432ba183fc0da57190d3707789a27aed4bd247a12e44c7d574768c224075",
   "column_count": 1,
   "command": "python -m gisnet.cli build-data-dictionary --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T23:22:22.029910Z",
+  "created_at_utc": "2026-08-05T23:32:16.044444Z",
   "dataset_name": "data_provenance_report",
-  "git_commit": "8a7cb2e8de39",
+  "git_commit": "b19cda5eed1e",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -17,10 +17,12 @@
     "checksum_sha256"
   ],
   "row_count": 1,
-  "run_id": "20260805T231756Z_8a7cb2e8de39",
+  "run_id": "20260805T232636Z_b19cda5eed1e",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/collaboration_matrix_year.json",
+    ".agent/manifests/community_continuity_year.json",
+    ".agent/manifests/community_transitions_year.json",
     ".agent/manifests/graph_metrics_year.json",
     ".agent/manifests/map_coverage_year.json",
     ".agent/manifests/map_edges_year.json",

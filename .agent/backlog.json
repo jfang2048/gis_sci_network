@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T23:24:14Z",
+  "last_updated_utc": "2026-08-05T23:36:15Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -930,12 +930,27 @@
       "dependencies": [
         "GISNET-072"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T23:26:36Z",
+          "from": "TODO",
+          "reason": "Matching adjacent-year communities with deterministic Jaccard assignment, stable continuity IDs, and explicit event tables.",
+          "run_id": "20260805T232636Z_b19cda5eed1e",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T23:36:15Z",
+          "from": "IN_PROGRESS",
+          "reason": "Adjacent-year Jaccard matching, deterministic continuity IDs, transition events, uncertainty flags, public dashboard integration, and acceptance checks passed.",
+          "run_id": "20260805T232636Z_b19cda5eed1e",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-073",
       "priority": "P2",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Adjacent-year Jaccard matching, deterministic continuity IDs, transition events, uncertainty flags, public dashboard integration, and acceptance checks passed.",
+      "status_updated_at_utc": "2026-08-05T23:36:15Z"
     },
     {
       "dependencies": [
