@@ -51,6 +51,7 @@ from gisnet.institutions.types import (
     write_institution_type_profile,
 )
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
+from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
@@ -90,7 +91,6 @@ from gisnet.state import (
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "compute-metrics",
-    "build-region-flows",
     "detect-communities",
     "match-communities",
     "validate",
@@ -487,6 +487,26 @@ def build_parser() -> argparse.ArgumentParser:
     build_outputs.add_argument("--duckdb-memory-limit", default="4GB")
     build_outputs.add_argument("--duckdb-threads", default=1, type=int)
     build_outputs.set_defaults(handler=_build_outputs)
+
+    build_flows = subparsers.add_parser(
+        "build-region-flows", help="aggregate institution pairs to region, subregion, and country"
+    )
+    _add_pipeline_arguments(build_flows)
+    build_flows.add_argument("--work-edges", default="data/processed/work_edges.parquet", type=Path)
+    build_flows.add_argument(
+        "--output", default="data/processed/region_flows_year.parquet", type=Path
+    )
+    build_flows.add_argument(
+        "--reconciliation",
+        default="data/processed/region_flow_reconciliation.parquet",
+        type=Path,
+    )
+    build_flows.add_argument(
+        "--summary", default="data/reference/region_flows_summary.json", type=Path
+    )
+    build_flows.add_argument("--duckdb-memory-limit", default="4GB")
+    build_flows.add_argument("--duckdb-threads", default=1, type=int)
+    build_flows.set_defaults(handler=_build_region_flows)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1634,6 +1654,43 @@ def _build_outputs(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['node_year_count']} node-year outputs; zero-edge output rows="
         f"{summary['zero_edge_output_node_year_count']}."
+    )
+    return 0
+
+
+def _build_region_flows(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would aggregate geographic flows from {args.work_edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-065"):
+            summary = build_geographic_flows(
+                args.work_edges,
+                flows_path=args.output,
+                reconciliation_path=args.reconciliation,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-region-flows "
+                f"--work-edges {args.work_edges} --output {args.output} --resume"
+            )
+            write_flow_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("region_flows_year", "region_flow_reconciliation", "region_flows_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Geographic flows failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['flow_row_count']} geographic flow rows; Asia countries="
+        f"{summary['asia_country_count']}, Americas countries={summary['americas_country_count']}."
     )
     return 0
 

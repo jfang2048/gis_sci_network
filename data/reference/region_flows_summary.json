@@ -1,0 +1,16 @@
+{
+  "americas_country_count": 46,
+  "asia_country_count": 51,
+  "flow_row_count": 97762,
+  "generated_at_utc": "2026-08-05T21:36:42.578741Z",
+  "logical_input_hash": "9768d28249595c1b9069bb0e0bc3508a27ea5b6828741309418c1fc4cec3a517",
+  "macro_region_flow_row_count": 384,
+  "maximum_fractional_reconciliation_error": 3.5433913581073284e-08,
+  "maximum_normalized_share_error": 1.7985612998927536e-14,
+  "outputs": {
+    "region_flow_reconciliation": "data/processed/region_flow_reconciliation.parquet",
+    "region_flows_year": "data/processed/region_flows_year.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "geographic-flows-2026-08-05-v1"
+}

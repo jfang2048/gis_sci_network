@@ -1,0 +1,44 @@
+{
+  "checksum_sha256": "f771ffb4f3d4559d7a5f1b0aa18f12053b35d5346065f70a48d720076bf62245",
+  "column_count": 12,
+  "command": "python -m gisnet.cli build-region-flows --work-edges data/processed/work_edges.parquet --output data/processed/region_flows_year.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T21:36:42.668186Z",
+  "dataset_name": "region_flow_reconciliation",
+  "git_commit": "5780a3f2500d",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "corpus_view": 0,
+    "expected_fractional_count": 0,
+    "expected_full_count": 0,
+    "flow_fractional_count": 0,
+    "flow_full_count": 0,
+    "fractional_count_difference": 0,
+    "full_count_difference": 0,
+    "geographic_level": 0,
+    "hierarchy_view": 0,
+    "normalized_share_difference": 0,
+    "normalized_share_sum": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "geographic_level"
+  ],
+  "row_count": 192,
+  "run_id": "20260805T213321Z_5780a3f2500d",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_edges.json",
+    ".agent/manifests/country_regions.json"
+  ],
+  "source_versions": {
+    "geographic_flow_policy": "geographic-flows-2026-08-05-v1"
+  },
+  "status": "valid"
+}

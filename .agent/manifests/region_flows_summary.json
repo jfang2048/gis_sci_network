@@ -1,0 +1,40 @@
+{
+  "checksum_sha256": "fcd4da1b4174068b9da7e78a241665c68057bd5b823f175d793bf72c7c2f6fc0",
+  "column_count": 11,
+  "command": "python -m gisnet.cli build-region-flows --work-edges data/processed/work_edges.parquet --output data/processed/region_flows_year.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T21:36:42.611061Z",
+  "dataset_name": "region_flows_summary",
+  "git_commit": "5780a3f2500d",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "americas_country_count": 0,
+    "asia_country_count": 0,
+    "flow_row_count": 0,
+    "generated_at_utc": 0,
+    "logical_input_hash": 0,
+    "macro_region_flow_row_count": 0,
+    "maximum_fractional_reconciliation_error": 0,
+    "maximum_normalized_share_error": 0,
+    "outputs": 0,
+    "schema_version": 0,
+    "stage_version": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260805T213321Z_5780a3f2500d",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_edges.json",
+    ".agent/manifests/country_regions.json"
+  ],
+  "source_versions": {
+    "geographic_flow_policy": "geographic-flows-2026-08-05-v1"
+  },
+  "status": "valid"
+}

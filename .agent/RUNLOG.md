@@ -935,3 +935,38 @@ retaining institutions that produce included output but never form an edge.
 ### Exact next action
 
 Task: GISNET-065 — Build region and country flows.
+
+## Run 20260805T213321Z_5780a3f2500d
+
+Started UTC: 2026-08-05T21:33:21Z
+Ended UTC: 2026-08-05T21:37:00Z
+Task: GISNET-065
+Initial git status: Clean on `main` at `5780a3f` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Aggregate institution pairs to canonical macro-region, subregion, and country flows with full and
+fractional counts, distinct Works/pairs, normalized shares, and exact full-count reconciliation.
+
+### Work completed
+
+- Added lexically ordered undirected flow pairs at three geographic levels.
+- Added annual full/fractional counts, distinct Work and institution-pair counts, and Work samples.
+- Added within-year/view fractional normalized shares and reconciliation diagnostics.
+- Recorded observed regional country coverage without reducing Asia to China or Americas to the US.
+
+### Validation results
+
+- Flow rows: 97,762; macro-region rows: 384; years: 2010–2025.
+- Full counts reconcile exactly at every geographic level.
+- Maximum fractional accumulation difference: `3.55e-08` on large totals (below `1e-6`).
+- Maximum normalized-share error: `1.80e-14`; reversed geographic pairs: 0.
+- Countries represented in Work edges: Asia 51; Americas 46.
+- Repeated outputs were byte-identical; peak RSS about 2.6 GB.
+- Flow SHA-256: `cbba334fc5dc1bcc58fe373aa0d748a9e33af5f7b5ce50bbec7df5ba18c22f21`.
+- Ruff format/check passed; strict mypy passed; pytest passed (81 tests).
+
+### Exact next action
+
+Task: GISNET-080 — Validate edge arithmetic.
