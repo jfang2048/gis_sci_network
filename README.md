@@ -84,6 +84,16 @@ uv run python -m gisnet.cli build-data-dictionary --resume
 Network-dependent tests are marked `network` and are skipped from ordinary offline
 quality gates unless explicitly selected.
 
+Run the same offline checks used by GitHub Actions with:
+
+```bash
+scripts/quality-gate.sh
+```
+
+This runs Ruff lint/format checks, strict mypy, the default non-network test suite, and
+the CLI status smoke check. Network tests are opt-in with `uv run pytest -m network`;
+CI does not receive or print an OpenAlex API key.
+
 The end-to-end command validates every output and provenance manifest before deciding
 whether to skip or rebuild a stage. Incomplete downloads always resume, stale derived
 branches rebuild in dependency order, valid raw pages are never deleted, and a failure

@@ -1552,3 +1552,35 @@ code hashes, and known quality issues without leaking a key or private path.
 ### Exact next action
 
 Task: GISNET-103 — Add CI and local quality gate.
+
+
+## Run 20260805T232303Z_f4f2f835a9b4
+
+Started UTC: 2026-08-05T23:23:03Z
+Ended UTC: 2026-08-05T23:24:13Z
+Task: GISNET-103
+Initial git status: Clean on `main` at `f4f2f83` tracking `origin/main`.
+Final git status: Pending the required local atomic commit and remote CI validation.
+
+### Objective
+
+Add a least-privilege CI workflow and matching local quality gate that use no real API key and
+skip external-network tests by default.
+
+### Work completed
+
+- Added a pinned GitHub Actions workflow with read-only contents permission and no retained token.
+- Added one executable local script for Ruff lint/format, strict mypy, pytest, and CLI status.
+- Made network tests opt-in by default while retaining their registered marker.
+- Added contract tests forbidding secret references, pull_request_target, shell tracing, and missing checks.
+
+### Validation results
+
+- Workflow YAML parses and contains read-only permissions; secret references: 0.
+- Local quality gate passed end to end; pytest passed (106 tests).
+- Peak local gate RSS about 1.49 GiB with no swap; all data-heavy production commands remain bounded.
+- CI uses the tracked synthetic/public fixtures and makes no OpenAlex request.
+
+### Exact next action
+
+Task: GISNET-073 — Match communities across years.

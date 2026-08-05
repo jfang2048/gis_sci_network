@@ -40,7 +40,7 @@ gisnet = "gisnet.cli:main"
 packages = ["src/gisnet"]
 
 [tool.pytest.ini_options]
-addopts = "-ra --strict-markers"
+addopts = "-ra --strict-markers -m 'not network'"
 testpaths = ["tests"]
 markers = [
   "network: tests that require external network access",
