@@ -826,3 +826,39 @@ Strict, Broad, and sensitivity memberships with machine-readable exclusion reaso
 ### Exact next action
 
 Task: GISNET-061 — Build normalized work-institution tables.
+
+## Run 20260805T211514Z_1fb9bede719e
+
+Started UTC: 2026-08-05T21:15:14Z
+Ended UTC: 2026-08-05T21:21:56Z
+Task: GISNET-061
+Initial git status: Clean on `main` at `1fb9bed` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Join corpus, stable institutions, frozen geography, and comparable hierarchy views into a validated
+Work-institution layer with within-work deduplication and primary research-scope flags.
+
+### Work completed
+
+- Built organization and umbrella Work-institution rows independently with canonical IDs.
+- Aggregated original institution IDs, affiliation strings, authorship counts, and rule provenance.
+- Joined source-specific institution metadata, geography, coordinates, and analytical-scope flags.
+- Split hierarchy processing into bounded stages after a 4 GB DuckDB allocation failure; the
+  successful default stayed below 4.4 GB RSS rather than scaling toward system memory.
+
+### Validation results
+
+- Total rows: 4,809,352; organization/umbrella: 2,404,676 each.
+- Resolved Works: 1,176,944 in each view; three previously recorded unresolved Works remain explicit.
+- Duplicate primary keys: 0; maximum institutions per Work: 138.
+- Single-institution Works retained: 584,584 in each hierarchy view.
+- Current empty collapse registry makes organization and umbrella counts equal, as expected.
+- Repeated output was byte-identical.
+- Output SHA-256: `523020df4a1137bc9810901ec85717053b141881ab920ef8ba9c64e968f88fa9`.
+- Ruff format/check passed; strict mypy passed; pytest passed (78 tests).
+
+### Exact next action
+
+Task: GISNET-062 — Build annual collaboration edges.

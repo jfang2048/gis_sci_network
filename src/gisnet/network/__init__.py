@@ -1,1 +1,1 @@
-"""Collaboration graph construction and metrics."""
+"""Collaboration graph construction, analysis, and metrics."""

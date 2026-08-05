@@ -50,6 +50,10 @@ from gisnet.institutions.types import (
     profile_institution_types,
     write_institution_type_profile,
 )
+from gisnet.network.work_institutions import (
+    build_normalized_work_institutions,
+    write_work_institution_artifacts,
+)
 from gisnet.openalex.cache import RawResponseCache
 from gisnet.openalex.client import (
     AuthenticationError,
@@ -414,6 +418,33 @@ def build_parser() -> argparse.ArgumentParser:
     build_corpus.add_argument("--duckdb-memory-limit", default="4GB")
     build_corpus.add_argument("--duckdb-threads", default=1, type=int)
     build_corpus.set_defaults(handler=_build_corpus)
+
+    build_work_institutions = subparsers.add_parser(
+        "build-work-institutions",
+        help="join corpus and hierarchy into normalized Work institutions",
+    )
+    _add_pipeline_arguments(build_work_institutions)
+    build_work_institutions.add_argument(
+        "--extracted", default="data/processed/work_institutions_extracted.parquet", type=Path
+    )
+    build_work_institutions.add_argument(
+        "--work-corpus", default="data/processed/work_corpus.parquet", type=Path
+    )
+    build_work_institutions.add_argument(
+        "--institutions", default="data/processed/institutions_ror.parquet", type=Path
+    )
+    build_work_institutions.add_argument(
+        "--hierarchy-map", default="data/processed/institution_hierarchy.parquet", type=Path
+    )
+    build_work_institutions.add_argument(
+        "--output", default="data/processed/work_institutions.parquet", type=Path
+    )
+    build_work_institutions.add_argument(
+        "--summary", default="data/reference/work_institutions_summary.json", type=Path
+    )
+    build_work_institutions.add_argument("--duckdb-memory-limit", default="4GB")
+    build_work_institutions.add_argument("--duckdb-threads", default=1, type=int)
+    build_work_institutions.set_defaults(handler=_build_work_institutions)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1407,6 +1438,48 @@ def _build_corpus(args: argparse.Namespace) -> int:
     print(
         f"Corpus Works={summary['work_count']}; strict={summary['strict_primary_count']}, "
         f"broad={summary['broad_primary_count']}."
+    )
+    return 0
+
+
+def _build_work_institutions(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(
+            f"Would build normalized organization/umbrella Work institutions from "
+            f"{args.extracted}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-061"):
+            summary = build_normalized_work_institutions(
+                args.extracted,
+                args.work_corpus,
+                args.institutions,
+                args.hierarchy_map,
+                output_path=args.output,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-work-institutions "
+                f"--extracted {args.extracted} --output {args.output} --resume"
+            )
+            write_work_institution_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("work_institutions", "work_institutions_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Normalized Work institutions failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['row_count']} Work-institution rows; organization Works="
+        f"{summary['organization_work_count']}, umbrella Works={summary['umbrella_work_count']}."
     )
     return 0
 

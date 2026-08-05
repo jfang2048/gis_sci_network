@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T21:14:32Z",
+  "last_updated_utc": "2026-08-05T21:21:56Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -719,12 +719,27 @@
         "GISNET-054",
         "GISNET-060"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T21:15:14Z",
+          "from": "TODO",
+          "reason": "Joining corpus, stable institutions, frozen geography, and both hierarchy views with within-work deduplication.",
+          "run_id": "20260805T211514Z_1fb9bede719e",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T21:21:56Z",
+          "from": "IN_PROGRESS",
+          "reason": "Both hierarchy views pass primary keys, within-Work deduplication, scope joins, singleton retention, and deterministic rerun checks.",
+          "run_id": "20260805T211514Z_1fb9bede719e",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-061",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Both hierarchy views pass primary keys, within-Work deduplication, scope joins, singleton retention, and deterministic rerun checks.",
+      "status_updated_at_utc": "2026-08-05T21:21:56Z"
     },
     {
       "dependencies": [

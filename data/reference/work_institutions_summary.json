@@ -1,0 +1,17 @@
+{
+  "generated_at_utc": "2026-08-05T21:21:35.147971Z",
+  "logical_input_hash": "f03fba93ff687b0f197b196ed259847dd8ae9fbf65726f0cfa703de894416c03",
+  "maximum_institution_count_per_work": 138,
+  "organization_row_count": 2404676,
+  "organization_single_institution_work_count": 584584,
+  "organization_work_count": 1176944,
+  "outputs": {
+    "work_institutions": "data/processed/work_institutions.parquet"
+  },
+  "row_count": 4809352,
+  "schema_version": 1,
+  "stage_version": "normalized-work-institutions-2026-08-05-v1",
+  "umbrella_row_count": 2404676,
+  "umbrella_single_institution_work_count": 584584,
+  "umbrella_work_count": 1176944
+}
