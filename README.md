@@ -102,6 +102,9 @@ collaboration matrices, geographic and fixed-layout network views, an institutio
 explorer, Topic-family comparisons, methods, and data-quality metadata. See
 [`dashboard/README.md`](dashboard/README.md) for snapshot rebuild details.
 
+The generated research methods and limitations are documented in
+[`outputs/reports/methodology.md`](outputs/reports/methodology.md).
+
 ## Topic registry status
 
 `config/topic_registry.yml` is currently a **provisional, AI-reviewed** registry backed

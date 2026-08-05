@@ -47,7 +47,8 @@
     "GISNET-092",
     "GISNET-093",
     "GISNET-095",
-    "GISNET-102"
+    "GISNET-102",
+    "GISNET-100"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -107,6 +108,8 @@
     "map_coverage_year": ".agent/manifests/map_coverage_year.json",
     "map_edges_year": ".agent/manifests/map_edges_year.json",
     "map_nodes_year": ".agent/manifests/map_nodes_year.json",
+    "methodology_report": ".agent/manifests/methodology_report.json",
+    "methodology_report_summary": ".agent/manifests/methodology_report_summary.json",
     "network_accessibility_year": ".agent/manifests/network_accessibility_year.json",
     "network_layout": ".agent/manifests/network_layout.json",
     "network_layout_summary": ".agent/manifests/network_layout_summary.json",
@@ -150,8 +153,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T230723Z_9b794d2fe028",
-  "last_updated_utc": "2026-08-05T23:12:20Z",
+  "last_successful_run_id": "20260805T231322Z_9a192813a964",
+  "last_updated_utc": "2026-08-05T23:17:03Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

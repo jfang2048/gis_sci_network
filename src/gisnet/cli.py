@@ -83,6 +83,7 @@ from gisnet.openalex.planner import (
     write_query_plan,
 )
 from gisnet.pipeline import DEFAULT_STAGES, run_pipeline, write_pipeline_artifact
+from gisnet.reporting.methodology import build_methodology_report, write_methodology_artifacts
 from gisnet.ror.enrich import enrich_institutions_with_ror, write_ror_artifacts
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
@@ -107,10 +108,7 @@ from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix
 from gisnet.visualization.network_view import build_network_view, write_network_view_artifacts
 from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
-_NOT_IMPLEMENTED_COMMANDS = (
-    "match-communities",
-    "report",
-)
+_NOT_IMPLEMENTED_COMMANDS = ("match-communities",)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -805,6 +803,18 @@ def build_parser() -> argparse.ArgumentParser:
     _add_pipeline_arguments(pipeline)
     pipeline.add_argument("--output", default="data/reference/pipeline_run_summary.json", type=Path)
     pipeline.set_defaults(handler=_run_pipeline)
+
+    report = subparsers.add_parser(
+        "report", help="generate the validated methodology report from processed artifacts"
+    )
+    _add_pipeline_arguments(report)
+    report.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
+    report.add_argument("--regions", default="config/regions.yml", type=Path)
+    report.add_argument("--output", default="outputs/reports/methodology.md", type=Path)
+    report.add_argument(
+        "--summary", default="data/reference/methodology_report_summary.json", type=Path
+    )
+    report.set_defaults(handler=_build_methodology_report)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2626,6 +2636,45 @@ def _run_pipeline(args: argparse.Namespace) -> int:
     print(
         f"Pipeline complete: {counts.get('skipped_valid', 0)} valid stages skipped; "
         f"{sum(value for key, value in counts.items() if key != 'skipped_valid')} stages executed."
+    )
+    return 0
+
+
+def _build_methodology_report(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would generate the methodology report at {args.output} from validated summaries.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    command = "python -m gisnet.cli report --resume"
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-100"):
+            summary = build_methodology_report(
+                project_path=args.config,
+                topic_registry_path=args.topic_registry,
+                regions_path=args.regions,
+                output_path=args.output,
+            )
+            write_methodology_artifacts(
+                summary,
+                summary_path=args.summary,
+                report_path=args.output,
+                run_id=run_id,
+                project_path=args.config,
+                topic_registry_path=args.topic_registry,
+                regions_path=args.regions,
+                command=command,
+            )
+            _register_manifest("methodology_report", ".agent/manifests/methodology_report.json")
+            _register_manifest(
+                "methodology_report_summary",
+                ".agent/manifests/methodology_report_summary.json",
+            )
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        print(f"Methodology report failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Generated {summary['present_section_count']} methodology sections and "
+        f"validated {summary['figure_count']} processed-data figures."
     )
     return 0
 
