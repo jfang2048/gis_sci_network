@@ -674,3 +674,44 @@ and only versioned institution override rules may change the effective country.
 ### Exact next action
 
 Task: GISNET-052 — Enrich institutions with ROR. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T205824Z_0d202a0c53cf
+
+Started UTC: 2026-08-05T20:58:24Z
+Ended UTC: 2026-08-05T21:03:12Z
+Task: GISNET-052
+Initial git status: Clean on `main` at `0d202a0` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Add optional and resumable stable-ID ROR v2 enrichment without blocking institutions that lack a
+ROR ID, without guessing identity, and without overwriting raw OpenAlex metadata.
+
+### Work completed
+
+- Added one canonical ROR v2 normalizer shared by API, cached API, and local-dump transports.
+- Added atomic non-secret response caching and optional bounded singleton retrieval.
+- Added source-specific names, types, locations, relationships, status, schema version, and QA fields.
+- Preserved every OpenAlex and frozen-geography column unchanged in the enriched institution output.
+- Retrieved a deliberately bounded 25-record API sample, then finalized and repeated from cache.
+
+### Validation results
+
+- Institutions: 46,812 unique rows; valid source ROR IDs: 46,734; missing ROR IDs: 78.
+- ROR v2.1 records enriched: 25; not retrieved by the optional bounded run: 46,709.
+- API/dump normalization equivalence is covered by a transport-independent regression test.
+- Cache-only repeated outputs were byte-identical.
+- Institution output SHA-256: `10e0a06be3e4b5929ec0b82efd149c748b2098eee043a8ed5e2b190a4c71a772`.
+- QA output SHA-256: `4864be6f06371e1b95659e38c001598a405949d0ca4645b9333e05ec74209580`.
+- Ruff format/check passed; strict mypy passed; pytest passed (74 tests).
+
+### Privacy and recovery
+
+No API key, ROR client identifier, raw cache record, or large Parquet output is tracked. The public
+summary records the bounded coverage explicitly. A later run can resume API retrieval or use a
+versioned local ROR dump without changing the normalized schema.
+
+### Exact next action
+
+Task: GISNET-054 — Build organization and umbrella views.

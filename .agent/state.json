@@ -24,7 +24,8 @@
     "GISNET-043",
     "GISNET-050",
     "GISNET-051",
-    "GISNET-053"
+    "GISNET-053",
+    "GISNET-052"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -49,9 +50,12 @@
     "institution_geography_summary": ".agent/manifests/institution_geography_summary.json",
     "institution_master_summary": ".agent/manifests/institution_master_summary.json",
     "institution_metadata_qa": ".agent/manifests/institution_metadata_qa.json",
+    "institution_ror_qa": ".agent/manifests/institution_ror_qa.json",
+    "institution_ror_summary": ".agent/manifests/institution_ror_summary.json",
     "institution_type_profile": ".agent/manifests/institution_type_profile.json",
     "institutions": ".agent/manifests/institutions.json",
     "institutions_geographic": ".agent/manifests/institutions_geographic.json",
+    "institutions_ror": ".agent/manifests/institutions_ror.json",
     "raw_works_download_status": ".agent/manifests/raw_works_download_status.json",
     "topic_candidates": ".agent/manifests/topic_candidates.json",
     "topic_registry": ".agent/manifests/topic_registry.json",
@@ -67,8 +71,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T205331Z_8d7beb87aab6",
-  "last_updated_utc": "2026-08-05T20:56:10Z",
+  "last_successful_run_id": "20260805T205824Z_0d202a0c53cf",
+  "last_updated_utc": "2026-08-05T21:03:12Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
@@ -78,6 +82,7 @@
     "openalex_work_types": "retrieved-2026-08-05",
     "openalex_works": "retrieved-2026-08-05",
     "openalex_works_preview": "retrieved-2026-08-05",
+    "ror": "ror-schema-v2.1-bounded-retrieval-2026-08-05",
     "un_m49": "un-m49-retrieved-2026-08-05"
   }
 }

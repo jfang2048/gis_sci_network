@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T20:56:10Z",
+  "last_updated_utc": "2026-08-05T21:03:12Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -593,12 +593,27 @@
       "dependencies": [
         "GISNET-051"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T20:58:24Z",
+          "from": "TODO",
+          "reason": "Starting optional, resumable stable-ID ROR enrichment with identical API/dump normalization.",
+          "run_id": "20260805T205824Z_0d202a0c53cf",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T21:03:12Z",
+          "from": "IN_PROGRESS",
+          "reason": "Stable-ID ROR v2 API/cache/dump enrichment, explicit missingness, transport equivalence, and deterministic cache rerun acceptance checks passed.",
+          "run_id": "20260805T205824Z_0d202a0c53cf",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-052",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Stable-ID ROR v2 API/cache/dump enrichment, explicit missingness, transport equivalence, and deterministic cache rerun acceptance checks passed.",
+      "status_updated_at_utc": "2026-08-05T21:03:12Z"
     },
     {
       "dependencies": [

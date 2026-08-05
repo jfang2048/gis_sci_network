@@ -1,0 +1,27 @@
+{
+  "api_failed_count": 0,
+  "api_found_count": 0,
+  "api_requested_count": 0,
+  "conflict_or_missing_qa_count": 46787,
+  "generated_at_utc": "2026-08-05T21:02:09.335885Z",
+  "institution_count": 46812,
+  "logical_input_hash": "30b9e13f36fc3f99cb730eafa22e9d74682b9e50d3fcbdb0b690e9fbe831e247",
+  "mode": "cache",
+  "outputs": {
+    "institution_ror_qa": "data/processed/institution_ror_qa.parquet",
+    "institutions_ror": "data/processed/institutions_ror.parquet"
+  },
+  "record_count": 25,
+  "ror_dump_version": null,
+  "ror_schema_versions": [
+    "2.1"
+  ],
+  "schema_version": 1,
+  "stage_version": "institution-ror-2026-08-05-v1",
+  "status_counts": {
+    "enriched": 25,
+    "missing_ror_id": 78,
+    "not_retrieved": 46709
+  },
+  "unique_valid_ror_id_count": 46734
+}

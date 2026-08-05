@@ -1,1 +1,1 @@
-"""ROR enrichment support."""
+"""Research Organization Registry enrichment helpers."""

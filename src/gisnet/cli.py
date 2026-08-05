@@ -68,6 +68,7 @@ from gisnet.openalex.planner import (
     validate_query_plan,
     write_query_plan,
 )
+from gisnet.ror.enrich import enrich_institutions_with_ror, write_ror_artifacts
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
     BacklogStore,
@@ -79,7 +80,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "enrich-institutions",
     "build-corpus",
     "build-edges",
     "compute-metrics",
@@ -309,6 +309,31 @@ def build_parser() -> argparse.ArgumentParser:
         "--summary", default="data/reference/institution_geography_summary.json", type=Path
     )
     apply_geography.set_defaults(handler=_apply_geography)
+
+    enrich_institutions = subparsers.add_parser(
+        "enrich-institutions", help="optionally enrich stable institution IDs from ROR"
+    )
+    _add_pipeline_arguments(enrich_institutions)
+    enrich_institutions.add_argument(
+        "--institutions", default="data/processed/institutions_geographic.parquet", type=Path
+    )
+    enrich_institutions.add_argument(
+        "--output", default="data/processed/institutions_ror.parquet", type=Path
+    )
+    enrich_institutions.add_argument(
+        "--qa", default="data/processed/institution_ror_qa.parquet", type=Path
+    )
+    enrich_institutions.add_argument(
+        "--summary", default="data/reference/institution_ror_summary.json", type=Path
+    )
+    enrich_institutions.add_argument("--ror-cache", default="data/cache/ror", type=Path)
+    enrich_institutions.add_argument(
+        "--ror-mode", choices=("cache", "api", "dump"), default="cache"
+    )
+    enrich_institutions.add_argument("--ror-dump", type=Path)
+    enrich_institutions.add_argument("--ror-dump-version")
+    enrich_institutions.add_argument("--max-ror-lookups", type=int, default=0)
+    enrich_institutions.set_defaults(handler=_enrich_institutions)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1107,6 +1132,51 @@ def _apply_geography(args: argparse.Namespace) -> int:
     print(
         f"Mapped {summary['institution_count']} institutions; geography QA="
         f"{summary['geography_qa_count']}, manual overrides={summary['manual_override_count']}."
+    )
+    return 0
+
+
+def _enrich_institutions(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(
+            f"Would enrich {args.institutions} using ROR mode={args.ror_mode}, "
+            f"max-lookups={args.max_ror_lookups}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-052"):
+            summary = enrich_institutions_with_ror(
+                args.institutions,
+                output_path=args.output,
+                qa_path=args.qa,
+                cache_directory=args.ror_cache,
+                mode=args.ror_mode,
+                dump_path=args.ror_dump,
+                dump_version=args.ror_dump_version,
+                max_lookups=args.max_ror_lookups,
+            )
+            command = (
+                "python -m gisnet.cli enrich-institutions "
+                f"--institutions {args.institutions} --ror-mode {args.ror_mode} "
+                f"--max-ror-lookups {args.max_ror_lookups} --resume"
+            )
+            write_ror_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("institutions_ror", "institution_ror_qa", "institution_ror_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"ROR enrichment failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"ROR records={summary['record_count']}/{summary['unique_valid_ror_id_count']}; "
+        f"enriched={summary['status_counts'].get('enriched', 0)}, "
+        f"missing-id={summary['status_counts'].get('missing_ror_id', 0)}."
     )
     return 0
 
