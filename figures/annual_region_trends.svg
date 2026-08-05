@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="100%" height="100%" fill="white"/>
+<text x="100" y="42" font-family="sans-serif" font-size="25" font-weight="700">Annual regional GIS collaboration, 2010-2025</text>
+<text x="100" y="72" font-family="sans-serif" font-size="15" fill="#475569">Broad corpus · organization hierarchy · fractional edge weight · complete years</text>
+<line x1="100" y1="620.00" x2="1160" y2="620.00" stroke="#e2e8f0"/>
+<text x="88" y="625.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
+<line x1="100" y1="518.00" x2="1160" y2="518.00" stroke="#e2e8f0"/>
+<text x="88" y="523.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">5,083</text>
+<line x1="100" y1="416.00" x2="1160" y2="416.00" stroke="#e2e8f0"/>
+<text x="88" y="421.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">10,166</text>
+<line x1="100" y1="314.00" x2="1160" y2="314.00" stroke="#e2e8f0"/>
+<text x="88" y="319.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">15,249</text>
+<line x1="100" y1="212.00" x2="1160" y2="212.00" stroke="#e2e8f0"/>
+<text x="88" y="217.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">20,332</text>
+<line x1="100" y1="110.00" x2="1160" y2="110.00" stroke="#e2e8f0"/>
+<text x="88" y="115.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">25,415</text>
+<text x="100.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2010</text>
+<text x="170.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2011</text>
+<text x="241.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2012</text>
+<text x="312.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2013</text>
+<text x="382.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2014</text>
+<text x="453.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2015</text>
+<text x="524.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2016</text>
+<text x="594.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2017</text>
+<text x="665.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2018</text>
+<text x="736.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2019</text>
+<text x="806.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2020</text>
+<text x="877.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2021</text>
+<text x="948.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2022</text>
+<text x="1018.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2023</text>
+<text x="1089.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2024</text>
+<text x="1160.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2025</text>
+<polyline points="100.00,554.06 170.67,551.87 241.33,547.62 312.00,548.04 382.67,545.09 453.33,541.06 524.00,538.61 594.67,537.21 665.33,531.83 736.00,528.06 806.67,521.04 877.33,523.00 948.00,526.49 1018.67,526.36 1089.33,532.45 1160.00,526.53" fill="none" stroke="#2563eb" stroke-width="3"/>
+<line x1="100" y1="682" x2="128" y2="682" stroke="#2563eb" stroke-width="4"/>
+<text x="136" y="687" font-family="sans-serif" font-size="13">Americas — Americas</text>
+<polyline points="100.00,598.46 170.67,597.16 241.33,593.72 312.00,589.82 382.67,586.57 453.33,584.62 524.00,582.84 594.67,581.91 665.33,578.16 736.00,572.97 806.67,573.86 877.33,574.94 948.00,577.31 1018.67,578.78 1089.33,577.08 1160.00,571.30" fill="none" stroke="#dc2626" stroke-width="3"/>
+<line x1="440" y1="682" x2="468" y2="682" stroke="#dc2626" stroke-width="4"/>
+<text x="476" y="687" font-family="sans-serif" font-size="13">Americas — Asia</text>
+<polyline points="100.00,514.59 170.67,509.35 241.33,504.65 312.00,496.36 382.67,481.51 453.33,479.25 524.00,461.77 594.67,452.85 665.33,420.68 736.00,382.22 806.67,370.34 877.33,323.92 948.00,263.83 1018.67,227.55 1089.33,204.31 1160.00,110.00" fill="none" stroke="#059669" stroke-width="3"/>
+<line x1="780" y1="682" x2="808" y2="682" stroke="#059669" stroke-width="4"/>
+<text x="816" y="687" font-family="sans-serif" font-size="13">Asia — Asia</text>
+<polyline points="100.00,526.34 170.67,517.28 241.33,508.88 312.00,504.20 382.67,489.19 453.33,482.06 524.00,477.69 594.67,475.40 665.33,467.43 736.00,455.02 806.67,459.80 877.33,451.16 948.00,454.42 1018.67,452.05 1089.33,464.33 1160.00,460.11" fill="none" stroke="#7c3aed" stroke-width="3"/>
+<line x1="100" y1="658" x2="128" y2="658" stroke="#7c3aed" stroke-width="4"/>
+<text x="136" y="663" font-family="sans-serif" font-size="13">Europe — Europe</text>
+<text transform="translate(24 365.0) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Fractional collaboration weight</text>
+<text x="630.0" y="652" text-anchor="middle" font-family="sans-serif" font-size="14">Publication year (complete calendar years only)</text>
+</svg>

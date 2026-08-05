@@ -1,0 +1,16 @@
+{
+  "generated_at_utc": "2026-08-05T22:38:12.257308Z",
+  "logical_input_hash": "1c5f60539e206806b49db1879f845f5854b80d0a82c976945bf0c2cbd83f8718",
+  "outputs": {
+    "annual_region_trends_svg": "figures/annual_region_trends.svg",
+    "trend_series_year": "data/processed/trend_series_year.parquet",
+    "view_comparison_svg": "figures/view_comparison.svg"
+  },
+  "partial_years_included": false,
+  "schema_version": 1,
+  "stage_version": "annual-region-trends-2026-08-05-v1",
+  "static_format": "SVG",
+  "trend_row_count": 384,
+  "year_maximum": 2025,
+  "year_minimum": 2010
+}

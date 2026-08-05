@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T22:35:05Z",
+  "last_updated_utc": "2026-08-05T22:38:40Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1076,12 +1076,27 @@
         "GISNET-065",
         "GISNET-071"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T22:35:22Z",
+          "from": "TODO",
+          "reason": "Generating annual regional trend tables and publication-ready static SVG views with explicit encodings.",
+          "run_id": "20260805T223522Z_148a236ad06f",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:38:40Z",
+          "from": "IN_PROGRESS",
+          "reason": "Annual trend tables and labelled SVG exports passed data, year-policy, format, and quality checks.",
+          "run_id": "20260805T223522Z_148a236ad06f",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-090",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Annual trend tables and labelled SVG exports passed data, year-policy, format, and quality checks.",
+      "status_updated_at_utc": "2026-08-05T22:38:40Z"
     },
     {
       "dependencies": [

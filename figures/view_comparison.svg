@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="100%" height="100%" fill="white"/>
+<text x="100" y="42" font-family="sans-serif" font-size="25" font-weight="700">Strict/Broad and organization/umbrella comparison</text>
+<text x="100" y="72" font-family="sans-serif" font-size="15" fill="#475569">All cross-region pairs · fractional edge weight · complete calendar years</text>
+<line x1="100" y1="620.00" x2="1160" y2="620.00" stroke="#e2e8f0"/>
+<text x="88" y="625.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
+<line x1="100" y1="518.00" x2="1160" y2="518.00" stroke="#e2e8f0"/>
+<text x="88" y="523.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">1,432</text>
+<line x1="100" y1="416.00" x2="1160" y2="416.00" stroke="#e2e8f0"/>
+<text x="88" y="421.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">2,864</text>
+<line x1="100" y1="314.00" x2="1160" y2="314.00" stroke="#e2e8f0"/>
+<text x="88" y="319.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">4,296</text>
+<line x1="100" y1="212.00" x2="1160" y2="212.00" stroke="#e2e8f0"/>
+<text x="88" y="217.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">5,728</text>
+<line x1="100" y1="110.00" x2="1160" y2="110.00" stroke="#e2e8f0"/>
+<text x="88" y="115.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">7,160</text>
+<text x="100.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2010</text>
+<text x="170.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2011</text>
+<text x="241.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2012</text>
+<text x="312.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2013</text>
+<text x="382.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2014</text>
+<text x="453.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2015</text>
+<text x="524.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2016</text>
+<text x="594.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2017</text>
+<text x="665.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2018</text>
+<text x="736.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2019</text>
+<text x="806.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2020</text>
+<text x="877.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2021</text>
+<text x="948.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2022</text>
+<text x="1018.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2023</text>
+<text x="1089.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2024</text>
+<text x="1160.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2025</text>
+<polyline points="100.00,414.91 170.67,393.97 241.33,367.26 312.00,338.11 382.67,307.18 453.33,292.22 524.00,279.09 594.67,259.40 665.33,229.04 736.00,192.83 806.67,185.14 877.33,180.30 948.00,189.35 1018.67,177.21 1089.33,171.15 1160.00,110.00" fill="none" stroke="#2563eb" stroke-width="3"/>
+<line x1="100" y1="682" x2="128" y2="682" stroke="#2563eb" stroke-width="4"/>
+<text x="136" y="687" font-family="sans-serif" font-size="13">broad / organization</text>
+<polyline points="100.00,414.91 170.67,393.97 241.33,367.26 312.00,338.11 382.67,307.18 453.33,292.22 524.00,279.09 594.67,259.40 665.33,229.04 736.00,192.83 806.67,185.14 877.33,180.30 948.00,189.35 1018.67,177.21 1089.33,171.15 1160.00,110.00" fill="none" stroke="#dc2626" stroke-width="3"/>
+<line x1="440" y1="682" x2="468" y2="682" stroke="#dc2626" stroke-width="4"/>
+<text x="476" y="687" font-family="sans-serif" font-size="13">broad / umbrella</text>
+<polyline points="100.00,563.46 170.67,558.28 241.33,555.19 312.00,545.83 382.67,545.65 453.33,540.45 524.00,541.69 594.67,540.99 665.33,539.48 736.00,537.25 806.67,537.14 877.33,541.78 948.00,548.05 1018.67,550.17 1089.33,542.13 1160.00,528.03" fill="none" stroke="#059669" stroke-width="3"/>
+<line x1="780" y1="682" x2="808" y2="682" stroke="#059669" stroke-width="4"/>
+<text x="816" y="687" font-family="sans-serif" font-size="13">strict / organization</text>
+<polyline points="100.00,563.46 170.67,558.28 241.33,555.19 312.00,545.83 382.67,545.65 453.33,540.45 524.00,541.69 594.67,540.99 665.33,539.48 736.00,537.25 806.67,537.14 877.33,541.78 948.00,548.05 1018.67,550.17 1089.33,542.13 1160.00,528.03" fill="none" stroke="#7c3aed" stroke-width="3"/>
+<line x1="100" y1="658" x2="128" y2="658" stroke="#7c3aed" stroke-width="4"/>
+<text x="136" y="663" font-family="sans-serif" font-size="13">strict / umbrella</text>
+<text transform="translate(24 365.0) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Cross-region fractional weight</text>
+<text x="630.0" y="652" text-anchor="middle" font-family="sans-serif" font-size="14">Publication year (complete calendar years only)</text>
+</svg>

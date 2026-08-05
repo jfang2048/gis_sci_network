@@ -1,0 +1,47 @@
+{
+  "checksum_sha256": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820",
+  "column_count": 14,
+  "command": "python -m gisnet.cli build-figures --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:38:12.278253Z",
+  "dataset_name": "trend_series_year",
+  "git_commit": "148a236ad06f",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "corpus_view": 0,
+    "distinct_institution_pair_count": 0,
+    "distinct_work_count": 0,
+    "fractional_count": 0,
+    "full_count": 0,
+    "hierarchy_view": 0,
+    "is_intra_region": 0,
+    "normalized_share": 0,
+    "region_pair": 0,
+    "source_region": 0,
+    "target_region": 0,
+    "units_note": 0,
+    "year": 0,
+    "year_status": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "source_region",
+    "target_region"
+  ],
+  "row_count": 384,
+  "run_id": "20260805T223522Z_148a236ad06f",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/region_flows_year.json",
+    ".agent/manifests/graph_metrics_year.json"
+  ],
+  "source_versions": {
+    "trend_figure_policy": "annual-region-trends-2026-08-05-v1"
+  },
+  "status": "valid"
+}

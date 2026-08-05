@@ -100,10 +100,10 @@ from gisnet.validation.reproducibility import (
 )
 from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
+from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "match-communities",
-    "build-figures",
     "build-dashboard-data",
     "run-pipeline",
     "report",
@@ -687,6 +687,24 @@ def build_parser() -> argparse.ArgumentParser:
     sensitivity.add_argument("--duckdb-memory-limit", default="4GB")
     sensitivity.add_argument("--duckdb-threads", default=1, type=int)
     sensitivity.set_defaults(handler=_run_sensitivity)
+
+    figures = subparsers.add_parser(
+        "build-figures", help="build annual regional trend tables and static SVG figures"
+    )
+    _add_pipeline_arguments(figures)
+    figures.add_argument("--flows", default="data/processed/region_flows_year.parquet", type=Path)
+    figures.add_argument(
+        "--graph-metrics", default="data/processed/graph_metrics_year.parquet", type=Path
+    )
+    figures.add_argument("--output", default="data/processed/trend_series_year.parquet", type=Path)
+    figures.add_argument("--trend-figure", default="figures/annual_region_trends.svg", type=Path)
+    figures.add_argument("--comparison-figure", default="figures/view_comparison.svg", type=Path)
+    figures.add_argument(
+        "--summary", default="data/reference/annual_trends_summary.json", type=Path
+    )
+    figures.add_argument("--duckdb-memory-limit", default="4GB")
+    figures.add_argument("--duckdb-threads", default=1, type=int)
+    figures.set_defaults(handler=_build_figures)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2256,6 +2274,39 @@ def _run_sensitivity(args: argparse.Namespace) -> int:
         f"{summary['comparison_count']} sensitivity comparisons; "
         f"major changes={summary['major_change_count']}."
     )
+    return 0
+
+
+def _build_figures(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would build regional trend figures from {args.flows}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-090"):
+            summary = build_annual_trends(
+                args.flows,
+                args.graph_metrics,
+                output_path=args.output,
+                trend_figure_path=args.trend_figure,
+                comparison_figure_path=args.comparison_figure,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-figures --resume"
+            write_trend_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("trend_series_year", "annual_trends_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Trend figure build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(f"Built {summary['trend_row_count']} annual trend rows and two publication SVG figures.")
     return 0
 
 

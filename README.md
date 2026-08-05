@@ -71,6 +71,7 @@ uv run python -m gisnet.cli detect-communities --resume
 uv run python -m gisnet.cli build-layout --resume
 uv run python -m gisnet.cli audit-top-entities --resume
 uv run python -m gisnet.cli run-sensitivity --resume
+uv run python -m gisnet.cli build-figures --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

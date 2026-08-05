@@ -1279,3 +1279,38 @@ changes, and never overwrite a primary scientific output.
 ### Exact next action
 
 Task: GISNET-090 — Build annual trend figures.
+
+
+## Run 20260805T223522Z_148a236ad06f
+
+Started UTC: 2026-08-05T22:35:22Z
+Ended UTC: 2026-08-05T22:38:40Z
+Task: GISNET-090
+Initial git status: Clean on `main` at `148a236` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Generate complete-year annual regional trend data and publication-ready static figures with explicit
+axes, units, corpus, hierarchy, counting method, and year policy.
+
+### Work completed
+
+- Built annual macro-region trend rows for every corpus and hierarchy view.
+- Exported a six-series regional/intra-region SVG for the Broad organization view.
+- Exported a Strict/Broad and organization/umbrella cross-region comparison SVG.
+- Labelled fractional units and the complete-calendar-year policy in each figure.
+
+### Validation results
+
+- Trend rows: 384; years: 2010-2025; partial years included: 0.
+- Both 1200x720 SVG files parse as valid XML and expose their view boxes.
+- Trend data SHA-256: `0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820`.
+- Trend SVG SHA-256: `e8cd5819b1271d1ed0e0befd5f8a9bb552393727964cea252f1dfd74bdbb1cc9`.
+- Comparison SVG SHA-256: `de4f24766ac352a97d751ab9c54fdd17d637b30d9b0ba3ac2498a13594126e07`.
+- An initial summary-key failure was corrected before any manifest/state completion.
+- Ruff format/check passed; strict mypy passed; pytest passed (93 tests).
+
+### Exact next action
+
+Task: GISNET-091 — Build region collaboration matrix.
