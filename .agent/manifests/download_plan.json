@@ -1,0 +1,44 @@
+{
+  "checksum_sha256": "008b19095242883c40048a25d374b1253af8403383a321fa8b1f518e3e2f1e94",
+  "column_count": 13,
+  "command": "python -m gisnet.cli plan-download --download-config config/download.yml --registry config/topic_registry.yml --regions config/regions.yml --start-year 2010 --end-year 2025 --corpus all --output data/reference/download_plan.json",
+  "config_hashes": {
+    "download": "7e186b630bd73d2011aa287f22fc6dd35a4e3e3ab4020f4a69525138ecf278ef",
+    "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e",
+    "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
+  },
+  "created_at_utc": "2026-08-05T17:23:27.386312Z",
+  "dataset_name": "download_plan",
+  "git_commit": "7f6e3ece3a5e",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "country_codes": 0,
+    "country_shard_index": 0,
+    "parameters": 0,
+    "predicted_page_count": 0,
+    "predicted_result_count": 0,
+    "preview_cost_usd": 0,
+    "preview_retrieved_at": 0,
+    "preview_status": 0,
+    "query_hash": 0,
+    "query_id": 0,
+    "topic_ids": 0,
+    "topic_shard_index": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "query_id"
+  ],
+  "row_count": 336,
+  "run_id": "20260805T170559Z_7f6e3ec",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/topic_registry.json",
+    ".agent/manifests/country_regions.json"
+  ],
+  "source_versions": {
+    "openalex_works_preview": "retrieved-2026-08-05"
+  },
+  "status": "valid"
+}

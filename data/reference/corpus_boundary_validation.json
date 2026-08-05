@@ -1,0 +1,160 @@
+{
+  "annotation_counts": {
+    "unlabelled": 36
+  },
+  "annotation_sample_hash": "f3952f6ef66f277477bbd8fc52ff7ea29e99cdaeadbf4c95621b98486596d678",
+  "broad_only_topic_count": 17,
+  "broad_topic_count": 23,
+  "excluded_topic_count": 10,
+  "known_positive_recall": {
+    "reason": "manually reviewed known-positive reference set",
+    "recovered_count": 10,
+    "reference_count": 10,
+    "status": "measured",
+    "value": 1.0
+  },
+  "known_positive_results": [
+    {
+      "expected_corpus": "strict",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10757",
+        "T10799",
+        "T12325"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit GIS network acquisition and spatial analysis methods",
+      "title": "OSMnx: New methods for acquiring constructing analyzing and visualizing complex street networks",
+      "work_id": "W2549766072"
+    },
+    {
+      "expected_corpus": "strict",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10757",
+        "T11106",
+        "T11980"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit core GIS scholarly work",
+      "title": "Geographic Information Systems",
+      "work_id": "W1975534106"
+    },
+    {
+      "expected_corpus": "strict",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10004",
+        "T10770",
+        "T14339"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit geostatistical mapping and spatial prediction",
+      "title": "SoilGrids250m: Global gridded soil information based on machine learning",
+      "work_id": "W2588003345"
+    },
+    {
+      "expected_corpus": "strict",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10004",
+        "T10770",
+        "T12157"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit global geostatistical mapping with uncertainty",
+      "title": "SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty",
+      "work_id": "W3166420679"
+    },
+    {
+      "expected_corpus": "strict",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10770",
+        "T12157",
+        "T13067"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit kriging and spatial modelling method",
+      "title": "An Alternative Implementation of Indicator Kriging on Mineral Reserves 3D Modeling",
+      "work_id": "W2195978296"
+    },
+    {
+      "expected_corpus": "broad",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10111",
+        "T10226",
+        "T11164"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit satellite land-cover Earth observation",
+      "title": "The 30 m annual land cover dataset and its dynamics in China from 1990 to 2019",
+      "work_id": "W3188524028"
+    },
+    {
+      "expected_corpus": "broad",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10466",
+        "T11234",
+        "T11312"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit satellite-based Earth observation and environmental modelling",
+      "title": "GLEAM v3: satellite-based land evaporation and root-zone soil moisture",
+      "work_id": "W2485420366"
+    },
+    {
+      "expected_corpus": "broad",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10801",
+        "T11405",
+        "T12983"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit satellite photogrammetry and image geometry",
+      "title": "Epipolar Resampling from Kompsat-2 and Kompsat-3",
+      "work_id": "W1992649052"
+    },
+    {
+      "expected_corpus": "broad",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10191",
+        "T10719",
+        "T11211"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Explicit point-cloud processing methods",
+      "title": "3D is here: Point Cloud Library (PCL)",
+      "work_id": "W2152864241"
+    },
+    {
+      "expected_corpus": "broad",
+      "is_recovered": true,
+      "observed_topic_ids": [
+        "T10036",
+        "T10191",
+        "T10531"
+      ],
+      "provenance": "OpenAlex Topic sample reviewed 2026-08-05",
+      "reason": "Geospatial computer vision localization and mapping benchmark",
+      "title": "Are we ready for autonomous driving? The KITTI vision benchmark suite",
+      "work_id": "W2150066425"
+    }
+  ],
+  "precision": {
+    "label_count": 0,
+    "minimum_required": 10,
+    "reason": "insufficient human labels",
+    "status": "not_estimated",
+    "value": null
+  },
+  "registry_hash": "5138d5b0c1e2a147b026e99071149086932d8f2f7f821492ffe75d19d2cb75e6",
+  "schema_version": 1,
+  "strict_topic_count": 6,
+  "uncertain_topic_count": 7,
+  "validation_version": "corpus-boundary-2026-08-05-v1"
+}

@@ -201,7 +201,39 @@ class BacklogStore:
             and all(dependency in done for dependency in task.dependencies)
             and (task.priority != "OPTIONAL" or "GISNET-104" in done)
         ]
-        return min(candidates, key=lambda task: priorities.get(task.priority, 99), default=None)
+        order = {task.id: index for index, task in enumerate(backlog.tasks)}
+        return min(
+            candidates,
+            key=lambda task: (
+                priorities.get(task.priority, 99),
+                _task_category_rank(task.id),
+                order[task.id],
+            ),
+            default=None,
+        )
+
+
+def _task_category_rank(task_id: str) -> int:
+    """Encode the backlog's within-priority research-before-acquisition ordering."""
+    try:
+        number = int(task_id.rsplit("-", 1)[-1])
+    except ValueError:
+        return 99
+    if 1 <= number <= 4:
+        return 0  # state and recovery
+    if 10 <= number <= 19 or 30 <= number <= 40:
+        return 1  # research definitions and reference policy
+    if 20 <= number <= 29 or 41 <= number <= 42:
+        return 2  # source acquisition
+    if 43 <= number <= 61:
+        return 3  # normalization
+    if 62 <= number <= 79:
+        return 4  # graph construction and analysis
+    if 80 <= number <= 89:
+        return 5  # validation
+    if 90 <= number <= 99:
+        return 6  # visualization
+    return 7  # reporting and release
 
 
 class LockHeldError(RuntimeError):

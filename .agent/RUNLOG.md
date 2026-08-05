@@ -229,3 +229,99 @@ The registry is explicitly labelled provisional. See `.agent/decisions.md` and
 ### Exact next action
 
 Task: GISNET-011 — Profile institution types. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T170559Z_7f6e3ec
+
+Started UTC: 2026-08-05T17:05:59Z
+Ended UTC: 2026-08-05T17:24:50Z
+Task: GISNET-011, GISNET-012, GISNET-034, GISNET-040, GISNET-023, and GISNET-041
+Initial git status: Clean on `main` at `7f6e3ec`.
+Final git status: Clean after the required local commit (verified at run end).
+
+### Objective
+
+Freeze explicit institution/work-type policies, audit the provisional corpus boundary, and build
+a deterministic, count-previewed bulk work-query plan without overstating human validation.
+
+### Work completed
+
+- Profiled all nine observed OpenAlex institution types and mapped every one to primary,
+  secondary-only, or excluded status; no observed type is unmapped.
+- Added a validated institution override registry supporting keep, collapse, replace, primary
+  exclusion, and manual-country actions with provenance, cycle detection, and audit output.
+- Created a 36-row deterministic boundary annotation sheet and a 10-work known-positive reference.
+  Precision remains withheld because the rows do not yet have human relevance labels.
+- Profiled 25 work types in both Topic corpora, inspected conference/preprint-like samples, and
+  froze independently configurable primary, preprint, expanded, and excluded policies.
+- Added a deterministic bounded query planner and dry-run CLI with stable query IDs, source-limit
+  checks, full country/Topic coverage validation, and explicit duplicate semantics.
+- Previewed and saved 336 year/Topic/country shards for 2010–2025 and verified a cache-only rerun
+  produced an identical download-plan checksum.
+- Adjusted equal-priority scheduling so research definitions precede source acquisition.
+
+### Files changed
+
+- `.agent/RUNLOG.md`, `.agent/backlog.json`, `.agent/decisions.md`, `.agent/state.json`
+- `.agent/manifests/{corpus_boundary_validation,download_plan,institution_type_profile,work_type_profile}.json`
+- `README.md`
+- `config/{download.yml,institution_overrides.csv,institution_types.yml,known_positive_works.csv,work_types.yml}`
+- `data/reference/{corpus_boundary_annotations.csv,corpus_boundary_validation.json,download_plan.json,institution_type_profile.json,work_type_profile.json}`
+- `outputs/reports/corpus_boundary_validation.md`
+- `src/gisnet/cli.py`, `src/gisnet/state.py`
+- `src/gisnet/corpus/{validation.py,work_types.py}`
+- `src/gisnet/institutions/{overrides.py,types.py}`
+- `src/gisnet/openalex/planner.py`
+- `tests/unit/test_{corpus_validation,institution_overrides,institution_types,query_planner,state,work_types}.py`
+- `data/cache/openalex/pages/**` (ignored compressed count/type response cache)
+
+### Commands executed
+
+- Complete run-start repository, backlog, state, README, AGENTS, and run-log inspection.
+- Live bounded grouped profiles for OpenAlex institution and work types plus inspection samples.
+- `uv run python -m gisnet.cli validate-corpus-boundary`.
+- `uv run python -m gisnet.cli plan-download --dry-run` followed by live count preview.
+- A second cache-backed plan preview with artifact SHA-256 equality verification.
+- Ruff format/check, strict mypy, pytest with branch coverage, invariants, and credential scan.
+
+### Validation results
+
+- Institution types: 9 observed, 9 explicitly mapped, 0 unmapped.
+- Boundary sample: 36 versioned rows; precision `insufficient_labels`; known-positive reference
+  recovery 10/10 with an explicit small-reference limitation.
+- Work types: 25 observed in both corpora, 25 mapped, 18 inspection samples, 0 unmapped.
+- Query plan: 336 unique stable IDs, 23 Topics, 160 target countries, complete 2010–2025 years;
+  all Topic shards <=10 and country shards <=25; repeated artifact checksum identical.
+- Preview: 1,561,250 returned records including expected duplicates, 7,975 estimated bulk pages,
+  USD 7.975 estimated bulk page cost, and USD 0.0336 observed preview cost.
+- Ruff: passed. Strict mypy: passed. Pytest: 65 passed; branch-aware coverage 72%.
+- Repository credential-value scan: clean.
+
+### Data and configuration hashes
+
+- Institution-type profile: `0587493821384c1d42840bfe3a9e3e60024fc0e075b7d82e1ef20ce165ebcaf0`
+- Corpus-boundary validation: `3945915039a3622ab26cf3bfe6f1a6cc11cd745ddbb442bd2da8573b4b95627d`
+- Work-type profile: `007e3f142347f90372a37c0149489b812ff288689211d84e75dfc7cf79f6240e`
+- Download plan: `008b19095242883c40048a25d374b1253af8403383a321fa8b1f518e3e2f1e94`
+- Download logical plan hash: `18d3dfc71df6488f6f1ecd9b1030c005015105636fe6ceff6b72e013ad93da2d`
+
+### Checkpoints written
+
+- `.agent/state.json` and `.agent/backlog.json`
+- Four new dataset manifests listed above
+- 336 count-preview cache pages plus grouped-profile and inspection cache pages
+
+### Failures or blockers
+
+No unresolved blocker. The host has no global `python`/`ruff`; project-local `.venv` commands were
+used. One state-hash update initially passed a CSV to the YAML semantic-hash helper; the lock was
+released safely, the already-completed task transition remained valid, and raw-byte SHA-256 was
+then used for CSV configuration without data loss.
+
+### Decisions made
+
+See `.agent/decisions.md`. Preview volume includes expected duplicate coverage and is not presented
+as a unique corpus count. No source identifiers, human labels, or corrections were invented.
+
+### Exact next action
+
+Task: GISNET-042 — Download raw Works. Command: `uv run python -m gisnet.cli next-task`.

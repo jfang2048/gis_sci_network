@@ -1,4 +1,54 @@
 schema_version: 1
-status: pending_source_profile
-unknown_policy: unknown
-types: {}
+policy_version: openalex-institution-types-2026-08-05-v1
+review_status: provisional
+unknown_policy:
+  analytical_scope: unknown
+  normalized_category: unknown
+  is_primary_research_scope: false
+  reason: Future or missing source types are retained and flagged for review.
+types:
+  education:
+    analytical_scope: primary
+    normalized_category: education
+    is_primary_research_scope: true
+    reason: Universities and other education institutions are in the initial primary scope.
+  government:
+    analytical_scope: primary
+    normalized_category: government_research
+    is_primary_research_scope: true
+    reason: Provisional source-level proxy for government research organizations.
+  nonprofit:
+    analytical_scope: primary
+    normalized_category: nonprofit_research
+    is_primary_research_scope: true
+    reason: Provisional source-level proxy for nonprofit research organizations.
+  facility:
+    analytical_scope: primary
+    normalized_category: research_facility
+    is_primary_research_scope: true
+    reason: Research facilities are explicitly included in the initial primary scope.
+  healthcare:
+    analytical_scope: secondary
+    normalized_category: healthcare
+    is_primary_research_scope: false
+    reason: Retained for expanded-scope sensitivity analysis.
+  company:
+    analytical_scope: secondary
+    normalized_category: company
+    is_primary_research_scope: false
+    reason: Retained for expanded-scope sensitivity analysis.
+  archive:
+    analytical_scope: secondary
+    normalized_category: archive
+    is_primary_research_scope: false
+    reason: Retained for expanded-scope sensitivity analysis.
+  other:
+    analytical_scope: secondary
+    normalized_category: other
+    is_primary_research_scope: false
+    reason: Retained and flagged rather than silently discarded.
+  funder:
+    analytical_scope: excluded
+    normalized_category: funder
+    is_primary_research_scope: false
+    reason: Funding bodies are retained in normalized data but excluded from research-performing scope.

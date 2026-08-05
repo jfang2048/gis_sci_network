@@ -11,7 +11,7 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
-from gisnet.config import config_file_hash, load_project_config
+from gisnet.config import config_file_hash, load_project_config, load_yaml
 from gisnet.corpus.topics import (
     discover_candidate_topics,
     freeze_topic_registry,
@@ -23,7 +23,24 @@ from gisnet.corpus.topics import (
     write_frozen_topic_registry,
     write_sample_artifacts,
 )
+from gisnet.corpus.validation import (
+    build_boundary_sample,
+    evaluate_boundary,
+    load_known_positives,
+    write_annotation_sheet,
+    write_boundary_artifacts,
+)
+from gisnet.corpus.work_types import (
+    load_work_type_policy,
+    profile_work_types,
+    write_work_type_profile,
+)
 from gisnet.geography import load_region_registry, write_mapping_csv
+from gisnet.institutions.types import (
+    load_institution_type_policy,
+    profile_institution_types,
+    write_institution_type_profile,
+)
 from gisnet.openalex.cache import RawResponseCache
 from gisnet.openalex.client import (
     AuthenticationError,
@@ -32,6 +49,13 @@ from gisnet.openalex.client import (
     OpenAlexError,
     RateLimitError,
     ResponseError,
+)
+from gisnet.openalex.planner import (
+    build_query_plan,
+    load_download_planner_config,
+    preview_query_plan,
+    validate_query_plan,
+    write_query_plan,
 )
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
@@ -44,7 +68,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "plan-download",
     "download-works",
     "normalize-works",
     "extract-institutions",
@@ -94,6 +117,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     regions.set_defaults(handler=_validate_regions)
 
+    institution_types = subparsers.add_parser(
+        "profile-institution-types", help="profile and map current OpenAlex institution types"
+    )
+    _add_pipeline_arguments(institution_types)
+    institution_types.add_argument("--policy", default="config/institution_types.yml", type=Path)
+    institution_types.add_argument(
+        "--output", default="data/reference/institution_type_profile.json", type=Path
+    )
+    institution_types.set_defaults(handler=_profile_institution_types)
+
     discover = subparsers.add_parser(
         "discover-topics", help="search OpenAlex for evidence-ranked candidate Topics"
     )
@@ -121,6 +154,48 @@ def build_parser() -> argparse.ArgumentParser:
     freeze.add_argument("--decisions", default="config/topic_decisions.yml", type=Path)
     freeze.add_argument("--output", default="config/topic_registry.yml", type=Path)
     freeze.set_defaults(handler=_freeze_topics)
+
+    boundary = subparsers.add_parser(
+        "validate-corpus-boundary",
+        help="build a deterministic annotation sample and supported boundary metrics",
+    )
+    _add_pipeline_arguments(boundary)
+    boundary.add_argument("--registry", default="config/topic_registry.yml", type=Path)
+    boundary.add_argument("--samples", default="data/interim/topic_work_samples.json", type=Path)
+    boundary.add_argument("--known-positives", default="config/known_positive_works.csv", type=Path)
+    boundary.add_argument(
+        "--annotations", default="data/reference/corpus_boundary_annotations.csv", type=Path
+    )
+    boundary.add_argument(
+        "--metrics", default="data/reference/corpus_boundary_validation.json", type=Path
+    )
+    boundary.add_argument(
+        "--report", default="outputs/reports/corpus_boundary_validation.md", type=Path
+    )
+    boundary.add_argument("--per-group", default=12, type=int)
+    boundary.set_defaults(handler=_validate_corpus_boundary)
+
+    work_types = subparsers.add_parser(
+        "profile-work-types", help="profile selected-corpus work types and inspection samples"
+    )
+    _add_pipeline_arguments(work_types)
+    work_types.add_argument("--policy", default="config/work_types.yml", type=Path)
+    work_types.add_argument("--registry", default="config/topic_registry.yml", type=Path)
+    work_types.add_argument("--output", default="data/reference/work_type_profile.json", type=Path)
+    work_types.set_defaults(handler=_profile_work_types)
+
+    plan_download = subparsers.add_parser(
+        "plan-download", help="build and preview deterministic OpenAlex work-query shards"
+    )
+    _add_pipeline_arguments(plan_download)
+    plan_download.add_argument("--download-config", default="config/download.yml", type=Path)
+    plan_download.add_argument("--registry", default="config/topic_registry.yml", type=Path)
+    plan_download.add_argument("--regions", default="config/regions.yml", type=Path)
+    plan_download.add_argument("--output", default="data/reference/download_plan.json", type=Path)
+    plan_download.add_argument(
+        "--skip-preview", action="store_true", help="write a validated plan without API counts"
+    )
+    plan_download.set_defaults(handler=_plan_download)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -249,6 +324,49 @@ def _validate_regions(args: argparse.Namespace) -> int:
     print(f"Mapping hash: {registry.semantic_hash}")
     if args.write_csv:
         print(f"Wrote validated CSV: {args.write_csv}")
+    return 0
+
+
+def _profile_institution_types(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        policy = load_institution_type_policy(args.policy)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Institution-type configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would issue one grouped institution request and write {args.output}.")
+        return 0
+    if not get_openalex_api_key():
+        print("Institution-type profiling requires an OpenAlex API key.", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-011"):
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                payload = profile_institution_types(client, cache, policy, force=args.force)
+            command = (
+                "python -m gisnet.cli profile-institution-types "
+                f"--policy {args.policy} --output {args.output}"
+            )
+            write_institution_type_profile(
+                payload,
+                path=args.output,
+                policy_path=args.policy,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest(
+                "institution_type_profile", ".agent/manifests/institution_type_profile.json"
+            )
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Institution-type profiling failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Profiled {payload['observed_type_count']} institution types; "
+        f"unmapped={len(payload['unmapped_observed_types'])}."
+    )
     return 0
 
 
@@ -396,6 +514,198 @@ def _freeze_topics(args: argparse.Namespace) -> int:
         f"Frozen {len(registry['topics'])} Topics to {args.output}; "
         f"strict={len(registry['strict_topic_ids'])}, broad={len(registry['broad_topic_ids'])}; "
         f"status={limitation}."
+    )
+    return 0
+
+
+def _validate_corpus_boundary(args: argparse.Namespace) -> int:
+    try:
+        registry = load_yaml(args.registry)
+        if not isinstance(registry, dict):
+            raise ValueError("Topic registry must be a mapping")
+        samples = load_candidate_payload(args.samples)
+        known_positives = load_known_positives(args.known_positives)
+        project = load_project_config(args.config)
+        records = build_boundary_sample(
+            registry,
+            samples,
+            seed=project.random_seed,
+            per_group=args.per_group,
+            existing_annotation_path=args.annotations,
+        )
+        metrics = evaluate_boundary(records, known_positives, registry, samples)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Corpus-boundary validation inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(
+            f"Validated boundary inputs; would write {len(records)} annotation rows, "
+            f"precision={metrics['precision']['status']}."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-034"):
+            write_annotation_sheet(records, args.annotations)
+            command = (
+                "python -m gisnet.cli validate-corpus-boundary "
+                f"--registry {args.registry} --samples {args.samples} "
+                f"--known-positives {args.known_positives} --annotations {args.annotations}"
+            )
+            write_boundary_artifacts(
+                metrics,
+                records,
+                metrics_path=args.metrics,
+                report_path=args.report,
+                run_id=run_id,
+                registry_path=args.registry,
+                known_positive_path=args.known_positives,
+                command=command,
+            )
+            _register_manifest(
+                "corpus_boundary_validation",
+                ".agent/manifests/corpus_boundary_validation.json",
+            )
+    except (OSError, ValueError) as exc:
+        print(f"Corpus-boundary validation failed safely: {exc}", file=sys.stderr)
+        return 3
+    recall = metrics["known_positive_recall"]
+    print(
+        f"Wrote {len(records)} annotation rows; precision={metrics['precision']['status']}; "
+        f"known-positive recall={recall['status']} ({recall['recovered_count']}/"
+        f"{recall['reference_count']})."
+    )
+    return 0
+
+
+def _profile_work_types(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        policy = load_work_type_policy(args.policy)
+        registry = load_yaml(args.registry)
+        if not isinstance(registry, dict):
+            raise ValueError("Topic registry must be a mapping")
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Work-type profile inputs failed: {exc}", file=sys.stderr)
+        return 2
+    start_year = args.start_year or project.analysis.start_year
+    end_year = args.end_year or project.analysis.end_year
+    if args.dry_run:
+        print(
+            f"Would issue two grouped profiles and six inspection queries for "
+            f"{start_year}-{end_year}; output={args.output}."
+        )
+        return 0
+    if not get_openalex_api_key():
+        print("Work-type profiling requires an OpenAlex API key.", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-040"):
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                payload = profile_work_types(
+                    client,
+                    cache,
+                    policy,
+                    registry,
+                    start_year=start_year,
+                    end_year=end_year,
+                    force=args.force,
+                )
+            command = (
+                "python -m gisnet.cli profile-work-types "
+                f"--policy {args.policy} --registry {args.registry} "
+                f"--start-year {start_year} --end-year {end_year} --output {args.output}"
+            )
+            write_work_type_profile(
+                payload,
+                path=args.output,
+                policy_path=args.policy,
+                registry_path=args.registry,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest("work_type_profile", ".agent/manifests/work_type_profile.json")
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Work-type profiling failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Profiled {len(payload['records'])} corpus/type rows and "
+        f"{len(payload['inspection_samples'])} inspection samples; "
+        f"unmapped={len(payload['unmapped_observed_types'])}."
+    )
+    return 0
+
+
+def _plan_download(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        planner_config = load_download_planner_config(args.download_config)
+        registry = load_yaml(args.registry)
+        if not isinstance(registry, dict):
+            raise ValueError("Topic registry must be a mapping")
+        region_registry = load_region_registry(args.regions)
+        start_year = args.start_year or project.analysis.start_year
+        end_year = args.end_year or project.analysis.end_year
+        plan = build_query_plan(
+            registry,
+            region_registry,
+            planner_config,
+            start_year=start_year,
+            end_year=end_year,
+            corpus=args.corpus,
+        )
+        validate_query_plan(plan, planner_config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Download-plan inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(
+            f"Validated {plan['query_count']} deterministic query shards for "
+            f"{len(plan['topic_ids'])} Topics, {len(plan['target_country_codes'])} countries, "
+            f"and {end_year - start_year + 1} years; no request or write performed."
+        )
+        return 0
+    if not args.skip_preview and not get_openalex_api_key():
+        print("Download-plan preview requires an OpenAlex API key.", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-041"):
+            if not args.skip_preview:
+                cache = RawResponseCache(project.openalex.cache_directory)
+                with OpenAlexClient(project.openalex) as client:
+                    preview_query_plan(plan, client, cache, planner_config, force=args.force)
+            validate_query_plan(plan, planner_config)
+            command = (
+                "python -m gisnet.cli plan-download "
+                f"--download-config {args.download_config} --registry {args.registry} "
+                f"--regions {args.regions} --start-year {start_year} --end-year {end_year} "
+                f"--corpus {args.corpus} --output {args.output}"
+            )
+            if args.skip_preview:
+                command += " --skip-preview"
+            write_query_plan(
+                plan,
+                path=args.output,
+                run_id=run_id,
+                download_config_path=args.download_config,
+                topic_registry_path=args.registry,
+                region_registry_path=args.regions,
+                command=command,
+            )
+            _register_manifest("download_plan", ".agent/manifests/download_plan.json")
+    except (OpenAlexError, OSError, ValueError) as exc:
+        print(f"Download planning failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Wrote {plan['query_count']} query shards to {args.output}; "
+        f"preview={plan['preview_status']}, "
+        f"predicted records including duplicates="
+        f"{plan['predicted_result_volume_including_duplicates']}, "
+        f"requests={plan['predicted_request_count']}, "
+        f"estimated bulk cost USD={plan['estimated_bulk_cost_usd']}."
     )
     return 0
 

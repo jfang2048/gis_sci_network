@@ -1,3 +1,134 @@
 schema_version: 1
-status: pending_corpus_profile
-types: {}
+policy_version: openalex-work-types-2026-08-05-v1
+review_status: provisional
+unknown_policy:
+  primary: false
+  preprint_sensitivity: false
+  expanded_sensitivity: false
+  reason: Unknown future types are retained in raw data and flagged for policy review.
+types:
+  article:
+    primary: true
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Peer-reviewed article-like scholarly output.
+  conference-paper:
+    primary: true
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Full conference-like scholarly output.
+  review:
+    primary: true
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Peer-reviewed review article retained as article-like output.
+  data-paper:
+    primary: true
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Peer-reviewed article whose scholarly contribution describes a dataset.
+  software-paper:
+    primary: true
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Peer-reviewed article whose scholarly contribution describes software.
+  preprint:
+    primary: false
+    preprint_sensitivity: true
+    expanded_sensitivity: true
+    reason: Separate sensitivity view pending version-family representative selection.
+  conference-abstract:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Expanded conference sensitivity only; abstracts may not represent full papers.
+  dataset:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Scholarly data object retained outside the article/conference primary policy.
+  software:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Software object retained in expanded sensitivity only.
+  book:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Book output retained in expanded type sensitivity.
+  book-chapter:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Book chapter retained in expanded type sensitivity.
+  dissertation:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Dissertation retained in expanded type sensitivity.
+  report:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Report retained in expanded type sensitivity.
+  standard:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: true
+    reason: Standard retained in expanded type sensitivity.
+  libguides:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Library guide is not an article-like or conference-like research output.
+  other:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Unspecified source type is retained and excluded pending review.
+  reference-entry:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Reference entry is not included as a primary research output.
+  peer-review:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Review report is metadata about another scholarly output.
+  paratext:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Paratext is explicitly excluded from meaningful scholarly work identities.
+  book-review:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Book review is excluded from the primary research-output corpus.
+  editorial:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Editorial material is excluded from the primary research-output corpus.
+  erratum:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Correction metadata is not a distinct included research contribution.
+  supplementary-materials:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Supplementary material remains linked to its primary work rather than counted separately.
+  letter:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Letter is excluded from the primary article-like policy.
+  retraction:
+    primary: false
+    preprint_sensitivity: false
+    expanded_sensitivity: false
+    reason: Retraction notices and retracted works are excluded by policy.

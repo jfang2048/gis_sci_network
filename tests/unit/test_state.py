@@ -122,3 +122,20 @@ def test_output_staleness_uses_schema_config_and_source_versions() -> None:
         config_hashes={"project": "changed"},
         source_versions={"openalex": "b"},
     )
+
+
+def test_scheduler_prefers_research_definition_before_raw_acquisition(tmp_path: Path) -> None:
+    path = tmp_path / "backlog.json"
+    path.write_text(
+        json.dumps(
+            {
+                "source": "test",
+                "tasks": [
+                    {"id": "GISNET-023", "priority": "P1", "status": "TODO"},
+                    {"id": "GISNET-034", "priority": "P1", "status": "TODO"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert BacklogStore(path).next_unblocked().id == "GISNET-034"  # type: ignore[union-attr]

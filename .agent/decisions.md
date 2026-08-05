@@ -35,3 +35,32 @@ candidate audit rather than being replaced with invented IDs. Each candidate rec
 deterministic work samples across three year and two citation strata. The resulting registry
 contains 6 Strict Topics and 23 Broad Topics (including Strict), with 7 uncertain Topics held
 outside primary results. All decisions remain provisional until human review.
+
+
+## 2026-08-05 — Institution and work-type policies
+
+All nine institution types observed in the live OpenAlex profile have explicit configurable
+mappings. Education, government, nonprofit, and facility are primary; archive, company,
+healthcare, and other are retained only for secondary views; funder is excluded from institutional
+nodes. The override registry remains empty rather than inventing entity corrections, while its
+validated schema supports keep, collapse, replace, primary exclusion, and manual country actions.
+
+All 25 work types observed in both Topic corpora are explicitly mapped. Articles, conference
+papers, reviews, data papers, and software papers form the primary view. Preprints are a distinct
+sensitivity view, and other scholarly long-form or grey-literature types are available only in the
+expanded view. Unknown future types remain raw and flagged rather than silently included.
+
+## 2026-08-05 — Boundary evidence and bulk query plan
+
+The corpus-boundary sheet contains 36 deterministic rows across Strict, Broad-only, and
+excluded/uncertain controls. Precision is withheld because none has a human relevance label.
+Recovery of 10/10 manually reviewed known-positive sampled works is reported only as small
+reference-set recall, never as population recall.
+
+The bulk plan queries the 23-topic Broad superset so one acquisition can derive both Strict and
+Broad views. It contains 336 deterministic year/Topic/country shards covering 160 codes in Europe,
+Asia, and the Americas for complete years 2010–2025. Count previews estimate 1,561,250 returned
+records including shard duplicates, 7,975 bulk page requests, and USD 7.975 under the configured
+per-page planning assumption. Duplicate coverage is intentional; normalization must deduplicate by
+OpenAlex Work ID and retain all source query IDs. These are preview estimates, not observed corpus
+counts or a spending authorization.

@@ -1,0 +1,100 @@
+{
+  "observed_type_count": 9,
+  "policy_version": "openalex-institution-types-2026-08-05-v1",
+  "profile_version": "openalex-institution-types-2026-08-05",
+  "records": [
+    {
+      "analytical_scope": "secondary",
+      "institution_count": 3230,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": false,
+      "mapping_reason": "Retained for expanded-scope sensitivity analysis.",
+      "normalized_category": "archive",
+      "source_display_name": "archive",
+      "source_type": "archive"
+    },
+    {
+      "analytical_scope": "secondary",
+      "institution_count": 35909,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": false,
+      "mapping_reason": "Retained for expanded-scope sensitivity analysis.",
+      "normalized_category": "company",
+      "source_display_name": "company",
+      "source_type": "company"
+    },
+    {
+      "analytical_scope": "primary",
+      "institution_count": 26438,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": true,
+      "mapping_reason": "Universities and other education institutions are in the initial primary scope.",
+      "normalized_category": "education",
+      "source_display_name": "education",
+      "source_type": "education"
+    },
+    {
+      "analytical_scope": "primary",
+      "institution_count": 14643,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": true,
+      "mapping_reason": "Research facilities are explicitly included in the initial primary scope.",
+      "normalized_category": "research_facility",
+      "source_display_name": "facility",
+      "source_type": "facility"
+    },
+    {
+      "analytical_scope": "excluded",
+      "institution_count": 565,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": false,
+      "mapping_reason": "Funding bodies are retained in normalized data but excluded from research-performing scope.",
+      "normalized_category": "funder",
+      "source_display_name": "funder",
+      "source_type": "funder"
+    },
+    {
+      "analytical_scope": "primary",
+      "institution_count": 8884,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": true,
+      "mapping_reason": "Provisional source-level proxy for government research organizations.",
+      "normalized_category": "government_research",
+      "source_display_name": "government",
+      "source_type": "government"
+    },
+    {
+      "analytical_scope": "secondary",
+      "institution_count": 14812,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": false,
+      "mapping_reason": "Retained for expanded-scope sensitivity analysis.",
+      "normalized_category": "healthcare",
+      "source_display_name": "healthcare",
+      "source_type": "healthcare"
+    },
+    {
+      "analytical_scope": "primary",
+      "institution_count": 19953,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": true,
+      "mapping_reason": "Provisional source-level proxy for nonprofit research organizations.",
+      "normalized_category": "nonprofit_research",
+      "source_display_name": "nonprofit",
+      "source_type": "nonprofit"
+    },
+    {
+      "analytical_scope": "secondary",
+      "institution_count": 10013,
+      "is_explicitly_configured": true,
+      "is_primary_research_scope": false,
+      "mapping_reason": "Retained and flagged rather than silently discarded.",
+      "normalized_category": "other",
+      "source_display_name": "other",
+      "source_type": "other"
+    }
+  ],
+  "retrieved_at_utc": "2026-08-05T17:07:55.099760Z",
+  "schema_version": 1,
+  "unmapped_observed_types": []
+}

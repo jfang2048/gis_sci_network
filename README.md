@@ -44,6 +44,11 @@ uv run python -m gisnet.cli validate-regions
 uv run python -m gisnet.cli discover-topics --resume
 uv run python -m gisnet.cli sample-topic-works --resume
 uv run python -m gisnet.cli freeze-topics
+uv run python -m gisnet.cli validate-corpus-boundary
+uv run python -m gisnet.cli profile-institution-types --resume
+uv run python -m gisnet.cli profile-work-types --resume
+uv run python -m gisnet.cli plan-download --dry-run
+uv run python -m gisnet.cli plan-download --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
@@ -55,3 +60,16 @@ quality gates unless explicitly selected.
 by candidate metadata and deterministic sampled-work evidence in
 `outputs/reports/topic_review.md`. No human review is implied. Uncertain Topics are
 excluded from primary Strict and Broad results and retained for sensitivity analysis.
+
+## Current corpus and download policy
+
+Institution and work-type mappings are explicit configuration rather than embedded code.
+Unknown future source types remain flagged for review. The primary work set includes articles,
+conference papers, reviews, data papers, and software papers; preprints and expanded types are
+separate sensitivity views.
+
+The saved bulk plan uses the Broad Topic set because it is a superset of Strict and can derive
+both views after normalization. It shards by publication year, Topic, and eligible author-
+institution country. Query-count estimates include expected duplicates across shards; downstream
+normalization must deduplicate on OpenAlex Work ID while preserving source query IDs. The current
+boundary precision is intentionally withheld until sufficient human annotation exists.

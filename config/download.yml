@@ -1,0 +1,30 @@
+schema_version: 1
+plan_version: openalex-download-plan-2026-08-05-v1
+topic_shard_size: 10
+country_shard_size: 25
+source_max_or_values: 50
+per_page: 200
+estimated_page_cost_usd: 0.001
+target_macro_regions:
+  - Europe
+  - Asia
+  - Americas
+select_fields:
+  - id
+  - doi
+  - title
+  - publication_year
+  - publication_date
+  - type
+  - is_retracted
+  - is_paratext
+  - cited_by_count
+  - fwci
+  - primary_topic
+  - topics
+  - referenced_works
+  - updated_date
+  - authorships
+  - primary_location
+  - locations
+  - ids
