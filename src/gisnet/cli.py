@@ -92,6 +92,7 @@ from gisnet.state import (
     TaskStatus,
     make_run_id,
 )
+from gisnet.validation.audit import build_top_entity_audit, write_audit_artifacts
 from gisnet.validation.edges import validate_edge_arithmetic, write_edge_validation_artifact
 from gisnet.validation.reproducibility import (
     verify_reproducibility,
@@ -630,6 +631,37 @@ def build_parser() -> argparse.ArgumentParser:
     layout.add_argument("--duckdb-memory-limit", default="4GB")
     layout.add_argument("--duckdb-threads", default=1, type=int)
     layout.set_defaults(handler=_build_layout)
+
+    audit = subparsers.add_parser(
+        "audit-top-entities", help="audit top institutions and cross-region edges"
+    )
+    _add_pipeline_arguments(audit)
+    audit.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    audit.add_argument("--edges", default="data/processed/edges_metrics_year.parquet", type=Path)
+    audit.add_argument(
+        "--work-institutions",
+        default="data/processed/work_institutions_extracted.parquet",
+        type=Path,
+    )
+    audit.add_argument("--institutions", default="data/processed/institutions.parquet", type=Path)
+    audit.add_argument(
+        "--hierarchy-path",
+        default="data/processed/institution_hierarchy.parquet",
+        type=Path,
+    )
+    audit.add_argument(
+        "--institution-output",
+        default="data/processed/top_institution_audit.parquet",
+        type=Path,
+    )
+    audit.add_argument("--edge-output", default="data/processed/top_edge_audit.parquet", type=Path)
+    audit.add_argument(
+        "--summary", default="data/reference/top_entity_audit_summary.json", type=Path
+    )
+    audit.add_argument("--sample-size", default=50, type=int)
+    audit.add_argument("--duckdb-memory-limit", default="4GB")
+    audit.add_argument("--duckdb-threads", default=1, type=int)
+    audit.set_defaults(handler=_audit_top_entities)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2114,6 +2146,49 @@ def _build_layout(args: argparse.Namespace) -> int:
         f"Built fixed coordinates for {summary['institution_count']} institutions; "
         f"core={summary['core_institution_count']}, "
         f"fallback={summary['fallback_institution_count']}."
+    )
+    return 0
+
+
+def _audit_top_entities(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would audit top entities from {args.nodes}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-081"):
+            summary = build_top_entity_audit(
+                args.nodes,
+                args.edges,
+                args.work_institutions,
+                args.institutions,
+                args.hierarchy_path,
+                institution_output_path=args.institution_output,
+                edge_output_path=args.edge_output,
+                sample_size=args.sample_size,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli audit-top-entities --resume"
+            write_audit_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "top_institution_audit",
+                "top_edge_audit",
+                "top_entity_audit_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Top-entity audit failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Audited {summary['institution_audit_row_count']} institutions and "
+        f"{summary['edge_audit_row_count']} cross-region edges."
     )
     return 0
 

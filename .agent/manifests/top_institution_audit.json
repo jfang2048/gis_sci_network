@@ -1,0 +1,55 @@
+{
+  "checksum_sha256": "01592df2d3c4128d05b7f327188630e6b06d4b43467ea06bf4d9607620c91983",
+  "column_count": 25,
+  "command": "python -m gisnet.cli audit-top-entities --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:31:40.254261Z",
+  "dataset_name": "top_institution_audit",
+  "git_commit": "0a9e9032d0d7",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "canonical_institution_id": 0,
+    "canonicalization_provenance": 0,
+    "canonicalization_reasons": 0,
+    "canonicalization_rule_id": 66,
+    "canonicalization_rule_ids": 0,
+    "correction_applied_automatically": 0,
+    "correction_route": 0,
+    "country_code": 0,
+    "display_name": 0,
+    "institution_category": 0,
+    "institution_id": 0,
+    "is_collapsed": 0,
+    "macro_region": 0,
+    "maximum_betweenness": 0,
+    "maximum_pagerank": 0,
+    "metadata_source": 0,
+    "observed_country_count": 0,
+    "observed_name_count": 0,
+    "output_rank": 0,
+    "pagerank_rank": 0,
+    "raw_affiliation_samples": 0,
+    "ror_id": 0,
+    "suspicious_flags": 0,
+    "total_work_count": 0,
+    "work_ids_sample": 0
+  },
+  "primary_key": [
+    "institution_id"
+  ],
+  "row_count": 66,
+  "run_id": "20260805T222905Z_0a9e9032d0d7",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/nodes_year.json",
+    ".agent/manifests/edges_metrics_year.json",
+    ".agent/manifests/institution_hierarchy.json"
+  ],
+  "source_versions": {
+    "top_entity_audit_policy": "top-entity-audit-2026-08-05-v1"
+  },
+  "status": "valid"
+}

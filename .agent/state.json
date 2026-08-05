@@ -39,7 +39,8 @@
     "GISNET-070",
     "GISNET-071",
     "GISNET-072",
-    "GISNET-074"
+    "GISNET-074",
+    "GISNET-081"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -100,6 +101,9 @@
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
     "region_flows_year": ".agent/manifests/region_flows_year.json",
     "reproducibility_validation": ".agent/manifests/reproducibility_validation.json",
+    "top_edge_audit": ".agent/manifests/top_edge_audit.json",
+    "top_entity_audit_summary": ".agent/manifests/top_entity_audit_summary.json",
+    "top_institution_audit": ".agent/manifests/top_institution_audit.json",
     "topic_candidates": ".agent/manifests/topic_candidates.json",
     "topic_registry": ".agent/manifests/topic_registry.json",
     "topic_work_samples": ".agent/manifests/topic_work_samples.json",
@@ -123,8 +127,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T222616Z_f33c622b141a",
-  "last_updated_utc": "2026-08-05T22:28:33Z",
+  "last_successful_run_id": "20260805T222905Z_0a9e9032d0d7",
+  "last_updated_utc": "2026-08-05T22:32:06Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

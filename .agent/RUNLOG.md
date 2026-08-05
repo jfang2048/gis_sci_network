@@ -1211,3 +1211,38 @@ or newly appearing institution so annual views never jump independently.
 ### Exact next action
 
 Task: GISNET-081 — Audit top institutions and edges.
+
+
+## Run 20260805T222905Z_0a9e9032d0d7
+
+Started UTC: 2026-08-05T22:29:05Z
+Ended UTC: 2026-08-05T22:32:06Z
+Task: GISNET-081
+Initial git status: Clean on `main` at `0a9e903` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Audit top institutions and cross-region edges against public Works, raw affiliation strings, and
+canonicalization provenance without altering raw or canonical data.
+
+### Work completed
+
+- Sampled top Broad/organization institutions by output and PageRank.
+- Sampled top cross-region edges by full-period fractional weight.
+- Attached supporting Work IDs, affiliation strings, hierarchy rules/reasons, and provenance.
+- Added suspicious-record flags and routed every future correction to the override registry.
+
+### Validation results
+
+- Institution audit rows: 66; cross-region edge audit rows: 50.
+- Automatically applied corrections: 0; correction route is `config/institution_overrides.csv`.
+- Current suspicious flags in the deterministic top sample: 0 institutions and 0 edges.
+- Institution audit SHA-256: `01592df2d3c4128d05b7f327188630e6b06d4b43467ea06bf4d9607620c91983`.
+- Edge audit SHA-256: `e741b848b8882a9a450fc9f57f6c019f0a7d5d768bfbea6711bcb74c5a05b7cd`.
+- Runtime 4.76 seconds; peak RSS about 679 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (91 tests).
+
+### Exact next action
+
+Task: GISNET-082 — Run required sensitivity matrix.

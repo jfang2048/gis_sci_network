@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T22:28:33Z",
+  "last_updated_utc": "2026-08-05T22:32:06Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -994,12 +994,27 @@
         "GISNET-064",
         "GISNET-071"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T22:29:05Z",
+          "from": "TODO",
+          "reason": "Auditing top institutions and cross-region edges against works, affiliations, and canonicalization provenance.",
+          "run_id": "20260805T222905Z_0a9e9032d0d7",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:32:06Z",
+          "from": "IN_PROGRESS",
+          "reason": "Top-entity audit is reproducible, provenance-complete, non-mutating, and correction-routed.",
+          "run_id": "20260805T222905Z_0a9e9032d0d7",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-081",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Top-entity audit is reproducible, provenance-complete, non-mutating, and correction-routed.",
+      "status_updated_at_utc": "2026-08-05T22:32:06Z"
     },
     {
       "dependencies": [

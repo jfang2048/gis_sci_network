@@ -1,0 +1,16 @@
+{
+  "automatic_correction_count": 0,
+  "correction_route": "config/institution_overrides.csv",
+  "edge_audit_row_count": 50,
+  "flagged_edge_count": 0,
+  "flagged_institution_count": 0,
+  "generated_at_utc": "2026-08-05T22:31:40.203926Z",
+  "institution_audit_row_count": 66,
+  "logical_input_hash": "a4c4a98ce677cd2e305a1bc3b11d9bef812278353148e9e5d07aa64520de8b9b",
+  "outputs": {
+    "top_edge_audit": "data/processed/top_edge_audit.parquet",
+    "top_institution_audit": "data/processed/top_institution_audit.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "top-entity-audit-2026-08-05-v1"
+}
