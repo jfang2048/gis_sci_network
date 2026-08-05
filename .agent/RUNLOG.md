@@ -387,3 +387,84 @@ estimate reflects terminal cursor pages after full 200-record pages, not extra r
 ### Exact next action
 
 Task: GISNET-043 — Normalize Works. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T183154Z_696de8fe2646
+
+Started UTC: 2026-08-05T18:31:54Z
+Ended UTC: 2026-08-05T20:28:42Z
+Task: GISNET-043
+Initial git status: Clean at `696de8f`, followed by interrupted uncommitted GISNET-043 work.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Normalize all validated raw OpenAlex Work pages into deterministic, deduplicated Parquet datasets
+without exhausting host memory, while preserving query provenance and quarantining malformed rows.
+
+### Work completed
+
+- Streamed 7,978 validated raw pages containing 1,561,250 shard-level records into DuckDB staging.
+- Deduplicated to 1,176,947 Works and preserved 1,561,250 Work/query provenance pairs.
+- Produced 3,384,604 unique Work-Topic rows and an empty but schema-valid malformed-record dataset.
+- Fixed a referenced-work assignment leak that could attach Topic rows to referenced Work IDs.
+- Added an explicit orphan Work-Topic integrity gate and regression coverage.
+- Bounded DuckDB to 6 GB and one thread, enabled spill-friendly operation, and streamed file hashes.
+- Documented public-repository data exclusions and OpenAlex reproduction links.
+
+### Files changed
+
+- `.agent/backlog.json`, `.agent/decisions.md`, `.agent/state.json`, `.agent/RUNLOG.md`
+- `.agent/manifests/{works,work_topics,work_malformed,works_normalization_summary}.json`
+- `.gitignore`, `README.md`, `pyproject.toml`, `uv.lock`
+- `data/reference/works_normalization_summary.json`
+- `src/gisnet/cli.py`, `src/gisnet/corpus/normalize.py`
+- `tests/unit/test_normalize_works.py`
+- Ignored local outputs under `data/cache/`, `data/interim/`, and `data/processed/`
+
+### Commands executed
+
+- Full repository, backlog, state, lock, tmux, process, cgroup, and kernel-journal inspection.
+- Targeted Ruff, mypy, and normalization/CLI tests during repair.
+- Full forced normalization with `--duckdb-memory-limit 6GB --duckdb-threads 1`.
+- Full resume rerun and byte-for-byte SHA-256 comparison of all three Parquet outputs.
+- Full Ruff format/check, strict mypy, pytest, CLI status, and dry-run validation.
+
+### Validation results
+
+- Kernel OOM root cause confirmed: prior Python process reached 29.7 GB RSS; scope peak 28.4 GB.
+- Repaired full run maximum RSS: 7,356,656 KB; memory pressure returned to zero afterward.
+- Works: 1,176,947 rows and 1,176,947 distinct Work IDs; years 2010 through 2025.
+- Work Topics: 3,384,604 rows and 3,384,604 distinct compound keys; orphan rows: 0.
+- Malformed records: 0; schema-valid quarantine Parquet retained.
+- Full resume produced byte-identical Parquet SHA-256 values.
+- Ruff format/check: passed. Strict mypy over 29 source files: passed. Pytest: 69 passed.
+
+### Data and configuration hashes
+
+- Works Parquet SHA-256: `a6d3e6b40336142c8d2f4084a7553fafd68613a92d5b07c2ac3de7b71ceebad6`
+- Work Topics Parquet SHA-256: `d4595278e4638e723a45a82acbcfbc523b7598a487c06ff608bce1953fb69d69`
+- Malformed Work records Parquet SHA-256: `2a8b207d5d1e2b4de4047b80bdde73d94fcc1754ac77c9c50c2a1a378c9e06dd`
+- Normalization logical input hash: `016401ee827b2c2a189b5ecbd345889e30ab56c5366e1b6ce2b1e93e670bb1c3`
+
+### Checkpoints written
+
+- `.agent/checkpoints/normalize_works.json` (ignored local resumable state)
+- `.agent/state.json` and `.agent/backlog.json`
+- Four normalization manifests under `.agent/manifests/`
+
+### Failures or blockers
+
+No unresolved blocker. The original run was killed by the kernel after DuckDB used its 80%-of-RAM
+default. A 4 GB bounded retry exited safely inside DuckDB rather than pressuring the host; the final
+6 GB, one-thread configuration completed. An intermediate integrity mismatch exposed and led to the
+repair of the referenced-work identifier leak before any invalid Work-Topic output was finalized.
+
+### Decisions made
+
+Normalization resource limits are explicit and auditable but do not enter the logical data hash.
+Deterministic output ordering remains explicit. Large generated datasets and credentials remain
+excluded from the public Git repository; tracked plans and OpenAlex links provide reproduction.
+
+### Exact next action
+
+Task: GISNET-050 — Extract distinct institutions per work. Command: `uv run python -m gisnet.cli next-task`.

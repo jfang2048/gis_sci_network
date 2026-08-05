@@ -75,3 +75,12 @@ preview estimate occurs when cursor pagination requires a terminal empty page af
 200-record page. Raw response cache and page checkpoints remain local ignored runtime state;
 the tracked status artifact and manifest preserve aggregate provenance but do not claim the raw
 cache can be reconstructed without re-downloading it.
+
+## 2026-08-05 — Bounded-memory Work normalization
+
+DuckDB normalization is explicitly capped at 6 GB with one worker thread and insertion-order
+preservation disabled; all exported datasets retain explicit deterministic `ORDER BY` clauses.
+This replaces DuckDB's host-relative default, which reserved 80% of the 30 GiB machine and caused
+a kernel OOM kill. Parquet checksums are streamed. Work-Topic staging rejects orphan rows before
+export, and referenced-work parsing uses a distinct identifier so it cannot overwrite `work_id`.
+Large raw, interim, and processed data remain ignored and are rebuilt locally from OpenAlex.

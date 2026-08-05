@@ -1,0 +1,25 @@
+{
+  "duckdb_memory_limit": "5.5 GiB",
+  "duckdb_preserve_insertion_order": false,
+  "duckdb_threads": 1,
+  "duplicate_source_occurrence_count": 384303,
+  "generated_at_utc": "2026-08-05T20:27:08.344623Z",
+  "input_page_count_this_invocation": 0,
+  "input_query_count": 336,
+  "input_record_count_this_invocation": 0,
+  "logical_input_hash": "016401ee827b2c2a189b5ecbd345889e30ab56c5366e1b6ce2b1e93e670bb1c3",
+  "malformed_record_count": 0,
+  "max_year": 2025,
+  "min_year": 2010,
+  "outputs": {
+    "work_malformed": "data/processed/work_malformed.parquet",
+    "work_topics": "data/processed/work_topics.parquet",
+    "works": "data/processed/works.parquet"
+  },
+  "processed_query_count": 336,
+  "schema_version": 1,
+  "stage_version": "works-normalizer-2026-08-05-v3",
+  "work_count": 1176947,
+  "work_query_source_count": 1561250,
+  "work_topic_count": 3384604
+}

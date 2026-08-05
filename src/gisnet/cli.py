@@ -9,9 +9,11 @@ from collections import Counter
 from collections.abc import Sequence
 from pathlib import Path
 
+import duckdb
 from pydantic import ValidationError
 
 from gisnet.config import config_file_hash, load_project_config, load_yaml
+from gisnet.corpus.normalize import normalize_raw_works, write_normalization_artifacts
 from gisnet.corpus.topics import (
     discover_candidate_topics,
     freeze_topic_registry,
@@ -73,7 +75,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "normalize-works",
     "extract-institutions",
     "enrich-institutions",
     "build-corpus",
@@ -213,6 +214,30 @@ def build_parser() -> argparse.ArgumentParser:
     download_works.add_argument("--max-queries", type=int)
     download_works.add_argument("--workers", type=int, default=4)
     download_works.set_defaults(handler=_download_works)
+
+    normalize_works = subparsers.add_parser(
+        "normalize-works", help="deduplicate raw Work pages into validated Parquet tables"
+    )
+    _add_pipeline_arguments(normalize_works)
+    normalize_works.add_argument("--plan", default="data/reference/download_plan.json", type=Path)
+    normalize_works.add_argument("--registry", default="config/topic_registry.yml", type=Path)
+    normalize_works.add_argument(
+        "--raw-checkpoints", default=".agent/checkpoints/openalex", type=Path
+    )
+    normalize_works.add_argument(
+        "--staging", default="data/interim/normalize_works.duckdb", type=Path
+    )
+    normalize_works.add_argument(
+        "--checkpoint", default=".agent/checkpoints/normalize_works.json", type=Path
+    )
+    normalize_works.add_argument("--output-directory", default="data/processed", type=Path)
+    normalize_works.add_argument(
+        "--summary", default="data/reference/works_normalization_summary.json", type=Path
+    )
+    normalize_works.add_argument("--batch-size", default=5000, type=int)
+    normalize_works.add_argument("--duckdb-memory-limit", default="6GB")
+    normalize_works.add_argument("--duckdb-threads", default=1, type=int)
+    normalize_works.set_defaults(handler=_normalize_works)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -787,6 +812,69 @@ def _download_works(args: argparse.Namespace) -> int:
         f"records including duplicates={payload['actual_result_count_including_duplicates']}."
     )
     return 0 if payload["status"] == "complete" else 4
+
+
+def _normalize_works(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        plan = load_download_plan(args.plan)
+        topic_registry = load_yaml(args.registry)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Work-normalization inputs failed: {exc}", file=sys.stderr)
+        return 2
+    start_year = args.start_year or project.analysis.start_year
+    end_year = args.end_year or project.analysis.end_year
+    if args.dry_run:
+        print(
+            f"Would validate and normalize {plan['query_count']} raw query checkpoints for "
+            f"{start_year}-{end_year}; no raw page or output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-043"):
+            summary = normalize_raw_works(
+                plan,
+                RawResponseCache(project.openalex.cache_directory),
+                topic_registry,
+                checkpoint_directory=args.raw_checkpoints,
+                staging_path=args.staging,
+                normalization_checkpoint_path=args.checkpoint,
+                output_directory=args.output_directory,
+                start_year=start_year,
+                end_year=end_year,
+                resume=args.resume or not args.force,
+                force=args.force,
+                batch_size=args.batch_size,
+                duckdb_memory_limit=args.duckdb_memory_limit,
+                duckdb_threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli normalize-works "
+                f"--plan {args.plan} --output-directory {args.output_directory} --resume "
+                f"--duckdb-memory-limit {args.duckdb_memory_limit} "
+                f"--duckdb-threads {args.duckdb_threads}"
+            )
+            write_normalization_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                download_plan_path=args.plan,
+                command=command,
+            )
+            for name in ("works", "work_topics", "work_malformed", "works_normalization_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Work normalization failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Normalized {summary['work_count']} unique Works and "
+        f"{summary['work_topic_count']} work-Topic rows; "
+        f"duplicate source occurrences={summary['duplicate_source_occurrence_count']}, "
+        f"malformed={summary['malformed_record_count']}."
+    )
+    return 0
 
 
 def _resolve_run_id(value: str | None) -> str:

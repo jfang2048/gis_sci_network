@@ -50,6 +50,7 @@ uv run python -m gisnet.cli profile-work-types --resume
 uv run python -m gisnet.cli plan-download --dry-run
 uv run python -m gisnet.cli plan-download --resume
 uv run python -m gisnet.cli download-works --resume --workers 4
+uv run python -m gisnet.cli normalize-works --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
@@ -74,3 +75,16 @@ both views after normalization. It shards by publication year, Topic, and eligib
 institution country. Query-count estimates include expected duplicates across shards; downstream
 normalization must deduplicate on OpenAlex Work ID while preserving source query IDs. The current
 boundary precision is intentionally withheld until sufficient human annotation exists.
+
+## Data availability and public-repository policy
+
+The public repository contains source code, configuration, compact reference artifacts, manifests,
+and reproducibility instructions. It intentionally excludes credentials and large generated data:
+raw/cache pages, interim DuckDB files, processed Parquet files, and private outputs are ignored by
+Git. These files are rebuilt locally rather than committed.
+
+The bibliographic source is [OpenAlex](https://openalex.org/). Its
+[API documentation](https://docs.openalex.org/) describes access to the upstream records; this
+project's `plan-download`, `download-works`, and `normalize-works` commands reproduce the local data
+layers from the tracked query plan and configuration. Normalization defaults to a bounded 6 GB
+DuckDB memory limit and one worker thread so larger-than-memory processing spills safely to disk.
