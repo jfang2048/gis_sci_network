@@ -100,6 +100,7 @@ from gisnet.validation.reproducibility import (
 )
 from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
+from gisnet.visualization.map_data import build_map_data, write_map_artifacts
 from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix_artifacts
 from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
@@ -722,6 +723,30 @@ def build_parser() -> argparse.ArgumentParser:
     matrix.add_argument("--duckdb-memory-limit", default="4GB")
     matrix.add_argument("--duckdb-threads", default=1, type=int)
     matrix.set_defaults(handler=_build_matrix)
+
+    map_data = subparsers.add_parser(
+        "build-map-data", help="build coordinate-grounded thresholded geographic map data"
+    )
+    _add_pipeline_arguments(map_data)
+    map_data.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    map_data.add_argument("--edges", default="data/processed/edges_metrics_year.parquet", type=Path)
+    map_data.add_argument(
+        "--nodes-output", default="data/processed/map_nodes_year.parquet", type=Path
+    )
+    map_data.add_argument(
+        "--edges-output", default="data/processed/map_edges_year.parquet", type=Path
+    )
+    map_data.add_argument(
+        "--coverage-output", default="data/processed/map_coverage_year.parquet", type=Path
+    )
+    map_data.add_argument(
+        "--summary", default="data/reference/geographic_map_summary.json", type=Path
+    )
+    map_data.add_argument("--edge-limit", default=500, type=int)
+    map_data.add_argument("--node-limit", default=1000, type=int)
+    map_data.add_argument("--duckdb-memory-limit", default="4GB")
+    map_data.add_argument("--duckdb-threads", default=1, type=int)
+    map_data.set_defaults(handler=_build_map_data)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2357,6 +2382,49 @@ def _build_matrix(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['matrix_and_drilldown_row_count']} matrix/drilldown rows; "
         f"reconciliation failures={summary['reconciliation_failure_count']}."
+    )
+    return 0
+
+
+def _build_map_data(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would build geographic map data from {args.nodes}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-092"):
+            summary = build_map_data(
+                args.nodes,
+                args.edges,
+                map_nodes_path=args.nodes_output,
+                map_edges_path=args.edges_output,
+                coverage_path=args.coverage_output,
+                edge_limit_per_view=args.edge_limit,
+                node_limit_per_view=args.node_limit,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-map-data --resume"
+            write_map_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "map_nodes_year",
+                "map_edges_year",
+                "map_coverage_year",
+                "geographic_map_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Geographic map data failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['map_node_row_count']} map nodes and "
+        f"{summary['map_edge_row_count']} thresholded map edges; invented coordinates=0."
     )
     return 0
 

@@ -1346,3 +1346,39 @@ exact companion values, stable ordering, and explicit missing-versus-zero semant
 ### Exact next action
 
 Task: GISNET-092 — Build geographic collaboration map.
+
+
+## Run 20260805T224147Z_a5680002cdf2
+
+Started UTC: 2026-08-05T22:41:47Z
+Ended UTC: 2026-08-05T22:51:10Z
+Task: GISNET-092
+Initial git status: Clean on `main` at `a568000` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build a truthful, legible geographic map layer using only sourced coordinates, visible default edge
+thresholds, filter-ready attributes, and explicit coverage/missing-coordinate diagnostics.
+
+### Work completed
+
+- Built map nodes and top-ranked map edges per annual corpus/hierarchy view.
+- Included year, corpus, hierarchy, macro-region pair, country, subregion, institution type, and Topic-family fields.
+- Added exact node/edge coordinate coverage and visible 500-edge/1,000-node default limits.
+- Preserved source data and excluded every endpoint without sourced coordinates.
+
+### Validation results
+
+- Map node rows: 890; selected edge rows: 574; coverage rows: 64.
+- Sourced coordinate coverage is low and disclosed: 0.10%-0.33% of node observations.
+- Missing coordinate observations: 501,000 nodes and 2,999,162 edges; invented coordinates: 0.
+- Final bounded implementation runtime: 2.00 seconds; peak RSS about 189 MiB.
+- A discarded wide-join coverage query was terminated at 4.5 GiB RSS after excessive temporary I/O; 191 GiB of temporary files were removed under the writer lock.
+- Map node SHA-256: `d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96`.
+- Map edge SHA-256: `eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84`.
+- Ruff format/check passed; strict mypy passed; pytest passed (95 tests).
+
+### Exact next action
+
+Task: GISNET-093 — Build fixed-layout network visualization.

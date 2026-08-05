@@ -1,0 +1,69 @@
+{
+  "checksum_sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96",
+  "column_count": 37,
+  "command": "python -m gisnet.cli build-map-data --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:50:40.021701Z",
+  "dataset_name": "map_nodes_year",
+  "git_commit": "a5680002cdf2",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "analytical_scope": 0,
+    "betweenness": 0,
+    "betweenness_cutoff": 0,
+    "betweenness_method": 0,
+    "betweenness_sample_size": 0,
+    "betweenness_seed": 0,
+    "bridge_score": 0,
+    "collaborative_work_count": 0,
+    "coordinate_policy": 0,
+    "corpus_view": 0,
+    "country_code": 0,
+    "country_name": 0,
+    "cross_region_collaboration_share": 0,
+    "cross_region_work_count": 0,
+    "default_node_limit": 0,
+    "default_node_rank": 0,
+    "degree": 0,
+    "display_name": 0,
+    "fractional_strength": 0,
+    "fractional_work_count": 0,
+    "full_strength": 0,
+    "hierarchy_view": 0,
+    "institution_category": 0,
+    "institution_id": 0,
+    "international_collaboration_share": 0,
+    "international_work_count": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "macro_region": 0,
+    "pagerank": 0,
+    "partner_country_count": 0,
+    "partner_region_count": 0,
+    "ror_id": 0,
+    "single_institution_work_count": 0,
+    "subregion": 0,
+    "work_count": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "institution_id"
+  ],
+  "row_count": 890,
+  "run_id": "20260805T224147Z_a5680002cdf2",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/nodes_year.json",
+    ".agent/manifests/edges_metrics_year.json"
+  ],
+  "source_versions": {
+    "map_data_policy": "geographic-map-data-2026-08-05-v1"
+  },
+  "status": "valid"
+}

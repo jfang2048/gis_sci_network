@@ -1,0 +1,22 @@
+{
+  "coordinates_invented": false,
+  "coverage_row_count": 64,
+  "default_edge_limit_per_view": 500,
+  "default_node_limit_per_view": 1000,
+  "filters_mutate_source_data": false,
+  "generated_at_utc": "2026-08-05T22:50:39.526195Z",
+  "logical_input_hash": "62303967fd68919506a65c33c2b4fceec28779f080490e98ba5cd7cf95efb87f",
+  "map_edge_row_count": 574,
+  "map_node_row_count": 890,
+  "maximum_node_coordinate_coverage_share": 0.003278688524590164,
+  "minimum_node_coordinate_coverage_share": 0.0010095911155981827,
+  "missing_coordinate_edge_observations": 2999162,
+  "missing_coordinate_node_observations": 501000,
+  "outputs": {
+    "map_coverage_year": "data/processed/map_coverage_year.parquet",
+    "map_edges_year": "data/processed/map_edges_year.parquet",
+    "map_nodes_year": "data/processed/map_nodes_year.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "geographic-map-data-2026-08-05-v1"
+}
