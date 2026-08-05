@@ -1,0 +1,22 @@
+{
+  "generated_at_utc": "2026-08-05T20:55:31.861324Z",
+  "geography_qa_count": 1585,
+  "institution_count": 46812,
+  "logical_input_hash": "1043b8524626fc0eaf25d84fb532260abb43923cccc009f7e58c315913e632f8",
+  "macro_region_counts": {
+    "Africa": 1524,
+    "Americas": 13466,
+    "Asia": 12371,
+    "Europe": 17152,
+    "Oceania": 714,
+    "Unknown": 1585
+  },
+  "manual_override_count": 0,
+  "outputs": {
+    "institution_geography_qa": "data/processed/institution_geography_qa.parquet",
+    "institutions_geographic": "data/processed/institutions_geographic.parquet"
+  },
+  "qa_row_count": 1585,
+  "schema_version": 1,
+  "stage_version": "institution-geography-2026-08-05-v1"
+}

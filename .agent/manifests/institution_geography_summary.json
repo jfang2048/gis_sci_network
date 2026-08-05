@@ -1,0 +1,40 @@
+{
+  "checksum_sha256": "fa3ca8a90824c2507b8ff809f41bfe388e177a98ba06768fb18862ea0baba55d",
+  "column_count": 10,
+  "command": "python -m gisnet.cli apply-geography --institutions data/processed/institutions.parquet --regions config/regions.yml --resume",
+  "config_hashes": {
+    "institution_overrides": "a2bfe8f3c1bee1e5a8095f930784b1f04d60c5e740c3c498d87725c306370e76",
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e"
+  },
+  "created_at_utc": "2026-08-05T20:55:31.938858Z",
+  "dataset_name": "institution_geography_summary",
+  "git_commit": "8d7beb87aab6",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "generated_at_utc": 0,
+    "geography_qa_count": 0,
+    "institution_count": 0,
+    "logical_input_hash": 0,
+    "macro_region_counts": 0,
+    "manual_override_count": 0,
+    "outputs": 0,
+    "qa_row_count": 0,
+    "schema_version": 0,
+    "stage_version": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260805T205331Z_8d7beb87aab6",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/institutions.json"
+  ],
+  "source_versions": {
+    "un_m49": "un-m49-retrieved-2026-08-05"
+  },
+  "status": "valid"
+}

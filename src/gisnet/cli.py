@@ -39,7 +39,9 @@ from gisnet.corpus.work_types import (
 )
 from gisnet.geography import load_region_registry, write_mapping_csv
 from gisnet.institutions.extract import extract_work_institutions, write_extraction_artifacts
+from gisnet.institutions.geography import apply_institution_geography, write_geography_artifacts
 from gisnet.institutions.master import build_institution_master, write_institution_master_artifacts
+from gisnet.institutions.overrides import InstitutionOverrideRegistry
 from gisnet.institutions.types import (
     load_institution_type_policy,
     profile_institution_types,
@@ -285,6 +287,28 @@ def build_parser() -> argparse.ArgumentParser:
     build_institutions.add_argument("--lookup-batch-size", default=25, type=int)
     build_institutions.add_argument("--offline", action="store_true")
     build_institutions.set_defaults(handler=_build_institutions)
+
+    apply_geography = subparsers.add_parser(
+        "apply-geography", help="apply frozen country-to-region conventions to institutions"
+    )
+    _add_pipeline_arguments(apply_geography)
+    apply_geography.add_argument(
+        "--institutions", default="data/processed/institutions.parquet", type=Path
+    )
+    apply_geography.add_argument("--regions", default="config/regions.yml", type=Path)
+    apply_geography.add_argument(
+        "--institution-overrides", default="config/institution_overrides.csv", type=Path
+    )
+    apply_geography.add_argument(
+        "--output", default="data/processed/institutions_geographic.parquet", type=Path
+    )
+    apply_geography.add_argument(
+        "--qa", default="data/processed/institution_geography_qa.parquet", type=Path
+    )
+    apply_geography.add_argument(
+        "--summary", default="data/reference/institution_geography_summary.json", type=Path
+    )
+    apply_geography.set_defaults(handler=_apply_geography)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1034,6 +1058,55 @@ def _build_institutions(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['institution_count']} institutions; metadata QA="
         f"{summary['metadata_qa_count']}, lookup matches={summary['lookup_found_count']}."
+    )
+    return 0
+
+
+def _apply_geography(args: argparse.Namespace) -> int:
+    try:
+        regions = load_region_registry(args.regions)
+        overrides = InstitutionOverrideRegistry.load(args.institution_overrides)
+    except (OSError, ValueError) as exc:
+        print(f"Institution-geography inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would apply {len(regions.countries)} frozen country rules to {args.institutions}.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-053"):
+            summary = apply_institution_geography(
+                args.institutions,
+                regions,
+                overrides,
+                output_path=args.output,
+                qa_path=args.qa,
+            )
+            command = (
+                "python -m gisnet.cli apply-geography "
+                f"--institutions {args.institutions} --regions {args.regions} --resume"
+            )
+            write_geography_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                regions_path=args.regions,
+                overrides_path=args.institution_overrides,
+                command=command,
+            )
+            for name in (
+                "institutions_geographic",
+                "institution_geography_qa",
+                "institution_geography_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"Institution geography failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Mapped {summary['institution_count']} institutions; geography QA="
+        f"{summary['geography_qa_count']}, manual overrides={summary['manual_override_count']}."
     )
     return 0
 

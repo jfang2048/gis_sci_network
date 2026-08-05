@@ -608,3 +608,69 @@ all original distinct source values remain as audit arrays. Names are never iden
 ### Exact next action
 
 Task: GISNET-053 — Apply geographic mapping. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T205331Z_8d7beb87aab6
+
+Started UTC: 2026-08-05T20:53:31Z
+Ended UTC: 2026-08-05T20:56:10Z
+Task: GISNET-053
+Initial git status: Clean on `main` at `8d7beb8` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Apply the frozen, versioned country-to-region convention to every institution, using only explicit
+institution override rules and retaining missing or unmapped source geography in QA.
+
+### Work completed
+
+- Added deterministic geographic enrichment of the full institution master.
+- Preserved source country separately from the effective frozen analytical country.
+- Added macro-region, subregion, country label, mapping version, and override provenance.
+- Added an explicit unknown/conflict QA Parquet and the `apply-geography` CLI.
+
+### Files changed
+
+- `.agent/{RUNLOG.md,backlog.json,state.json}` and three geography manifests
+- `README.md`, `data/reference/institution_geography_summary.json`
+- `src/gisnet/cli.py`, `src/gisnet/institutions/geography.py`
+- `tests/unit/test_institution_geography.py`
+- Ignored geographic institution and QA Parquet datasets
+
+### Commands executed
+
+- Synthetic override/unknown tests, full live mapping, invariant queries, deterministic rerun.
+- Ruff format/check, strict mypy, full pytest, and CLI dry run.
+
+### Validation results
+
+- All 46,812 institutions map to non-null effective country, macro-region, and subregion values.
+- Macro counts: Europe 17,152; Americas 13,466; Asia 12,371; Africa 1,524; Oceania 714; Unknown 1,585.
+- Primary-scope target coverage: Europe 9,764; Asia 8,732; Americas 7,568.
+- Geography QA: 1,585 explicit missing-source-country rows; manual overrides: 0.
+- All 2,404,676 Work-institution rows join to the geographic master; orphan joins: 0.
+- Repeated outputs were byte-identical; peak RSS 428,240 KB.
+- Ruff: passed. Strict mypy over 33 files: passed. Pytest: 72 passed.
+
+### Data and configuration hashes
+
+- Geographic institutions: `694c4c13413aef6fb20118e817744a374d8da21ec7d45ad3610869fed143e8ec`
+- Geography QA: `a95268dd5c5d4ed92628da6a59eace14bbaade6c7655df8636d1ec9e65ea5f11`
+- Logical input hash: `1043b8524626fc0eaf25d84fb532260abb43923cccc009f7e58c315913e632f8`
+
+### Checkpoints written
+
+- `.agent/state.json`, `.agent/backlog.json`, and three dataset manifests.
+
+### Failures or blockers
+
+No unresolved blocker. Missing countries remain `ZZ`/`Unknown`; no name-to-country inference was made.
+
+### Decisions made
+
+The frozen mapping is an analytical convention. OpenAlex source country is preserved independently,
+and only versioned institution override rules may change the effective country.
+
+### Exact next action
+
+Task: GISNET-052 — Enrich institutions with ROR. Command: `uv run python -m gisnet.cli next-task`.

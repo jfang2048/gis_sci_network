@@ -53,6 +53,7 @@ uv run python -m gisnet.cli download-works --resume --workers 4
 uv run python -m gisnet.cli normalize-works --resume
 uv run python -m gisnet.cli extract-institutions --resume
 uv run python -m gisnet.cli build-institutions --resume
+uv run python -m gisnet.cli apply-geography --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
