@@ -1,0 +1,19 @@
+{
+  "edge_year_count": 2999736,
+  "generated_at_utc": "2026-08-05T22:01:56.571725Z",
+  "invalid_intensity_count": 0,
+  "invalid_persistence_3y_count": 0,
+  "invalid_persistence_5y_count": 0,
+  "logical_input_hash": "04d34ba6e905b7e4cd2f862762d6d04dc6264520c990d32fe2d52a9ae8d26ea2",
+  "maximum_normalized_intensity": 1.0,
+  "minimum_normalized_intensity": 3.6832845187089774e-07,
+  "outputs": {
+    "edges_metrics_year": "data/processed/edges_metrics_year.parquet"
+  },
+  "persistence_3y_incomplete_window_count": 168230,
+  "persistence_5y_incomplete_window_count": 374278,
+  "schema_version": 1,
+  "stage_version": "edge-intensity-persistence-2026-08-05-v1",
+  "visualization_score_is_primary": false,
+  "visualization_score_method": "non_primary_log_fractional_persistence_blend_v1"
+}

@@ -52,6 +52,7 @@ from gisnet.institutions.types import (
 )
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
+from gisnet.network.intensity import build_edge_intensity, write_intensity_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
@@ -532,6 +533,26 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="data/reference/reproducibility_validation.json", type=Path
     )
     reproducibility.set_defaults(handler=_verify_reproducibility)
+
+    intensity = subparsers.add_parser(
+        "compute-edge-intensity", help="compute normalized edge intensity and trailing persistence"
+    )
+    _add_pipeline_arguments(intensity)
+    intensity.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    intensity.add_argument(
+        "--institution-outputs",
+        default="data/processed/institution_outputs_year.parquet",
+        type=Path,
+    )
+    intensity.add_argument(
+        "--output", default="data/processed/edges_metrics_year.parquet", type=Path
+    )
+    intensity.add_argument(
+        "--summary", default="data/reference/edge_intensity_summary.json", type=Path
+    )
+    intensity.add_argument("--duckdb-memory-limit", default="4GB")
+    intensity.add_argument("--duckdb-threads", default=1, type=int)
+    intensity.set_defaults(handler=_compute_edge_intensity)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1787,6 +1808,52 @@ def _verify_reproducibility(args: argparse.Namespace) -> int:
     print(
         f"Reproducibility passed for {payload['dataset_check_count']} core datasets; "
         "no incomplete temp output remains."
+    )
+    return 0
+
+
+def _compute_edge_intensity(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Intensity configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would compute intensity/persistence for {args.edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-064"):
+            summary = build_edge_intensity(
+                args.edges,
+                args.institution_outputs,
+                output_path=args.output,
+                analysis_start_year=project.analysis.start_year,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli compute-edge-intensity "
+                f"--edges {args.edges} --institution-outputs {args.institution_outputs} --resume"
+            )
+            write_intensity_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in ("edges_metrics_year", "edge_intensity_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Edge intensity failed safely: {exc}", file=sys.stderr)
+        return 3
+    invalid_persistence = (
+        summary["invalid_persistence_3y_count"] + summary["invalid_persistence_5y_count"]
+    )
+    print(
+        f"Computed intensity/persistence for {summary['edge_year_count']} annual edges; "
+        f"invalid persistence={invalid_persistence}."
     )
     return 0
 

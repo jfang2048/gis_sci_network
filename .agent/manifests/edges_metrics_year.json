@@ -1,0 +1,69 @@
+{
+  "checksum_sha256": "e6b190689b35205970639965870a59b4269d966d1389a2e1d4e9d828187249b8",
+  "column_count": 36,
+  "command": "python -m gisnet.cli compute-edge-intensity --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:01:57.609532Z",
+  "dataset_name": "edges_metrics_year",
+  "git_commit": "cde48a5ac8a4",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "active_years_3y": 0,
+    "active_years_5y": 0,
+    "corpus_view": 0,
+    "distinct_topic_family_count": 0,
+    "distinct_work_count": 0,
+    "excluded_threshold_work_count": 0,
+    "fractional_count": 0,
+    "full_count": 0,
+    "hierarchy_view": 0,
+    "large_consortium_work_count": 0,
+    "maximum_consortium_size": 0,
+    "normalized_intensity": 0,
+    "persistence_3y": 0,
+    "persistence_3y_incomplete_window": 0,
+    "persistence_5y": 0,
+    "persistence_5y_incomplete_window": 0,
+    "source_category": 0,
+    "source_country": 0,
+    "source_id": 0,
+    "source_name": 0,
+    "source_region": 0,
+    "source_subregion": 0,
+    "source_work_count": 0,
+    "target_category": 0,
+    "target_country": 0,
+    "target_id": 0,
+    "target_name": 0,
+    "target_region": 0,
+    "target_subregion": 0,
+    "target_work_count": 0,
+    "topic_families": 0,
+    "visualization_score": 0,
+    "visualization_score_is_primary": 0,
+    "visualization_score_method": 0,
+    "work_ids_sample": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "source_id",
+    "target_id"
+  ],
+  "row_count": 2999736,
+  "run_id": "20260805T214246Z_cde48a5ac8a4",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/edges_year.json",
+    ".agent/manifests/institution_outputs_year.json"
+  ],
+  "source_versions": {
+    "intensity_policy": "edge-intensity-persistence-2026-08-05-v1"
+  },
+  "status": "valid"
+}

@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T21:42:23Z",
+  "last_updated_utc": "2026-08-05T22:02:30Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -798,12 +798,27 @@
         "GISNET-062",
         "GISNET-063"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T21:42:46Z",
+          "from": "TODO",
+          "reason": "Joining node output denominators and computing normalized intensity plus explicit trailing persistence windows.",
+          "run_id": "20260805T214246Z_cde48a5ac8a4",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T22:02:30Z",
+          "from": "IN_PROGRESS",
+          "reason": "All intensity and persistence acceptance checks passed; output is deterministic and bounded-memory.",
+          "run_id": "20260805T214246Z_cde48a5ac8a4",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-064",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "All intensity and persistence acceptance checks passed; output is deterministic and bounded-memory.",
+      "status_updated_at_utc": "2026-08-05T22:02:30Z"
     },
     {
       "dependencies": [

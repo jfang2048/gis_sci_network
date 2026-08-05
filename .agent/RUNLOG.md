@@ -1038,3 +1038,39 @@ atomic dataset writes, corrupted cache, corrupted state, and normalization rerun
 ### Exact next action
 
 Task: GISNET-064 — Compute normalized intensity and persistence.
+
+
+## Run 20260805T214246Z_cde48a5ac8a4
+
+Started UTC: 2026-08-05T21:42:46Z
+Ended UTC: 2026-08-05T22:02:30Z
+Task: GISNET-064
+Initial git status: Clean on `main` at `cde48a5` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Join institutional output denominators and compute normalized intensity, fixed-denominator trailing
+persistence, explicit incomplete-window flags, and a clearly non-primary visualization score.
+
+### Work completed
+
+- Added normalized intensity using the geometric mean of source and target output counts.
+- Added fixed 3-year and 5-year persistence plus explicit early-window flags.
+- Added a labelled non-primary visualization score and CLI/artifact manifests.
+- Replaced spill-heavy all-years SQL with a single-pass bounded-memory Parquet stream.
+
+### Validation results
+
+- Annual edge rows: 2,999,736; every edge joined to positive output denominators.
+- Normalized intensity range: `3.6833e-07` to `1.0`; invalid values: 0.
+- Persistence ranges: 3-year `0.3333` to `1.0`; 5-year `0.2` to `1.0`; invalid values: 0.
+- Incomplete-window flags: 168,230 (3-year) and 374,278 (5-year).
+- Repeated output SHA-256: `e6b190689b35205970639965870a59b4269d966d1389a2e1d4e9d828187249b8`.
+- Final runtime 17.74 seconds; peak RSS about 1.22 GiB; no DuckDB spill.
+- Three spill-heavy prototypes were terminated before system pressure; their temporary files were removed under the writer lock.
+- Ruff format/check passed; strict mypy passed; pytest passed (86 tests).
+
+### Exact next action
+
+Task: GISNET-070 — Build annual graph objects.

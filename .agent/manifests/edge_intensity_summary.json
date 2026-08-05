@@ -1,0 +1,44 @@
+{
+  "checksum_sha256": "1c90a071bc5581c569560ca8a1128537eba3e7d3610be4dfbf9e420a3f5c5c61",
+  "column_count": 15,
+  "command": "python -m gisnet.cli compute-edge-intensity --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:01:56.604068Z",
+  "dataset_name": "edge_intensity_summary",
+  "git_commit": "cde48a5ac8a4",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "edge_year_count": 0,
+    "generated_at_utc": 0,
+    "invalid_intensity_count": 0,
+    "invalid_persistence_3y_count": 0,
+    "invalid_persistence_5y_count": 0,
+    "logical_input_hash": 0,
+    "maximum_normalized_intensity": 0,
+    "minimum_normalized_intensity": 0,
+    "outputs": 0,
+    "persistence_3y_incomplete_window_count": 0,
+    "persistence_5y_incomplete_window_count": 0,
+    "schema_version": 0,
+    "stage_version": 0,
+    "visualization_score_is_primary": 0,
+    "visualization_score_method": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260805T214246Z_cde48a5ac8a4",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/edges_year.json",
+    ".agent/manifests/institution_outputs_year.json"
+  ],
+  "source_versions": {
+    "intensity_policy": "edge-intensity-persistence-2026-08-05-v1"
+  },
+  "status": "valid"
+}
