@@ -1004,3 +1004,37 @@ edge invariants against consortium configuration.
 ### Exact next action
 
 Task: GISNET-083 — Reproducibility and interruption tests.
+
+## Run 20260805T214049Z_c156ce57e0ad
+
+Started UTC: 2026-08-05T21:40:49Z
+Ended UTC: 2026-08-05T21:42:23Z
+Task: GISNET-083
+Initial git status: Clean on `main` at `c156ce5` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Consolidate deterministic repeated-run checksums and prove clean recovery for pagination interruption,
+atomic dataset writes, corrupted cache, corrupted state, and normalization reruns.
+
+### Work completed
+
+- Added core-dataset manifest/checksum verification for 12 pipeline outputs.
+- Added a hard failure when incomplete `.tmp` outputs remain in the processed-data directory.
+- Added checksum mismatch and temporary-output regression tests.
+- Re-ran the existing pagination, atomic-write, cache quarantine, state backup, and normalization repeat tests.
+
+### Validation results
+
+- All 12 current core datasets match their last validated manifest checksums.
+- Checksum mismatches: 0; incomplete processed temp outputs: 0.
+- Interrupted pagination resumes at the next unwritten page without duplicate records.
+- Failed atomic validation preserves the last good output and removes the temporary file.
+- Corrupt cache entries are quarantined; corrupt state is surfaced with a diagnostic backup.
+- Repeated normalization and every downstream deterministic stage retain identical hashes.
+- Ruff format/check passed; strict mypy passed; pytest passed (85 tests).
+
+### Exact next action
+
+Task: GISNET-064 — Compute normalized intensity and persistence.

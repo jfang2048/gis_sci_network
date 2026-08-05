@@ -33,7 +33,8 @@
     "GISNET-062",
     "GISNET-063",
     "GISNET-065",
-    "GISNET-080"
+    "GISNET-080",
+    "GISNET-083"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -81,6 +82,7 @@
     "region_flow_reconciliation": ".agent/manifests/region_flow_reconciliation.json",
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
     "region_flows_year": ".agent/manifests/region_flows_year.json",
+    "reproducibility_validation": ".agent/manifests/reproducibility_validation.json",
     "topic_candidates": ".agent/manifests/topic_candidates.json",
     "topic_registry": ".agent/manifests/topic_registry.json",
     "topic_work_samples": ".agent/manifests/topic_work_samples.json",
@@ -104,8 +106,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T213715Z_13517e3a9798",
-  "last_updated_utc": "2026-08-05T21:40:09Z",
+  "last_successful_run_id": "20260805T214049Z_c156ce57e0ad",
+  "last_updated_utc": "2026-08-05T21:42:23Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

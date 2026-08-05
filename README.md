@@ -63,6 +63,7 @@ uv run python -m gisnet.cli build-edges --resume
 uv run python -m gisnet.cli build-outputs --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
+uv run python -m gisnet.cli verify-reproducibility
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline

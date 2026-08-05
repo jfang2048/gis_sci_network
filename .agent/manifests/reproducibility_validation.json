@@ -1,0 +1,48 @@
+{
+  "checksum_sha256": "bec09660fb68233e57bbb1d91bddd6288f97ed34b4cd739d472a2a1ed2c3fb25",
+  "column_count": 9,
+  "command": "python -m gisnet.cli verify-reproducibility",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T21:41:58.778249Z",
+  "dataset_name": "reproducibility_validation",
+  "git_commit": "c156ce57e0ad",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "actual_checksum_sha256": 0,
+    "checksum_matches": 0,
+    "dataset_name": 0,
+    "expected_checksum_sha256": 0,
+    "manifest_path": 0,
+    "manifest_run_id": 0,
+    "manifest_status": 0,
+    "path": 0,
+    "row_count": 0
+  },
+  "primary_key": [
+    "dataset_name"
+  ],
+  "row_count": 12,
+  "run_id": "20260805T214049Z_c156ce57e0ad",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/works.json",
+    ".agent/manifests/work_topics.json",
+    ".agent/manifests/institutions_geographic.json",
+    ".agent/manifests/institution_hierarchy.json",
+    ".agent/manifests/work_version_diagnostics.json",
+    ".agent/manifests/work_corpus.json",
+    ".agent/manifests/work_institutions.json",
+    ".agent/manifests/work_edges.json",
+    ".agent/manifests/edges_year.json",
+    ".agent/manifests/edge_work_diagnostics.json",
+    ".agent/manifests/institution_outputs_year.json",
+    ".agent/manifests/region_flows_year.json"
+  ],
+  "source_versions": {
+    "reproducibility_policy": "reproducibility-validation-2026-08-05-v1"
+  },
+  "status": "valid"
+}

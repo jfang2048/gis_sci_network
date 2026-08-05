@@ -89,6 +89,10 @@ from gisnet.state import (
     make_run_id,
 )
 from gisnet.validation.edges import validate_edge_arithmetic, write_edge_validation_artifact
+from gisnet.validation.reproducibility import (
+    verify_reproducibility,
+    write_reproducibility_artifact,
+)
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "compute-metrics",
@@ -519,6 +523,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="data/reference/edge_arithmetic_validation.json", type=Path
     )
     validate.set_defaults(handler=_validate_outputs)
+
+    reproducibility = subparsers.add_parser(
+        "verify-reproducibility", help="verify core dataset checksums and clean recovery state"
+    )
+    _add_pipeline_arguments(reproducibility)
+    reproducibility.add_argument(
+        "--output", default="data/reference/reproducibility_validation.json", type=Path
+    )
+    reproducibility.set_defaults(handler=_verify_reproducibility)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1745,6 +1758,35 @@ def _validate_outputs(args: argparse.Namespace) -> int:
     print(
         f"Edge arithmetic passed {len(payload['checks'])} checks across "
         f"{payload['work_edge_count']} Work-edge contributions."
+    )
+    return 0
+
+
+def _verify_reproducibility(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print("Would compare core datasets with manifests and check for incomplete temp outputs.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-083"):
+            payload = verify_reproducibility()
+            command = "python -m gisnet.cli verify-reproducibility"
+            write_reproducibility_artifact(
+                payload,
+                path=args.output,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            _register_manifest(
+                "reproducibility_validation", ".agent/manifests/reproducibility_validation.json"
+            )
+    except (OSError, ValueError) as exc:
+        print(f"Reproducibility validation failed: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Reproducibility passed for {payload['dataset_check_count']} core datasets; "
+        "no incomplete temp output remains."
     )
     return 0
 
