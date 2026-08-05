@@ -102,6 +102,7 @@ from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensit
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
 from gisnet.visualization.map_data import build_map_data, write_map_artifacts
 from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix_artifacts
+from gisnet.visualization.network_view import build_network_view, write_network_view_artifacts
 from gisnet.visualization.trends import build_annual_trends, write_trend_artifacts
 
 _NOT_IMPLEMENTED_COMMANDS = (
@@ -747,6 +748,43 @@ def build_parser() -> argparse.ArgumentParser:
     map_data.add_argument("--duckdb-memory-limit", default="4GB")
     map_data.add_argument("--duckdb-threads", default=1, type=int)
     map_data.set_defaults(handler=_build_map_data)
+
+    network_view = subparsers.add_parser(
+        "build-network-view", help="build fixed-coordinate institutional network view data"
+    )
+    _add_pipeline_arguments(network_view)
+    network_view.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    network_view.add_argument(
+        "--edges", default="data/processed/edges_metrics_year.parquet", type=Path
+    )
+    network_view.add_argument(
+        "--communities", default="data/processed/communities_year.parquet", type=Path
+    )
+    network_view.add_argument(
+        "--layout", default="data/processed/network_layout.parquet", type=Path
+    )
+    network_view.add_argument(
+        "--nodes-output",
+        default="data/processed/network_view_nodes_year.parquet",
+        type=Path,
+    )
+    network_view.add_argument(
+        "--edges-output",
+        default="data/processed/network_view_edges_year.parquet",
+        type=Path,
+    )
+    network_view.add_argument(
+        "--accessibility-output",
+        default="data/processed/network_accessibility_year.parquet",
+        type=Path,
+    )
+    network_view.add_argument(
+        "--summary", default="data/reference/network_view_summary.json", type=Path
+    )
+    network_view.add_argument("--edge-limit", default=1000, type=int)
+    network_view.add_argument("--duckdb-memory-limit", default="4GB")
+    network_view.add_argument("--duckdb-threads", default=1, type=int)
+    network_view.set_defaults(handler=_build_network_view)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2425,6 +2463,50 @@ def _build_map_data(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['map_node_row_count']} map nodes and "
         f"{summary['map_edge_row_count']} thresholded map edges; invented coordinates=0."
+    )
+    return 0
+
+
+def _build_network_view(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would build fixed-layout network data from {args.nodes}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-093"):
+            summary = build_network_view(
+                args.nodes,
+                args.edges,
+                args.communities,
+                args.layout,
+                nodes_output_path=args.nodes_output,
+                edges_output_path=args.edges_output,
+                accessibility_output_path=args.accessibility_output,
+                edge_limit_per_view=args.edge_limit,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-network-view --resume"
+            write_network_view_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "network_view_nodes_year",
+                "network_view_edges_year",
+                "network_accessibility_year",
+                "network_view_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Fixed-layout network view failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['network_node_row_count']} fixed network nodes and "
+        f"{summary['network_edge_row_count']} visible edges."
     )
     return 0
 

@@ -1,0 +1,46 @@
+{
+  "checksum_sha256": "50be264f73d62852302eea7c2678696a4c83f3b71eb13738c50f4dccd153bd8a",
+  "column_count": 13,
+  "command": "python -m gisnet.cli build-network-view --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T22:53:10.218951Z",
+  "dataset_name": "network_accessibility_year",
+  "git_commit": "30b845728146",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "coordinate_policy": 0,
+    "corpus_view": 0,
+    "cross_region_edge_count": 0,
+    "default_edge_limit": 0,
+    "edge_count": 0,
+    "hierarchy_view": 0,
+    "isolated_node_count": 0,
+    "node_count": 0,
+    "summary_text": 0,
+    "top_fractional_strength": 0,
+    "top_institution": 0,
+    "visible_minimum_fractional_weight": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view"
+  ],
+  "row_count": 64,
+  "run_id": "20260805T225124Z_30b845728146",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/nodes_year.json",
+    ".agent/manifests/edges_metrics_year.json",
+    ".agent/manifests/communities_year.json",
+    ".agent/manifests/network_layout.json"
+  ],
+  "source_versions": {
+    "network_view_policy": "fixed-layout-network-view-2026-08-05-v1"
+  },
+  "status": "valid"
+}

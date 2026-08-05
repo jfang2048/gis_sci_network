@@ -1,0 +1,30 @@
+{
+  "accessibility_summary_row_count": 64,
+  "default_edge_limit_per_view": 1000,
+  "distinct_layout_node_count": 500,
+  "encodings": {
+    "edge_width": "fractional_count",
+    "node_color": [
+      "macro_region",
+      "community_id"
+    ],
+    "node_size": [
+      "work_count",
+      "degree",
+      "fractional_strength",
+      "pagerank"
+    ]
+  },
+  "generated_at_utc": "2026-08-05T22:53:10.055359Z",
+  "institutions_with_unstable_coordinates": 0,
+  "logical_input_hash": "fcd9651a6a5f9b6b1070ae3a40b3c54468a008c01bd7ed0f4a275d6ec1d15f0f",
+  "network_edge_row_count": 64000,
+  "network_node_row_count": 31486,
+  "outputs": {
+    "network_accessibility_year": "data/processed/network_accessibility_year.parquet",
+    "network_view_edges_year": "data/processed/network_view_edges_year.parquet",
+    "network_view_nodes_year": "data/processed/network_view_nodes_year.parquet"
+  },
+  "schema_version": 1,
+  "stage_version": "fixed-layout-network-view-2026-08-05-v1"
+}

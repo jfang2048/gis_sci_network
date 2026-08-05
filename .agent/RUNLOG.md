@@ -1382,3 +1382,37 @@ thresholds, filter-ready attributes, and explicit coverage/missing-coordinate di
 ### Exact next action
 
 Task: GISNET-093 — Build fixed-layout network visualization.
+
+
+## Run 20260805T225124Z_30b845728146
+
+Started UTC: 2026-08-05T22:51:24Z
+Ended UTC: 2026-08-05T22:53:40Z
+Task: GISNET-093
+Initial git status: Clean on `main` at `30b8457` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build a legible fixed-layout institutional network view with selectable node encodings, community or
+region categories, visible edge thresholds, details, and an accessible textual summary.
+
+### Work completed
+
+- Joined the 500-node aggregate core to annual node metrics and primary Leiden communities.
+- Kept coordinates fixed while exposing work, degree, strength, PageRank, region, and community fields.
+- Selected the top 1,000 core edges per annual view with exact details and visible rank/limit metadata.
+- Generated one plain-language accessibility summary for each of 64 annual graph views.
+
+### Validation results
+
+- Network node rows: 31,486; visible edge rows: 64,000; accessibility rows: 64.
+- Institutions with coordinates that varied between years: 0; empty summaries: 0.
+- Node-view SHA-256: `1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b`.
+- Edge-view SHA-256: `df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c`.
+- Runtime 2.36 seconds; peak RSS about 500 MiB.
+- Ruff format/check passed; strict mypy passed; pytest passed (96 tests).
+
+### Exact next action
+
+Task: GISNET-095 — Build Streamlit dashboard.
