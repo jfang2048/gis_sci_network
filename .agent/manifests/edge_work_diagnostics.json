@@ -1,0 +1,43 @@
+{
+  "checksum_sha256": "565edf0755626b5f57453d60b3139649bd12769b423737be64d9059ed40dacb7",
+  "column_count": 12,
+  "command": "python -m gisnet.cli build-edges --work-institutions data/processed/work_institutions.parquet --corpus all --hierarchy all --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T21:29:00.676472Z",
+  "dataset_name": "edge_work_diagnostics",
+  "git_commit": "06350c560944",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "corpus_view": 0,
+    "exceeds_consortium_exclusion_threshold": 0,
+    "expected_pair_count": 0,
+    "fractional_sum_absolute_error": 0,
+    "fractional_weight_sum": 0,
+    "full_weight_sum": 0,
+    "generated_pair_count": 0,
+    "hierarchy_view": 0,
+    "institution_count": 0,
+    "is_large_consortium": 0,
+    "work_id": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "work_id"
+  ],
+  "row_count": 1062936,
+  "run_id": "20260805T212319Z_06350c560944",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_institutions.json"
+  ],
+  "source_versions": {
+    "edge_policy": "annual-collaboration-edges-2026-08-05-v1"
+  },
+  "status": "valid"
+}

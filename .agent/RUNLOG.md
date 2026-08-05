@@ -862,3 +862,41 @@ Work-institution layer with within-work deduplication and primary research-scope
 ### Exact next action
 
 Task: GISNET-062 — Build annual collaboration edges.
+
+## Run 20260805T212319Z_06350c560944
+
+Started UTC: 2026-08-05T21:23:19Z
+Ended UTC: 2026-08-05T21:29:24Z
+Task: GISNET-062
+Initial git status: Clean on `main` at `06350c5` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Construct stable unordered institution pairs for Strict/Broad and organization/umbrella views,
+record full and fractional contributions, diagnose consortium sizes, and aggregate annual edges.
+
+### Work completed
+
+- Generated per-Work canonical pairs with `source_id < target_id` and defensive node deduplication.
+- Assigned full weight 1 and fractional weight `2 / (k * (k - 1))`.
+- Added per-Work pair-count/fractional-sum diagnostics and versioned consortium flags.
+- Aggregated annual edge counts, metadata, Topic families, and deterministic Work samples.
+- Split four corpus/hierarchy shards to keep the default 4 GB DuckDB limit operational.
+
+### Validation results
+
+- Work-edge contributions: 4,505,668; annual edges: 2,999,736.
+- Collaborative Work-view combinations: 1,062,936.
+- Invalid/self/reversed pairs: 0; pair-count errors: 0.
+- Fractional per-Work sums all pass at 1e-10; maximum error `9.83e-14`.
+- Large-consortium Work views (k >= 25): 456; exclusion-threshold views (k >= 100): 0.
+- Maximum included primary-scope consortium size: 94.
+- Repeated outputs were byte-identical; peak RSS about 4.1 GB.
+- Work-edge SHA-256: `77aa672fef5375012ea9bbdfc777dccb9c266e5c455bc7b433fb1683c1c18c13`.
+- Annual-edge SHA-256: `bccfe253c020f85352f0a65784d92e162578555e9ad5c786318525d0933cbb9b`.
+- Ruff format/check passed; strict mypy passed; pytest passed (79 tests).
+
+### Exact next action
+
+Task: GISNET-063 — Build institutional output tables.

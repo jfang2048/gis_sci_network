@@ -50,6 +50,7 @@ from gisnet.institutions.types import (
     profile_institution_types,
     write_institution_type_profile,
 )
+from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
     write_work_institution_artifacts,
@@ -87,7 +88,6 @@ from gisnet.state import (
 )
 
 _NOT_IMPLEMENTED_COMMANDS = (
-    "build-edges",
     "compute-metrics",
     "build-region-flows",
     "detect-communities",
@@ -445,6 +445,25 @@ def build_parser() -> argparse.ArgumentParser:
     build_work_institutions.add_argument("--duckdb-memory-limit", default="4GB")
     build_work_institutions.add_argument("--duckdb-threads", default=1, type=int)
     build_work_institutions.set_defaults(handler=_build_work_institutions)
+
+    build_edges = subparsers.add_parser(
+        "build-edges", help="build per-Work pairs and annual full/fractional edges"
+    )
+    _add_pipeline_arguments(build_edges)
+    build_edges.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    build_edges.add_argument("--work-edges", default="data/processed/work_edges.parquet", type=Path)
+    build_edges.add_argument("--output", default="data/processed/edges_year.parquet", type=Path)
+    build_edges.add_argument(
+        "--diagnostics", default="data/processed/edge_work_diagnostics.parquet", type=Path
+    )
+    build_edges.add_argument(
+        "--summary", default="data/reference/collaboration_edges_summary.json", type=Path
+    )
+    build_edges.add_argument("--duckdb-memory-limit", default="4GB")
+    build_edges.add_argument("--duckdb-threads", default=1, type=int)
+    build_edges.set_defaults(handler=_build_edges)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1480,6 +1499,64 @@ def _build_work_institutions(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['row_count']} Work-institution rows; organization Works="
         f"{summary['organization_work_count']}, umbrella Works={summary['umbrella_work_count']}."
+    )
+    return 0
+
+
+def _build_edges(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Edge configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            f"Would build {corpora} x {hierarchies} annual edges from "
+            f"{args.work_institutions}; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-062"):
+            summary = build_collaboration_edges(
+                args.work_institutions,
+                work_edges_path=args.work_edges,
+                edges_year_path=args.output,
+                diagnostics_path=args.diagnostics,
+                warning_institution_count=project.consortium.warning_institution_count,
+                exclusion_institution_count=project.consortium.exclusion_institution_count,
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-edges "
+                f"--work-institutions {args.work_institutions} --corpus {args.corpus} "
+                f"--hierarchy {args.hierarchy} --resume"
+            )
+            write_edge_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "work_edges",
+                "edges_year",
+                "edge_work_diagnostics",
+                "collaboration_edges_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Collaboration edges failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['work_edge_count']} Work-edge contributions and "
+        f"{summary['annual_edge_count']} annual edges."
     )
     return 0
 

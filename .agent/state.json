@@ -29,7 +29,8 @@
     "GISNET-054",
     "GISNET-044",
     "GISNET-060",
-    "GISNET-061"
+    "GISNET-061",
+    "GISNET-062"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -46,11 +47,14 @@
   },
   "current_task_id": null,
   "dataset_manifests": {
+    "collaboration_edges_summary": ".agent/manifests/collaboration_edges_summary.json",
     "corpus_annual_counts": ".agent/manifests/corpus_annual_counts.json",
     "corpus_boundary_validation": ".agent/manifests/corpus_boundary_validation.json",
     "corpus_topic_family_counts": ".agent/manifests/corpus_topic_family_counts.json",
     "country_regions": ".agent/manifests/country_regions.json",
     "download_plan": ".agent/manifests/download_plan.json",
+    "edge_work_diagnostics": ".agent/manifests/edge_work_diagnostics.json",
+    "edges_year": ".agent/manifests/edges_year.json",
     "institution_canonicalization_audit": ".agent/manifests/institution_canonicalization_audit.json",
     "institution_extraction_summary": ".agent/manifests/institution_extraction_summary.json",
     "institution_geography_qa": ".agent/manifests/institution_geography_qa.json",
@@ -74,6 +78,7 @@
     "work_corpus": ".agent/manifests/work_corpus.json",
     "work_corpus_summary": ".agent/manifests/work_corpus_summary.json",
     "work_duplicate_doi_diagnostics": ".agent/manifests/work_duplicate_doi_diagnostics.json",
+    "work_edges": ".agent/manifests/work_edges.json",
     "work_institutions": ".agent/manifests/work_institutions.json",
     "work_institutions_extracted": ".agent/manifests/work_institutions_extracted.json",
     "work_institutions_summary": ".agent/manifests/work_institutions_summary.json",
@@ -89,8 +94,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T211514Z_1fb9bede719e",
-  "last_updated_utc": "2026-08-05T21:21:56Z",
+  "last_successful_run_id": "20260805T212319Z_06350c560944",
+  "last_updated_utc": "2026-08-05T21:29:24Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
