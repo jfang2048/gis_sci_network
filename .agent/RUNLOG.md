@@ -970,3 +970,37 @@ fractional counts, distinct Works/pairs, normalized shares, and exact full-count
 ### Exact next action
 
 Task: GISNET-080 — Validate edge arithmetic.
+
+## Run 20260805T213715Z_13517e3a9798
+
+Started UTC: 2026-08-05T21:37:15Z
+Ended UTC: 2026-08-05T21:40:09Z
+Task: GISNET-080
+Initial git status: Clean on `main` at `13517e3` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Lock edge arithmetic with required synthetic scenarios and validate all stored Work-level and annual
+edge invariants against consortium configuration.
+
+### Work completed
+
+- Added two-, three-, and five-institution synthetic arithmetic tests.
+- Added defensive duplicate-institution, umbrella self-pair, and consortium-threshold tests.
+- Added an auditable real-data `validate` command covering 11 stored-data invariants.
+- Validated pair combinations, full/fractional weights, view coverage, thresholds, and aggregation.
+
+### Validation results
+
+- All 11 real-data checks passed across 4,505,668 Work-edge contributions.
+- Pair/fractional diagnostics passed across 1,062,936 collaborative Work views.
+- Per-Work maximum fractional error: `9.83e-14`.
+- Annual full counts reconcile exactly; deterministic single-thread fractional accumulation differs
+  by `1.38e-05` over 1,062,936 total weight (well below the `1e-4` absolute gate).
+- Synthetic two-, three-, many-, duplicate-, collapse-, and threshold cases pass.
+- Ruff format/check passed; strict mypy passed; pytest passed (83 tests).
+
+### Exact next action
+
+Task: GISNET-083 — Reproducibility and interruption tests.

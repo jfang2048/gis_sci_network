@@ -1,1 +1,1 @@
-"""Dataset and analytical invariant validation."""
+"""Dataset and analytical invariant validation checks."""

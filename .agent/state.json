@@ -32,7 +32,8 @@
     "GISNET-061",
     "GISNET-062",
     "GISNET-063",
-    "GISNET-065"
+    "GISNET-065",
+    "GISNET-080"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -55,6 +56,7 @@
     "corpus_topic_family_counts": ".agent/manifests/corpus_topic_family_counts.json",
     "country_regions": ".agent/manifests/country_regions.json",
     "download_plan": ".agent/manifests/download_plan.json",
+    "edge_arithmetic_validation": ".agent/manifests/edge_arithmetic_validation.json",
     "edge_work_diagnostics": ".agent/manifests/edge_work_diagnostics.json",
     "edges_year": ".agent/manifests/edges_year.json",
     "institution_canonicalization_audit": ".agent/manifests/institution_canonicalization_audit.json",
@@ -102,8 +104,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260805T213321Z_5780a3f2500d",
-  "last_updated_utc": "2026-08-05T21:37:00Z",
+  "last_successful_run_id": "20260805T213715Z_13517e3a9798",
+  "last_updated_utc": "2026-08-05T21:40:09Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

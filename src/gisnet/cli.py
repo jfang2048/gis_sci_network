@@ -88,12 +88,12 @@ from gisnet.state import (
     TaskStatus,
     make_run_id,
 )
+from gisnet.validation.edges import validate_edge_arithmetic, write_edge_validation_artifact
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "compute-metrics",
     "detect-communities",
     "match-communities",
-    "validate",
     "build-figures",
     "build-dashboard-data",
     "run-pipeline",
@@ -507,6 +507,18 @@ def build_parser() -> argparse.ArgumentParser:
     build_flows.add_argument("--duckdb-memory-limit", default="4GB")
     build_flows.add_argument("--duckdb-threads", default=1, type=int)
     build_flows.set_defaults(handler=_build_region_flows)
+
+    validate = subparsers.add_parser("validate", help="run stored-data arithmetic invariants")
+    _add_pipeline_arguments(validate)
+    validate.add_argument("--work-edges", default="data/processed/work_edges.parquet", type=Path)
+    validate.add_argument("--edges", default="data/processed/edges_year.parquet", type=Path)
+    validate.add_argument(
+        "--edge-diagnostics", default="data/processed/edge_work_diagnostics.parquet", type=Path
+    )
+    validate.add_argument(
+        "--output", default="data/reference/edge_arithmetic_validation.json", type=Path
+    )
+    validate.set_defaults(handler=_validate_outputs)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -1691,6 +1703,48 @@ def _build_region_flows(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['flow_row_count']} geographic flow rows; Asia countries="
         f"{summary['asia_country_count']}, Americas countries={summary['americas_country_count']}."
+    )
+    return 0
+
+
+def _validate_outputs(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Validation configuration failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        print(f"Would validate edge arithmetic in {args.work_edges}; no output is changed.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-080"):
+            payload = validate_edge_arithmetic(
+                args.work_edges,
+                args.edges,
+                args.edge_diagnostics,
+                warning_institution_count=project.consortium.warning_institution_count,
+                exclusion_institution_count=project.consortium.exclusion_institution_count,
+            )
+            command = (
+                f"python -m gisnet.cli validate --work-edges {args.work_edges} --edges {args.edges}"
+            )
+            write_edge_validation_artifact(
+                payload,
+                path=args.output,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            _register_manifest(
+                "edge_arithmetic_validation", ".agent/manifests/edge_arithmetic_validation.json"
+            )
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Stored-data validation failed: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Edge arithmetic passed {len(payload['checks'])} checks across "
+        f"{payload['work_edge_count']} Work-edge contributions."
     )
     return 0
 
