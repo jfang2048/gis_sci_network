@@ -1,6 +1,6 @@
 {
   "data_version": "gisnet-0.1.0-2026-08-05",
-  "generated_at_utc": "2026-08-05T23:32:14.387203Z",
+  "generated_at_utc": "2026-08-05T23:39:21.631764Z",
   "known_limitations": [
     "Institution coordinates are sparse and never imputed.",
     "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
@@ -9,7 +9,7 @@
     "Visualization score is non-primary and used only to rank visible edges.",
     "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-05-v2",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v3",
   "public_snapshot": true,
   "schema_version": 1,
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
@@ -28,6 +28,11 @@
       "path": "dashboard/data/graph_metrics.parquet",
       "row_count": 64,
       "sha256": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84"
+    },
+    "institution_identities": {
+      "path": "dashboard/data/institution_identities.parquet",
+      "row_count": 46812,
+      "sha256": "cb26fa08d9bc6632c9ff8bf7ae486bf57a54683bbb5468c8e848285977e27f08"
     },
     "map_coverage": {
       "path": "dashboard/data/map_coverage.parquet",

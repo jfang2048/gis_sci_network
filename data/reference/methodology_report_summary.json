@@ -7,13 +7,13 @@
     "figures/view_comparison.svg",
     "figures/region_matrix.svg"
   ],
-  "generated_at_utc": "2026-08-05T23:32:14.925939Z",
-  "logical_input_hash": "183304efbca603e71528f7d494aa16ede18f843aed8e8f7a92242c59e3408124",
+  "generated_at_utc": "2026-08-05T23:39:22.158747Z",
+  "logical_input_hash": "3b2bbbc2257dda1e23b63d3f2c854ab59df474b51566a7d29719853b0958660d",
   "output": "outputs/reports/methodology.md",
   "partial_year_policy_disclosed": true,
   "present_section_count": 12,
   "provisional_topic_decisions_disclosed": true,
-  "report_sha256": "8becfe3476227522f2ca03e115539f4ba563a164e0aba5dcb0a867c56564b33e",
+  "report_sha256": "00c65d4bf9295f063b8e7d4c2ca54933a58c119687ec7ca9523e11e00a4e8b87",
   "required_section_count": 12,
   "schema_version": 1,
   "stage_version": "methodology-report-2026-08-05-v1"

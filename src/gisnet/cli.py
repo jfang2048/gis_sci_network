@@ -2649,6 +2649,8 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "sensitivity": "data/processed/sensitivity_matrix.parquet",
         "community_continuity": "data/processed/community_continuity_year.parquet",
         "community_transitions": "data/processed/community_transitions_year.parquet",
+        "institution_hierarchy": "data/processed/institution_hierarchy.parquet",
+        "institutions": "data/processed/institutions.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

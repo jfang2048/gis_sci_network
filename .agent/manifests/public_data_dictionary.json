@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "1fa6407660cf0dff879798af0fc6c8f2ebc39c82693d686a96c55ffabf0cb6b4",
+  "checksum_sha256": "c33697f536297494f822152fe1557a659ec833616bd82e67ea7d489c65f06104",
   "column_count": 1,
   "command": "python -m gisnet.cli build-data-dictionary --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T23:32:16.038060Z",
+  "created_at_utc": "2026-08-05T23:39:23.266814Z",
   "dataset_name": "public_data_dictionary",
-  "git_commit": "b19cda5eed1e",
+  "git_commit": "11433205c2b8",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -17,13 +17,14 @@
     "checksum_sha256"
   ],
   "row_count": 1,
-  "run_id": "20260805T232636Z_b19cda5eed1e",
+  "run_id": "20260805T233627Z_11433205c2b8",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/collaboration_matrix_year.json",
     ".agent/manifests/community_continuity_year.json",
     ".agent/manifests/community_transitions_year.json",
     ".agent/manifests/graph_metrics_year.json",
+    ".agent/manifests/institution_hierarchy.json",
     ".agent/manifests/map_coverage_year.json",
     ".agent/manifests/map_edges_year.json",
     ".agent/manifests/map_nodes_year.json",

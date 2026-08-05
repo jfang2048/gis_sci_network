@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-05T23:36:15Z",
+  "last_updated_utc": "2026-08-05T23:40:13Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1198,12 +1198,27 @@
       "dependencies": [
         "GISNET-064"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-05T23:36:27Z",
+          "from": "TODO",
+          "reason": "Implementing stable-ID institution-pair explorer with explicit missing-year semantics and acceptance tests.",
+          "run_id": "20260805T233627Z_11433205c2b8",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-05T23:40:13Z",
+          "from": "IN_PROGRESS",
+          "reason": "Stable-ID pair search, complete-year semantics, supporting topics/works, explicit organization/umbrella identities, and acceptance checks passed.",
+          "run_id": "20260805T233627Z_11433205c2b8",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-094",
       "priority": "P2",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Stable-ID pair search, complete-year semantics, supporting topics/works, explicit organization/umbrella identities, and acceptance checks passed.",
+      "status_updated_at_utc": "2026-08-05T23:40:13Z"
     },
     {
       "dependencies": [

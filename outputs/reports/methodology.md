@@ -36,7 +36,7 @@ Bibliographic Works, authorships, institutions, Topics, and source identifiers c
 Raw pages are cached with checksums and query IDs before normalization; the completed acquisition
 contains only source-provided identifiers. ROR is an optional source for cached institution
 enrichment, and UN Statistics Division M49 is the source for the geographic convention. Ordinary
-dashboard viewing uses 13 processed public tables and makes
+dashboard viewing uses 14 processed public tables and makes
 no OpenAlex or ROR request.
 
 ## 5. Institution resolution

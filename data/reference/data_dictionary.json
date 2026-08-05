@@ -1,11 +1,11 @@
 {
-  "column_entry_count": 305,
+  "column_entry_count": 310,
   "data_version": "gisnet-0.1.0-2026-08-05",
   "dictionary_version": "public-data-dictionary-2026-08-05-v1",
-  "methods_version": "public-dashboard-bundle-2026-08-05-v2",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v3",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 13,
+  "table_count": 14,
   "tables": [
     {
       "code_commit": "b19cda5eed1e",
@@ -559,6 +559,74 @@
       },
       "table": "graph_metrics",
       "transformation_command": "python -m gisnet.cli compute-metrics --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume"
+    },
+    {
+      "code_commit": "e222ecdc5744",
+      "column_count": 5,
+      "columns": [
+        {
+          "description": "Stable source identifier for the uncollapsed organization identity.",
+          "name": "organization_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Display name associated with the organization identity.",
+          "name": "organization_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable identifier used for the documented umbrella hierarchy view.",
+          "name": "umbrella_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Display name associated with the umbrella identity.",
+          "name": "umbrella_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the organization is explicitly collapsed into another umbrella ID.",
+          "name": "is_collapsed",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        }
+      ],
+      "configuration_hashes": {
+        "institution_overrides": "a2bfe8f3c1bee1e5a8095f930784b1f04d60c5e740c3c498d87725c306370e76",
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Stable organization identifiers mapped to their documented umbrella identity.",
+      "known_data_quality_issue": "Umbrella collapse occurs only under explicit frozen hierarchy rules.",
+      "path": "dashboard/data/institution_identities.parquet",
+      "primary_key": [
+        "organization_id"
+      ],
+      "row_count": 46812,
+      "sha256": "cb26fa08d9bc6632c9ff8bf7ae486bf57a54683bbb5468c8e848285977e27f08",
+      "source_manifest": ".agent/manifests/institution_hierarchy.json",
+      "source_manifests": [
+        ".agent/manifests/institutions_ror.json",
+        ".agent/manifests/institutions_geographic.json"
+      ],
+      "source_versions": {
+        "hierarchy_policy": "institution-hierarchy-2026-08-05-v1"
+      },
+      "table": "institution_identities",
+      "transformation_command": "python -m gisnet.cli build-hierarchy --institutions data/processed/institutions_ror.parquet --output data/processed/institution_hierarchy.parquet --resume"
     },
     {
       "code_commit": "a5680002cdf2",

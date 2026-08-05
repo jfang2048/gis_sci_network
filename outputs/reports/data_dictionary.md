@@ -1,9 +1,9 @@
 # Public Data Dictionary and Provenance
 
 Data version: `gisnet-0.1.0-2026-08-05`
-Methods version: `public-dashboard-bundle-2026-08-05-v2`
-Released tables: 13
-Documented table-column entries: 305
+Methods version: `public-dashboard-bundle-2026-08-05-v3`
+Released tables: 14
+Documented table-column entries: 310
 
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
@@ -122,6 +122,30 @@ Annual graph-level topology, connectivity, mixing, and turnover metrics.
 | `betweenness_sample_size` | `int64` | Number of graph vertices included by the betweenness method. | Not null in this public release. | 0 |
 | `betweenness_cutoff` | `int64` | Maximum path length for approximated betweenness; null when exact. | Not null in this public release. | 0 |
 | `random_seed` | `int64` | Deterministic random seed for the graph computation. | Not null in this public release. | 0 |
+
+## `institution_identities`
+
+Stable organization identifiers mapped to their documented umbrella identity.
+
+- Path: `dashboard/data/institution_identities.parquet`
+- Rows: 46,812
+- Primary key: `organization_id`
+- SHA-256: `cb26fa08d9bc6632c9ff8bf7ae486bf57a54683bbb5468c8e848285977e27f08`
+- Direct source manifest: `.agent/manifests/institution_hierarchy.json`
+- Source manifests: `.agent/manifests/institutions_ror.json, .agent/manifests/institutions_geographic.json`
+- Configuration hashes: `{"institution_overrides": "a2bfe8f3c1bee1e5a8095f930784b1f04d60c5e740c3c498d87725c306370e76", "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"hierarchy_policy": "institution-hierarchy-2026-08-05-v1"}`
+- Code commit: `e222ecdc5744`
+- Transformation: `python -m gisnet.cli build-hierarchy --institutions data/processed/institutions_ror.parquet --output data/processed/institution_hierarchy.parquet --resume`
+- Known issue: Umbrella collapse occurs only under explicit frozen hierarchy rules.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `organization_id` | `string` | Stable source identifier for the uncollapsed organization identity. | Not null in this public release. | 0 |
+| `organization_name` | `string` | Display name associated with the organization identity. | Not null in this public release. | 0 |
+| `umbrella_id` | `string` | Stable identifier used for the documented umbrella hierarchy view. | Not null in this public release. | 0 |
+| `umbrella_name` | `string` | Display name associated with the umbrella identity. | Not null in this public release. | 0 |
+| `is_collapsed` | `bool` | Whether the organization is explicitly collapsed into another umbrella ID. | Not null in this public release. | 0 |
 
 ## `map_coverage`
 

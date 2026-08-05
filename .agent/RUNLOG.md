@@ -1617,3 +1617,36 @@ Match adjacent-year annual communities without treating annual numeric labels as
 ### Exact next action
 
 Task: GISNET-094 — Build institution-pair explorer.
+
+
+## Run 20260805T233627Z_11433205c2b8
+
+Started UTC: 2026-08-05T23:36:27Z
+Ended UTC: 2026-08-05T23:40:13Z
+Task: GISNET-094
+Initial git status: Clean on `main` at `1143320` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Finish the institution-pair explorer with stable identity resolution, complete-year metric semantics, supporting evidence, and explicit organization/umbrella identities.
+
+### Work completed
+
+- Added reusable stable-ID label, pair-timeline, and hierarchy-identity helpers.
+- Kept similar names distinct by displaying and selecting their stable source identifiers.
+- Filled absent public edge-years with zero full/fractional counts while retaining missing intensity and persistence.
+- Displayed Topic families, supporting Work IDs, and both organization and umbrella identity records.
+- Published a validated 46,812-row institution identity mapping in the compact dashboard bundle.
+
+### Validation results
+
+- Unit tests cover identical names with distinct IDs, reversed pair order, missing-year semantics, same-ID rejection, and both hierarchy views.
+- Identity mapping has 46,812 unique organization IDs; required identity fields are complete.
+- Public bundle now contains 14 tables and the data dictionary documents 310 columns.
+- Ruff lint/format passed; strict mypy passed; pytest passed (112 tests), including all 8 Streamlit pages.
+- Candidate privacy scan found no token, private key, or private home path; dashboard health endpoint returned `ok`.
+
+### Exact next action
+
+Task: GISNET-104 — Produce final release bundle.

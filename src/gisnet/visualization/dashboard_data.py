@@ -14,7 +14,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-05-v2"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-05-v3"
 
 
 def build_dashboard_bundle(
@@ -26,7 +26,7 @@ def build_dashboard_bundle(
     threads: int = 1,
 ) -> dict[str, Any]:
     """Build a compact, validated snapshot with no API calls or private paths."""
-    required = {
+    copied_sources = {
         "trends",
         "matrix",
         "map_nodes",
@@ -40,6 +40,7 @@ def build_dashboard_bundle(
         "community_continuity",
         "community_transitions",
     }
+    required = copied_sources | {"institution_hierarchy", "institutions"}
     missing = required.difference(sources)
     if missing:
         raise ValueError(f"dashboard bundle lacks sources: {sorted(missing)}")
@@ -49,8 +50,9 @@ def build_dashboard_bundle(
             raise ValueError(f"dashboard source does not exist: {path}")
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
-    destinations = {name: output / f"{name}.parquet" for name in required}
+    destinations = {name: output / f"{name}.parquet" for name in copied_sources}
     destinations["topics"] = output / "topics.parquet"
+    destinations["institution_identities"] = output / "institution_identities.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -61,7 +63,7 @@ def build_dashboard_bundle(
     try:
         connection.execute("SET memory_limit = ?", [memory_limit])
         connection.execute("SET threads = ?", [threads])
-        for name in sorted(required):
+        for name in sorted(copied_sources):
             connection.execute(
                 f"""
                 COPY (SELECT * FROM read_parquet(?))
@@ -93,6 +95,31 @@ def build_dashboard_bundle(
             (FORMAT PARQUET, COMPRESSION ZSTD)
             """,
             [str(paths["network_edges"])],
+        )
+        connection.execute(
+            f"""
+            COPY (
+                SELECT
+                    hierarchy.institution_id AS organization_id,
+                    organization.display_name AS organization_name,
+                    hierarchy.canonical_institution_id AS umbrella_id,
+                    umbrella.display_name AS umbrella_name,
+                    hierarchy.is_collapsed
+                FROM read_parquet(?) AS hierarchy
+                JOIN read_parquet(?) AS organization
+                  ON hierarchy.institution_id = organization.institution_id
+                JOIN read_parquet(?) AS umbrella
+                  ON hierarchy.canonical_institution_id = umbrella.institution_id
+                WHERE hierarchy.hierarchy_view = 'umbrella'
+                ORDER BY organization_name, organization_id
+            ) TO '{_literal(temporary["institution_identities"])}'
+            (FORMAT PARQUET, COMPRESSION ZSTD)
+            """,
+            [
+                str(paths["institution_hierarchy"]),
+                str(paths["institutions"]),
+                str(paths["institutions"]),
+            ],
         )
     except BaseException:
         for path in temporary.values():
@@ -174,6 +201,17 @@ def build_dashboard_bundle(
             ],
             {"transition_year", "event_type", "assignment_selected", "jaccard_overlap"},
             "transition_year",
+        ),
+        "institution_identities": (
+            ["organization_id"],
+            {
+                "organization_id",
+                "organization_name",
+                "umbrella_id",
+                "umbrella_name",
+                "is_collapsed",
+            },
+            None,
         ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],

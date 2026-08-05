@@ -43,6 +43,14 @@ TABLES: dict[str, dict[str, Any]] = {
         "description": "Annual graph-level topology, connectivity, mixing, and turnover metrics.",
         "known_issue": "Betweenness uses the disclosed cutoff approximation for large graphs.",
     },
+    "institution_identities": {
+        "primary_key": ["organization_id"],
+        "source_manifest": ".agent/manifests/institution_hierarchy.json",
+        "description": (
+            "Stable organization identifiers mapped to their documented umbrella identity."
+        ),
+        "known_issue": "Umbrella collapse occurs only under explicit frozen hierarchy rules.",
+    },
     "map_coverage": {
         "primary_key": ["year", "corpus_view", "hierarchy_view"],
         "source_manifest": ".agent/manifests/map_coverage_year.json",
@@ -135,6 +143,11 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "corpus_view": "GIS corpus definition: strict or broad.",
     "hierarchy_view": "Institution identity view: organization or documented umbrella.",
     "institution_id": "Stable source institution identifier used as the node key.",
+    "organization_id": "Stable source identifier for the uncollapsed organization identity.",
+    "organization_name": "Display name associated with the organization identity.",
+    "umbrella_id": "Stable identifier used for the documented umbrella hierarchy view.",
+    "umbrella_name": "Display name associated with the umbrella identity.",
+    "is_collapsed": "Whether the organization is explicitly collapsed into another umbrella ID.",
     "display_name": "Source-provided or canonically selected institution display name.",
     "ror_id": "Source-linked Research Organization Registry identifier, when available.",
     "country_code": "Source country code associated with the institution.",

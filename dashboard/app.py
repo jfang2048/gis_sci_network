@@ -10,6 +10,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+from gisnet.visualization.pair_explorer import (
+    build_pair_timeline,
+    identity_rows,
+    institution_labels,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dashboard" / "data"
 PAGES = (
@@ -89,6 +95,7 @@ sensitivity = load_table("sensitivity")
 topics = load_table("topics")
 community_continuity = load_table("community_continuity")
 community_transitions = load_table("community_transitions")
+institution_identities = load_table("institution_identities")
 
 if graph_metrics.empty:
     st.error("The dashboard snapshot is incomplete: graph metrics are unavailable.")
@@ -430,14 +437,7 @@ elif page == "Institution explorer":
     pair_data = network_edges.loc[
         (network_edges["corpus_view"] == corpus) & (network_edges["hierarchy_view"] == hierarchy)
     ].copy()
-    labels: dict[str, str] = {}
-    for _, edge in (
-        pair_data[["source_id", "source_name", "target_id", "target_name"]]
-        .drop_duplicates()
-        .iterrows()
-    ):
-        labels[str(edge["source_id"])] = f"{edge['source_name']} [{edge['source_id']}]"
-        labels[str(edge["target_id"])] = f"{edge['target_name']} [{edge['target_id']}]"
+    labels = institution_labels(pair_data)
     ordered_ids = sorted(labels, key=lambda identifier: (labels[identifier].casefold(), identifier))
     if len(ordered_ids) < 2:
         show_empty("No institution pairs are available in this view.")
@@ -447,17 +447,17 @@ elif page == "Institution explorer":
         institution_b = right.selectbox(
             "Institution B", ordered_ids, index=min(1, len(ordered_ids) - 1), format_func=labels.get
         )
-        source_id, target_id = sorted((institution_a, institution_b))
-        pair = pair_data.loc[
-            (pair_data["source_id"] == source_id) & (pair_data["target_id"] == target_id)
-        ].copy()
-        if pair.empty:
-            show_empty("This thresholded public snapshot has no visible edge for the selected IDs.")
+        if institution_a == institution_b:
+            show_empty("Choose two different stable institution IDs.")
         else:
-            all_years = pd.DataFrame({"year": years})
-            pair = all_years.merge(pair, on="year", how="left")
-            pair["full_count"] = pair["full_count"].fillna(0)
-            pair["fractional_count"] = pair["fractional_count"].fillna(0.0)
+            pair = build_pair_timeline(pair_data, institution_a, institution_b, years=years)
+        has_observed_pair = (
+            institution_a != institution_b
+            and pair[["full_count", "fractional_count"]].to_numpy().any()
+        )
+        if institution_a != institution_b and not has_observed_pair:
+            show_empty("This thresholded public snapshot has no visible edge for the selected IDs.")
+        elif has_observed_pair:
             figure = go.Figure()
             figure.add_trace(
                 go.Scatter(
@@ -497,6 +497,19 @@ elif page == "Institution explorer":
                 "Stable institution IDs are shown in brackets; missing years use zero counts "
                 "and missing intensity/persistence."
             )
+        st.subheader("Organization and umbrella identities")
+        for selected_id, selected_label in (
+            (institution_a, labels[institution_a]),
+            (institution_b, labels[institution_b]),
+        ):
+            st.markdown(f"**{selected_label}**")
+            identities = identity_rows(
+                institution_identities, selected_id, hierarchy_view=hierarchy
+            )
+            if identities.empty:
+                st.caption("No released hierarchy mapping is available for this ID.")
+            else:
+                st.dataframe(identities, width="stretch", hide_index=True)
 
 elif page == "Topic-family comparison":
     st.header("Topic-family comparison")
