@@ -121,6 +121,8 @@ Every public table column, primary key, null semantic, lineage path, configurati
 code hash, and known issue is documented in
 [`outputs/reports/data_dictionary.md`](outputs/reports/data_dictionary.md), with a
 machine-readable companion at [`data/reference/data_dictionary.json`](data/reference/data_dictionary.json).
+Release contents, verification, upstream large-data links, and clean-clone reproduction
+steps are collected in [`RELEASE.md`](RELEASE.md).
 
 ## Topic registry status
 
@@ -145,9 +147,10 @@ boundary precision is intentionally withheld until sufficient human annotation e
 ## Data availability and public-repository policy
 
 The public repository contains source code, configuration, compact reference artifacts, manifests,
-and reproducibility instructions. It intentionally excludes credentials and large generated data:
-raw/cache pages, interim DuckDB files, processed Parquet files, and private outputs are ignored by
-Git. These files are rebuilt locally rather than committed.
+reproducibility instructions, and a compact thresholded processed snapshot in `dashboard/data/`.
+It intentionally excludes credentials and large generated data: raw/cache pages, interim DuckDB
+files, the full `data/processed/` Parquet layer, and private outputs are ignored by Git. These larger
+layers are rebuilt locally rather than committed.
 
 The bibliographic source is [OpenAlex](https://openalex.org/). Its
 [API documentation](https://docs.openalex.org/) describes access to the upstream records; this

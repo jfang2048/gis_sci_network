@@ -2,8 +2,8 @@
   "column_entry_count": 310,
   "dictionary_sha256": "c33697f536297494f822152fe1557a659ec833616bd82e67ea7d489c65f06104",
   "documented_table_count": 14,
-  "generated_at_utc": "2026-08-05T23:39:23.265656Z",
-  "logical_input_hash": "f9c67fe0645f014aa217d3221d89923c740ab0614d0ffffd32ad93b7b74afc14",
+  "generated_at_utc": "2026-08-05T23:43:44.810915Z",
+  "logical_input_hash": "4121e164c81d08a2e0d1b7e622cef25d933fed2b708d44d2b76b6c93b1599c8c",
   "outputs": {
     "machine_readable_dictionary": "data/reference/data_dictionary.json",
     "provenance_report": "outputs/reports/data_dictionary.md"

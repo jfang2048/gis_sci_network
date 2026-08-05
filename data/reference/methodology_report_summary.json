@@ -7,8 +7,8 @@
     "figures/view_comparison.svg",
     "figures/region_matrix.svg"
   ],
-  "generated_at_utc": "2026-08-05T23:39:22.158747Z",
-  "logical_input_hash": "3b2bbbc2257dda1e23b63d3f2c854ab59df474b51566a7d29719853b0958660d",
+  "generated_at_utc": "2026-08-05T23:43:43.679898Z",
+  "logical_input_hash": "768692ad427d701b899e2675c799f73e7388a07c40a2f6966bc54a2b9d416f2b",
   "output": "outputs/reports/methodology.md",
   "partial_year_policy_disclosed": true,
   "present_section_count": 12,

@@ -1650,3 +1650,37 @@ Finish the institution-pair explorer with stable identity resolution, complete-y
 ### Exact next action
 
 Task: GISNET-104 — Produce final release bundle.
+
+
+## Run 20260805T234030Z_2f9990b306be
+
+Started UTC: 2026-08-05T23:40:30Z
+Ended UTC: 2026-08-05T23:47:42Z
+Task: GISNET-104
+Initial git status: Clean on `main` at `2f9990b` tracking `origin/main`.
+Final git status: Pending the required local atomic commit, remote CI, tag, and GitHub release.
+
+### Objective
+
+Produce a privacy-safe, checksum-complete public release containing all required source, configuration, aggregate data, visualization, methods, dictionary, provenance, limitations, and reproduction materials.
+
+### Work completed
+
+- Added a machine-verifiable release manifest and manifest checksum covering every public configuration, aggregate table, reference artifact, figure, report, and provenance manifest.
+- Added release viewing, verification, limitations, large-source links, and clean-clone reproduction instructions.
+- Kept raw API responses, the full processed layer, credentials, caches, and private outputs outside Git.
+- Expanded dashboard provenance to all fourteen upstream source manifests.
+- Replaced eager dashboard loading with active-page loading and shared immutable table caching.
+- Batched local test collection so native-library memory is released throughout the quality gate.
+
+### Validation results
+
+- Release manifest verifies 162 files totaling 7,819,824 bytes; 14 compact tables; every file has a SHA-256 checksum.
+- Raw API responses included: no; release and repository privacy findings: 0; files above 100 MiB: 0.
+- Repeated pipeline validation skipped all 36 valid stages; runtime 1.39 seconds; peak RSS about 120 MiB.
+- Dashboard all-page peak RSS fell from about 1.76 GiB to about 0.56 GiB; final full gate peak RSS about 0.52 GiB.
+- Ruff lint/format passed; strict mypy passed; all 115 tests passed; dashboard health returned `ok`.
+
+### Exact next action
+
+Push the atomic release commit, require GitHub CI success, then publish tag and release `v0.1.0`.

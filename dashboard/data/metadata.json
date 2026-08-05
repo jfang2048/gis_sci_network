@@ -1,6 +1,6 @@
 {
   "data_version": "gisnet-0.1.0-2026-08-05",
-  "generated_at_utc": "2026-08-05T23:39:21.631764Z",
+  "generated_at_utc": "2026-08-05T23:43:43.147631Z",
   "known_limitations": [
     "Institution coordinates are sparse and never imputed.",
     "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",

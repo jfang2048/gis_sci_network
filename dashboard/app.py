@@ -45,7 +45,7 @@ def load_metadata() -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_table(name: str) -> pd.DataFrame:
     path = DATA / f"{name}.parquet"
     if not path.is_file():
@@ -82,20 +82,10 @@ if not metadata:
     )
     st.stop()
 
-trends = load_table("trends")
-matrix = load_table("matrix")
 map_nodes = load_table("map_nodes")
 map_edges = load_table("map_edges")
-map_coverage = load_table("map_coverage")
-network_nodes = load_table("network_nodes")
-network_edges = load_table("network_edges")
-network_accessibility = load_table("network_accessibility")
 graph_metrics = load_table("graph_metrics")
-sensitivity = load_table("sensitivity")
 topics = load_table("topics")
-community_continuity = load_table("community_continuity")
-community_transitions = load_table("community_transitions")
-institution_identities = load_table("institution_identities")
 
 if graph_metrics.empty:
     st.error("The dashboard snapshot is incomplete: graph metrics are unavailable.")
@@ -145,6 +135,7 @@ st.caption(
 weight_column = "fractional_count" if counting == "Fractional" else "full_count"
 
 if page == "Overview":
+    trends = load_table("trends")
     st.header("Overview")
     current = filtered_view(graph_metrics, year, corpus, hierarchy)
     row = current.iloc[0] if not current.empty else None
@@ -194,6 +185,8 @@ if page == "Overview":
         )
 
 elif page == "Region trends":
+    trends = load_table("trends")
+    matrix = load_table("matrix")
     st.header("Region trends and collaboration matrix")
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
@@ -249,6 +242,7 @@ elif page == "Region trends":
         )
 
 elif page == "Geographic map":
+    map_coverage = load_table("map_coverage")
     st.header("Geographic collaboration map")
     nodes = filtered_view(map_nodes, year, corpus, hierarchy)
     edges = filtered_view(map_edges, year, corpus, hierarchy)
@@ -330,6 +324,10 @@ elif page == "Geographic map":
     )
 
 elif page == "Institutional network":
+    network_nodes = load_table("network_nodes")
+    network_edges = load_table("network_edges")
+    network_accessibility = load_table("network_accessibility")
+    community_continuity = load_table("community_continuity")
     st.header("Fixed-layout institutional network")
     nodes = filtered_view(network_nodes, year, corpus, hierarchy)
     edges = filtered_view(network_edges, year, corpus, hierarchy)
@@ -433,6 +431,8 @@ elif page == "Institutional network":
         st.info(summary.iloc[0]["summary_text"])
 
 elif page == "Institution explorer":
+    network_edges = load_table("network_edges")
+    institution_identities = load_table("institution_identities")
     st.header("Institution-pair explorer")
     pair_data = network_edges.loc[
         (network_edges["corpus_view"] == corpus) & (network_edges["hierarchy_view"] == hierarchy)
@@ -576,6 +576,10 @@ labels do not express a political position.
             st.write(f"- {limitation}")
 
 elif page == "Data quality":
+    sensitivity = load_table("sensitivity")
+    map_coverage = load_table("map_coverage")
+    community_continuity = load_table("community_continuity")
+    community_transitions = load_table("community_transitions")
     st.header("Data quality and sensitivity")
     st.subheader("Required sensitivity matrix")
     st.dataframe(

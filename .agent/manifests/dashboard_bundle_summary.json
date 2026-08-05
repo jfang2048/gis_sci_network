@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "a31b048e3d0940b7b95c61ba98c33d613c3658f8cf0cfcc8e8534994d1967235",
+  "checksum_sha256": "b0725b8f0433e7b345660b1b6c02f9698e221c63fad248ec7856a489448a629a",
   "column_count": 12,
   "command": "python -m gisnet.cli build-dashboard-data --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T23:39:21.646487Z",
+  "created_at_utc": "2026-08-05T23:43:43.163235Z",
   "dataset_name": "dashboard_bundle_summary",
-  "git_commit": "11433205c2b8",
+  "git_commit": "2f9990b306be",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -28,15 +28,23 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T233627Z_11433205c2b8",
+  "run_id": "20260805T234030Z_2f9990b306be",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/trend_series_year.json",
     ".agent/manifests/collaboration_matrix_year.json",
     ".agent/manifests/map_nodes_year.json",
+    ".agent/manifests/map_edges_year.json",
+    ".agent/manifests/map_coverage_year.json",
     ".agent/manifests/network_view_nodes_year.json",
+    ".agent/manifests/network_view_edges_year.json",
+    ".agent/manifests/network_accessibility_year.json",
+    ".agent/manifests/graph_metrics_year.json",
+    ".agent/manifests/sensitivity_matrix.json",
     ".agent/manifests/community_continuity_year.json",
-    ".agent/manifests/community_transitions_year.json"
+    ".agent/manifests/community_transitions_year.json",
+    ".agent/manifests/institution_hierarchy.json",
+    ".agent/manifests/institutions.json"
   ],
   "source_versions": {
     "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-05-v3"
