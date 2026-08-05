@@ -39,6 +39,7 @@ from gisnet.corpus.work_types import (
 )
 from gisnet.geography import load_region_registry, write_mapping_csv
 from gisnet.institutions.extract import extract_work_institutions, write_extraction_artifacts
+from gisnet.institutions.master import build_institution_master, write_institution_master_artifacts
 from gisnet.institutions.types import (
     load_institution_type_policy,
     profile_institution_types,
@@ -259,6 +260,31 @@ def build_parser() -> argparse.ArgumentParser:
     )
     extract_institutions.add_argument("--batch-size", default=2000, type=int)
     extract_institutions.set_defaults(handler=_extract_institutions)
+
+    build_institutions = subparsers.add_parser(
+        "build-institutions", help="build a stable-ID institution master and metadata audit"
+    )
+    _add_pipeline_arguments(build_institutions)
+    build_institutions.add_argument(
+        "--extracted",
+        default="data/processed/work_institutions_extracted.parquet",
+        type=Path,
+    )
+    build_institutions.add_argument(
+        "--institution-types", default="config/institution_types.yml", type=Path
+    )
+    build_institutions.add_argument(
+        "--institutions", default="data/processed/institutions.parquet", type=Path
+    )
+    build_institutions.add_argument(
+        "--qa", default="data/processed/institution_metadata_qa.parquet", type=Path
+    )
+    build_institutions.add_argument(
+        "--summary", default="data/reference/institution_master_summary.json", type=Path
+    )
+    build_institutions.add_argument("--lookup-batch-size", default=25, type=int)
+    build_institutions.add_argument("--offline", action="store_true")
+    build_institutions.set_defaults(handler=_build_institutions)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -949,6 +975,65 @@ def _extract_institutions(args: argparse.Namespace) -> int:
         f"Extracted {summary['work_institution_count']} distinct Work-institution rows across "
         f"{summary['resolved_work_count']} Works; unresolved Works="
         f"{summary['unresolved_work_count']}."
+    )
+    return 0
+
+
+def _build_institutions(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+        policy = load_institution_type_policy(args.institution_types)
+    except (OSError, ValueError) as exc:
+        print(f"Institution-master inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        mode = "offline" if args.offline else "cached/live stable-ID completion"
+        print(f"Would build the institution master from {args.extracted} using {mode}.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-051"):
+            if args.offline:
+                summary = build_institution_master(
+                    args.extracted,
+                    policy,
+                    master_path=args.institutions,
+                    qa_path=args.qa,
+                    lookup_batch_size=args.lookup_batch_size,
+                    force=args.force,
+                )
+            else:
+                with OpenAlexClient(project.openalex) as client:
+                    summary = build_institution_master(
+                        args.extracted,
+                        policy,
+                        master_path=args.institutions,
+                        qa_path=args.qa,
+                        client=client,
+                        cache=RawResponseCache(project.openalex.cache_directory),
+                        lookup_batch_size=args.lookup_batch_size,
+                        force=args.force,
+                    )
+            command = (
+                "python -m gisnet.cli build-institutions "
+                f"--extracted {args.extracted} --institutions {args.institutions} --resume"
+            )
+            write_institution_master_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                institution_type_path=args.institution_types,
+                command=command,
+            )
+            for name in ("institutions", "institution_metadata_qa", "institution_master_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"Institution master failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['institution_count']} institutions; metadata QA="
+        f"{summary['metadata_qa_count']}, lookup matches={summary['lookup_found_count']}."
     )
     return 0
 

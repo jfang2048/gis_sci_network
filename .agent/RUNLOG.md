@@ -538,3 +538,73 @@ the only identity keys; names are labels only.
 ### Exact next action
 
 Task: GISNET-051 — Build institution master table. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260805T204723Z_04ae54c19bf0
+
+Started UTC: 2026-08-05T20:47:23Z
+Ended UTC: 2026-08-05T20:53:10Z
+Task: GISNET-051
+Initial git status: Clean on `main` at `04ae54c` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build a unique institution master keyed only by stable OpenAlex IDs, complete missing metadata where
+the source supports it, preserve ambiguity, and guarantee every Work-institution row reconciles.
+
+### Work completed
+
+- Aggregated 2,404,676 Work assertions into 46,812 unique institutions.
+- Added deterministic source-value selection, alternative names, lineage, type-policy flags, and QA.
+- Queried 1,679 incomplete/conflicting institutions in bounded cached OpenAlex ID batches.
+- Preserved source values and missingness while adding live coordinates and relationship metadata.
+- Added `build-institutions`, an offline mode, and deterministic Parquet/manifests.
+
+### Files changed
+
+- `.agent/{RUNLOG.md,backlog.json,state.json}` and three institution-master manifests
+- `README.md`, `data/reference/institution_master_summary.json`
+- `src/gisnet/cli.py`, `src/gisnet/institutions/master.py`
+- `tests/unit/test_institution_master.py`
+- Ignored institution master and QA Parquet datasets
+
+### Commands executed
+
+- Source completeness/conflict profiling and official OpenAlex field/filter verification.
+- Live cached metadata completion, full joins/QA queries, and a cache-only deterministic rerun.
+- Ruff format/check, strict mypy, full pytest, CLI dry run, and status checks.
+
+### Validation results
+
+- Institutions: 46,812 unique rows; Work-institution orphan joins: 0.
+- Metadata QA: 1,679 rows; source lookup matches: 1,602; missing/removed IDs: 77.
+- Remaining missing: country 1,585; type 78; ROR 78. No value was guessed.
+- Source scopes: primary 29,190; secondary 17,337; excluded 207; unknown 78.
+- Coordinates available for 1,601 lookup-target institutions.
+- Repeated cache-backed output was byte-identical; peak RSS 435,716 KB.
+- Ruff: passed. Strict mypy over 32 files: passed. Pytest: 71 passed.
+
+### Data and configuration hashes
+
+- Institutions: `c87e3ffd4a30b70740eac6589f060f092d74e82ffa0e6f4b3991c1e6ff1e3507`
+- Institution metadata QA: `8550c0485033fcb4e62d4bed41948ea68e78f4d68e08dfccd70f291fc5d8c3ec`
+- Logical input hash: `224665f260f43d4456aebd96042b9a551be4f41221362808934ce5547ee3c029`
+
+### Checkpoints written
+
+- Cached non-secret OpenAlex institution response pages.
+- `.agent/state.json`, `.agent/backlog.json`, and three dataset manifests.
+
+### Failures or blockers
+
+No unresolved blocker. Seventy-seven historical source IDs were not returned by current OpenAlex
+batch lookup; their Work-asserted names and stable IDs remain in the master with explicit QA.
+
+### Decisions made
+
+Live stable-ID metadata supersedes conflicting source assertions only in resolved master columns;
+all original distinct source values remain as audit arrays. Names are never identity join keys.
+
+### Exact next action
+
+Task: GISNET-053 — Apply geographic mapping. Command: `uv run python -m gisnet.cli next-task`.

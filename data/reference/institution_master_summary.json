@@ -1,0 +1,20 @@
+{
+  "generated_at_utc": "2026-08-05T20:52:30.561820Z",
+  "institution_count": 46812,
+  "logical_input_hash": "224665f260f43d4456aebd96042b9a551be4f41221362808934ce5547ee3c029",
+  "lookup_batch_failure_id_count": 0,
+  "lookup_failure_or_missing_count": 77,
+  "lookup_found_count": 1602,
+  "lookup_requested_count": 1679,
+  "metadata_qa_count": 1679,
+  "missing_country_count": 1585,
+  "missing_ror_count": 78,
+  "missing_type_count": 78,
+  "outputs": {
+    "institution_metadata_qa": "data/processed/institution_metadata_qa.parquet",
+    "institutions": "data/processed/institutions.parquet"
+  },
+  "qa_row_count": 1679,
+  "schema_version": 1,
+  "stage_version": "institution-master-2026-08-05-v1"
+}

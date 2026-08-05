@@ -1,0 +1,44 @@
+{
+  "checksum_sha256": "9f0a357c7f7ae9a9638583946dd943a3b06b654c424b29d16339962897885dc7",
+  "column_count": 15,
+  "command": "python -m gisnet.cli build-institutions --extracted data/processed/work_institutions_extracted.parquet --institutions data/processed/institutions.parquet --resume",
+  "config_hashes": {
+    "institution_types": "08ef40d55f8dc65a3dd37a77885482ee271d3766b8ad95cebf4676c53ee29d7d",
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-05T20:52:30.673427Z",
+  "dataset_name": "institution_master_summary",
+  "git_commit": "04ae54c19bf0",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "generated_at_utc": 0,
+    "institution_count": 0,
+    "logical_input_hash": 0,
+    "lookup_batch_failure_id_count": 0,
+    "lookup_failure_or_missing_count": 0,
+    "lookup_found_count": 0,
+    "lookup_requested_count": 0,
+    "metadata_qa_count": 0,
+    "missing_country_count": 0,
+    "missing_ror_count": 0,
+    "missing_type_count": 0,
+    "outputs": 0,
+    "qa_row_count": 0,
+    "schema_version": 0,
+    "stage_version": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260805T204723Z_04ae54c19bf0",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_institutions_extracted.json"
+  ],
+  "source_versions": {
+    "openalex_institutions": "retrieved-2026-08-05"
+  },
+  "status": "valid"
+}
