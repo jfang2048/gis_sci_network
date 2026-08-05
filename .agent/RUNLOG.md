@@ -1416,3 +1416,39 @@ region categories, visible edge thresholds, details, and an accessible textual s
 ### Exact next action
 
 Task: GISNET-095 — Build Streamlit dashboard.
+
+
+## Run 20260805T225409Z_7d66d92f0419
+
+Started UTC: 2026-08-05T22:54:09Z
+Ended UTC: 2026-08-05T23:04:33Z
+Task: GISNET-095
+Initial git status: Clean on `main` at `7d66d92` tracking `origin/main`.
+Final git status: Pending the required local atomic commit after validation.
+
+### Objective
+
+Build and publish a privacy-checked, processed-data-only Streamlit dashboard with all required pages,
+global filters, explicit limitations, integrity metadata, and a one-command local viewing path.
+
+### Work completed
+
+- Implemented all eight required pages and all ten global filters.
+- Added regional trends/matrix, geographic map, fixed-layout network, stable-ID institution-pair,
+  Topic-family, methods, and data-quality views.
+- Built an atomic 11-table public snapshot from processed datasets only; viewing makes no API calls.
+- Added a documented `uv run streamlit run dashboard/app.py` launch command and committed theme.
+- Added a Streamlit runtime test that executes every page and verifies every required global filter.
+
+### Validation results
+
+- Public snapshot: 196,122 rows across 11 tables; total size 4.2 MiB.
+- Every metadata row count and SHA-256 matches its Parquet; every file is under 100 MB.
+- Streamlit health endpoint returned `ok`; all eight pages executed without an exception.
+- Public snapshot embedded-string privacy scan found no key, token, private path, or private-key marker.
+- Build runtime 1.40 seconds; peak RSS about 267 MiB; no swap.
+- Ruff format/check passed; strict mypy passed; pytest passed (98 tests).
+
+### Exact next action
+
+Task: GISNET-102 — Create end-to-end pipeline command.

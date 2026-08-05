@@ -1,0 +1,29 @@
+{
+  "api_requests_during_viewing": false,
+  "data_version": "gisnet-0.1.0-2026-08-05",
+  "generated_at_utc": "2026-08-05T23:00:56.863113Z",
+  "logical_input_hash": "2416efdf688515a2fd9abf658dd89b57599f02f5665c2d9703f23576983dbddf",
+  "methods_version": "public-dashboard-bundle-2026-08-05-v1",
+  "outputs": {
+    "dashboard_data_directory": "dashboard/data",
+    "dashboard_metadata": "dashboard/data/metadata.json"
+  },
+  "public_snapshot": true,
+  "row_count": 196122,
+  "schema_version": 1,
+  "stage_version": "public-dashboard-bundle-2026-08-05-v1",
+  "table_count": 11,
+  "table_hashes": {
+    "graph_metrics": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84",
+    "map_coverage": "80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8",
+    "map_edges": "eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84",
+    "map_nodes": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96",
+    "matrix": "9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77",
+    "network_accessibility": "b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b",
+    "network_edges": "df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c",
+    "network_nodes": "1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b",
+    "sensitivity": "eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257",
+    "topics": "d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9",
+    "trends": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820"
+  }
+}

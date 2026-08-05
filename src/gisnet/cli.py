@@ -99,6 +99,7 @@ from gisnet.validation.reproducibility import (
     write_reproducibility_artifact,
 )
 from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
+from gisnet.visualization.dashboard_data import build_dashboard_bundle, write_dashboard_artifact
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
 from gisnet.visualization.map_data import build_map_data, write_map_artifacts
 from gisnet.visualization.matrix import build_collaboration_matrix, write_matrix_artifacts
@@ -107,7 +108,6 @@ from gisnet.visualization.trends import build_annual_trends, write_trend_artifac
 
 _NOT_IMPLEMENTED_COMMANDS = (
     "match-communities",
-    "build-dashboard-data",
     "run-pipeline",
     "report",
 )
@@ -785,6 +785,19 @@ def build_parser() -> argparse.ArgumentParser:
     network_view.add_argument("--duckdb-memory-limit", default="4GB")
     network_view.add_argument("--duckdb-threads", default=1, type=int)
     network_view.set_defaults(handler=_build_network_view)
+
+    dashboard_data = subparsers.add_parser(
+        "build-dashboard-data", help="build the compact processed-data-only public dashboard bundle"
+    )
+    _add_pipeline_arguments(dashboard_data)
+    dashboard_data.add_argument("--output-directory", default="dashboard/data", type=Path)
+    dashboard_data.add_argument("--metadata", default="dashboard/data/metadata.json", type=Path)
+    dashboard_data.add_argument(
+        "--summary", default="data/reference/dashboard_bundle_summary.json", type=Path
+    )
+    dashboard_data.add_argument("--duckdb-memory-limit", default="4GB")
+    dashboard_data.add_argument("--duckdb-threads", default=1, type=int)
+    dashboard_data.set_defaults(handler=_build_dashboard_data)
 
     for name in _NOT_IMPLEMENTED_COMMANDS:
         command = subparsers.add_parser(name, help="reserved by the execution backlog")
@@ -2507,6 +2520,53 @@ def _build_network_view(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['network_node_row_count']} fixed network nodes and "
         f"{summary['network_edge_row_count']} visible edges."
+    )
+    return 0
+
+
+def _build_dashboard_data(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(f"Would build the public dashboard bundle in {args.output_directory}.")
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    sources: dict[str, str | Path] = {
+        "trends": "data/processed/trend_series_year.parquet",
+        "matrix": "data/processed/collaboration_matrix_year.parquet",
+        "map_nodes": "data/processed/map_nodes_year.parquet",
+        "map_edges": "data/processed/map_edges_year.parquet",
+        "map_coverage": "data/processed/map_coverage_year.parquet",
+        "network_nodes": "data/processed/network_view_nodes_year.parquet",
+        "network_edges": "data/processed/network_view_edges_year.parquet",
+        "network_accessibility": "data/processed/network_accessibility_year.parquet",
+        "graph_metrics": "data/processed/graph_metrics_year.parquet",
+        "sensitivity": "data/processed/sensitivity_matrix.parquet",
+    }
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-095"):
+            summary = build_dashboard_bundle(
+                sources=sources,
+                output_directory=args.output_directory,
+                metadata_path=args.metadata,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-dashboard-data --resume"
+            write_dashboard_artifact(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            _register_manifest(
+                "dashboard_bundle_summary", ".agent/manifests/dashboard_bundle_summary.json"
+            )
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Dashboard data build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['table_count']} dashboard tables with {summary['row_count']} rows; "
+        "ordinary viewing makes zero API requests."
     )
     return 0
 

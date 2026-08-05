@@ -1,0 +1,72 @@
+{
+  "data_version": "gisnet-0.1.0-2026-08-05",
+  "generated_at_utc": "2026-08-05T23:00:56.857106Z",
+  "known_limitations": [
+    "Institution coordinates are sparse and never imputed.",
+    "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
+    "The Topic registry is provisional and has not received human review.",
+    "2025 is the last complete calendar year; no partial 2026 data are included.",
+    "Visualization score is non-primary and used only to rank visible edges."
+  ],
+  "methods_version": "public-dashboard-bundle-2026-08-05-v1",
+  "public_snapshot": true,
+  "schema_version": 1,
+  "source_policy": "processed aggregate datasets only; no API requests during viewing",
+  "tables": {
+    "graph_metrics": {
+      "path": "dashboard/data/graph_metrics.parquet",
+      "row_count": 64,
+      "sha256": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84"
+    },
+    "map_coverage": {
+      "path": "dashboard/data/map_coverage.parquet",
+      "row_count": 64,
+      "sha256": "80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8"
+    },
+    "map_edges": {
+      "path": "dashboard/data/map_edges.parquet",
+      "row_count": 574,
+      "sha256": "eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84"
+    },
+    "map_nodes": {
+      "path": "dashboard/data/map_nodes.parquet",
+      "row_count": 890,
+      "sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96"
+    },
+    "matrix": {
+      "path": "dashboard/data/matrix.parquet",
+      "row_count": 97762,
+      "sha256": "9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77"
+    },
+    "network_accessibility": {
+      "path": "dashboard/data/network_accessibility.parquet",
+      "row_count": 64,
+      "sha256": "b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b"
+    },
+    "network_edges": {
+      "path": "dashboard/data/network_edges.parquet",
+      "row_count": 64000,
+      "sha256": "df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c"
+    },
+    "network_nodes": {
+      "path": "dashboard/data/network_nodes.parquet",
+      "row_count": 31486,
+      "sha256": "1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b"
+    },
+    "sensitivity": {
+      "path": "dashboard/data/sensitivity.parquet",
+      "row_count": 8,
+      "sha256": "eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257"
+    },
+    "topics": {
+      "path": "dashboard/data/topics.parquet",
+      "row_count": 826,
+      "sha256": "d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9"
+    },
+    "trends": {
+      "path": "dashboard/data/trends.parquet",
+      "row_count": 384,
+      "sha256": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820"
+    }
+  }
+}

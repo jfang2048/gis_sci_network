@@ -75,10 +75,26 @@ uv run python -m gisnet.cli build-figures --resume
 uv run python -m gisnet.cli build-matrix --resume
 uv run python -m gisnet.cli build-map-data --resume
 uv run python -m gisnet.cli build-network-view --resume
+uv run python -m gisnet.cli build-dashboard-data --resume
 ```
 
 Network-dependent tests are marked `network` and are skipped from ordinary offline
 quality gates unless explicitly selected.
+
+## View the dashboard
+
+The repository includes a compact, public processed-data snapshot, so viewing the
+result does not require an API key or a new OpenAlex download.
+
+```bash
+uv sync
+uv run streamlit run dashboard/app.py
+```
+
+Open <http://localhost:8501>. The eight-page dashboard includes regional trends,
+collaboration matrices, geographic and fixed-layout network views, an institution-pair
+explorer, Topic-family comparisons, methods, and data-quality metadata. See
+[`dashboard/README.md`](dashboard/README.md) for snapshot rebuild details.
 
 ## Topic registry status
 
