@@ -2,6 +2,7 @@ import csv
 from pathlib import Path
 
 from gisnet.corpus.validation import (
+    boundary_report,
     build_boundary_sample,
     evaluate_boundary,
     write_annotation_sheet,
@@ -85,3 +86,9 @@ def test_precision_is_withheld_without_labels_and_supported_recall_is_measured()
     assert metrics["precision"]["status"] == "not_estimated"
     assert metrics["known_positive_recall"]["status"] == "measured"
     assert metrics["known_positive_recall"]["value"] == 1.0
+    assert metrics["human_review_complete"] is False
+    assert metrics["scientific_status"] == "blocked_pending_human_corpus_review"
+    assert "no human review is implied" in metrics["known_positive_recall"]["reason"]
+    report = boundary_report(metrics, records)
+    assert "blocked pending human judgement" in report
+    assert "manually reviewed" not in report

@@ -9,10 +9,10 @@
   "core_institution_count": 500,
   "core_size": 500,
   "fallback_institution_count": 24552,
-  "generated_at_utc": "2026-08-05T22:28:11.863534Z",
+  "generated_at_utc": "2026-08-15T15:28:11.161002Z",
   "institution_count": 25052,
   "layout_method": "seeded_fruchterman_reingold_core_plus_sha256_annulus_fallback",
-  "logical_input_hash": "24012200faf34e2e3aea72747f0306257c2a20f083b7b094ddb84592d985430f",
+  "logical_input_hash": "d6cbe5d84074578c1cacffe07ca322d014816a25c98ac80522ce7c985bf1cb47",
   "outputs": {
     "network_layout": "data/processed/network_layout.parquet"
   },

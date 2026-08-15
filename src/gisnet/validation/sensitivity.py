@@ -16,7 +16,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics, write_parquet_manifest
 
-_STAGE_VERSION = "required-sensitivity-matrix-2026-08-05-v1"
+_STAGE_VERSION = "required-sensitivity-matrix-2026-08-06-v2"
 _MAJOR_CHANGE_THRESHOLD = 0.20
 
 
@@ -25,10 +25,12 @@ def build_sensitivity_matrix(
     edges_path: str | Path,
     work_edges_path: str | Path,
     nodes_path: str | Path,
+    work_institutions_path: str | Path,
     work_corpus_path: str | Path,
     topic_registry_path: str | Path,
     *,
     output_path: str | Path,
+    scope_output_path: str | Path,
     memory_limit: str = "4GB",
     threads: int = 1,
 ) -> dict[str, Any]:
@@ -38,6 +40,7 @@ def build_sensitivity_matrix(
         Path(edges_path),
         Path(work_edges_path),
         Path(nodes_path),
+        Path(work_institutions_path),
         Path(work_corpus_path),
         Path(topic_registry_path),
     ]
@@ -45,9 +48,13 @@ def build_sensitivity_matrix(
         if not path.is_file():
             raise ValueError(f"sensitivity input does not exist: {path}")
     output = Path(output_path)
+    scope_output = Path(scope_output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
+    scope_output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_suffix(".parquet.tmp")
-    temporary.unlink(missing_ok=True)
+    scope_temporary = scope_output.with_suffix(".parquet.tmp")
+    for path in (temporary, scope_temporary):
+        path.unlink(missing_ok=True)
     connection = duckdb.connect()
     try:
         connection.execute("SET memory_limit = ?", [memory_limit])
@@ -112,16 +119,7 @@ def build_sensitivity_matrix(
             """,
             [str(sources[2])],
         ).fetchone()
-        scope = connection.execute(
-            """
-            SELECT
-                sum(work_count) FILTER (WHERE analytical_scope = 'primary'),
-                sum(work_count)
-            FROM read_parquet(?)
-            WHERE corpus_view = 'broad' AND hierarchy_view = 'organization'
-            """,
-            [str(sources[3])],
-        ).fetchone()
+        _write_institution_scope_sensitivity(connection, sources[4], scope_temporary)
         preprints = connection.execute(
             """
             SELECT
@@ -129,11 +127,15 @@ def build_sensitivity_matrix(
                 count(*) FILTER (WHERE broad_preprint_sensitivity)
             FROM read_parquet(?)
             """,
-            [str(sources[4])],
+            [str(sources[5])],
         ).fetchone()
+    except BaseException:
+        for path in (temporary, scope_temporary):
+            path.unlink(missing_ok=True)
+        raise
     finally:
         connection.close()
-    values = (strict_broad, counting, hierarchy, rolling, consortium, scope, preprints)
+    values = (strict_broad, counting, hierarchy, rolling, consortium, preprints)
     if any(value is None for value in values):
         raise ValueError("required sensitivity query returned no result")
     assert strict_broad is not None
@@ -141,9 +143,9 @@ def build_sensitivity_matrix(
     assert hierarchy is not None
     assert rolling is not None
     assert consortium is not None
-    assert scope is not None
     assert preprints is not None
-    registry = yaml.safe_load(sources[5].read_text(encoding="utf-8"))
+    scope_row = _institution_scope_comparison(scope_temporary)
+    registry = yaml.safe_load(sources[6].read_text(encoding="utf-8"))
     review_status = str(registry.get("review_status", "unknown"))
     rows = [
         _comparison_row(
@@ -191,15 +193,7 @@ def build_sensitivity_matrix(
             consortium[0],
             consortium[1],
         ),
-        _comparison_row(
-            "S06",
-            "Primary institution types versus expanded types",
-            "summed annual institutional work count",
-            "primary",
-            "expanded",
-            scope[0],
-            scope[1],
-        ),
+        scope_row,
         _comparison_row(
             "S07",
             "Published-only versus published plus preprints",
@@ -232,6 +226,19 @@ def build_sensitivity_matrix(
             "primary_result_overwritten",
         },
     )
+    scope_metrics = parquet_metrics(
+        scope_temporary,
+        primary_key=["year", "corpus_view", "hierarchy_view", "scope_view"],
+        required_columns={
+            "year",
+            "corpus_view",
+            "hierarchy_view",
+            "scope_view",
+            "institution_work_count",
+            "scope_definition",
+        },
+        year_column="year",
+    )
     validation = duckdb.connect()
     try:
         checks = validation.execute(
@@ -248,8 +255,10 @@ def build_sensitivity_matrix(
     finally:
         validation.close()
     if checks is None or int(checks[0]) != 8 or int(checks[1]):
-        temporary.unlink(missing_ok=True)
+        for path in (temporary, scope_temporary):
+            path.unlink(missing_ok=True)
         raise ValueError("sensitivity matrix coverage or primary-output isolation failed")
+    os.replace(scope_temporary, scope_output)
     os.replace(temporary, output)
     return {
         "schema_version": 1,
@@ -265,9 +274,16 @@ def build_sensitivity_matrix(
         "completed_comparison_count": int(checks[2]),
         "major_change_count": int(checks[3]),
         "unavailable_comparison_count": 8 - int(checks[2]),
+        "expanded_scope_materialized": True,
+        "scope_row_count": int(scope_metrics["row_count"]),
+        "primary_scope_institution_work_count": scope_row["baseline_value"],
+        "expanded_scope_institution_work_count": scope_row["alternative_value"],
         "major_change_threshold": _MAJOR_CHANGE_THRESHOLD,
         "primary_result_overwritten": False,
-        "outputs": {"sensitivity_matrix": str(output)},
+        "outputs": {
+            "sensitivity_matrix": str(output),
+            "institution_scope_sensitivity_year": str(scope_output),
+        },
         "generated_at_utc": _timestamp(),
     }
 
@@ -322,7 +338,9 @@ def write_sensitivity_artifacts(
     source_manifests = [
         ".agent/manifests/graph_metrics_year.json",
         ".agent/manifests/edges_year.json",
+        ".agent/manifests/work_edges.json",
         ".agent/manifests/nodes_year.json",
+        ".agent/manifests/work_institutions.json",
         ".agent/manifests/work_corpus.json",
     ]
     source_versions = {"sensitivity_policy": _STAGE_VERSION}
@@ -338,18 +356,138 @@ def write_sensitivity_artifacts(
         source_manifests=source_manifests,
         command=command,
     )
-    write_parquet_manifest(
-        path=summary["outputs"]["sensitivity_matrix"],
-        dataset_name="sensitivity_matrix",
-        primary_key=["comparison_id"],
-        required_columns={"comparison_id", "comparison", "status", "major_change"},
-        year_column=None,
-        run_id=run_id,
-        config_hashes=config_hashes,
-        source_manifests=source_manifests,
-        source_versions=source_versions,
-        command=command,
+    definitions = {
+        "sensitivity_matrix": (
+            ["comparison_id"],
+            {"comparison_id", "comparison", "status", "major_change"},
+            None,
+        ),
+        "institution_scope_sensitivity_year": (
+            ["year", "corpus_view", "hierarchy_view", "scope_view"],
+            {"year", "scope_view", "institution_work_count", "scope_definition"},
+            "year",
+        ),
+    }
+    for dataset_name, raw_path in summary["outputs"].items():
+        primary_key, required_columns, year_column = definitions[dataset_name]
+        write_parquet_manifest(
+            path=raw_path,
+            dataset_name=dataset_name,
+            primary_key=primary_key,
+            required_columns=required_columns,
+            year_column=year_column,
+            run_id=run_id,
+            config_hashes=config_hashes,
+            source_manifests=source_manifests,
+            source_versions=source_versions,
+            command=command,
+        )
+
+
+def _write_institution_scope_sensitivity(
+    connection: duckdb.DuckDBPyConnection,
+    work_institutions_path: Path,
+    destination: Path,
+) -> None:
+    connection.execute(
+        f"""
+        COPY (
+            WITH memberships AS (
+                SELECT publication_year AS year, hierarchy_view, work_id, institution_id,
+                       'strict' AS corpus_view, 'primary' AS scope_view
+                FROM read_parquet(?)
+                WHERE strict_primary AND is_primary_network_scope
+                UNION ALL
+                SELECT publication_year, hierarchy_view, work_id, institution_id,
+                       'strict', 'expanded'
+                FROM read_parquet(?)
+                WHERE strict_primary AND is_target_macro_region
+                  AND analytical_scope IN ('primary', 'secondary')
+                UNION ALL
+                SELECT publication_year, hierarchy_view, work_id, institution_id,
+                       'broad', 'primary'
+                FROM read_parquet(?)
+                WHERE broad_primary AND is_primary_network_scope
+                UNION ALL
+                SELECT publication_year, hierarchy_view, work_id, institution_id,
+                       'broad', 'expanded'
+                FROM read_parquet(?)
+                WHERE broad_primary AND is_target_macro_region
+                  AND analytical_scope IN ('primary', 'secondary')
+            )
+            SELECT year, corpus_view, hierarchy_view, scope_view,
+                   count(*)::BIGINT AS institution_work_count,
+                   count(DISTINCT work_id)::BIGINT AS distinct_work_count,
+                   count(DISTINCT institution_id)::BIGINT AS institution_count,
+                   CASE scope_view
+                       WHEN 'primary' THEN 'institution_types.analytical_scope = primary'
+                       ELSE 'institution_types.analytical_scope IN (primary, secondary)'
+                   END AS scope_definition
+            FROM memberships
+            GROUP BY year, corpus_view, hierarchy_view, scope_view
+            ORDER BY year, corpus_view, hierarchy_view, scope_view
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(work_institutions_path)] * 4,
     )
+
+
+def _institution_scope_comparison(scope_path: str | Path) -> dict[str, Any]:
+    def unavailable() -> dict[str, Any]:
+        return _comparison_row(
+            "S06",
+            "Primary institution types versus expanded types",
+            "summed distinct Work-institution memberships",
+            "primary institution types",
+            "primary plus secondary institution types",
+            None,
+            None,
+            status="not_available_expanded_scope_not_materialized",
+        )
+
+    path = Path(scope_path)
+    if not path.is_file():
+        return unavailable()
+    connection = duckdb.connect()
+    try:
+        values = connection.execute(
+            """
+            SELECT
+                sum(institution_work_count) FILTER (WHERE scope_view = 'primary'),
+                sum(institution_work_count) FILTER (WHERE scope_view = 'expanded'),
+                count(DISTINCT scope_definition),
+                count(DISTINCT scope_view)
+            FROM read_parquet(?)
+            WHERE corpus_view = 'broad' AND hierarchy_view = 'organization'
+            """,
+            [str(path)],
+        ).fetchone()
+    except duckdb.Error:
+        return unavailable()
+    finally:
+        connection.close()
+    if (
+        values is None
+        or values[0] is None
+        or values[1] is None
+        or int(values[2]) != 2
+        or int(values[3]) != 2
+    ):
+        return unavailable()
+    return _comparison_row(
+        "S06",
+        "Primary institution types versus expanded types",
+        "summed distinct Work-institution memberships",
+        "primary institution types",
+        "primary plus secondary institution types",
+        values[0],
+        values[1],
+    )
+
+
+def _literal(path: Path) -> str:
+    return str(path).replace("'", "''")
 
 
 def _timestamp() -> str:

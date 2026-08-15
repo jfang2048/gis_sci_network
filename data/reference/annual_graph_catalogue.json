@@ -1,6 +1,6 @@
 {
   "edge_observation_count": 2999736,
-  "generated_at_utc": "2026-08-05T22:05:00.657894Z",
+  "generated_at_utc": "2026-08-06T00:45:39.076448Z",
   "graph_count": 64,
   "graph_representation": {
     "available_weights": [
@@ -18,7 +18,7 @@
     "type": "weighted undirected"
   },
   "isolated_output_node_count": 64114,
-  "logical_input_hash": "cd8d2e51bdb8dc7a441262c1b962359b5515a1b4e7bf4b6e152087e5b38a2d17",
+  "logical_input_hash": "81ba652332b80793d332b9b7ad0dd155ad98727470618ed2e79a3c85a93fa0ca",
   "minimum_isolated_output_nodes_per_graph": 716,
   "node_observation_count": 501890,
   "outputs": {

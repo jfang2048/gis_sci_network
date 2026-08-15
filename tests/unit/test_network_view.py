@@ -1,4 +1,4 @@
-from gisnet.visualization.network_view import _accessibility_sentence
+from gisnet.visualization.network_view import EDGE_WIDTH_ENCODING, _accessibility_sentence
 
 
 def test_accessibility_summary_states_encodings_and_threshold() -> None:
@@ -18,3 +18,6 @@ def test_accessibility_summary_states_encodings_and_threshold() -> None:
     assert "broad" in text
     assert "50 edges cross" in text
     assert "0.125" in text
+    assert "constant display width" in text
+    assert "fractional weight controls inclusion" in text
+    assert EDGE_WIDTH_ENCODING == "constant; selected weight controls inclusion only"

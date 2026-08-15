@@ -1,8 +1,8 @@
 {
   "community_node_row_count": 501890,
   "distinct_annual_community_labels": 237,
-  "generated_at_utc": "2026-08-05T22:25:26.784640Z",
-  "logical_input_hash": "66876063e8ddbdddf2fe8f0c0750414311472a58ba11612d0b86deaea11261c4",
+  "generated_at_utc": "2026-08-15T15:28:09.704098Z",
+  "logical_input_hash": "83d7b06e9627f755eed6f4d5f89be77ac47b63974eadf581b62af706443712ed",
   "outputs": {
     "communities_year": "data/processed/communities_year.parquet",
     "community_sensitivity_year": "data/processed/community_sensitivity_year.parquet"

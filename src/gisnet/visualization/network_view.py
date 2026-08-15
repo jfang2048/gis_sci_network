@@ -15,7 +15,8 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics, write_parquet_manifest
 
-_STAGE_VERSION = "fixed-layout-network-view-2026-08-05-v1"
+_STAGE_VERSION = "fixed-layout-network-view-2026-08-06-v2"
+EDGE_WIDTH_ENCODING = "constant; selected weight controls inclusion only"
 
 
 def build_network_view(
@@ -96,7 +97,7 @@ def build_network_view(
                 )
                 SELECT *,
                     ?::INTEGER AS default_edge_limit,
-                    'fractional_count' AS edge_width_encoding,
+                    '{EDGE_WIDTH_ENCODING}' AS edge_width_encoding,
                     'macro-region pair' AS edge_color_encoding
                 FROM core_edges
                 WHERE default_edge_rank <= ?
@@ -223,7 +224,7 @@ def build_network_view(
         "encodings": {
             "node_size": ["work_count", "degree", "fractional_strength", "pagerank"],
             "node_color": ["macro_region", "community_id"],
-            "edge_width": "fractional_count",
+            "edge_width": EDGE_WIDTH_ENCODING,
         },
         "outputs": {
             "network_view_nodes_year": str(outputs[0]),
@@ -242,7 +243,8 @@ def _accessibility_sentence(row: dict[str, Any]) -> str:
         f"{row['hierarchy_view']} hierarchy shows {int(row['node_count']):,} core institutions "
         f"and {int(row['edge_count']):,} visible edges. {int(row['cross_region_edge_count']):,} "
         f"edges cross macro-regions. The leading institution by fractional strength is "
-        f"{row['top_institution']}. The visible minimum fractional edge weight is {weight_text}."
+        f"{row['top_institution']}. Edges use constant display width; fractional weight controls "
+        f"inclusion, and the visible minimum fractional edge weight is {weight_text}."
     )
 
 

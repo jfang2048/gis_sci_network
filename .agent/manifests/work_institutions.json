@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "523020df4a1137bc9810901ec85717053b141881ab920ef8ba9c64e968f88fa9",
+  "checksum_sha256": "cc5d13ddf3e5b81dcb03e79dc727ddaf50718373560bb982363c007abda12e79",
   "column_count": 41,
   "command": "python -m gisnet.cli build-work-institutions --extracted data/processed/work_institutions_extracted.parquet --output data/processed/work_institutions.parquet --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T21:21:37.976237Z",
+  "created_at_utc": "2026-08-06T00:44:22.992792Z",
   "dataset_name": "work_institutions",
-  "git_commit": "1fb9bede719e",
+  "git_commit": "568bbdbf6b3f",
   "max_year": 2025,
   "min_year": 2010,
   "null_counts": {
@@ -30,8 +30,8 @@
     "is_primary_network_scope": 0,
     "is_primary_research_scope": 0,
     "is_target_macro_region": 0,
-    "latitude": 4650692,
-    "longitude": 4650692,
+    "latitude": 5858,
+    "longitude": 5858,
     "macro_region": 0,
     "method_families": 0,
     "normalized_category": 0,
@@ -59,7 +59,7 @@
     "institution_id"
   ],
   "row_count": 4809352,
-  "run_id": "20260805T211514Z_1fb9bede719e",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_institutions_extracted.json",

@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "2562e753389449aa622e75b46b180744085c08c9a6884c24f932fc1b28fd402c",
+  "checksum_sha256": "32658adf6b1e69dfba2326ac2d130a3965889a45a45123e748783211767da3d4",
   "column_count": 11,
   "command": "python -m gisnet.cli build-graphs --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T22:05:01.454452Z",
+  "created_at_utc": "2026-08-06T00:45:39.147714Z",
   "dataset_name": "annual_graph_catalogue",
-  "git_commit": "dc5b846462a0",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -27,7 +27,7 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T220304Z_dc5b846462a0",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/edges_year.json",

@@ -15,7 +15,7 @@
     "split_merge": 49
   },
   "event_overlap_threshold": 0.1,
-  "generated_at_utc": "2026-08-05T23:30:52.073364Z",
+  "generated_at_utc": "2026-08-15T15:28:10.480727Z",
   "logical_input_hash": "ded5ea27d7991c1013ce9522a7820ea225050e9972a0c61c4d45c2dd5e173266",
   "outputs": {
     "community_continuity_year": "data/processed/community_continuity_year.parquet",

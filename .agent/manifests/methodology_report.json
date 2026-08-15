@@ -1,5 +1,5 @@
 {
-  "checksum_sha256": "00c65d4bf9295f063b8e7d4c2ca54933a58c119687ec7ca9523e11e00a4e8b87",
+  "checksum_sha256": "b46867993c1d94db920a14a92f607300e04ff560cb9bde4fbb496a25aa84af99",
   "column_count": 1,
   "command": "python -m gisnet.cli report --resume",
   "config_hashes": {
@@ -7,9 +7,9 @@
     "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e",
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
   },
-  "created_at_utc": "2026-08-05T23:43:43.768208Z",
+  "created_at_utc": "2026-08-15T15:29:11.578012Z",
   "dataset_name": "methodology_report",
-  "git_commit": "2f9990b306be",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -19,7 +19,7 @@
     "report_sha256"
   ],
   "row_count": 1,
-  "run_id": "20260805T234030Z_2f9990b306be",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_corpus_summary.json",

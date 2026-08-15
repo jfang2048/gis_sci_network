@@ -1,14 +1,14 @@
 {
-  "checksum_sha256": "c87e3ffd4a30b70740eac6589f060f092d74e82ffa0e6f4b3991c1e6ff1e3507",
-  "column_count": 26,
+  "checksum_sha256": "c97012585bc99a888e7a2860d782ea8bc56d07064fe7c0705ccef0b8fc6422da",
+  "column_count": 27,
   "command": "python -m gisnet.cli build-institutions --extracted data/processed/work_institutions_extracted.parquet --institutions data/processed/institutions.parquet --resume",
   "config_hashes": {
     "institution_types": "08ef40d55f8dc65a3dd37a77885482ee271d3766b8ad95cebf4676c53ee29d7d",
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T20:52:30.721452Z",
+  "created_at_utc": "2026-08-06T00:43:02.021231Z",
   "dataset_name": "institutions",
-  "git_commit": "04ae54c19bf0",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -18,17 +18,18 @@
     "canonical_institution_id": 0,
     "canonicalization_rule_id": 46812,
     "child_ids": 0,
+    "coordinate_source": 101,
     "country_code": 1585,
     "display_name": 0,
     "institution_id": 0,
     "institution_type": 78,
     "is_primary_research_scope": 0,
-    "latitude": 45211,
+    "latitude": 101,
     "lineage": 0,
-    "longitude": 45211,
+    "longitude": 101,
     "metadata_source": 0,
     "normalized_category": 0,
-    "openalex_updated_date": 45210,
+    "openalex_updated_date": 100,
     "parent_ids": 0,
     "predecessor_ids": 0,
     "ror_id": 78,
@@ -43,13 +44,14 @@
     "institution_id"
   ],
   "row_count": 46812,
-  "run_id": "20260805T204723Z_04ae54c19bf0",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_institutions_extracted.json"
   ],
   "source_versions": {
-    "openalex_institutions": "retrieved-2026-08-05"
+    "institution_master_policy": "institution-master-2026-08-06-v2",
+    "openalex_institutions": "2026-08-06T00:42:59.854128Z"
   },
   "status": "valid"
 }

@@ -3,21 +3,29 @@
   "api_found_count": 0,
   "api_requested_count": 0,
   "conflict_or_missing_qa_count": 46787,
-  "generated_at_utc": "2026-08-05T21:02:09.335885Z",
+  "coordinate_fallback_count": 0,
+  "coordinate_source_counts": {
+    "openalex": 46711
+  },
+  "generated_at_utc": "2026-08-06T00:43:06.484258Z",
   "institution_count": 46812,
-  "logical_input_hash": "30b9e13f36fc3f99cb730eafa22e9d74682b9e50d3fcbdb0b690e9fbe831e247",
+  "logical_input_hash": "fb137ab61eb5275bcb975ff39ea50d6f5c2988affb08e18a6baa74493c17c361",
+  "missing_resolved_coordinate_count": 101,
   "mode": "cache",
   "outputs": {
     "institution_ror_qa": "data/processed/institution_ror_qa.parquet",
     "institutions_ror": "data/processed/institutions_ror.parquet"
   },
+  "partial_resolved_coordinate_count": 0,
   "record_count": 25,
+  "resolved_coordinate_count": 46711,
+  "ror_coordinate_count": 25,
   "ror_dump_version": null,
   "ror_schema_versions": [
     "2.1"
   ],
   "schema_version": 1,
-  "stage_version": "institution-ror-2026-08-05-v1",
+  "stage_version": "institution-ror-2026-08-06-v2",
   "status_counts": {
     "enriched": 25,
     "missing_ror_id": 78,

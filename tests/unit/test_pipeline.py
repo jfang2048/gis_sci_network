@@ -18,6 +18,7 @@ def _write_manifest(
     created: str = "2026-08-05T12:00:00Z",
     config_hashes: dict[str, str] | None = None,
     source_manifests: list[str] | None = None,
+    source_versions: dict[str, str] | None = None,
 ) -> None:
     atomic_write_json(
         manifest,
@@ -27,6 +28,7 @@ def _write_manifest(
             "checksum_sha256": file_sha256(data),
             "config_hashes": config_hashes or {},
             "source_manifests": source_manifests or [],
+            "source_versions": source_versions or {},
         },
     )
 
@@ -62,6 +64,33 @@ def test_validate_stage_detects_output_config_and_source_changes(tmp_path: Path)
     assert validate_stage(stage, config_inputs={"policy": config}).reason.startswith(
         "source manifest is newer"
     )
+
+
+def test_validate_stage_invalidates_changed_policy_version(tmp_path: Path) -> None:
+    data = tmp_path / "data.json"
+    data.write_text("{}\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.json"
+    _write_manifest(
+        manifest,
+        data,
+        source_versions={"example_policy": "v1"},
+    )
+    stage = PipelineStage(
+        "example",
+        (StageOutput(manifest, data),),
+        policy_versions=(("example_policy", "v2"),),
+    )
+
+    validation = validate_stage(stage)
+    assert validation.valid is False
+    assert validation.reason.startswith("stage policy changed")
+
+    _write_manifest(
+        manifest,
+        data,
+        source_versions={"example_policy": "v2"},
+    )
+    assert validate_stage(stage).valid
 
 
 def test_pipeline_skips_valid_stage_and_resumes_failed_raw_stage(tmp_path: Path) -> None:

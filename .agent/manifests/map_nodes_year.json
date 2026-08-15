@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96",
+  "checksum_sha256": "353675a124140a3b77d4353adb213417cf453c9d27fd0e4144524188b308e8d5",
   "column_count": 37,
   "command": "python -m gisnet.cli build-map-data --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T22:50:40.021701Z",
+  "created_at_utc": "2026-08-15T15:28:25.642614Z",
   "dataset_name": "map_nodes_year",
-  "git_commit": "a5680002cdf2",
+  "git_commit": "568bbdbf6b3f",
   "max_year": 2025,
   "min_year": 2010,
   "null_counts": {
@@ -55,8 +55,8 @@
     "hierarchy_view",
     "institution_id"
   ],
-  "row_count": 890,
-  "run_id": "20260805T224147Z_a5680002cdf2",
+  "row_count": 75304,
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/nodes_year.json",

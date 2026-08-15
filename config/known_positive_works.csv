@@ -1,11 +1,11 @@
 work_id,expected_corpus,title,reason,provenance
-W2549766072,strict,OSMnx: New methods for acquiring constructing analyzing and visualizing complex street networks,Explicit GIS network acquisition and spatial analysis methods,OpenAlex Topic sample reviewed 2026-08-05
-W1975534106,strict,Geographic Information Systems,Explicit core GIS scholarly work,OpenAlex Topic sample reviewed 2026-08-05
-W2588003345,strict,SoilGrids250m: Global gridded soil information based on machine learning,Explicit geostatistical mapping and spatial prediction,OpenAlex Topic sample reviewed 2026-08-05
-W3166420679,strict,SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty,Explicit global geostatistical mapping with uncertainty,OpenAlex Topic sample reviewed 2026-08-05
-W2195978296,strict,An Alternative Implementation of Indicator Kriging on Mineral Reserves 3D Modeling,Explicit kriging and spatial modelling method,OpenAlex Topic sample reviewed 2026-08-05
-W3188524028,broad,The 30 m annual land cover dataset and its dynamics in China from 1990 to 2019,Explicit satellite land-cover Earth observation,OpenAlex Topic sample reviewed 2026-08-05
-W2485420366,broad,GLEAM v3: satellite-based land evaporation and root-zone soil moisture,Explicit satellite-based Earth observation and environmental modelling,OpenAlex Topic sample reviewed 2026-08-05
-W1992649052,broad,Epipolar Resampling from Kompsat-2 and Kompsat-3,Explicit satellite photogrammetry and image geometry,OpenAlex Topic sample reviewed 2026-08-05
-W2152864241,broad,3D is here: Point Cloud Library (PCL),Explicit point-cloud processing methods,OpenAlex Topic sample reviewed 2026-08-05
-W2150066425,broad,Are we ready for autonomous driving? The KITTI vision benchmark suite,Geospatial computer vision localization and mapping benchmark,OpenAlex Topic sample reviewed 2026-08-05
+W2549766072,strict,OSMnx: New methods for acquiring constructing analyzing and visualizing complex street networks,Explicit GIS network acquisition and spatial analysis methods,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W1975534106,strict,Geographic Information Systems,Explicit core GIS scholarly work,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W2588003345,strict,SoilGrids250m: Global gridded soil information based on machine learning,Explicit geostatistical mapping and spatial prediction,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W3166420679,strict,SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty,Explicit global geostatistical mapping with uncertainty,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W2195978296,strict,An Alternative Implementation of Indicator Kriging on Mineral Reserves 3D Modeling,Explicit kriging and spatial modelling method,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W3188524028,broad,The 30 m annual land cover dataset and its dynamics in China from 1990 to 2019,Explicit satellite land-cover Earth observation,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W2485420366,broad,GLEAM v3: satellite-based land evaporation and root-zone soil moisture,Explicit satellite-based Earth observation and environmental modelling,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W1992649052,broad,Epipolar Resampling from Kompsat-2 and Kompsat-3,Explicit satellite photogrammetry and image geometry,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W2152864241,broad,3D is here: Point Cloud Library (PCL),Explicit point-cloud processing methods,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"
+W2150066425,broad,Are we ready for autonomous driving? The KITTI vision benchmark suite,Geospatial computer vision localization and mapping benchmark,"Provisional project-curated OpenAlex Topic sample, no human review attested, 2026-08-05"

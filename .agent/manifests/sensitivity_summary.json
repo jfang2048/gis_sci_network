@@ -1,25 +1,29 @@
 {
-  "checksum_sha256": "2db08264ddf9ac6d3966c77927413dca65b9ae6574d0efe347ba88c9e61969dd",
-  "column_count": 11,
+  "checksum_sha256": "fe453ff29fa0ce66606015d0243271567ff7b4b90e02a750ac079759c56590d2",
+  "column_count": 15,
   "command": "python -m gisnet.cli run-sensitivity --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T22:34:33.121109Z",
+  "created_at_utc": "2026-08-15T15:28:18.742676Z",
   "dataset_name": "sensitivity_summary",
-  "git_commit": "a4b38b01c735",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
     "comparison_count": 0,
     "completed_comparison_count": 0,
+    "expanded_scope_institution_work_count": 0,
+    "expanded_scope_materialized": 0,
     "generated_at_utc": 0,
     "logical_input_hash": 0,
     "major_change_count": 0,
     "major_change_threshold": 0,
     "outputs": 0,
     "primary_result_overwritten": 0,
+    "primary_scope_institution_work_count": 0,
     "schema_version": 0,
+    "scope_row_count": 0,
     "stage_version": 0,
     "unavailable_comparison_count": 0
   },
@@ -27,16 +31,18 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T223245Z_a4b38b01c735",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/graph_metrics_year.json",
     ".agent/manifests/edges_year.json",
+    ".agent/manifests/work_edges.json",
     ".agent/manifests/nodes_year.json",
+    ".agent/manifests/work_institutions.json",
     ".agent/manifests/work_corpus.json"
   ],
   "source_versions": {
-    "sensitivity_policy": "required-sensitivity-matrix-2026-08-05-v1"
+    "sensitivity_policy": "required-sensitivity-matrix-2026-08-06-v2"
   },
   "status": "valid"
 }

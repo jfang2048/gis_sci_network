@@ -1684,3 +1684,223 @@ Produce a privacy-safe, checksum-complete public release containing all required
 ### Exact next action
 
 Push the atomic release commit, require GitHub CI success, then publish tag and release `v0.1.0`.
+
+## Run 20260806T002306Z_568bbdbf6b3f
+
+Started UTC: 2026-08-06T00:23:06Z (resumed 2026-08-15)
+Ended UTC: 2026-08-15T15:31:07Z
+Task: GISNET-105
+Initial git status: Existing in-progress GISNET-105 work on `main`; 67 tracked files modified and 2 task-local files untracked.
+Final git status: Pending the required local atomic commit after successful validation.
+
+### Objective
+
+Finish the interrupted audit remediation, then replace the illegible default geographic edge map
+and absolute within-region comparisons with complete, proportional, scientifically explicit views.
+
+### Work completed
+
+- Completed sourced institution-coordinate fallback and provenance corrections; the rebuilt 2025
+  Broad/organization map coverage is 13,856 of 13,867 nodes (99.92%) without invented coordinates.
+- Corrected global dashboard filter applicability, complete filter dimensions, country-code labels,
+  provisional-corpus and empty-umbrella warnings, constant network-edge display semantics, and S06.
+- Added endpoint-normalized partner shares: internal links contribute two local endpoints and each
+  source geography's partner shares sum to 100%; zero-local geographies remain visible at 0%.
+- Replaced the primary geographic spaghetti map with macro-region local-share bars and a complete
+  country domestic-share choropleth; limited institution links to an optional top-25 drilldown.
+- Rebuilt the affected pipeline branch, methods report, 16-table/319-column data dictionary, public
+  dashboard snapshot, and checksum-complete release manifest.
+
+### Files changed
+
+- `.agent/RUNLOG.md`
+- `.agent/manifests/annual_graph_catalogue.json`
+- `.agent/manifests/annual_trends_summary.json`
+- `.agent/manifests/collaboration_edges_summary.json`
+- `.agent/manifests/collaboration_matrix_summary.json`
+- `.agent/manifests/collaboration_matrix_year.json`
+- `.agent/manifests/communities_year.json`
+- `.agent/manifests/community_continuity_summary.json`
+- `.agent/manifests/community_continuity_year.json`
+- `.agent/manifests/community_detection_summary.json`
+- `.agent/manifests/community_sensitivity_year.json`
+- `.agent/manifests/community_transitions_year.json`
+- `.agent/manifests/corpus_boundary_validation.json`
+- `.agent/manifests/dashboard_bundle_summary.json`
+- `.agent/manifests/data_dictionary_summary.json`
+- `.agent/manifests/data_provenance_report.json`
+- `.agent/manifests/edge_arithmetic_validation.json`
+- `.agent/manifests/edge_intensity_summary.json`
+- `.agent/manifests/edge_work_diagnostics.json`
+- `.agent/manifests/edges_metrics_year.json`
+- `.agent/manifests/edges_year.json`
+- `.agent/manifests/geographic_map_summary.json`
+- `.agent/manifests/graph_metrics_year.json`
+- `.agent/manifests/graph_summary_year.json`
+- `.agent/manifests/institution_canonicalization_audit.json`
+- `.agent/manifests/institution_geography_qa.json`
+- `.agent/manifests/institution_geography_summary.json`
+- `.agent/manifests/institution_hierarchy.json`
+- `.agent/manifests/institution_hierarchy_candidates.json`
+- `.agent/manifests/institution_hierarchy_summary.json`
+- `.agent/manifests/institution_master_summary.json`
+- `.agent/manifests/institution_metadata_qa.json`
+- `.agent/manifests/institution_output_reconciliation.json`
+- `.agent/manifests/institution_outputs_summary.json`
+- `.agent/manifests/institution_outputs_year.json`
+- `.agent/manifests/institution_ror_qa.json`
+- `.agent/manifests/institution_ror_summary.json`
+- `.agent/manifests/institution_scope_sensitivity_year.json`
+- `.agent/manifests/institutions.json`
+- `.agent/manifests/institutions_geographic.json`
+- `.agent/manifests/institutions_ror.json`
+- `.agent/manifests/map_coverage_year.json`
+- `.agent/manifests/map_edges_year.json`
+- `.agent/manifests/map_nodes_year.json`
+- `.agent/manifests/methodology_report.json`
+- `.agent/manifests/methodology_report_summary.json`
+- `.agent/manifests/network_accessibility_year.json`
+- `.agent/manifests/network_layout.json`
+- `.agent/manifests/network_layout_summary.json`
+- `.agent/manifests/network_metrics_summary.json`
+- `.agent/manifests/network_view_edges_year.json`
+- `.agent/manifests/network_view_nodes_year.json`
+- `.agent/manifests/network_view_summary.json`
+- `.agent/manifests/nodes_year.json`
+- `.agent/manifests/pipeline_run_summary.json`
+- `.agent/manifests/public_data_dictionary.json`
+- `.agent/manifests/region_flow_reconciliation.json`
+- `.agent/manifests/region_flows_summary.json`
+- `.agent/manifests/region_flows_year.json`
+- `.agent/manifests/reproducibility_validation.json`
+- `.agent/manifests/sensitivity_matrix.json`
+- `.agent/manifests/sensitivity_summary.json`
+- `.agent/manifests/top_edge_audit.json`
+- `.agent/manifests/top_entity_audit_summary.json`
+- `.agent/manifests/top_institution_audit.json`
+- `.agent/manifests/trend_series_year.json`
+- `.agent/manifests/work_edges.json`
+- `.agent/manifests/work_institutions.json`
+- `.agent/manifests/work_institutions_summary.json`
+- `.agent/state.json`
+- `README.md`
+- `.agent/backlog.json`
+- `config/known_positive_works.csv`
+- `dashboard/README.md`
+- `dashboard/app.py`
+- `dashboard/data/filter_dimensions.parquet`
+- `dashboard/data/geography_dimensions.parquet`
+- `dashboard/data/map_coverage.parquet`
+- `dashboard/data/map_edges.parquet`
+- `dashboard/data/map_nodes.parquet`
+- `dashboard/data/metadata.json`
+- `dashboard/data/network_accessibility.parquet`
+- `dashboard/data/network_edges.parquet`
+- `dashboard/data/network_nodes.parquet`
+- `dashboard/data/sensitivity.parquet`
+- `data/reference/annual_graph_catalogue.json`
+- `data/reference/annual_trends_summary.json`
+- `data/reference/collaboration_edges_summary.json`
+- `data/reference/collaboration_matrix_summary.json`
+- `data/reference/community_continuity_summary.json`
+- `data/reference/community_detection_summary.json`
+- `data/reference/corpus_boundary_validation.json`
+- `data/reference/dashboard_bundle_summary.json`
+- `data/reference/data_dictionary.json`
+- `data/reference/data_dictionary_summary.json`
+- `data/reference/edge_arithmetic_validation.json`
+- `data/reference/edge_intensity_summary.json`
+- `data/reference/geographic_map_summary.json`
+- `data/reference/institution_geography_summary.json`
+- `data/reference/institution_hierarchy_summary.json`
+- `data/reference/institution_master_summary.json`
+- `data/reference/institution_outputs_summary.json`
+- `data/reference/institution_ror_summary.json`
+- `data/reference/methodology_report_summary.json`
+- `data/reference/network_layout_summary.json`
+- `data/reference/network_metrics_summary.json`
+- `data/reference/network_view_summary.json`
+- `data/reference/pipeline_run_summary.json`
+- `data/reference/region_flows_summary.json`
+- `data/reference/reproducibility_validation.json`
+- `data/reference/sensitivity_summary.json`
+- `data/reference/top_entity_audit_summary.json`
+- `data/reference/work_institutions_summary.json`
+- `outputs/reports/corpus_boundary_validation.md`
+- `outputs/reports/data_dictionary.md`
+- `outputs/reports/methodology.md`
+- `release/manifest.json`
+- `release/manifest.json.sha256`
+- `src/gisnet/cli.py`
+- `src/gisnet/corpus/validation.py`
+- `src/gisnet/institutions/master.py`
+- `src/gisnet/pipeline.py`
+- `src/gisnet/reporting/data_dictionary.py`
+- `src/gisnet/ror/enrich.py`
+- `src/gisnet/validation/sensitivity.py`
+- `src/gisnet/visualization/dashboard_data.py`
+- `src/gisnet/visualization/dashboard_filters.py`
+- `src/gisnet/visualization/network_view.py`
+- `tests/integration/test_dashboard.py`
+- `tests/unit/test_corpus_validation.py`
+- `tests/unit/test_dashboard_data.py`
+- `tests/unit/test_dashboard_filters.py`
+- `tests/unit/test_institution_master.py`
+- `tests/unit/test_network_view.py`
+- `tests/unit/test_pipeline.py`
+- `tests/unit/test_ror_enrich.py`
+- `tests/unit/test_sensitivity.py`
+
+### Commands executed
+
+- `uv run pytest tests/unit/test_dashboard_filters.py tests/unit/test_dashboard_data.py tests/integration/test_dashboard.py -q`
+- `uv run python -m gisnet.cli build-dashboard-data --resume --run-id 20260806T002306Z_568bbdbf6b3f`
+- `uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume --run-id 20260806T002306Z_568bbdbf6b3f`
+- `uv run python -m gisnet.cli report --resume --run-id 20260806T002306Z_568bbdbf6b3f`
+- `uv run python -m gisnet.cli build-data-dictionary --resume --run-id 20260806T002306Z_568bbdbf6b3f`
+- `uv run python -m gisnet.release build --run-id 20260806T002306Z_568bbdbf6b3f`
+- `uv run python -m gisnet.release verify`
+- `git diff --check && scripts/quality-gate.sh`
+
+### Validation results
+
+- Pipeline success: {'executed': 2, 'rebuilt_stale': 9, 'skipped_valid': 25}; failed stage: none; raw data deleted: false.
+- Local-share unit tests prove endpoint arithmetic, row sums of 1.0, and explicit zero-local rows.
+- Dashboard AppTest passed all eight pages, proportional map panels, country partner drilldown,
+  page-aware filters, scientific warnings, and optional coordinate-limited link view.
+- Ruff check and format passed; strict mypy passed; all 129 non-network tests passed.
+- Release verified 165 files (11721479 bytes) with
+  zero privacy findings; dashboard tables: 16.
+
+### Data and configuration hashes
+
+- Project configuration: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- Dashboard metadata: `44ebccbfcec488c3c9b091b77f89e276872ae4c5e3e31e91a50419e83d1b79d1`
+- Pipeline summary: `27668187774ed2a3769501e61956df5f7ebfbcd5f3b26edbb1efc307721d0f0a`
+- Release manifest: `6eb7d466be26ee9b27e311147669ab4c7b1c6dff5ba658a8ad403e1a2acd774d`
+- Release manifest checksum file: `6eb7d466be26ee9b27e311147669ab4c7b1c6dff5ba658a8ad403e1a2acd774d`
+
+### Checkpoints written
+
+No download checkpoints were changed. Derived datasets and manifests were written atomically by
+their existing stage writers.
+
+### Failures or blockers
+
+The first data-dictionary rebuild correctly failed because the two new public tables lacked curated
+contracts. Added their primary keys, definitions, provenance, and limitations; the rerun passed.
+No remaining blocker affects GISNET-105. Plotly 6 emits a forward-looking country-name location-mode
+deprecation warning; Plotly is pinned below 7 and the country mapping remains explicit in the bundle.
+
+### Decisions made
+
+- Use `2W(r,r) / (2W(r,r) + sum_s!=r W(r,s))` as the within-region endpoint share. This
+  normalizes collaboration composition without claiming to control for all opportunity-set effects.
+- Keep absolute full/fractional weights in tables and hover details, not as the default intra-region
+  visual comparison.
+- Make complete country/region flows primary; keep institution coordinates as a disclosed drilldown.
+
+### Exact next action
+
+Primary release tasks are complete. Start an optional GISNET-110+ extension only if explicitly
+requested; otherwise maintain the verified release.

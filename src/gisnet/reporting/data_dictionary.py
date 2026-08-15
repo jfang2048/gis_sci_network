@@ -14,7 +14,7 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-05-v1"
+_STAGE_VERSION = "public-data-dictionary-2026-08-15-v2"
 
 TABLES: dict[str, dict[str, Any]] = {
     "community_continuity": {
@@ -43,6 +43,22 @@ TABLES: dict[str, dict[str, Any]] = {
         "description": "Annual graph-level topology, connectivity, mixing, and turnover metrics.",
         "known_issue": "Betweenness uses the disclosed cutoff approximation for large graphs.",
     },
+    "filter_dimensions": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view", "dimension", "value"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Complete annual country, subregion, and institution-type dashboard choices."
+        ),
+        "known_issue": "Topic-family choices come from the separate thresholded Topic table.",
+    },
+    "geography_dimensions": {
+        "primary_key": ["country_code"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Country-code labels used to join complete country flows to dashboard geography."
+        ),
+        "known_issue": "Only countries observed in complete annual network nodes are included.",
+    },
     "institution_identities": {
         "primary_key": ["organization_id"],
         "source_manifest": ".agent/manifests/institution_hierarchy.json",
@@ -55,7 +71,7 @@ TABLES: dict[str, dict[str, Any]] = {
         "primary_key": ["year", "corpus_view", "hierarchy_view"],
         "source_manifest": ".agent/manifests/map_coverage_year.json",
         "description": "Annual sourced-coordinate coverage and default map display limits.",
-        "known_issue": "Coordinate coverage is sparse; missing coordinates are never imputed.",
+        "known_issue": "Coverage varies by year and view; missing coordinates are never imputed.",
     },
     "map_edges": {
         "primary_key": ["year", "corpus_view", "hierarchy_view", "source_id", "target_id"],
@@ -247,6 +263,7 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "node_count": "Number of nodes in the annual graph or public view.",
     "edge_count": "Number of undirected edges in the annual graph or public view.",
     "density": "Observed edges divided by possible undirected edges.",
+    "dimension": "Dashboard filter dimension: country, subregion, or institution type.",
     "mean_degree": "Arithmetic mean annual node degree.",
     "mean_full_strength": "Arithmetic mean annual full-count node strength.",
     "mean_fractional_strength": "Arithmetic mean annual fractional node strength.",
@@ -304,6 +321,7 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "event_type": "Continuation, split, merge, birth, disappearance, complex, or minor overlap.",
     "confident_match_threshold": "Jaccard threshold below which selected matches are uncertain.",
     "event_overlap_threshold": "Jaccard threshold used to classify split and merge links.",
+    "value": "Observed display value belonging to the named dashboard filter dimension.",
 }
 
 

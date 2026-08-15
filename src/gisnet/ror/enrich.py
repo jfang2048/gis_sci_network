@@ -18,7 +18,7 @@ from gisnet.atomic import atomic_write_json
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics, write_parquet_manifest
 
-_STAGE_VERSION = "institution-ror-2026-08-05-v1"
+_STAGE_VERSION = "institution-ror-2026-08-06-v2"
 _ROR_API = "https://api.ror.org/v2/organizations"
 _ROR_ID = re.compile(r"^[0-9a-hj-km-np-tv-z]{9}$")
 _ENRICHMENT_FIELDS = [
@@ -211,6 +211,7 @@ def enrich_institutions_with_ror(
     qa_rows: list[dict[str, Any]] = []
     status_counts: dict[str, int] = {}
     schema_versions: set[str] = set()
+    coordinate_fallback_count = 0
     for raw in table.to_pylist():
         institution_id = str(raw["institution_id"])
         identifier = normalize_ror_id(raw.get("ror_id"))
@@ -236,6 +237,18 @@ def enrich_institutions_with_ror(
         if isinstance(version, str):
             schema_versions.add(version)
         status_counts[status] = status_counts.get(status, 0) + 1
+        latitude = _number(raw.get("latitude"))
+        longitude = _number(raw.get("longitude"))
+        coordinate_source = _string(raw.get("coordinate_source"))
+        ror_latitude = _number(normalized.get("ror_latitude"))
+        ror_longitude = _number(normalized.get("ror_longitude"))
+        if (latitude is None or longitude is None) and (
+            ror_latitude is not None and ror_longitude is not None
+        ):
+            latitude = ror_latitude
+            longitude = ror_longitude
+            coordinate_source = "ror"
+            coordinate_fallback_count += 1
         issues = _conflicts(raw, normalized, status)
         if issues:
             qa_rows.append(
@@ -257,6 +270,9 @@ def enrich_institutions_with_ror(
         rows.append(
             {
                 **raw,
+                "latitude": latitude,
+                "longitude": longitude,
+                "coordinate_source": coordinate_source,
                 **normalized,
                 "ror_enrichment_status": status,
                 "ror_enrichment_source": enrichment_source,
@@ -264,7 +280,10 @@ def enrich_institutions_with_ror(
         )
     output = Path(output_path)
     qa = Path(qa_path)
-    output_schema = pa.schema([*table.schema, *_ENRICHMENT_FIELDS])
+    input_fields = list(table.schema)
+    if "coordinate_source" not in table.schema.names:
+        input_fields.append(pa.field("coordinate_source", pa.string()))
+    output_schema = pa.schema([*input_fields, *_ENRICHMENT_FIELDS])
     _write_atomic(rows, output_schema, output)
     _write_atomic(qa_rows, _QA_SCHEMA, qa)
     output_metrics = parquet_metrics(
@@ -293,6 +312,28 @@ def enrich_institutions_with_ror(
         "api_found_count": api_found,
         "api_failed_count": api_failed,
         "status_counts": dict(sorted(status_counts.items())),
+        "ror_coordinate_count": sum(
+            row["ror_latitude"] is not None and row["ror_longitude"] is not None for row in rows
+        ),
+        "coordinate_fallback_count": coordinate_fallback_count,
+        "resolved_coordinate_count": sum(_has_coordinate_pair(row) for row in rows),
+        "missing_resolved_coordinate_count": sum(not _has_coordinate_pair(row) for row in rows),
+        "partial_resolved_coordinate_count": sum(_has_partial_coordinate_pair(row) for row in rows),
+        "coordinate_source_counts": dict(
+            sorted(
+                {
+                    source: sum(
+                        row.get("coordinate_source") == source and _has_coordinate_pair(row)
+                        for row in rows
+                    )
+                    for source in {
+                        str(row["coordinate_source"])
+                        for row in rows
+                        if row.get("coordinate_source") is not None
+                    }
+                }.items()
+            )
+        ),
         "conflict_or_missing_qa_count": len(qa_rows),
         "ror_schema_versions": sorted(schema_versions),
         "ror_dump_version": dump_version,
@@ -383,6 +424,14 @@ def _write_atomic(rows: list[dict[str, Any]], schema: pa.Schema, path: Path) -> 
     os.replace(temporary, path)
 
 
+def _has_coordinate_pair(row: dict[str, Any]) -> bool:
+    return row.get("latitude") is not None and row.get("longitude") is not None
+
+
+def _has_partial_coordinate_pair(row: dict[str, Any]) -> bool:
+    return (row.get("latitude") is None) != (row.get("longitude") is None)
+
+
 def write_ror_artifacts(
     summary: dict[str, Any],
     *,
@@ -393,6 +442,7 @@ def write_ror_artifacts(
 ) -> None:
     config_hashes = {"project": config_file_hash(project_config_path)}
     source_versions = {
+        "institution_ror_policy": _STAGE_VERSION,
         "ror_schema": ",".join(summary["ror_schema_versions"]) or "not-retrieved",
         "ror_dump": summary.get("ror_dump_version") or "not-used",
     }

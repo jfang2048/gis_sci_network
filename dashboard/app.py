@@ -10,6 +10,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+from gisnet.visualization.dashboard_filters import (
+    control_is_enabled,
+    dimension_options,
+    filter_geographic_view,
+    local_collaboration_profile,
+    partner_share_view,
+)
 from gisnet.visualization.pair_explorer import (
     build_pair_timeline,
     identity_rows,
@@ -74,6 +81,39 @@ def metric_value(row: pd.Series | None, column: str, default: float = 0.0) -> fl
     return float(row[column])
 
 
+def region_comparison_rows(
+    frame: pd.DataFrame,
+    *,
+    weight_column: str,
+    region_pair: str,
+) -> pd.DataFrame:
+    """Return comparable directional shares for the selected macro-region view."""
+    normalized = frame.rename(
+        columns={"source_region": "source_geography", "target_region": "target_geography"}
+    )
+    directed = partner_share_view(normalized, weight_column=weight_column)
+    if directed.empty:
+        return directed
+    if region_pair == "All":
+        selected = directed.loc[
+            directed["is_local"] & directed["source_geography"].isin(("Europe", "Asia", "Americas"))
+        ].copy()
+        selected["comparison"] = selected["source_geography"]
+        return selected
+    source, target = region_pair.split(" — ", maxsplit=1)
+    if source == target:
+        selected = directed.loc[
+            (directed["source_geography"] == source) & (directed["target_geography"] == target)
+        ].copy()
+    else:
+        selected = directed.loc[
+            ((directed["source_geography"] == source) & (directed["target_geography"] == target))
+            | ((directed["source_geography"] == target) & (directed["target_geography"] == source))
+        ].copy()
+    selected["comparison"] = selected["source_geography"] + " → " + selected["target_geography"]
+    return selected
+
+
 metadata = load_metadata()
 if not metadata:
     st.error(
@@ -86,6 +126,18 @@ map_nodes = load_table("map_nodes")
 map_edges = load_table("map_edges")
 graph_metrics = load_table("graph_metrics")
 topics = load_table("topics")
+trends = load_table("trends")
+filter_dimensions = load_table("filter_dimensions")
+if filter_dimensions.empty:
+    # Older public snapshots predate the complete filter-dimension table. The fixed-layout
+    # core is still substantially less coordinate-biased than the map-node fallback.
+    filter_dimensions = load_table("network_nodes")
+institution_identities = load_table("institution_identities")
+geography_dimensions = load_table("geography_dimensions")
+if geography_dimensions.empty and not map_nodes.empty:
+    geography_dimensions = map_nodes[
+        ["country_code", "country_name", "macro_region", "subregion"]
+    ].drop_duplicates()
 
 if graph_metrics.empty:
     st.error("The dashboard snapshot is incomplete: graph metrics are unavailable.")
@@ -94,33 +146,88 @@ if graph_metrics.empty:
 years = sorted(int(value) for value in graph_metrics["year"].dropna().unique())
 corpora = sorted(str(value) for value in graph_metrics["corpus_view"].dropna().unique())
 hierarchies = sorted(str(value) for value in graph_metrics["hierarchy_view"].dropna().unique())
-region_pairs = sorted(
-    str(value) for value in map_edges.get("macro_region_pair", []).dropna().unique()
-)
-countries = sorted(str(value) for value in map_nodes.get("country_name", []).dropna().unique())
-subregions = sorted(str(value) for value in map_nodes.get("subregion", []).dropna().unique())
-institution_types = sorted(
-    str(value) for value in map_nodes.get("institution_category", []).dropna().unique()
-)
-topic_families = sorted(str(value) for value in topics.get("topic_family", []).dropna().unique())
 
 st.sidebar.title("GIS Network")
 page = st.sidebar.selectbox("Page", PAGES)
 st.sidebar.subheader("Global filters")
-year = st.sidebar.select_slider("Year", options=years, value=years[-1])
-corpus = st.sidebar.selectbox("Corpus view", corpora, index=corpora.index("broad"))
-hierarchy = st.sidebar.selectbox(
-    "Hierarchy view", hierarchies, index=hierarchies.index("organization")
+year = st.sidebar.select_slider(
+    "Year",
+    options=years,
+    value=years[-1],
+    disabled=not control_is_enabled(page, "Year"),
+    help="This control is disabled when it does not affect the selected page.",
 )
-counting = st.sidebar.radio("Counting method", ("Fractional", "Full"), horizontal=True)
-region_pair = st.sidebar.selectbox("Macro-region pair", ("All", *region_pairs))
-country = st.sidebar.selectbox("Country", ("All", *countries))
-subregion = st.sidebar.selectbox("Subregion", ("All", *subregions))
-institution_type = st.sidebar.selectbox("Institution type", ("All", *institution_types))
-topic_family = st.sidebar.selectbox("Topic family", ("All", *topic_families))
+corpus = st.sidebar.selectbox(
+    "Corpus view",
+    corpora,
+    index=corpora.index("broad"),
+    disabled=not control_is_enabled(page, "Corpus view"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+hierarchy = st.sidebar.selectbox(
+    "Hierarchy view",
+    hierarchies,
+    index=hierarchies.index("organization"),
+    disabled=not control_is_enabled(page, "Hierarchy view"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+region_pairs = dimension_options(trends, "region_pair", corpus=corpus, hierarchy=hierarchy)
+countries = dimension_options(
+    filter_dimensions, "country_name", year=year, corpus=corpus, hierarchy=hierarchy
+)
+subregions = dimension_options(
+    filter_dimensions, "subregion", year=year, corpus=corpus, hierarchy=hierarchy
+)
+institution_types = dimension_options(
+    filter_dimensions,
+    "institution_category",
+    year=year,
+    corpus=corpus,
+    hierarchy=hierarchy,
+)
+topic_families = dimension_options(topics, "topic_family", corpus=corpus, hierarchy=hierarchy)
+counting = st.sidebar.radio(
+    "Counting method",
+    ("Fractional", "Full"),
+    horizontal=True,
+    disabled=not control_is_enabled(page, "Counting method"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+region_pair = st.sidebar.selectbox(
+    "Macro-region pair",
+    ("All", *region_pairs),
+    disabled=not control_is_enabled(page, "Macro-region pair"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+country = st.sidebar.selectbox(
+    "Country",
+    ("All", *countries),
+    disabled=not control_is_enabled(page, "Country"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+subregion = st.sidebar.selectbox(
+    "Subregion",
+    ("All", *subregions),
+    disabled=not control_is_enabled(page, "Subregion"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+institution_type = st.sidebar.selectbox(
+    "Institution type",
+    ("All", *institution_types),
+    disabled=not control_is_enabled(page, "Institution type"),
+    help="This control is disabled when it does not affect the selected page.",
+)
+topic_family = st.sidebar.selectbox(
+    "Topic family",
+    ("All", *topic_families),
+    disabled=not control_is_enabled(page, "Topic family"),
+    help="This control is disabled when it does not affect the selected page.",
+)
 consortium_policy = st.sidebar.selectbox(
     "Consortium policy",
     ("Primary configured policy", "Exclude warning-size consortium edges"),
+    disabled=not control_is_enabled(page, "Consortium policy"),
+    help="This control is disabled when it does not affect the selected page.",
 )
 st.sidebar.divider()
 st.sidebar.caption(f"Data: {metadata.get('data_version', 'unknown')}")
@@ -131,11 +238,33 @@ st.title("Dynamic GIS Scientific Collaboration Network")
 st.caption(
     "Institutional co-authorship across Europe, Asia, and the Americas · 2010-2025 complete years"
 )
+st.warning(
+    "Scientific review warning: the Topic registry and corpus boundary remain provisional until "
+    "the required human review is completed. No AI-generated judgment is treated as human review."
+)
+metadata_collapse_count = metadata.get("active_umbrella_collapse_count")
+active_collapse_count = (
+    int(metadata_collapse_count)
+    if isinstance(metadata_collapse_count, int | float)
+    else (
+        int(institution_identities["is_collapsed"].fillna(False).astype(bool).sum())
+        if "is_collapsed" in institution_identities.columns
+        else 0
+    )
+)
+if (
+    control_is_enabled(page, "Hierarchy view")
+    and hierarchy == "umbrella"
+    and active_collapse_count == 0
+):
+    st.warning(
+        "Umbrella hierarchy warning: there are zero active collapse rules or relationships. The "
+        "umbrella view is currently equivalent to the organization view; no hierarchy is inferred."
+    )
 
 weight_column = "fractional_count" if counting == "Fractional" else "full_count"
 
 if page == "Overview":
-    trends = load_table("trends")
     st.header("Overview")
     current = filtered_view(graph_metrics, year, corpus, hierarchy)
     row = current.iloc[0] if not current.empty else None
@@ -151,24 +280,34 @@ if page == "Overview":
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
     ].copy()
-    if region_pair != "All":
-        view_trends = view_trends.loc[view_trends["region_pair"] == region_pair]
-    else:
-        view_trends = view_trends.loc[view_trends["source_region"] != view_trends["target_region"]]
-    if view_trends.empty:
+    comparison = region_comparison_rows(
+        view_trends,
+        weight_column=weight_column,
+        region_pair=region_pair,
+    )
+    if comparison.empty:
         show_empty("Choose a different macro-region pair.")
     else:
         figure = px.line(
-            view_trends.sort_values("year"),
+            comparison.sort_values("year"),
             x="year",
-            y=weight_column,
-            color="region_pair",
+            y="partner_share",
+            color="comparison",
             markers=True,
-            title=f"Regional collaboration over time — {counting.lower()} counting",
-            labels={weight_column: f"{counting} collaboration weight", "year": "Publication year"},
+            title=f"Regional partner share over time — {counting.lower()} counting",
+            labels={
+                "partner_share": "Share of collaboration endpoints",
+                "year": "Publication year",
+                "comparison": "Region / direction",
+            },
         )
         figure.add_vline(x=year, line_dash="dot", line_color="#0f172a")
+        figure.update_yaxes(tickformat=".0%", range=[0, 1])
         st.plotly_chart(figure, width="stretch")
+        st.caption(
+            "Shares use collaboration endpoints, so an internal link contributes two local "
+            "endpoints while a cross-region link contributes one endpoint to each region."
+        )
     st.subheader("What this snapshot contains")
     table_rows = metadata.get("tables", {})
     if isinstance(table_rows, dict):
@@ -185,56 +324,79 @@ if page == "Overview":
         )
 
 elif page == "Region trends":
-    trends = load_table("trends")
     matrix = load_table("matrix")
     st.header("Region trends and collaboration matrix")
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
     ].copy()
-    if region_pair != "All":
-        view_trends = view_trends.loc[view_trends["region_pair"] == region_pair]
-    if view_trends.empty:
+    comparison = region_comparison_rows(
+        view_trends,
+        weight_column=weight_column,
+        region_pair=region_pair,
+    )
+    if comparison.empty:
         show_empty("Choose another region pair or view.")
     else:
         figure = px.line(
-            view_trends.sort_values("year"),
+            comparison.sort_values("year"),
             x="year",
-            y=weight_column,
-            color="region_pair",
+            y="partner_share",
+            color="comparison",
             markers=True,
-            labels={weight_column: f"{counting} collaboration weight"},
+            title=f"Regional collaboration composition — {counting.lower()} counting",
+            labels={
+                "partner_share": "Share of collaboration endpoints",
+                "comparison": "Region / direction",
+            },
         )
         figure.add_vline(x=year, line_dash="dot")
+        figure.update_yaxes(tickformat=".0%", range=[0, 1])
         st.plotly_chart(figure, width="stretch")
+        st.caption(
+            "The default compares within-region proportions, not absolute collaboration totals. "
+            "Select a cross-region pair to compare each direction against its own region total."
+        )
     cells = filtered_view(matrix, year, corpus, hierarchy)
     cells = cells.loc[cells["geographic_level"] == "macro_region"].copy()
     if cells.empty:
         show_empty("No matrix is available for this year and view.")
     else:
-        labels = sorted(set(cells["source_geography"]) | set(cells["target_geography"]))
+        partner_cells = partner_share_view(cells, weight_column=weight_column)
+        labels = sorted(
+            set(partner_cells["source_geography"]) | set(partner_cells["target_geography"])
+        )
         grid = pd.DataFrame(index=labels, columns=labels, dtype=float)
-        for _, cell in cells.iterrows():
-            value = float(cell[weight_column])
+        for _, cell in partner_cells.iterrows():
+            value = float(cell["partner_share"])
             grid.loc[cell["source_geography"], cell["target_geography"]] = value
-            grid.loc[cell["target_geography"], cell["source_geography"]] = value
         figure = px.imshow(
             grid,
-            text_auto=".3g",
+            text_auto=".1%",
             color_continuous_scale="Blues",
-            title=f"{year} macro-region matrix — {counting.lower()} weight",
-            labels={"color": counting},
+            zmin=0,
+            zmax=1,
+            title=f"{year} partner-share matrix — {counting.lower()} counting",
+            labels={
+                "x": "Partner region",
+                "y": "Source region",
+                "color": "Endpoint share",
+            },
         )
         st.plotly_chart(figure, width="stretch")
-        st.caption("Blank cells are missing/no observed flow, not silently imputed zeros.")
+        st.caption(
+            "Each source-region row sums to 100%. Diagonal cells are within-region shares; "
+            "blank cells are missing/no observed flow, not imputed zeros."
+        )
         st.dataframe(
-            cells[
+            partner_cells[
                 [
                     "source_geography",
                     "target_geography",
                     "full_count",
                     "fractional_count",
-                    "normalized_share",
-                    "cell_status",
+                    "endpoint_weight",
+                    "total_endpoint_weight",
+                    "partner_share",
                 ]
             ],
             width="stretch",
@@ -243,85 +405,317 @@ elif page == "Region trends":
 
 elif page == "Geographic map":
     map_coverage = load_table("map_coverage")
-    st.header("Geographic collaboration map")
-    nodes = filtered_view(map_nodes, year, corpus, hierarchy)
-    edges = filtered_view(map_edges, year, corpus, hierarchy)
-    if region_pair != "All":
-        edges = edges.loc[edges["macro_region_pair"] == region_pair]
-    if country != "All":
-        nodes = nodes.loc[nodes["country_name"] == country]
-        edges = edges.loc[
-            (edges["source_country"] == country) | (edges["target_country"] == country)
-        ]
-    if subregion != "All":
-        nodes = nodes.loc[nodes["subregion"] == subregion]
-        edges = edges.loc[
-            (edges["source_subregion"] == subregion) | (edges["target_subregion"] == subregion)
-        ]
-    if institution_type != "All":
-        nodes = nodes.loc[nodes["institution_category"] == institution_type]
-        edges = edges.loc[
-            (edges["source_institution_type"] == institution_type)
-            | (edges["target_institution_type"] == institution_type)
-        ]
-    if topic_family != "All":
-        edges = edges.loc[edges["topic_families"].apply(lambda values: topic_family in values)]
-    if consortium_policy.startswith("Exclude"):
-        edges = edges.loc[edges["large_consortium_work_count"] == 0]
-    if nodes.empty:
-        show_empty("Coordinate coverage is sparse; broaden the country/type filters.")
+    matrix = load_table("matrix")
+    current_matrix = filtered_view(matrix, year, corpus, hierarchy)
+    st.header("Geographic collaboration patterns")
+    st.caption(
+        "The primary views below use the complete country and region flow tables, not the sparse "
+        "institution-coordinate subset. Color and bar length represent proportions rather than "
+        "absolute collaboration volume."
+    )
+
+    macro_profile = local_collaboration_profile(
+        current_matrix,
+        weight_column=weight_column,
+        geographic_level="macro_region",
+    )
+    macro_profile = macro_profile.loc[
+        macro_profile["geography"].isin(("Europe", "Asia", "Americas"))
+    ].copy()
+    st.subheader("Within-region collaboration share")
+    if macro_profile.empty:
+        show_empty("No macro-region collaboration profile is available for this selection.")
     else:
-        edge_limit = st.slider("Visible edge limit", 0, 500, min(200, len(edges)), step=25)
-        edges = edges.nsmallest(edge_limit, "default_edge_rank") if edge_limit else edges.iloc[0:0]
-        figure = go.Figure()
-        if not edges.empty:
-            longitudes: list[float | None] = []
-            latitudes: list[float | None] = []
-            for _, edge in edges.iterrows():
-                longitudes.extend([edge["source_longitude"], edge["target_longitude"], None])
-                latitudes.extend([edge["source_latitude"], edge["target_latitude"], None])
-            figure.add_trace(
+        macro_figure = px.bar(
+            macro_profile,
+            x="geography",
+            y="local_collaboration_share",
+            color="geography",
+            text="local_collaboration_share",
+            title=f"{year} local partner share — {counting.lower()} counting",
+            labels={
+                "geography": "Macro-region",
+                "local_collaboration_share": "Within-region endpoint share",
+            },
+        )
+        macro_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
+        macro_figure.update_yaxes(tickformat=".0%", range=[0, 1])
+        macro_figure.update_layout(showlegend=False, height=420)
+        st.plotly_chart(macro_figure, width="stretch")
+        st.dataframe(
+            macro_profile[
+                [
+                    "geography",
+                    "local_collaboration_share",
+                    "local_collaboration_weight",
+                    "external_endpoint_weight",
+                    "total_endpoint_weight",
+                ]
+            ],
+            width="stretch",
+            hide_index=True,
+        )
+
+    country_profile = local_collaboration_profile(
+        current_matrix,
+        weight_column=weight_column,
+        geographic_level="country",
+    ).rename(columns={"geography": "country_code"})
+    if not country_profile.empty and not geography_dimensions.empty:
+        country_profile = country_profile.merge(
+            geography_dimensions,
+            on="country_code",
+            how="left",
+            validate="one_to_one",
+        )
+        country_profile["country_name"] = country_profile["country_name"].fillna(
+            country_profile["country_code"]
+        )
+    st.subheader("Domestic collaboration share by country")
+    st.caption(
+        "For each country, the numerator is the weighted domestic collaboration endpoints and "
+        "the denominator is all weighted endpoints attached to that country; internal links count "
+        "twice because both institutions are local. Hover shows the denominator, so high shares "
+        "based on little activity are identifiable."
+    )
+    if country_profile.empty or "country_name" not in country_profile.columns:
+        show_empty("No country-level collaboration profile is available for this selection.")
+    else:
+        country_figure = px.choropleth(
+            country_profile,
+            locations="country_name",
+            locationmode="country names",
+            color="local_collaboration_share",
+            range_color=(0, 1),
+            color_continuous_scale="Viridis",
+            hover_name="country_name",
+            hover_data={
+                "country_name": False,
+                "country_code": True,
+                "macro_region": True,
+                "local_collaboration_share": ":.1%",
+                "local_collaboration_weight": ":.3g",
+                "total_endpoint_weight": ":.3g",
+            },
+            labels={
+                "local_collaboration_share": "Domestic endpoint share",
+                "local_collaboration_weight": "Domestic collaboration weight",
+                "total_endpoint_weight": "All endpoint weight",
+                "macro_region": "Macro-region",
+            },
+            title=f"{year} domestic partner orientation — {counting.lower()} counting",
+        )
+        country_figure.update_geos(
+            projection_type="natural earth",
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#94a3b8",
+            showland=True,
+            landcolor="#f8fafc",
+        )
+        country_figure.update_coloraxes(colorbar_tickformat=".0%")
+        country_figure.update_layout(height=600, margin={"l": 0, "r": 0, "t": 55, "b": 0})
+        st.plotly_chart(country_figure, width="stretch")
+
+    if country != "All" and not geography_dimensions.empty:
+        country_matches = geography_dimensions.loc[
+            geography_dimensions["country_name"] == country, "country_code"
+        ]
+        country_flows = partner_share_view(
+            current_matrix,
+            weight_column=weight_column,
+            geographic_level="country",
+        )
+        if not country_matches.empty and not country_flows.empty:
+            country_code = str(country_matches.iloc[0])
+            partner_rows = country_flows.loc[
+                country_flows["source_geography"] == country_code
+            ].copy()
+            partner_labels = geography_dimensions[["country_code", "country_name"]].rename(
+                columns={
+                    "country_code": "target_geography",
+                    "country_name": "partner_country",
+                }
+            )
+            partner_rows = partner_rows.merge(
+                partner_labels,
+                on="target_geography",
+                how="left",
+                validate="many_to_one",
+            )
+            partner_rows["partner_country"] = partner_rows["partner_country"].fillna(
+                partner_rows["target_geography"]
+            )
+            top_partners = partner_rows.nlargest(15, "partner_share").sort_values("partner_share")
+            st.subheader(f"Partner composition for {country}")
+            partner_figure = px.bar(
+                top_partners,
+                x="partner_share",
+                y="partner_country",
+                orientation="h",
+                text="partner_share",
+                labels={
+                    "partner_share": "Share of country collaboration endpoints",
+                    "partner_country": "Partner country",
+                },
+            )
+            partner_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
+            partner_figure.update_xaxes(tickformat=".0%", range=[0, 1])
+            partner_figure.update_layout(height=500)
+            st.plotly_chart(partner_figure, width="stretch")
+            if len(partner_rows) > len(top_partners):
+                st.caption(
+                    "The chart shows the 15 largest shares; the full partner row sums to 100%."
+                )
+
+    with st.expander("Institution-level links (optional sourced-coordinate subset)"):
+        st.caption(
+            "This drilldown is intentionally secondary because missing institution coordinates can "
+            "bias it. Filters for subregion, institution type, Topic family, region pair, and "
+            "consortium policy apply here."
+        )
+        coverage = filtered_view(map_coverage, year, corpus, hierarchy)
+        if coverage.empty:
+            st.info("Coordinate coverage is unavailable for this selected view.")
+        else:
+            coverage_row = coverage.iloc[0]
+            coverage_columns = st.columns(3)
+            coverage_columns[0].metric(
+                "Coordinate coverage", f"{coverage_row['node_coordinate_coverage_share']:.2%}"
+            )
+            coverage_columns[1].metric(
+                "Nodes with coordinates", f"{int(coverage_row['coordinate_node_count']):,}"
+            )
+            coverage_columns[2].metric(
+                "Nodes missing coordinates",
+                f"{int(coverage_row['missing_coordinate_node_count']):,}",
+            )
+            st.warning(
+                f"Only {int(coverage_row['coordinate_node_count']):,} of "
+                f"{int(coverage_row['total_node_count']):,} node observations have a complete "
+                "sourced coordinate pair. No coordinates are invented."
+            )
+
+        base_nodes = filtered_view(map_nodes, year, corpus, hierarchy)
+        base_edges = filtered_view(map_edges, year, corpus, hierarchy)
+        nodes, partner_nodes, edges = filter_geographic_view(
+            base_nodes,
+            base_edges,
+            country=country,
+            subregion=subregion,
+            institution_type=institution_type,
+            region_pair=region_pair,
+            topic_family=topic_family,
+            exclude_warning_size_consortia=consortium_policy.startswith("Exclude"),
+        )
+        if nodes.empty:
+            show_empty("Coordinate coverage is sparse; broaden the country/type filters.")
+        else:
+            if edges.empty:
+                visible_edges = edges
+                st.info("No coordinate-complete institution links match these filters.")
+            else:
+                maximum_edges = min(100, len(edges))
+                edge_limit = st.slider(
+                    "Visible institution-link limit",
+                    0,
+                    maximum_edges,
+                    min(25, maximum_edges),
+                    step=5 if maximum_edges >= 5 else 1,
+                )
+                visible_edges = (
+                    edges.sort_values(
+                        [weight_column, "source_id", "target_id"],
+                        ascending=[False, True, True],
+                        kind="stable",
+                    ).head(edge_limit)
+                    if edge_limit
+                    else edges.iloc[0:0]
+                )
+            visible_endpoint_ids = set(str(value) for value in visible_edges["source_id"])
+            visible_endpoint_ids.update(str(value) for value in visible_edges["target_id"])
+            partner_nodes = partner_nodes.loc[
+                partner_nodes["institution_id"].isin(visible_endpoint_ids)
+            ]
+            institution_figure = go.Figure()
+            maximum_weight = (
+                float(visible_edges[weight_column].max()) if not visible_edges.empty else 0.0
+            )
+            for _, edge in visible_edges.iterrows():
+                relative_weight = (
+                    float(edge[weight_column]) / maximum_weight if maximum_weight > 0 else 0.0
+                )
+                hover = (
+                    f"{edge['source_name']} — {edge['target_name']}<br>"
+                    f"{counting} weight: {float(edge[weight_column]):.3g}<br>"
+                    f"Normalized intensity: {float(edge['normalized_intensity']):.3g}"
+                )
+                institution_figure.add_trace(
+                    go.Scattergeo(
+                        lon=[edge["source_longitude"], edge["target_longitude"]],
+                        lat=[edge["source_latitude"], edge["target_latitude"]],
+                        mode="lines",
+                        line={
+                            "width": 0.6 + 2.4 * relative_weight**0.5,
+                            "color": "rgba(37,99,235,0.35)",
+                        },
+                        text=[hover, hover],
+                        hovertemplate="%{text}<extra></extra>",
+                        showlegend=False,
+                    )
+                )
+            if not partner_nodes.empty:
+                institution_figure.add_trace(
+                    go.Scattergeo(
+                        lon=partner_nodes["longitude"],
+                        lat=partner_nodes["latitude"],
+                        text=partner_nodes["display_name"] + " · " + partner_nodes["country_name"],
+                        customdata=partner_nodes[["institution_id", "work_count"]],
+                        hovertemplate=(
+                            "%{text}<br>ID %{customdata[0]}<br>Works %{customdata[1]}"
+                            "<br>Partner outside node filters<extra></extra>"
+                        ),
+                        mode="markers",
+                        marker={
+                            "size": 6,
+                            "color": "#64748b",
+                            "opacity": 0.55,
+                            "line": {"width": 0.4, "color": "white"},
+                        },
+                        name="Partner endpoints outside node filters",
+                    )
+                )
+            institution_figure.add_trace(
                 go.Scattergeo(
-                    lon=longitudes,
-                    lat=latitudes,
-                    mode="lines",
-                    line={"width": 0.8, "color": "rgba(37,99,235,0.35)"},
-                    name=f"Top {len(edges)} edges",
-                    hoverinfo="skip",
+                    lon=nodes["longitude"],
+                    lat=nodes["latitude"],
+                    text=nodes["display_name"] + " · " + nodes["country_name"],
+                    customdata=nodes[["institution_id", "work_count"]],
+                    hovertemplate=(
+                        "%{text}<br>ID %{customdata[0]}<br>Works %{customdata[1]}<extra></extra>"
+                    ),
+                    mode="markers",
+                    marker={
+                        "size": 8,
+                        "color": "#dc2626",
+                        "line": {"width": 0.5, "color": "white"},
+                    },
+                    name="Institutions matching node filters",
                 )
             )
-        figure.add_trace(
-            go.Scattergeo(
-                lon=nodes["longitude"],
-                lat=nodes["latitude"],
-                text=nodes["display_name"] + " · " + nodes["country_name"],
-                customdata=nodes[["institution_id", "work_count"]],
-                hovertemplate=(
-                    "%{text}<br>ID %{customdata[0]}<br>Works %{customdata[1]}<extra></extra>"
-                ),
-                mode="markers",
-                marker={"size": 8, "color": "#dc2626", "line": {"width": 0.5, "color": "white"}},
-                name="Institutions with sourced coordinates",
+            institution_figure.update_geos(
+                showland=True,
+                landcolor="#f1f5f9",
+                showcountries=True,
+                projection_type="natural earth",
             )
-        )
-        figure.update_geos(
-            showland=True, landcolor="#f1f5f9", showcountries=True, projection_type="natural earth"
-        )
-        figure.update_layout(height=650, margin={"l": 0, "r": 0, "t": 20, "b": 0})
-        st.plotly_chart(figure, width="stretch")
-    coverage = filtered_view(map_coverage, year, corpus, hierarchy)
-    if not coverage.empty:
-        coverage_row = coverage.iloc[0]
-        st.warning(
-            f"Coordinate coverage is {coverage_row['node_coordinate_coverage_share']:.2%}: "
-            f"{int(coverage_row['coordinate_node_count']):,} of "
-            f"{int(coverage_row['total_node_count']):,} node observations. "
-            "No coordinates are invented."
-        )
-    st.caption(
-        "Default edge ranking uses the explicitly non-primary visualization score; "
-        "the limit is visible above."
-    )
+            institution_figure.update_layout(height=650, margin={"l": 0, "r": 0, "t": 20, "b": 0})
+            st.plotly_chart(institution_figure, width="stretch")
+            st.caption(
+                f"Showing {len(visible_edges)} links ranked by {counting.lower()} weight; "
+                "line width "
+                "is relative within this displayed subset and is not comparable across filters."
+            )
 
 elif page == "Institutional network":
     network_nodes = load_table("network_nodes")
@@ -423,8 +817,9 @@ elif page == "Institutional network":
         )
         st.plotly_chart(figure, width="stretch")
         st.caption(
-            f"Node size = {size_metric}; node color = {color_metric}; edge width represents "
-            f"{counting.lower()} collaboration weight; visible minimum = {minimum_weight:.4g}."
+            f"Node size = {size_metric}; node color = {color_metric}; edge width is constant. "
+            f"The {counting.lower()} collaboration weight controls edge inclusion, with visible "
+            f"minimum {minimum_weight:.4g}."
         )
     summary = filtered_view(network_accessibility, year, corpus, hierarchy)
     if not summary.empty:
@@ -432,7 +827,6 @@ elif page == "Institutional network":
 
 elif page == "Institution explorer":
     network_edges = load_table("network_edges")
-    institution_identities = load_table("institution_identities")
     st.header("Institution-pair explorer")
     pair_data = network_edges.loc[
         (network_edges["corpus_view"] == corpus) & (network_edges["hierarchy_view"] == hierarchy)

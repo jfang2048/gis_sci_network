@@ -1,10 +1,10 @@
 {
   "edge_year_count": 2999736,
-  "generated_at_utc": "2026-08-05T22:01:56.571725Z",
+  "generated_at_utc": "2026-08-06T00:45:37.597580Z",
   "invalid_intensity_count": 0,
   "invalid_persistence_3y_count": 0,
   "invalid_persistence_5y_count": 0,
-  "logical_input_hash": "04d34ba6e905b7e4cd2f862762d6d04dc6264520c990d32fe2d52a9ae8d26ea2",
+  "logical_input_hash": "5cdd3cc33919c130e992a57d6d9ee5f67a2a16c34701098f3732135f13c0216c",
   "maximum_normalized_intensity": 1.0,
   "minimum_normalized_intensity": 3.6832845187089774e-07,
   "outputs": {

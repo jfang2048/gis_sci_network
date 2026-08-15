@@ -36,16 +36,16 @@ Bibliographic Works, authorships, institutions, Topics, and source identifiers c
 Raw pages are cached with checksums and query IDs before normalization; the completed acquisition
 contains only source-provided identifiers. ROR is an optional source for cached institution
 enrichment, and UN Statistics Division M49 is the source for the geographic convention. Ordinary
-dashboard viewing uses 14 processed public tables and makes
+dashboard viewing uses 16 processed public tables and makes
 no OpenAlex or ROR request.
 
 ## 5. Institution resolution
 
 Stable OpenAlex institution IDs are the primary keys; source ROR IDs are preserved when present.
 The master contains 46,812 institutions, with
-1,679 metadata QA rows. Two explicit hierarchy views are retained:
+1,702 metadata QA rows. Two explicit hierarchy views are retained:
 organization and umbrella. The hierarchy contains 93,624 rows and
-8,971 review candidates. Automatic name-only collapses:
+9,313 review candidates. Automatic name-only collapses:
 0; explicit configured collapses:
 0. Similar names therefore do not silently resolve to one
 record.
@@ -87,7 +87,7 @@ reproducibility check validated 12 core datasets with
 0 incomplete temporary outputs. Recovery tests cover
 pagination resumption, failed atomic validation, corrupt-cache quarantine, invalid-state backup,
 and deterministic normalization. The stored PageRank sum error is
-3.47e-14.
+3.61e-14.
 
 ## 9. Sensitivity analysis
 
@@ -106,8 +106,8 @@ metadata can be incomplete, hierarchy candidates require human review, and OpenA
 not a census of all scholarship. Collaboration is co-authorship, not citation flow, knowledge
 flow, research similarity, or causality. Version diagnostics identify
 10,679 ambiguous possible Work families. Sourced
-coordinate coverage ranges from 0.10% to
-0.33%; no coordinate is invented. The
+coordinate coverage ranges from 99.92% to
+100.00%; no coordinate is invented. The
 network dashboard is a thresholded view and must not be used to infer absence from a hidden edge.
 No partial 2026 data are included; 2025 is the last complete calendar year.
 

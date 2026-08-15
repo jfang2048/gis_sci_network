@@ -1,12 +1,21 @@
 {
-  "generated_at_utc": "2026-08-05T20:52:30.561820Z",
+  "coordinate_count": 46711,
+  "coordinate_source_counts": {
+    "openalex": 46711
+  },
+  "generated_at_utc": "2026-08-06T00:43:01.841447Z",
   "institution_count": 46812,
-  "logical_input_hash": "224665f260f43d4456aebd96042b9a551be4f41221362808934ce5547ee3c029",
+  "logical_input_hash": "0696cef5a6f8594ba6259ecc4dbfa7b9eecd0bcbbf5eeedecd9fa458d6e0facb",
   "lookup_batch_failure_id_count": 0,
-  "lookup_failure_or_missing_count": 77,
-  "lookup_found_count": 1602,
-  "lookup_requested_count": 1679,
-  "metadata_qa_count": 1679,
+  "lookup_cache_found_count": 1602,
+  "lookup_failure_or_missing_count": 100,
+  "lookup_found_count": 46712,
+  "lookup_network_target_count": 45210,
+  "lookup_requested_count": 46812,
+  "lookup_retrieved_at_max": "2026-08-06T00:42:59.854128Z",
+  "lookup_retrieved_at_min": "2026-08-05T20:51:27.310826Z",
+  "metadata_qa_count": 1702,
+  "missing_coordinate_count": 101,
   "missing_country_count": 1585,
   "missing_ror_count": 78,
   "missing_type_count": 78,
@@ -14,7 +23,8 @@
     "institution_metadata_qa": "data/processed/institution_metadata_qa.parquet",
     "institutions": "data/processed/institutions.parquet"
   },
-  "qa_row_count": 1679,
+  "partial_coordinate_count": 0,
+  "qa_row_count": 1702,
   "schema_version": 1,
-  "stage_version": "institution-master-2026-08-05-v1"
+  "stage_version": "institution-master-2026-08-06-v2"
 }

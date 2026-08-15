@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "b0725b8f0433e7b345660b1b6c02f9698e221c63fad248ec7856a489448a629a",
+  "checksum_sha256": "015198bcb072a89d98156c92d33c13ab321e33ecb93f0137001a3fde677f9113",
   "column_count": 12,
   "command": "python -m gisnet.cli build-dashboard-data --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T23:43:43.163235Z",
+  "created_at_utc": "2026-08-15T15:28:28.191735Z",
   "dataset_name": "dashboard_bundle_summary",
-  "git_commit": "2f9990b306be",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -28,7 +28,7 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T234030Z_2f9990b306be",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/trend_series_year.json",
@@ -44,10 +44,11 @@
     ".agent/manifests/community_continuity_year.json",
     ".agent/manifests/community_transitions_year.json",
     ".agent/manifests/institution_hierarchy.json",
-    ".agent/manifests/institutions.json"
+    ".agent/manifests/institutions.json",
+    ".agent/manifests/nodes_year.json"
   ],
   "source_versions": {
-    "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-05-v3"
+    "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"
   },
   "status": "valid"
 }

@@ -306,7 +306,7 @@ def build_parser() -> argparse.ArgumentParser:
     build_institutions.add_argument(
         "--summary", default="data/reference/institution_master_summary.json", type=Path
     )
-    build_institutions.add_argument("--lookup-batch-size", default=25, type=int)
+    build_institutions.add_argument("--lookup-batch-size", default=50, type=int)
     build_institutions.add_argument("--offline", action="store_true")
     build_institutions.set_defaults(handler=_build_institutions)
 
@@ -707,11 +707,21 @@ def build_parser() -> argparse.ArgumentParser:
     sensitivity.add_argument("--work-edges", default="data/processed/work_edges.parquet", type=Path)
     sensitivity.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
     sensitivity.add_argument(
+        "--work-institutions",
+        default="data/processed/work_institutions.parquet",
+        type=Path,
+    )
+    sensitivity.add_argument(
         "--work-corpus", default="data/processed/work_corpus.parquet", type=Path
     )
     sensitivity.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
     sensitivity.add_argument(
         "--output", default="data/processed/sensitivity_matrix.parquet", type=Path
+    )
+    sensitivity.add_argument(
+        "--scope-output",
+        default="data/processed/institution_scope_sensitivity_year.parquet",
+        type=Path,
     )
     sensitivity.add_argument(
         "--summary", default="data/reference/sensitivity_summary.json", type=Path
@@ -2450,9 +2460,11 @@ def _run_sensitivity(args: argparse.Namespace) -> int:
                 args.edges,
                 args.work_edges,
                 args.nodes,
+                args.work_institutions,
                 args.work_corpus,
                 args.topic_registry,
                 output_path=args.output,
+                scope_output_path=args.scope_output,
                 memory_limit=args.duckdb_memory_limit,
                 threads=args.duckdb_threads,
             )
@@ -2464,7 +2476,11 @@ def _run_sensitivity(args: argparse.Namespace) -> int:
                 project_config_path=args.config,
                 command=command,
             )
-            for name in ("sensitivity_matrix", "sensitivity_summary"):
+            for name in (
+                "sensitivity_matrix",
+                "institution_scope_sensitivity_year",
+                "sensitivity_summary",
+            ):
                 _register_manifest(name, f".agent/manifests/{name}.json")
     except (duckdb.Error, OSError, ValueError) as exc:
         print(f"Sensitivity matrix failed safely: {exc}", file=sys.stderr)
@@ -2651,6 +2667,7 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "community_transitions": "data/processed/community_transitions_year.parquet",
         "institution_hierarchy": "data/processed/institution_hierarchy.parquet",
         "institutions": "data/processed/institutions.parquet",
+        "complete_nodes": "data/processed/nodes_year.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

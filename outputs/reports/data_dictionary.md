@@ -1,9 +1,9 @@
 # Public Data Dictionary and Provenance
 
-Data version: `gisnet-0.1.0-2026-08-05`
-Methods version: `public-dashboard-bundle-2026-08-05-v3`
-Released tables: 14
-Documented table-column entries: 310
+Data version: `gisnet-0.1.0-2026-08-15`
+Methods version: `public-dashboard-bundle-2026-08-15-v5`
+Released tables: 16
+Documented table-column entries: 319
 
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
@@ -20,7 +20,7 @@ Annual community labels linked to stable longitudinal continuity IDs.
 - Source manifests: `.agent/manifests/communities_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"community_continuity": "jaccard-community-continuity-2026-08-05-v1"}`
-- Code commit: `b19cda5eed1e`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli match-communities --resume`
 - Known issue: Matches below Jaccard 0.25 are retained but explicitly uncertain.
 
@@ -52,7 +52,7 @@ Adjacent-year overlap assignments and split/merge/birth/death events.
 - Source manifests: `.agent/manifests/communities_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"community_continuity": "jaccard-community-continuity-2026-08-05-v1"}`
-- Code commit: `b19cda5eed1e`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli match-communities --resume`
 - Known issue: Minor positive overlaps are retained separately from event-threshold links.
 
@@ -80,6 +80,53 @@ Adjacent-year overlap assignments and split/merge/birth/death events.
 | `confident_match_threshold` | `double` | Jaccard threshold below which selected matches are uncertain. | Not null in this public release. | 0 |
 | `event_overlap_threshold` | `double` | Jaccard threshold used to classify split and merge links. | Not null in this public release. | 0 |
 
+## `filter_dimensions`
+
+Complete annual country, subregion, and institution-type dashboard choices.
+
+- Path: `dashboard/data/filter_dimensions.parquet`
+- Rows: 8,670
+- Primary key: `year, corpus_view, hierarchy_view, dimension, value`
+- SHA-256: `42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1`
+- Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"}`
+- Code commit: `568bbdbf6b3f`
+- Transformation: `python -m gisnet.cli build-dashboard-data --resume`
+- Known issue: Topic-family choices come from the separate thresholded Topic table.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `dimension` | `string` | Dashboard filter dimension: country, subregion, or institution type. | Not null in this public release. | 0 |
+| `value` | `string` | Observed display value belonging to the named dashboard filter dimension. | Not null in this public release. | 0 |
+
+## `geography_dimensions`
+
+Country-code labels used to join complete country flows to dashboard geography.
+
+- Path: `dashboard/data/geography_dimensions.parquet`
+- Rows: 146
+- Primary key: `country_code`
+- SHA-256: `05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08`
+- Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"}`
+- Code commit: `568bbdbf6b3f`
+- Transformation: `python -m gisnet.cli build-dashboard-data --resume`
+- Known issue: Only countries observed in complete annual network nodes are included.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `country_code` | `string` | Source country code associated with the institution. | Not null in this public release. | 0 |
+| `country_name` | `string` | Frozen country or territory display name. | Not null in this public release. | 0 |
+| `macro_region` | `string` | Frozen UN M49-style macro-region analytical grouping. | Not null in this public release. | 0 |
+| `subregion` | `string` | Frozen UN M49-style subregion analytical grouping. | Not null in this public release. | 0 |
+
 ## `graph_metrics`
 
 Annual graph-level topology, connectivity, mixing, and turnover metrics.
@@ -92,7 +139,7 @@ Annual graph-level topology, connectivity, mixing, and turnover metrics.
 - Source manifests: `.agent/manifests/edges_year.json, .agent/manifests/institution_outputs_year.json, .agent/manifests/graph_summary_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"network_metrics_policy": "network-metrics-2026-08-05-v1"}`
-- Code commit: `0994927dc1b8`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli compute-metrics --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume`
 - Known issue: Betweenness uses the disclosed cutoff approximation for large graphs.
 
@@ -135,7 +182,7 @@ Stable organization identifiers mapped to their documented umbrella identity.
 - Source manifests: `.agent/manifests/institutions_ror.json, .agent/manifests/institutions_geographic.json`
 - Configuration hashes: `{"institution_overrides": "a2bfe8f3c1bee1e5a8095f930784b1f04d60c5e740c3c498d87725c306370e76", "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"hierarchy_policy": "institution-hierarchy-2026-08-05-v1"}`
-- Code commit: `e222ecdc5744`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-hierarchy --institutions data/processed/institutions_ror.parquet --output data/processed/institution_hierarchy.parquet --resume`
 - Known issue: Umbrella collapse occurs only under explicit frozen hierarchy rules.
 
@@ -154,14 +201,14 @@ Annual sourced-coordinate coverage and default map display limits.
 - Path: `dashboard/data/map_coverage.parquet`
 - Rows: 64
 - Primary key: `year, corpus_view, hierarchy_view`
-- SHA-256: `80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8`
+- SHA-256: `917e1e7a8a565fd31f9c14e9ee93b6d9352f8ba53155d733e53023354fd0e6f4`
 - Direct source manifest: `.agent/manifests/map_coverage_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"map_data_policy": "geographic-map-data-2026-08-05-v1"}`
-- Code commit: `a5680002cdf2`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-map-data --resume`
-- Known issue: Coordinate coverage is sparse; missing coordinates are never imputed.
+- Known issue: Coverage varies by year and view; missing coordinates are never imputed.
 
 | Column | Arrow type | Description | Null semantics | Null count |
 |---|---|---|---|---:|
@@ -184,14 +231,14 @@ Annual sourced-coordinate coverage and default map display limits.
 Top display-ranked collaboration edges whose endpoints have sourced coordinates.
 
 - Path: `dashboard/data/map_edges.parquet`
-- Rows: 574
+- Rows: 32,000
 - Primary key: `year, corpus_view, hierarchy_view, source_id, target_id`
-- SHA-256: `eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84`
+- SHA-256: `d7c0ddf20858284b40b935962b7c1030930fc93f47b5691815b880e836df6c2e`
 - Direct source manifest: `.agent/manifests/map_edges_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"map_data_policy": "geographic-map-data-2026-08-05-v1"}`
-- Code commit: `a5680002cdf2`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-map-data --resume`
 - Known issue: This thresholded map extract is not the complete annual edge table.
 
@@ -249,14 +296,14 @@ Top display-ranked collaboration edges whose endpoints have sourced coordinates.
 Annual institution metrics for nodes with source-provided coordinates.
 
 - Path: `dashboard/data/map_nodes.parquet`
-- Rows: 890
+- Rows: 75,304
 - Primary key: `year, corpus_view, hierarchy_view, institution_id`
-- SHA-256: `d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96`
+- SHA-256: `353675a124140a3b77d4353adb213417cf453c9d27fd0e4144524188b308e8d5`
 - Direct source manifest: `.agent/manifests/map_nodes_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"map_data_policy": "geographic-map-data-2026-08-05-v1"}`
-- Code commit: `a5680002cdf2`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-map-data --resume`
 - Known issue: Absence means unavailable sourced coordinates, not an absent institution.
 
@@ -312,7 +359,7 @@ Sparse macro-region, subregion, and country collaboration matrix cells.
 - Source manifests: `.agent/manifests/region_flows_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"matrix_policy": "region-collaboration-matrix-2026-08-05-v1"}`
-- Code commit: `a2ab7184c141`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-matrix --resume`
 - Known issue: An absent row is missing/no observed flow, never an imputed zero.
 
@@ -342,12 +389,12 @@ Plain-language annual summaries and visible network thresholds.
 - Path: `dashboard/data/network_accessibility.parquet`
 - Rows: 64
 - Primary key: `year, corpus_view, hierarchy_view`
-- SHA-256: `b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b`
+- SHA-256: `233fed187e55bcf3a247b5ade84b6b11a295d3bdc4ae16a9cad934d4fed1bb8b`
 - Direct source manifest: `.agent/manifests/network_accessibility_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/communities_year.json, .agent/manifests/network_layout.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-05-v1"}`
-- Code commit: `30b845728146`
+- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-06-v2"}`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-network-view --resume`
 - Known issue: Counts describe the fixed-layout public view, not every raw affiliation.
 
@@ -374,12 +421,12 @@ Top fixed-layout core edges with weights, persistence, details, and coordinates.
 - Path: `dashboard/data/network_edges.parquet`
 - Rows: 64,000
 - Primary key: `year, corpus_view, hierarchy_view, source_id, target_id`
-- SHA-256: `df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c`
+- SHA-256: `920878da893802281d54dfd696b1452a764e395db33d49a94ee2085aac2290e4`
 - Direct source manifest: `.agent/manifests/network_view_edges_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/communities_year.json, .agent/manifests/network_layout.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-05-v1"}`
-- Code commit: `30b845728146`
+- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-06-v2"}`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-network-view --resume`
 - Known issue: Limited to the top 1,000 edges per view by a non-primary display score.
 
@@ -437,12 +484,12 @@ Fixed-coordinate annual core-node metrics and primary communities.
 - Path: `dashboard/data/network_nodes.parquet`
 - Rows: 31,486
 - Primary key: `year, corpus_view, hierarchy_view, institution_id`
-- SHA-256: `1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b`
+- SHA-256: `9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7`
 - Direct source manifest: `.agent/manifests/network_view_nodes_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/communities_year.json, .agent/manifests/network_layout.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-05-v1"}`
-- Code commit: `30b845728146`
+- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-06-v2"}`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-network-view --resume`
 - Known issue: The public visualization core is thresholded to 500 aggregate nodes.
 
@@ -460,8 +507,8 @@ Fixed-coordinate annual core-node metrics and primary communities.
 | `subregion` | `string` | Frozen UN M49-style subregion analytical grouping. | Not null in this public release. | 0 |
 | `institution_category` | `string` | Configured analytical category for the source institution type. | Not null in this public release. | 0 |
 | `analytical_scope` | `string` | Whether the row is in focal or retained contextual geographic scope. | Not null in this public release. | 0 |
-| `latitude` | `double` | Source-provided institution latitude; never imputed. | Null means no source-provided coordinate is available; no value is imputed. | 31,102 |
-| `longitude` | `double` | Source-provided institution longitude; never imputed. | Null means no source-provided coordinate is available; no value is imputed. | 31,102 |
+| `latitude` | `double` | Source-provided institution latitude; never imputed. | Not null in this public release. | 0 |
+| `longitude` | `double` | Source-provided institution longitude; never imputed. | Not null in this public release. | 0 |
 | `work_count` | `int64` | Distinct primary-corpus Works affiliated with the institution. | Not null in this public release. | 0 |
 | `fractional_work_count` | `double` | Institutional Work output under the stored fractional allocation. | Not null in this public release. | 0 |
 | `collaborative_work_count` | `int64` | Distinct Works containing more than one institution. | Not null in this public release. | 0 |
@@ -498,12 +545,12 @@ Required alternative-definition comparisons and change flags.
 - Path: `dashboard/data/sensitivity.parquet`
 - Rows: 8
 - Primary key: `comparison_id`
-- SHA-256: `eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257`
+- SHA-256: `b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168`
 - Direct source manifest: `.agent/manifests/sensitivity_matrix.json`
-- Source manifests: `.agent/manifests/graph_metrics_year.json, .agent/manifests/edges_year.json, .agent/manifests/nodes_year.json, .agent/manifests/work_corpus.json`
+- Source manifests: `.agent/manifests/graph_metrics_year.json, .agent/manifests/edges_year.json, .agent/manifests/work_edges.json, .agent/manifests/nodes_year.json, .agent/manifests/work_institutions.json, .agent/manifests/work_corpus.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"sensitivity_policy": "required-sensitivity-matrix-2026-08-05-v1"}`
-- Code commit: `a4b38b01c735`
+- Source versions: `{"sensitivity_policy": "required-sensitivity-matrix-2026-08-06-v2"}`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli run-sensitivity --resume`
 - Known issue: One reviewed-registry comparison is explicitly unavailable.
 
@@ -534,8 +581,8 @@ Topic-family aggregates derived from the visible fixed-layout edge core.
 - Direct source manifest: `.agent/manifests/network_view_edges_year.json`
 - Source manifests: `.agent/manifests/nodes_year.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/communities_year.json, .agent/manifests/network_layout.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-05-v1"}`
-- Code commit: `30b845728146`
+- Source versions: `{"network_view_policy": "fixed-layout-network-view-2026-08-06-v2"}`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-network-view --resume`
 - Known issue: Topic decisions are provisional and the table covers visible edges only.
 
@@ -563,7 +610,7 @@ Annual macro-region collaboration trend series for complete calendar years.
 - Source manifests: `.agent/manifests/region_flows_year.json, .agent/manifests/graph_metrics_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
 - Source versions: `{"trend_figure_policy": "annual-region-trends-2026-08-05-v1"}`
-- Code commit: `148a236ad06f`
+- Code commit: `568bbdbf6b3f`
 - Transformation: `python -m gisnet.cli build-figures --resume`
 - Known issue: The last included year is 2025; partial 2026 observations are excluded.
 

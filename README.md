@@ -5,6 +5,25 @@ research collaboration among universities and research institutions in Europe, A
 and the Americas. Complete-year results cover 2010–2025 by default. Africa and Oceania
 remain represented so mixed-region collaboration is not discarded.
 
+## View the results
+
+Static figures can be opened directly on GitHub:
+
+- [Annual regional collaboration trends](figures/annual_region_trends.svg)
+- [Strict/Broad and organization/umbrella comparison](figures/view_comparison.svg)
+- [Latest macro-region collaboration matrix](figures/region_matrix.svg)
+
+The interactive visualization is a local Streamlit application. From the repository root:
+
+```bash
+uv sync
+uv run streamlit run dashboard/app.py
+```
+
+It opens at <http://localhost:8501> by default. GitHub displays the source files but does not
+execute or render the Streamlit application itself. No hosted dashboard URL is currently
+published; ordinary local viewing uses the checked-in processed snapshot and needs no API key.
+
 The authoritative execution plan is
 [`AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md`](AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md).
 
@@ -100,17 +119,9 @@ whether to skip or rebuild a stage. Incomplete downloads always resume, stale de
 branches rebuild in dependency order, valid raw pages are never deleted, and a failure
 prints the exact recovery command.
 
-## View the dashboard
+## Dashboard snapshot and documentation
 
-The repository includes a compact, public processed-data snapshot, so viewing the
-result does not require an API key or a new OpenAlex download.
-
-```bash
-uv sync
-uv run streamlit run dashboard/app.py
-```
-
-Open <http://localhost:8501>. The eight-page dashboard includes regional trends,
+The checked-in eight-page dashboard includes regional trends,
 collaboration matrices, geographic and fixed-layout network views, an institution-pair
 explorer, Topic-family comparisons, methods, and data-quality metadata. See
 [`dashboard/README.md`](dashboard/README.md) for snapshot rebuild details.

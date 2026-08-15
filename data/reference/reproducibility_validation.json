@@ -25,12 +25,12 @@
       "row_count": 3384604
     },
     {
-      "actual_checksum_sha256": "694c4c13413aef6fb20118e817744a374d8da21ec7d45ad3610869fed143e8ec",
+      "actual_checksum_sha256": "03639c5cba1325283a25bc87c64b8640a544fe44b386553999f6cc1cc20c9cca",
       "checksum_matches": true,
       "dataset_name": "institutions_geographic",
-      "expected_checksum_sha256": "694c4c13413aef6fb20118e817744a374d8da21ec7d45ad3610869fed143e8ec",
+      "expected_checksum_sha256": "03639c5cba1325283a25bc87c64b8640a544fe44b386553999f6cc1cc20c9cca",
       "manifest_path": ".agent/manifests/institutions_geographic.json",
-      "manifest_run_id": "20260805T205331Z_8d7beb87aab6",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/institutions_geographic.parquet",
       "row_count": 46812
@@ -41,7 +41,7 @@
       "dataset_name": "institution_hierarchy",
       "expected_checksum_sha256": "06b69aa1ffba4e8f5efce2cf02241d700c8c8cb8fb96959be3f17227892cf85e",
       "manifest_path": ".agent/manifests/institution_hierarchy.json",
-      "manifest_run_id": "20260805T210344Z_e222ecdc5744",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/institution_hierarchy.parquet",
       "row_count": 93624
@@ -69,12 +69,12 @@
       "row_count": 1176947
     },
     {
-      "actual_checksum_sha256": "523020df4a1137bc9810901ec85717053b141881ab920ef8ba9c64e968f88fa9",
+      "actual_checksum_sha256": "cc5d13ddf3e5b81dcb03e79dc727ddaf50718373560bb982363c007abda12e79",
       "checksum_matches": true,
       "dataset_name": "work_institutions",
-      "expected_checksum_sha256": "523020df4a1137bc9810901ec85717053b141881ab920ef8ba9c64e968f88fa9",
+      "expected_checksum_sha256": "cc5d13ddf3e5b81dcb03e79dc727ddaf50718373560bb982363c007abda12e79",
       "manifest_path": ".agent/manifests/work_institutions.json",
-      "manifest_run_id": "20260805T211514Z_1fb9bede719e",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/work_institutions.parquet",
       "row_count": 4809352
@@ -85,7 +85,7 @@
       "dataset_name": "work_edges",
       "expected_checksum_sha256": "77aa672fef5375012ea9bbdfc777dccb9c266e5c455bc7b433fb1683c1c18c13",
       "manifest_path": ".agent/manifests/work_edges.json",
-      "manifest_run_id": "20260805T212319Z_06350c560944",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/work_edges.parquet",
       "row_count": 4505668
@@ -96,7 +96,7 @@
       "dataset_name": "edges_year",
       "expected_checksum_sha256": "bccfe253c020f85352f0a65784d92e162578555e9ad5c786318525d0933cbb9b",
       "manifest_path": ".agent/manifests/edges_year.json",
-      "manifest_run_id": "20260805T212319Z_06350c560944",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/edges_year.parquet",
       "row_count": 2999736
@@ -107,18 +107,18 @@
       "dataset_name": "edge_work_diagnostics",
       "expected_checksum_sha256": "565edf0755626b5f57453d60b3139649bd12769b423737be64d9059ed40dacb7",
       "manifest_path": ".agent/manifests/edge_work_diagnostics.json",
-      "manifest_run_id": "20260805T212319Z_06350c560944",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/edge_work_diagnostics.parquet",
       "row_count": 1062936
     },
     {
-      "actual_checksum_sha256": "2126f253148415c3493f89d520fd6e5752860154d063d5ba9e537fc16a24435d",
+      "actual_checksum_sha256": "4842fb88f35df5eb5e5550a4cbf41f6872b8da40ae321119f9c3849fb5767e29",
       "checksum_matches": true,
       "dataset_name": "institution_outputs_year",
-      "expected_checksum_sha256": "2126f253148415c3493f89d520fd6e5752860154d063d5ba9e537fc16a24435d",
+      "expected_checksum_sha256": "4842fb88f35df5eb5e5550a4cbf41f6872b8da40ae321119f9c3849fb5767e29",
       "manifest_path": ".agent/manifests/institution_outputs_year.json",
-      "manifest_run_id": "20260805T212957Z_f63b2e618d7f",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/institution_outputs_year.parquet",
       "row_count": 501890
@@ -129,14 +129,14 @@
       "dataset_name": "region_flows_year",
       "expected_checksum_sha256": "cbba334fc5dc1bcc58fe373aa0d748a9e33af5f7b5ce50bbec7df5ba18c22f21",
       "manifest_path": ".agent/manifests/region_flows_year.json",
-      "manifest_run_id": "20260805T213321Z_5780a3f2500d",
+      "manifest_run_id": "20260806T002306Z_568bbdbf6b3f",
       "manifest_status": "valid",
       "path": "data/processed/region_flows_year.parquet",
       "row_count": 97762
     }
   ],
-  "generated_at_utc": "2026-08-05T21:41:58.769642Z",
-  "logical_input_hash": "0c7aac507ad46ab97902596a7ede016907fbb1073073f7df86229d3c391bc268",
+  "generated_at_utc": "2026-08-06T00:45:20.051784Z",
+  "logical_input_hash": "ee627698453d6328e46f6662d85d09631c087d4d624bd02ffaeb8c5c2ba2dea0",
   "recovery_contracts": {
     "atomic_write_preserves_previous_output": true,
     "corrupt_cache_quarantined": true,

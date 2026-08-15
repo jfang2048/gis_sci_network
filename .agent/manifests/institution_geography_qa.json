@@ -7,9 +7,9 @@
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
     "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e"
   },
-  "created_at_utc": "2026-08-05T20:55:32.001807Z",
+  "created_at_utc": "2026-08-06T00:43:03.608095Z",
   "dataset_name": "institution_geography_qa",
-  "git_commit": "8d7beb87aab6",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -24,7 +24,7 @@
     "institution_id"
   ],
   "row_count": 1585,
-  "run_id": "20260805T205331Z_8d7beb87aab6",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/institutions.json"

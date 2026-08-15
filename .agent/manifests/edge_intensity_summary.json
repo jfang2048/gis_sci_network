@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "1c90a071bc5581c569560ca8a1128537eba3e7d3610be4dfbf9e420a3f5c5c61",
+  "checksum_sha256": "2f6bcac65ff04371c082c394697e9eedf201f8f567e24fdbe95aa6aa4dec236d",
   "column_count": 15,
   "command": "python -m gisnet.cli compute-edge-intensity --edges data/processed/edges_year.parquet --institution-outputs data/processed/institution_outputs_year.parquet --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T22:01:56.604068Z",
+  "created_at_utc": "2026-08-06T00:45:37.629991Z",
   "dataset_name": "edge_intensity_summary",
-  "git_commit": "cde48a5ac8a4",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -31,7 +31,7 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T214246Z_cde48a5ac8a4",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/edges_year.json",

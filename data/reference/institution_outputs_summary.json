@@ -5,12 +5,12 @@
   ],
   "eligible_work_institution_row_count": 4360954,
   "eligible_work_view_year_count": 2321132,
-  "generated_at_utc": "2026-08-05T21:32:42.614121Z",
+  "generated_at_utc": "2026-08-06T00:45:09.272578Z",
   "hierarchy_views": [
     "organization",
     "umbrella"
   ],
-  "logical_input_hash": "59a4b0725e3eba064b39c42d1eddc218409f5ac88b02f5035a9b0071998fefd7",
+  "logical_input_hash": "b408040574cdeb94e9190f5ab4fd31d4e429540091eb2e4e2d696739dce63810",
   "maximum_fractional_reconciliation_error": 7.712515071034431e-10,
   "node_year_count": 501890,
   "outputs": {

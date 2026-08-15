@@ -1,14 +1,14 @@
 {
-  "checksum_sha256": "3945915039a3622ab26cf3bfe6f1a6cc11cd745ddbb442bd2da8573b4b95627d",
+  "checksum_sha256": "4ad6e0fc8497897d746c6b765cccd5d4d5a4769527eeb1bcf646ef69e0428c16",
   "column_count": 7,
   "command": "python -m gisnet.cli validate-corpus-boundary --registry config/topic_registry.yml --samples data/interim/topic_work_samples.json --known-positives config/known_positive_works.csv --annotations data/reference/corpus_boundary_annotations.csv",
   "config_hashes": {
-    "known_positive_works": "2d932bd8f6f6cc8fcb3e511d33c883cdf35cef10de6844016ae44aefa8a3d195",
+    "known_positive_works": "67278776d210c19befcb442375238ce398baf74b2aae95e298c3f96cce3b9be2",
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
   },
-  "created_at_utc": "2026-08-05T17:13:21.750134Z",
+  "created_at_utc": "2026-08-06T00:36:09.741106Z",
   "dataset_name": "corpus_boundary_validation",
-  "git_commit": "7f6e3ece3a5e",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -24,13 +24,14 @@
     "work_id"
   ],
   "row_count": 10,
-  "run_id": "20260805T170559Z_7f6e3ec",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/topic_registry.json",
     ".agent/manifests/topic_work_samples.json"
   ],
   "source_versions": {
+    "corpus_boundary_policy": "corpus-boundary-2026-08-06-v2",
     "openalex_topic_samples": "retrieved-2026-08-05"
   },
   "status": "valid"

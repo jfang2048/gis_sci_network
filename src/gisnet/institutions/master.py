@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 from collections import Counter
 from datetime import UTC, datetime
@@ -19,7 +20,7 @@ from gisnet.institutions.types import InstitutionTypePolicy
 from gisnet.openalex.cache import RawResponseCache
 from gisnet.openalex.client import OpenAlexClient, OpenAlexError
 
-_STAGE_VERSION = "institution-master-2026-08-05-v1"
+_STAGE_VERSION = "institution-master-2026-08-06-v2"
 _SELECT = (
     "id,ror,display_name,display_name_acronyms,display_name_alternatives,country_code,type,"
     "lineage,geo,associated_institutions,updated_date"
@@ -38,6 +39,7 @@ _MASTER_SCHEMA = pa.schema(
         ("is_primary_research_scope", pa.bool_()),
         ("latitude", pa.float64()),
         ("longitude", pa.float64()),
+        ("coordinate_source", pa.string()),
         ("lineage", pa.list_(pa.string())),
         ("parent_ids", pa.list_(pa.string())),
         ("child_ids", pa.list_(pa.string())),
@@ -84,17 +86,19 @@ def build_institution_master(
         raise ValueError("lookup_batch_size must be between 1 and 50")
     source = Path(extracted_path)
     aggregates = _aggregate_assertions(source)
-    needed = [
-        institution_id
-        for institution_id, aggregate in aggregates.items()
-        if _issue_fields(aggregate)
-    ]
+    targets = sorted(aggregates)
     lookup_results: dict[str, tuple[dict[str, Any], str]] = {}
+    if cache is not None and not force:
+        lookup_results.update(_cached_institution_records(cache, set(targets)))
+    cache_found_count = len(lookup_results)
     lookup_failure_count = 0
     if client is not None:
         if cache is None:
             raise ValueError("OpenAlex lookups require a raw response cache")
-        for batch in _batches(sorted(needed), lookup_batch_size):
+        needed = [
+            institution_id for institution_id in targets if institution_id not in lookup_results
+        ]
+        for batch in _batches(needed, lookup_batch_size):
             parameters = {
                 "filter": f"openalex:{'|'.join(batch)}",
                 "select": _SELECT,
@@ -125,7 +129,9 @@ def build_institution_master(
         lookup = lookup_results.get(institution_id)
         row, resolved_fields = _master_row(institution_id, aggregate, lookup, policy)
         master_rows.append(row)
-        if issues:
+        if issues or (client is not None and lookup is None):
+            if not issues:
+                issues = ["missing_openalex_metadata"]
             qa_rows.append(
                 {
                     "institution_id": institution_id,
@@ -163,19 +169,40 @@ def build_institution_master(
             "policy_version": policy.policy_version,
         }
     )
+    retrieval_times = sorted(
+        retrieved_at for _record, retrieved_at in lookup_results.values() if retrieved_at
+    )
     return {
         "schema_version": 1,
         "stage_version": _STAGE_VERSION,
         "logical_input_hash": logical_input_hash,
         "institution_count": len(master_rows),
         "metadata_qa_count": len(qa_rows),
-        "lookup_requested_count": len(needed),
+        "lookup_requested_count": len(targets),
+        "lookup_cache_found_count": cache_found_count,
+        "lookup_network_target_count": (
+            len(targets) - cache_found_count if client is not None else 0
+        ),
         "lookup_found_count": len(lookup_results),
-        "lookup_failure_or_missing_count": len(needed) - len(lookup_results),
+        "lookup_failure_or_missing_count": len(targets) - len(lookup_results),
         "lookup_batch_failure_id_count": lookup_failure_count,
+        "lookup_retrieved_at_min": retrieval_times[0] if retrieval_times else None,
+        "lookup_retrieved_at_max": retrieval_times[-1] if retrieval_times else None,
         "missing_country_count": sum(row["country_code"] is None for row in master_rows),
         "missing_type_count": sum(row["institution_type"] is None for row in master_rows),
         "missing_ror_count": sum(row["ror_id"] is None for row in master_rows),
+        "coordinate_count": sum(_has_coordinate_pair(row) for row in master_rows),
+        "missing_coordinate_count": sum(not _has_coordinate_pair(row) for row in master_rows),
+        "partial_coordinate_count": sum(_has_partial_coordinate_pair(row) for row in master_rows),
+        "coordinate_source_counts": dict(
+            sorted(
+                Counter(
+                    str(row["coordinate_source"])
+                    for row in master_rows
+                    if row["coordinate_source"] is not None and _has_coordinate_pair(row)
+                ).items()
+            )
+        ),
         "outputs": {"institutions": str(master), "institution_metadata_qa": str(qa)},
         "generated_at_utc": _timestamp(),
         "qa_row_count": int(qa_metrics["row_count"]),
@@ -273,6 +300,7 @@ def _master_row(
     predecessor_ids: set[str] = set()
     successor_ids: set[str] = set()
     latitude = longitude = None
+    coordinate_source = None
     updated_date = None
     resolved_fields: list[str] = []
     metadata_source = "work_assertion"
@@ -296,6 +324,8 @@ def _master_row(
         if isinstance(geo, dict):
             latitude = _number(geo.get("latitude"))
             longitude = _number(geo.get("longitude"))
+            if latitude is not None or longitude is not None:
+                coordinate_source = "openalex"
             geo_country = _country_code(geo.get("country_code"))
             if selected["country_code"] is None and geo_country is not None:
                 selected["country_code"] = geo_country
@@ -329,6 +359,7 @@ def _master_row(
             "is_primary_research_scope": type_rule.is_primary_research_scope,
             "latitude": latitude,
             "longitude": longitude,
+            "coordinate_source": coordinate_source,
             "lineage": sorted(lineage),
             "parent_ids": sorted(parent_ids),
             "child_ids": sorted(child_ids),
@@ -357,6 +388,49 @@ def _most_common(counter: Counter[str]) -> str | None:
 
 def _batches(values: list[str], size: int) -> list[list[str]]:
     return [values[index : index + size] for index in range(0, len(values), size)]
+
+
+def _cached_institution_records(
+    cache: RawResponseCache, target_ids: set[str]
+) -> dict[str, tuple[dict[str, Any], str]]:
+    """Reuse valid institution records even when an earlier request used different batches."""
+    records: dict[str, tuple[dict[str, Any], str]] = {}
+    for metadata_path in sorted(cache.pages.rglob("*.meta.json")):
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if metadata.get("endpoint") != "/institutions":
+            continue
+        cache_key = metadata.get("cache_key")
+        if not isinstance(cache_key, str):
+            continue
+        entry = cache.get(cache_key)
+        if entry is None:
+            continue
+        results = entry.data.get("results")
+        if not isinstance(results, list):
+            continue
+        retrieved_at = str(entry.metadata.get("retrieved_at_utc") or "")
+        for raw in results:
+            if not isinstance(raw, dict):
+                continue
+            if not set(_SELECT.split(",")).issubset(raw):
+                continue
+            institution_id = _short_id(raw.get("id"), "I")
+            if institution_id in target_ids:
+                existing = records.get(institution_id)
+                if existing is None or retrieved_at >= existing[1]:
+                    records[institution_id] = (raw, retrieved_at)
+    return records
+
+
+def _has_coordinate_pair(row: dict[str, Any]) -> bool:
+    return row.get("latitude") is not None and row.get("longitude") is not None
+
+
+def _has_partial_coordinate_pair(row: dict[str, Any]) -> bool:
+    return (row.get("latitude") is None) != (row.get("longitude") is None)
 
 
 def _write_atomic_parquet(rows: list[dict[str, Any]], schema: pa.Schema, path: Path) -> None:
@@ -420,7 +494,10 @@ def write_institution_master_artifacts(
         "institution_types": config_file_hash(institution_type_path),
     }
     source_manifests = [".agent/manifests/work_institutions_extracted.json"]
-    source_versions = {"openalex_institutions": "retrieved-2026-08-05"}
+    source_versions = {
+        "openalex_institutions": summary.get("lookup_retrieved_at_max") or "not-retrieved",
+        "institution_master_policy": _STAGE_VERSION,
+    }
     write_json_artifact(
         path=summary_path,
         dataset_name="institution_master_summary",

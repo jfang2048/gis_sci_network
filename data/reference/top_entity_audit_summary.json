@@ -4,9 +4,9 @@
   "edge_audit_row_count": 50,
   "flagged_edge_count": 0,
   "flagged_institution_count": 0,
-  "generated_at_utc": "2026-08-05T22:31:40.203926Z",
+  "generated_at_utc": "2026-08-15T15:28:15.534441Z",
   "institution_audit_row_count": 66,
-  "logical_input_hash": "a4c4a98ce677cd2e305a1bc3b11d9bef812278353148e9e5d07aa64520de8b9b",
+  "logical_input_hash": "da9789e06c9f2dcd9e03afd9849224ca043dbc72abd5685e5bdcd414bc9efced",
   "outputs": {
     "top_edge_audit": "data/processed/top_edge_audit.parquet",
     "top_institution_audit": "data/processed/top_institution_audit.parquet"

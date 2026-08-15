@@ -13,6 +13,7 @@ from gisnet.atomic import atomic_write_text
 from gisnet.config import config_file_hash, semantic_hash
 
 Annotation = Literal["relevant", "irrelevant", "uncertain", ""]
+_VALIDATION_VERSION = "corpus-boundary-2026-08-06-v2"
 
 ANNOTATION_COLUMNS = [
     "sample_id",
@@ -203,7 +204,7 @@ def evaluate_boundary(
         "reference_count": len(coverage_records),
         "recovered_count": recovered_count,
         "value": (recovered_count / len(coverage_records) if recall_supported else None),
-        "reason": "manually reviewed known-positive reference set"
+        "reason": "provisional curated reference set; no human review is implied"
         if recall_supported
         else "reference set lacks sufficient observed Topic evidence",
     }
@@ -214,7 +215,9 @@ def evaluate_boundary(
     )
     return {
         "schema_version": 1,
-        "validation_version": "corpus-boundary-2026-08-05-v1",
+        "validation_version": _VALIDATION_VERSION,
+        "human_review_complete": False,
+        "scientific_status": "blocked_pending_human_corpus_review",
         "registry_hash": topic_registry.get("registry_hash"),
         "annotation_sample_hash": semantic_hash(records),
         "annotation_counts": dict(
@@ -247,7 +250,8 @@ def boundary_report(metrics: dict[str, Any], records: list[dict[str, Any]]) -> s
     )
     return f"""# Corpus Boundary Validation
 
-> The Topic registry is provisional and has not received human review.
+> The Topic registry and corpus boundary are provisional. The annotation sample has not received
+> human review, so scientific boundary validation remains blocked pending human judgement.
 
 ## Deterministic annotation sample
 
@@ -262,9 +266,10 @@ reported until at least {precision.get("minimum_required", 10)} relevant/irrelev
 ## Known-positive check
 
 - Recall: {recall_text}
-- Reference basis: manually reviewed real OpenAlex works already present in Topic samples.
+- Reference basis: provisional curated real OpenAlex works already present in Topic samples.
 
-This recall applies only to the small reference set and is not a population-wide recall estimate.
+No human review is implied by this recovery check. Its recall applies only to the small reference
+set and is not a population-wide recall estimate.
 
 ## Strict versus Broad
 
@@ -303,7 +308,10 @@ def write_boundary_artifacts(
                 Path(known_positive_path).read_bytes()
             ).hexdigest(),
         },
-        source_versions={"openalex_topic_samples": "retrieved-2026-08-05"},
+        source_versions={
+            "openalex_topic_samples": "retrieved-2026-08-05",
+            "corpus_boundary_policy": _VALIDATION_VERSION,
+        },
         source_manifests=[
             ".agent/manifests/topic_registry.json",
             ".agent/manifests/topic_work_samples.json",

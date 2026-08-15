@@ -1,15 +1,22 @@
 {
-  "data_version": "gisnet-0.1.0-2026-08-05",
-  "generated_at_utc": "2026-08-05T23:43:43.147631Z",
+  "active_umbrella_collapse_count": 0,
+  "corpus_human_review_complete": false,
+  "corpus_scientific_status": "blocked_pending_human_corpus_review",
+  "data_version": "gisnet-0.1.0-2026-08-15",
+  "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
+  "generated_at_utc": "2026-08-15T15:28:28.162905Z",
+  "geographic_comparison_metric": "local collaboration endpoint share; internal links contribute two endpoints",
   "known_limitations": [
-    "Institution coordinates are sparse and never imputed.",
+    "Institution coordinate coverage is reported per view; coordinates are never invented.",
+    "Country and region maps use proportional endpoint shares by default; absolute weights remain available in details.",
     "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
     "The Topic registry is provisional and has not received human review.",
+    "The corpus-boundary annotation sample is unlabelled and awaits human review.",
     "2025 is the last complete calendar year; no partial 2026 data are included.",
     "Visualization score is non-primary and used only to rank visible edges.",
     "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-05-v3",
+  "methods_version": "public-dashboard-bundle-2026-08-15-v5",
   "public_snapshot": true,
   "schema_version": 1,
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
@@ -24,6 +31,16 @@
       "row_count": 51585,
       "sha256": "101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec"
     },
+    "filter_dimensions": {
+      "path": "dashboard/data/filter_dimensions.parquet",
+      "row_count": 8670,
+      "sha256": "42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1"
+    },
+    "geography_dimensions": {
+      "path": "dashboard/data/geography_dimensions.parquet",
+      "row_count": 146,
+      "sha256": "05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08"
+    },
     "graph_metrics": {
       "path": "dashboard/data/graph_metrics.parquet",
       "row_count": 64,
@@ -37,17 +54,17 @@
     "map_coverage": {
       "path": "dashboard/data/map_coverage.parquet",
       "row_count": 64,
-      "sha256": "80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8"
+      "sha256": "917e1e7a8a565fd31f9c14e9ee93b6d9352f8ba53155d733e53023354fd0e6f4"
     },
     "map_edges": {
       "path": "dashboard/data/map_edges.parquet",
-      "row_count": 574,
-      "sha256": "eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84"
+      "row_count": 32000,
+      "sha256": "d7c0ddf20858284b40b935962b7c1030930fc93f47b5691815b880e836df6c2e"
     },
     "map_nodes": {
       "path": "dashboard/data/map_nodes.parquet",
-      "row_count": 890,
-      "sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96"
+      "row_count": 75304,
+      "sha256": "353675a124140a3b77d4353adb213417cf453c9d27fd0e4144524188b308e8d5"
     },
     "matrix": {
       "path": "dashboard/data/matrix.parquet",
@@ -57,22 +74,22 @@
     "network_accessibility": {
       "path": "dashboard/data/network_accessibility.parquet",
       "row_count": 64,
-      "sha256": "b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b"
+      "sha256": "233fed187e55bcf3a247b5ade84b6b11a295d3bdc4ae16a9cad934d4fed1bb8b"
     },
     "network_edges": {
       "path": "dashboard/data/network_edges.parquet",
       "row_count": 64000,
-      "sha256": "df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c"
+      "sha256": "920878da893802281d54dfd696b1452a764e395db33d49a94ee2085aac2290e4"
     },
     "network_nodes": {
       "path": "dashboard/data/network_nodes.parquet",
       "row_count": 31486,
-      "sha256": "1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b"
+      "sha256": "9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7"
     },
     "sensitivity": {
       "path": "dashboard/data/sensitivity.parquet",
       "row_count": 8,
-      "sha256": "eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257"
+      "sha256": "b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168"
     },
     "topics": {
       "path": "dashboard/data/topics.parquet",

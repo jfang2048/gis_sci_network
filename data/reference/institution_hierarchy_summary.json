@@ -2,16 +2,16 @@
   "automatic_collapse_count": 0,
   "canonicalization_rule_count": 0,
   "explicit_collapse_count": 0,
-  "generated_at_utc": "2026-08-05T21:06:10.939950Z",
+  "generated_at_utc": "2026-08-06T00:43:09.025736Z",
   "hierarchy_row_count": 93624,
   "institution_count": 46812,
-  "logical_input_hash": "b19255e1982f99211a443ab3a3e9be8ce8177659cf3049a68e5d5542f31bef5d",
+  "logical_input_hash": "f041df0c13326ef427a0d3d2b945114a8de3a775c239750198c36b10bac3f80d",
   "outputs": {
     "institution_canonicalization_audit": "data/processed/institution_canonicalization_audit.parquet",
     "institution_hierarchy": "data/processed/institution_hierarchy.parquet",
     "institution_hierarchy_candidates": "data/processed/institution_hierarchy_candidates.parquet"
   },
-  "relationship_candidate_count": 8971,
+  "relationship_candidate_count": 9313,
   "schema_version": 1,
   "stage_version": "institution-hierarchy-2026-08-05-v1"
 }

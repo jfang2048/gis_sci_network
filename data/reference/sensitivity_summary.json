@@ -1,15 +1,20 @@
 {
   "comparison_count": 8,
   "completed_comparison_count": 7,
-  "generated_at_utc": "2026-08-05T22:34:33.113778Z",
-  "logical_input_hash": "72521029a487aeecd8b0ed1d65f4c247c0b13f97a21bd63678781ad929e0a59b",
+  "expanded_scope_institution_work_count": 1982360.0,
+  "expanded_scope_materialized": true,
+  "generated_at_utc": "2026-08-15T15:28:18.732723Z",
+  "logical_input_hash": "87224c8827740e7c5c2b4d1b1f916d83ea78b8d8613429509ca1b433925dd769",
   "major_change_count": 3,
   "major_change_threshold": 0.2,
   "outputs": {
+    "institution_scope_sensitivity_year": "data/processed/institution_scope_sensitivity_year.parquet",
     "sensitivity_matrix": "data/processed/sensitivity_matrix.parquet"
   },
   "primary_result_overwritten": false,
+  "primary_scope_institution_work_count": 1841160.0,
   "schema_version": 1,
-  "stage_version": "required-sensitivity-matrix-2026-08-05-v1",
+  "scope_row_count": 128,
+  "stage_version": "required-sensitivity-matrix-2026-08-06-v2",
   "unavailable_comparison_count": 1
 }

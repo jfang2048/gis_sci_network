@@ -1,6 +1,7 @@
 # Corpus Boundary Validation
 
-> The Topic registry is provisional and has not received human review.
+> The Topic registry and corpus boundary are provisional. The annotation sample has not received
+> human review, so scientific boundary validation remains blocked pending human judgement.
 
 ## Deterministic annotation sample
 
@@ -15,9 +16,10 @@ reported until at least 10 relevant/irrelevant labels exist.
 ## Known-positive check
 
 - Recall: 1.000 (10/10)
-- Reference basis: manually reviewed real OpenAlex works already present in Topic samples.
+- Reference basis: provisional curated real OpenAlex works already present in Topic samples.
 
-This recall applies only to the small reference set and is not a population-wide recall estimate.
+No human review is implied by this recovery check. Its recall applies only to the small reference
+set and is not a population-wide recall estimate.
 
 ## Strict versus Broad
 

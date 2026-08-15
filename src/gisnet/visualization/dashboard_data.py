@@ -14,7 +14,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-05-v3"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-15-v5"
 
 
 def build_dashboard_bundle(
@@ -40,7 +40,7 @@ def build_dashboard_bundle(
         "community_continuity",
         "community_transitions",
     }
-    required = copied_sources | {"institution_hierarchy", "institutions"}
+    required = copied_sources | {"institution_hierarchy", "institutions", "complete_nodes"}
     missing = required.difference(sources)
     if missing:
         raise ValueError(f"dashboard bundle lacks sources: {sorted(missing)}")
@@ -53,6 +53,8 @@ def build_dashboard_bundle(
     destinations = {name: output / f"{name}.parquet" for name in copied_sources}
     destinations["topics"] = output / "topics.parquet"
     destinations["institution_identities"] = output / "institution_identities.parquet"
+    destinations["filter_dimensions"] = output / "filter_dimensions.parquet"
+    destinations["geography_dimensions"] = output / "geography_dimensions.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -72,6 +74,12 @@ def build_dashboard_bundle(
                 """,
                 [str(paths[name])],
             )
+        _write_filter_dimensions(
+            connection, paths["complete_nodes"], temporary["filter_dimensions"]
+        )
+        _write_geography_dimensions(
+            connection, paths["complete_nodes"], temporary["geography_dimensions"]
+        )
         connection.execute(
             f"""
             COPY (
@@ -121,6 +129,17 @@ def build_dashboard_bundle(
                 str(paths["institutions"]),
             ],
         )
+        collapse_count = connection.execute(
+            """
+            SELECT count(*)
+            FROM read_parquet(?)
+            WHERE hierarchy_view = 'umbrella' AND is_collapsed
+            """,
+            [str(paths["institution_hierarchy"])],
+        ).fetchone()
+        if collapse_count is None:
+            raise ValueError("institution hierarchy collapse count was unavailable")
+        active_collapse_count = int(collapse_count[0])
     except BaseException:
         for path in temporary.values():
             path.unlink(missing_ok=True)
@@ -213,6 +232,16 @@ def build_dashboard_bundle(
             },
             None,
         ),
+        "filter_dimensions": (
+            ["year", "corpus_view", "hierarchy_view", "dimension", "value"],
+            {"year", "corpus_view", "hierarchy_view", "dimension", "value"},
+            "year",
+        ),
+        "geography_dimensions": (
+            ["country_code"],
+            {"country_code", "country_name", "macro_region", "subregion"},
+            None,
+        ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],
             {"year", "topic_family", "full_count", "fractional_count"},
@@ -231,11 +260,18 @@ def build_dashboard_bundle(
     hashes = {name: metrics[name]["checksum_sha256"] for name in sorted(metrics)}
     payload = {
         "schema_version": 1,
-        "data_version": "gisnet-0.1.0-2026-08-05",
+        "data_version": "gisnet-0.1.0-2026-08-15",
         "methods_version": _STAGE_VERSION,
         "generated_at_utc": _timestamp(),
         "source_policy": "processed aggregate datasets only; no API requests during viewing",
         "public_snapshot": True,
+        "active_umbrella_collapse_count": active_collapse_count,
+        "corpus_human_review_complete": False,
+        "corpus_scientific_status": "blocked_pending_human_corpus_review",
+        "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
+        "geographic_comparison_metric": (
+            "local collaboration endpoint share; internal links contribute two endpoints"
+        ),
         "tables": {
             name: {
                 "path": f"dashboard/data/{destinations[name].name}",
@@ -245,9 +281,12 @@ def build_dashboard_bundle(
             for name in sorted(destinations)
         },
         "known_limitations": [
-            "Institution coordinates are sparse and never imputed.",
+            "Institution coordinate coverage is reported per view; coordinates are never invented.",
+            "Country and region maps use proportional endpoint shares by default; "
+            "absolute weights remain available in details.",
             "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
             "The Topic registry is provisional and has not received human review.",
+            "The corpus-boundary annotation sample is unlabelled and awaits human review.",
             "2025 is the last complete calendar year; no partial 2026 data are included.",
             "Visualization score is non-primary and used only to rank visible edges.",
             "Community continuity matches below Jaccard 0.25 are explicitly uncertain.",
@@ -324,6 +363,7 @@ def write_dashboard_artifact(
             ".agent/manifests/community_transitions_year.json",
             ".agent/manifests/institution_hierarchy.json",
             ".agent/manifests/institutions.json",
+            ".agent/manifests/nodes_year.json",
         ],
         command=command,
     )
@@ -331,6 +371,59 @@ def write_dashboard_artifact(
 
 def _literal(path: Path) -> str:
     return str(path).replace("'", "''")
+
+
+def _write_filter_dimensions(
+    connection: duckdb.DuckDBPyConnection,
+    complete_nodes_path: Path,
+    destination: Path,
+) -> None:
+    """Write filter choices from all network nodes, never the coordinate-limited map subset."""
+    connection.execute(
+        f"""
+        COPY (
+            SELECT DISTINCT year, corpus_view, hierarchy_view, dimension, value
+            FROM (
+                SELECT year, corpus_view, hierarchy_view, 'country' AS dimension,
+                       country_name AS value
+                FROM read_parquet(?) WHERE country_name IS NOT NULL
+                UNION ALL
+                SELECT year, corpus_view, hierarchy_view, 'subregion', subregion
+                FROM read_parquet(?) WHERE subregion IS NOT NULL
+                UNION ALL
+                SELECT year, corpus_view, hierarchy_view, 'institution_type',
+                       institution_category
+                FROM read_parquet(?) WHERE institution_category IS NOT NULL
+            )
+            ORDER BY year, corpus_view, hierarchy_view, dimension, value
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(complete_nodes_path)] * 3,
+    )
+
+
+def _write_geography_dimensions(
+    connection: duckdb.DuckDBPyConnection,
+    complete_nodes_path: Path,
+    destination: Path,
+) -> None:
+    """Write stable country-code labels from complete nodes, independent of coordinates."""
+    connection.execute(
+        f"""
+        COPY (
+            SELECT DISTINCT country_code, country_name, macro_region, subregion
+            FROM read_parquet(?)
+            WHERE country_code IS NOT NULL
+              AND country_name IS NOT NULL
+              AND macro_region IS NOT NULL
+              AND subregion IS NOT NULL
+            ORDER BY country_code
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(complete_nodes_path)],
+    )
 
 
 def _timestamp() -> str:

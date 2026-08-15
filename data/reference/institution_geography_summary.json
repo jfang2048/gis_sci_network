@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-08-05T20:55:31.861324Z",
+  "generated_at_utc": "2026-08-06T00:43:03.445181Z",
   "geography_qa_count": 1585,
   "institution_count": 46812,
-  "logical_input_hash": "1043b8524626fc0eaf25d84fb532260abb43923cccc009f7e58c315913e632f8",
+  "logical_input_hash": "f057285eb5f5827cef4b3c9850d596097c13b67240a31de5bf2c7d488540a14a",
   "macro_region_counts": {
     "Africa": 1524,
     "Americas": 13466,

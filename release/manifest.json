@@ -1,20 +1,20 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 90,
-      "size_bytes": 132957
+      "file_count": 91,
+      "size_bytes": 135910
     },
     "config": {
       "file_count": 11,
-      "size_bytes": 150301
+      "size_bytes": 150781
     },
     "dashboard/data": {
-      "file_count": 15,
-      "size_bytes": 6358847
+      "file_count": 17,
+      "size_bytes": 10244692
     },
     "data/reference": {
       "file_count": 39,
-      "size_bytes": 1036713
+      "size_bytes": 1044794
     },
     "figures": {
       "file_count": 3,
@@ -22,10 +22,10 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 127357
+      "size_bytes": 131653
     }
   },
-  "dashboard_table_count": 14,
+  "dashboard_table_count": 16,
   "external_large_data": [
     {
       "name": "OpenAlex data",
@@ -43,57 +43,57 @@
   "files": [
     {
       "path": ".agent/manifests/annual_graph_catalogue.json",
-      "sha256": "76b529c898cfd20dc4ce990bc08f2931d8bbdca6db99ca162a02004d8a542810",
+      "sha256": "67abf033c9c20b7cf712e983317d6c5e99ec7946fe67257ac821b1361354827f",
       "size_bytes": 1284
     },
     {
       "path": ".agent/manifests/annual_trends_summary.json",
-      "sha256": "59ae016e139bdcd9b7c7a28982029ba1557852383356157850bfde7c4c274630",
+      "sha256": "6f990589a7e7083ec8f571298d43886fd2ccdd4660b4a1306ff6fbd4e67884d0",
       "size_bytes": 1094
     },
     {
       "path": ".agent/manifests/collaboration_edges_summary.json",
-      "sha256": "9c4237825f0318f79f0dbcb672cf50f16177df051e695dbb6ff163965539703c",
+      "sha256": "bcce7f7e6b4bcd13d32d1408941ac3c9e500c4813c21a511f1f14b4afa73ebfa",
       "size_bytes": 1362
     },
     {
       "path": ".agent/manifests/collaboration_matrix_summary.json",
-      "sha256": "575b8763a7a823d08b4bf1221f59d7b78a0b73247aeec3623b683047bfccb8a5",
+      "sha256": "b1948fb2ff5844e1988b2989fe22817966a7d53bbb40692c095d66e28625fd9b",
       "size_bytes": 1126
     },
     {
       "path": ".agent/manifests/collaboration_matrix_year.json",
-      "sha256": "3aa47a50d28e4a9c5c3217a4db5eaea47b8d3bcdf2008c6df65651a77d968239",
+      "sha256": "3b0d76b9e8d88cb768adb06a850eafd6a077bc9ef7aafe776035d2cfec1af369",
       "size_bytes": 1317
     },
     {
       "path": ".agent/manifests/communities_year.json",
-      "sha256": "bdc718aee9f19121da07dd97412f43d9d06370e131f8535c001ac054a2539d07",
+      "sha256": "76981bd607a526f94c3e7b1e65ba508e41f3e869f6ec08f3050dfd310e7d21e5",
       "size_bytes": 1230
     },
     {
       "path": ".agent/manifests/community_continuity_summary.json",
-      "sha256": "cbd6b650948a20c2c17df850d626dc96cc6963487401b240fbb9ca9b5319f08c",
+      "sha256": "7d28af8cb65b94b4784d60e3c10a12a5aabdbb40d52f2cedf9214fd214367351",
       "size_bytes": 1242
     },
     {
       "path": ".agent/manifests/community_continuity_year.json",
-      "sha256": "8351f0c075f5552e81732979a5a8db74dc1d2c27c50d83c6be90e3df6ff90b74",
+      "sha256": "21bd463467a0feae16944a97c521275e4961d9de66bab62f6f1d1352aba13f7e",
       "size_bytes": 1232
     },
     {
       "path": ".agent/manifests/community_detection_summary.json",
-      "sha256": "4ddc311a1fb216484d93e172b1156e4a1570a8e75951b9dec0f1e0e9b3a5e9d7",
+      "sha256": "98eabb7a4b572e2003f0874d349b2af0991b7ce6c68aa0709a7c34ea9f44f45c",
       "size_bytes": 1265
     },
     {
       "path": ".agent/manifests/community_sensitivity_year.json",
-      "sha256": "ea23d82e89501b00d57aaae13f55db0f43fa43f8b4a2452d3caa4a29183367a1",
+      "sha256": "1d9eb469ee16c14485a2902882b5df4652cc0b904a4ebbbb9270cfe7c7d56842",
       "size_bytes": 1187
     },
     {
       "path": ".agent/manifests/community_transitions_year.json",
-      "sha256": "c485d45e4c42eba56645815fe5242b6db427eb387707bf8f8f6c1a2015dd2d77",
+      "sha256": "36c287764a4926d777ebe5cbb8ecceef96d9cdcd9a573f5b515731aa71e6a538",
       "size_bytes": 1550
     },
     {
@@ -103,8 +103,8 @@
     },
     {
       "path": ".agent/manifests/corpus_boundary_validation.json",
-      "sha256": "dacc0a0f6ec6ffaeca3cb9f88560bb9208f32769d415e88e355066e32317eb7c",
-      "size_bytes": 1267
+      "sha256": "b57097e4d0f0b6d994bf3cb8cef0f7433d9cdd941763edf204f42691a2fa6df3",
+      "size_bytes": 1335
     },
     {
       "path": ".agent/manifests/corpus_topic_family_counts.json",
@@ -118,18 +118,18 @@
     },
     {
       "path": ".agent/manifests/dashboard_bundle_summary.json",
-      "sha256": "b2527d58bac0e65651b2eb6d5afdfe6a1db80fcea03bcca290102889e5245b17",
-      "size_bytes": 1764
+      "sha256": "455c169f3ee9ea840e43a986db8c16b5da5e86e9481474180e0a593ddb063cb7",
+      "size_bytes": 1804
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "fd30c8df302ad00d2a516c13c7a09f26184a72d0d6a982689d759d92985df9b6",
-      "size_bytes": 1830
+      "sha256": "705057ff613450d2eaadae6f267b2822f0d2c8d09f683b5a2bd8bb52edf7aa08",
+      "size_bytes": 1884
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "46ee3b74102551bbc0a75b421951d5504bd723c6dfdd1bfd6882275732242265",
-      "size_bytes": 1433
+      "sha256": "a40c4b6f4b736e41cfc4b981fd917a7af3b12d8b90515c738033b647dab08119",
+      "size_bytes": 1487
     },
     {
       "path": ".agent/manifests/download_plan.json",
@@ -138,47 +138,47 @@
     },
     {
       "path": ".agent/manifests/edge_arithmetic_validation.json",
-      "sha256": "37be0943b72c0f7437f022879d8a5ada7ba034ab4af212ad4cc2023f1572bb20",
+      "sha256": "a6bc6e3c5beea6b6e02cf6f5d903012b708903bf7b717cbdaa7040b9e2487c7a",
       "size_bytes": 1302
     },
     {
       "path": ".agent/manifests/edge_intensity_summary.json",
-      "sha256": "dbeee1ca005aabf78a0aca6781cc50e607492739373711e3da497bcacdbb97a0",
+      "sha256": "50857306d06677d5e73c08abf572208e94e86dca8bef958dbf1bcd03fb46a98e",
       "size_bytes": 1481
     },
     {
       "path": ".agent/manifests/edge_work_diagnostics.json",
-      "sha256": "2cf76eb7ab5c36930fc1624eed296989cbd890a38998cc0a11a95520b09bb10c",
+      "sha256": "ac3ec8f6a892a1e60700851ec269e4ad9fc69a1dc6e97ef24fe6496095ebc4c0",
       "size_bytes": 1274
     },
     {
       "path": ".agent/manifests/edges_metrics_year.json",
-      "sha256": "82931f402e66b95e60e7648424e6cc8eedee09f853f5f9d6f78de1014660f2a3",
+      "sha256": "bee2f3084adc6f28071ed119bd6ce1c0763ec72df58ec3de804e2e51c0b75625",
       "size_bytes": 2041
     },
     {
       "path": ".agent/manifests/edges_year.json",
-      "sha256": "29091f3d71449262d7762033344dbf0a50e36fb9698ec2df347fabeca743f131",
+      "sha256": "63f445d903a4e2f38bf094daa388b9b962da8f585cb1a0c38bb16342bdcb1bed",
       "size_bytes": 1565
     },
     {
       "path": ".agent/manifests/geographic_map_summary.json",
-      "sha256": "5828a3b5bee569e3b490dbfbe2212af4f8fb4c80de59bad54ca3d5049aea5b57",
+      "sha256": "b2c7220c1d8485426f76ee00769121aa5021735c3eaf925ea6c8e3edb0f6320f",
       "size_bytes": 1378
     },
     {
       "path": ".agent/manifests/graph_metrics_year.json",
-      "sha256": "bbe57fc10d2f2e319f7d4955480ce8c6f08fa4291aa7c71a11e843aa7d9d00c6",
+      "sha256": "1ad9a97ff08c941614d836f7318f6a83f9dd7a1b44123b0bab896ff93e80cf53",
       "size_bytes": 1722
     },
     {
       "path": ".agent/manifests/graph_summary_year.json",
-      "sha256": "ebfa937332068a67e6c74213f4335689b6c405407fa0a85ed670c336a10681fc",
+      "sha256": "dc3ad3cae1183725ffd917e7074cf25e146370edfc991dfccfc1341ed922f3e1",
       "size_bytes": 1495
     },
     {
       "path": ".agent/manifests/institution_canonicalization_audit.json",
-      "sha256": "a79c542fdf2135275dcaf17675d8779802f399fcde7e9b503e415a12e7af690c",
+      "sha256": "8b241751811bd2e927d68e6449a9441ff71d07b5d92cf302cc16bdc5cff0fcdc",
       "size_bytes": 1221
     },
     {
@@ -188,63 +188,68 @@
     },
     {
       "path": ".agent/manifests/institution_geography_qa.json",
-      "sha256": "0b4ed165a131791b07976670eee9d101d3b3274e56f654fd5730cfc564cabdef",
+      "sha256": "d007cb2ef732460b9764adf0edf81b89004103421a32ee75d49f6451f4068c7c",
       "size_bytes": 1206
     },
     {
       "path": ".agent/manifests/institution_geography_summary.json",
-      "sha256": "ff84456463b0b35c161305d6bb4340b2bf9197e59e4ba36186fb9abab4570f28",
+      "sha256": "161ee4fe51ab6ccbf2daa2e9f7dffd994e82d39cee4c755dae23311f0826716d",
       "size_bytes": 1304
     },
     {
       "path": ".agent/manifests/institution_hierarchy.json",
-      "sha256": "331b1a00d36807dc7f66fa26697d2a1b97678c972392c0b1347eee035ba5d7a5",
+      "sha256": "f0cec769846dc591cab61c3be6e18e3ac72d82353d4b56a7aad17a61c76220ee",
       "size_bytes": 1290
     },
     {
       "path": ".agent/manifests/institution_hierarchy_candidates.json",
-      "sha256": "409e810f6ba43049ecbbed5436c80b04e66d41c9032da47c1731c2c0145ce75d",
+      "sha256": "8a32f30e574fdd2c17e749e815e378c3253eb0eda11c5af53a00f371dff3bf75",
       "size_bytes": 1276
     },
     {
       "path": ".agent/manifests/institution_hierarchy_summary.json",
-      "sha256": "3be73504979cf549c4cd237eb410ed0985a81f629bcdcac6283cbedebac3ee9a",
+      "sha256": "4089ef5856168210772f418c3c3f9c0238e90a35f124be94656ef84027efccf3",
       "size_bytes": 1387
     },
     {
       "path": ".agent/manifests/institution_master_summary.json",
-      "sha256": "34b6633c8337de86066c7be670ad6f77b77603114022fd28c0237c346d9d7bbf",
-      "size_bytes": 1444
+      "sha256": "628a7fb0bd993881cc2d684ff6883e161d7ef928e73360a3d6db0e8092241c78",
+      "size_bytes": 1793
     },
     {
       "path": ".agent/manifests/institution_metadata_qa.json",
-      "sha256": "57034f10914a5c1607660ef40c7447fae85549ec2111910dc94b1f5e5710c672",
-      "size_bytes": 1231
+      "sha256": "9e2d5ba7cf70241e7f24fcf7e9a671e7eb4aa1f35b7437d33a36368adad0017a",
+      "size_bytes": 1307
     },
     {
       "path": ".agent/manifests/institution_output_reconciliation.json",
-      "sha256": "0e6aa45bd6f842011f1f502b4fbaff88215be6e11f04c1c6958d42b91b3c5ad2",
+      "sha256": "b3d46bd130fd9643100110964aee515ef8ae92988d5f279bfaab8fc75613e759",
       "size_bytes": 1279
     },
     {
       "path": ".agent/manifests/institution_outputs_summary.json",
-      "sha256": "660358da10b4e495ad77067292c4238a4931a3b99e542acd06a9573f21d7e056",
+      "sha256": "cf7db62433032d3b61be0f03b24f8598dab494bb6c6da6f06744cb9b444282d2",
       "size_bytes": 1271
     },
     {
       "path": ".agent/manifests/institution_outputs_year.json",
-      "sha256": "c1ff17eaa4213d07533431d235aaf28999eaa9ef0a409e21997fe466eb07d779",
-      "size_bytes": 1552
+      "sha256": "294c3bccd2cf60d3e5e81e7defc3a2958b6666890c7d2d7b7df7d85b632b0612",
+      "size_bytes": 1546
     },
     {
       "path": ".agent/manifests/institution_ror_qa.json",
-      "sha256": "4e9c1f63109ec11019e75f8d16e2317e0805d98c9e1c2f8401c674f323ae27a8",
-      "size_bytes": 1170
+      "sha256": "222b49c5e896828134910d579b340d1256de8d3c8d265fb0e4f8f1dca9be27d1",
+      "size_bytes": 1233
     },
     {
       "path": ".agent/manifests/institution_ror_summary.json",
-      "sha256": "4ce5827ad2b07eb2f4c8df08291a48be8b668ac8b86f270617b0e897d306f5e9",
-      "size_bytes": 1323
+      "sha256": "baaaa169d6430ce473a732cc0f74d4f40dc21c523ae793f4f8d7255530c956bb",
+      "size_bytes": 1612
+    },
+    {
+      "path": ".agent/manifests/institution_scope_sensitivity_year.json",
+      "sha256": "43506a4a8902285a75cdf8d1ae4e48e054cde168766e36673ce9c667043fac66",
+      "size_bytes": 1271
     },
     {
       "path": ".agent/manifests/institution_type_profile.json",
@@ -253,93 +258,93 @@
     },
     {
       "path": ".agent/manifests/institutions.json",
-      "sha256": "e8aa134cb528dd86b98a9846c95ee89133047b8be6737a49a5069affe2f71509",
-      "size_bytes": 1707
+      "sha256": "54016ab090d6648c54044bc6330912c7151923b6a1e6a179075742afb4e18959",
+      "size_bytes": 1807
     },
     {
       "path": ".agent/manifests/institutions_geographic.json",
-      "sha256": "b06bbfb86138b3d0538172bbf4c5ca7f38c8065bf4ea980d52d36e949b06c15a",
-      "size_bytes": 1947
+      "sha256": "5e7c44071adff8615ac55c277b17365ae0f035dfee819f075d84d2d3069b8d77",
+      "size_bytes": 1971
     },
     {
       "path": ".agent/manifests/institutions_ror.json",
-      "sha256": "258d15534535819146eaa6d140c3c3b69e62b7bb709fde2dfa46e61205118bb8",
-      "size_bytes": 2377
+      "sha256": "0856bb9e20b825b45a37dd3adb91c37aa1e47deb1c4dca5c859aba265ac4909f",
+      "size_bytes": 2464
     },
     {
       "path": ".agent/manifests/map_coverage_year.json",
-      "sha256": "4f8aa9d09abba4708d733c63735df6a7c7875f4d3349a7ca0b74c1947a36c9e2",
+      "sha256": "f1a6254a4f67f59a18a380a5fb18e3bc25dd3a8baed3e8069f5d24e961d707bb",
       "size_bytes": 1244
     },
     {
       "path": ".agent/manifests/map_edges_year.json",
-      "sha256": "044f388b458e7c66699bcbbed3b1b49891c7134df1c419a98714ec7a834b3d78",
-      "size_bytes": 2193
+      "sha256": "f4c9bce44ab1fb98931a227edd9001105e0c9112a115972e18315844be8ea355",
+      "size_bytes": 2195
     },
     {
       "path": ".agent/manifests/map_nodes_year.json",
-      "sha256": "7def756b5458ffb6eaeac42d788bf81d492f42301d7e5bb3542b3789fec2f413",
-      "size_bytes": 1874
+      "sha256": "1c9efb272d8515a556f6845c99a29cda7fed462a5bd9f1f5c36d5cfb53489e6b",
+      "size_bytes": 1876
     },
     {
       "path": ".agent/manifests/methodology_report.json",
-      "sha256": "2c2adf9d7de0d13d1ba1a81e40599ba949c27b68685c6191902dca9ab666ee24",
+      "sha256": "d275d6816d3cf70304733992f525b66d336f07f58c5150d773a889243ae07b6e",
       "size_bytes": 1696
     },
     {
       "path": ".agent/manifests/methodology_report_summary.json",
-      "sha256": "2aea7e7d235a184929ee2862534d3f1eceb23fe966004eca460f2b9e52e9c0af",
+      "sha256": "5a1d1955b6b4f9c86c2fc0821971ccced41ca281b8ec57287be28eaaa0d970e8",
       "size_bytes": 2121
     },
     {
       "path": ".agent/manifests/network_accessibility_year.json",
-      "sha256": "ba50e60e076be08ba7cd8fc19fd3333b67cc82e988e6104ddd1263c36c6b4845",
+      "sha256": "e361e1b73da730ab011f357fe9201a2489c94e10be93d2b97b7c54c73b0aa9a5",
       "size_bytes": 1320
     },
     {
       "path": ".agent/manifests/network_layout.json",
-      "sha256": "46d5c512f8132a7476fc5a0c197a822f22676932ba0b5e89bc0911fcdda56427",
+      "sha256": "59d1d55cd944c934e29de4258128cba76e9b9fdd3842dbb6d4be9fb4bc0d8f98",
       "size_bytes": 1301
     },
     {
       "path": ".agent/manifests/network_layout_summary.json",
-      "sha256": "5e687b523e00194825fbb4f02363bdde8926d6a6776d12f056c4202e77e015cd",
+      "sha256": "39fc3af5faf221d1397a0a003ea4f661f64834fa93d353083e604a355c891b7c",
       "size_bytes": 1274
     },
     {
       "path": ".agent/manifests/network_metrics_summary.json",
-      "sha256": "eb2696e08e678cf155d304e29ba07b22cfd70ccb31e0ef2ee57b35c4e5f3295e",
+      "sha256": "4cdb54804ca1887787427bad4c254702b018ef144cf30ffc5a16413850ede52c",
       "size_bytes": 1383
     },
     {
       "path": ".agent/manifests/network_view_edges_year.json",
-      "sha256": "228a1723d617464b97a2fe8ebe688776fa46440b1cc40cc681c5c8fa92ccf380",
+      "sha256": "6d36bc286f993a18682137ec8a9dbc2dc8241420727fe761cb7f0d129a95c83c",
       "size_bytes": 2207
     },
     {
       "path": ".agent/manifests/network_view_nodes_year.json",
-      "sha256": "e7da24707bea7954c33390564afb2a0fe5658a553406bf6392122913e942459b",
-      "size_bytes": 2097
+      "sha256": "47ce21a53bfde01a6e9f8b410da00d844b70720d9baeebe4956a2b9a4425df56",
+      "size_bytes": 2089
     },
     {
       "path": ".agent/manifests/network_view_summary.json",
-      "sha256": "943caa9452daf07f3d6466a650115828b47b2ad16e0bdb94f8e8af9a1aae1677",
+      "sha256": "9f107a10ff257f1686d05dd7a79fe4ebaf0ace1b3ed3c6bfcab017074abe1677",
       "size_bytes": 1309
     },
     {
       "path": ".agent/manifests/nodes_year.json",
-      "sha256": "3e0ff1e86951679d2b5bd84d5b77cd5a7c62ce608b6ca4353857ba5ac1ea3ee3",
-      "size_bytes": 1968
+      "sha256": "683fc3249d44ee0c5b1bbcb064939780913449bdae621d7ca290d26d5ee3f67d",
+      "size_bytes": 1962
     },
     {
       "path": ".agent/manifests/pipeline_run_summary.json",
-      "sha256": "ae48d33af939718e0a903c86517efca6c97e617e885ea67f0ab409e9245516f0",
-      "size_bytes": 3885
+      "sha256": "06b56aa8e20f2d796144f8c19eb80028b4f67fab430e6c901f0817e008874124",
+      "size_bytes": 3998
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "f237bcbd02274b30f027a24e09607b5603080a8b9e6eaa4d17dbadd3c5a0c547",
-      "size_bytes": 1433
+      "sha256": "7fd07b0497f6f8ee8a5173e24db303f2065d37171f289a5a06ea3dc68e250f6c",
+      "size_bytes": 1487
     },
     {
       "path": ".agent/manifests/raw_works_download_status.json",
@@ -348,47 +353,47 @@
     },
     {
       "path": ".agent/manifests/region_flow_reconciliation.json",
-      "sha256": "3f1ab3e5816cc57215b27bf4822ee363178f66f6684c860e83b6df2921a7fd70",
+      "sha256": "7161a9bc36875e7e9999fe3480c9b9aa811102545359d04a5a55d89f5ec60b13",
       "size_bytes": 1343
     },
     {
       "path": ".agent/manifests/region_flows_summary.json",
-      "sha256": "d213c90fe29d79632e64c6b89f67798503e5b0441c9988a96af6ea3e87c68d98",
+      "sha256": "003e19974f6fb5112723eb1403bfe1fed2e0c51ee42bd6e23c7d33e18fc2333a",
       "size_bytes": 1271
     },
     {
       "path": ".agent/manifests/region_flows_year.json",
-      "sha256": "8e5f679b418ac81134fd315e6c7af0983c3e65d72035d8aba291e8e4fd24a383",
+      "sha256": "aa65948ab33b9b12fbf2bc19e03ebc9983799f915f5670a97c7a5abcaa30a3ee",
       "size_bytes": 1348
     },
     {
       "path": ".agent/manifests/reproducibility_validation.json",
-      "sha256": "4f2852922e0b36a9402ffee632333bdfa3ff31fe4c87e0bed0bc6eea14d3013e",
+      "sha256": "6008b9f731c14d7f8168a3870206b8d6dbd9a0543eeead273cfdf98e249cf481",
       "size_bytes": 1538
     },
     {
       "path": ".agent/manifests/sensitivity_matrix.json",
-      "sha256": "1088ef63af9daabe541fb7313d195e5335498a624639bbf00d02a9d3dff447cd",
-      "size_bytes": 1254
+      "sha256": "0afd7bdc55d10e6f2749b481364e38e916e4fbe6f6b3f2eb870b3fc1e398044a",
+      "size_bytes": 1341
     },
     {
       "path": ".agent/manifests/sensitivity_summary.json",
-      "sha256": "537783ba993b4cd51e86f5239c5a467c02d8faf3ea57844511b45bfb8e7c3ff6",
-      "size_bytes": 1247
+      "sha256": "afe81595d68a81d9b465aa494daf16a463d9ab476d2b0a2d03ca5a47cbc4c3a5",
+      "size_bytes": 1493
     },
     {
       "path": ".agent/manifests/top_edge_audit.json",
-      "sha256": "44f43f2a46271d79a5c33e1fd82e13df61f291badd55fcca4e9c526d42e28341",
+      "sha256": "4a73cfe65305fb31efd0a0fcfa321a884e1ff80095e0cfc2a43a93a0bd532955",
       "size_bytes": 1756
     },
     {
       "path": ".agent/manifests/top_entity_audit_summary.json",
-      "sha256": "40daa8ef9a6c5345dab72c96c07b361dde1d7196d2ee156e59826cf71c2e1423",
+      "sha256": "9e9e0b0ef77850a804f0796af3ae62cbfa33e3348916bb6a9095384b904df05d",
       "size_bytes": 1215
     },
     {
       "path": ".agent/manifests/top_institution_audit.json",
-      "sha256": "25d84c623490c02e684e93684ba61145d5634380b5cb25478efc26f8f20fa0e6",
+      "sha256": "ee4e6faa45015fe1ae79b67ecda4aa0cdcc11f53895f78f629da9ae5e0e5117b",
       "size_bytes": 1609
     },
     {
@@ -408,7 +413,7 @@
     },
     {
       "path": ".agent/manifests/trend_series_year.json",
-      "sha256": "9824849b0ec56b0e4512ebb53631b5a4afc73a02b269637521ceb3cd8fefa5c4",
+      "sha256": "87608c4f0bcdd289e050dc9e4e394e8b764556fe8ebbe2f4a7735429fa0ff71c",
       "size_bytes": 1257
     },
     {
@@ -433,13 +438,13 @@
     },
     {
       "path": ".agent/manifests/work_edges.json",
-      "sha256": "763808c20f8b21d8a563c08e4618854f6530468eb51bbc35c83efd9e370dabaa",
+      "sha256": "1caf7085ba5ff8c9bbbe033122aeffc6f01d72dac1c2aa46976fc5aac061e867",
       "size_bytes": 1490
     },
     {
       "path": ".agent/manifests/work_institutions.json",
-      "sha256": "81026002554fce265fc1bc55a9b6daf99d882887f2c85b396a1421aaeb19263e",
-      "size_bytes": 2303
+      "sha256": "bcd74103a25972ca8fbc4956e49f597ddf8aa7bf29fd8b8e531d61ceda8f0d31",
+      "size_bytes": 2297
     },
     {
       "path": ".agent/manifests/work_institutions_extracted.json",
@@ -448,7 +453,7 @@
     },
     {
       "path": ".agent/manifests/work_institutions_summary.json",
-      "sha256": "c31cff25671f659448fe7aef0bf91eddebac2ad43ad99208df0887a5d225eb29",
+      "sha256": "3c7b8d46367669538303a8a64f9a1a9258e02581f1d9b2e019a0f97677545b29",
       "size_bytes": 1497
     },
     {
@@ -513,8 +518,8 @@
     },
     {
       "path": "config/known_positive_works.csv",
-      "sha256": "2d932bd8f6f6cc8fcb3e511d33c883cdf35cef10de6844016ae44aefa8a3d195",
-      "size_bytes": 1861
+      "sha256": "67278776d210c19befcb442375238ce398baf74b2aae95e298c3f96cce3b9be2",
+      "size_bytes": 2341
     },
     {
       "path": "config/project.yml",
@@ -557,6 +562,16 @@
       "size_bytes": 478926
     },
     {
+      "path": "dashboard/data/filter_dimensions.parquet",
+      "sha256": "42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1",
+      "size_bytes": 4498
+    },
+    {
+      "path": "dashboard/data/geography_dimensions.parquet",
+      "sha256": "05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08",
+      "size_bytes": 2492
+    },
+    {
       "path": "dashboard/data/graph_metrics.parquet",
       "sha256": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84",
       "size_bytes": 8496
@@ -568,18 +583,18 @@
     },
     {
       "path": "dashboard/data/map_coverage.parquet",
-      "sha256": "80bc2568ca617d73cbfe638ebd44f1f4572b971e41bb6bba532d588aae890ad8",
-      "size_bytes": 3673
+      "sha256": "917e1e7a8a565fd31f9c14e9ee93b6d9352f8ba53155d733e53023354fd0e6f4",
+      "size_bytes": 3653
     },
     {
       "path": "dashboard/data/map_edges.parquet",
-      "sha256": "eda28ccf5f61ecec66dbebee136fe4df6f49a23deb2535658a8d082d79abda84",
-      "size_bytes": 32781
+      "sha256": "d7c0ddf20858284b40b935962b7c1030930fc93f47b5691815b880e836df6c2e",
+      "size_bytes": 1416437
     },
     {
       "path": "dashboard/data/map_nodes.parquet",
-      "sha256": "d35915eb6f3da32a45385d1fb31520794c795778cb5bb536f09a43a89129da96",
-      "size_bytes": 40215
+      "sha256": "353675a124140a3b77d4353adb213417cf453c9d27fd0e4144524188b308e8d5",
+      "size_bytes": 2515364
     },
     {
       "path": "dashboard/data/matrix.parquet",
@@ -588,28 +603,28 @@
     },
     {
       "path": "dashboard/data/metadata.json",
-      "sha256": "46084dfc0627499525751e7874167b179be93094acde828215e5e5ceab30a239",
-      "size_bytes": 3502
+      "sha256": "44ebccbfcec488c3c9b091b77f89e276872ae4c5e3e31e91a50419e83d1b79d1",
+      "size_bytes": 4503
     },
     {
       "path": "dashboard/data/network_accessibility.parquet",
-      "sha256": "b32d69195cd6fcde059ec8cda2f1f710d178fa6a49373afbb5f7068095d7e63b",
-      "size_bytes": 5597
+      "sha256": "233fed187e55bcf3a247b5ade84b6b11a295d3bdc4ae16a9cad934d4fed1bb8b",
+      "size_bytes": 5651
     },
     {
       "path": "dashboard/data/network_edges.parquet",
-      "sha256": "df99f97d19ac5953572ebccb674003beafe91fa386beb3040d125e92a76e863c",
-      "size_bytes": 1688533
+      "sha256": "920878da893802281d54dfd696b1452a764e395db33d49a94ee2085aac2290e4",
+      "size_bytes": 1688698
     },
     {
       "path": "dashboard/data/network_nodes.parquet",
-      "sha256": "1c807568588f2fe7bea2c875c23f1a3dbc8d4e4ee75fa6d9df416ed148d2849b",
-      "size_bytes": 980041
+      "sha256": "9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7",
+      "size_bytes": 998845
     },
     {
       "path": "dashboard/data/sensitivity.parquet",
-      "sha256": "eaeb9a1ef294f9d8bd24331ac80609195207c9a1513ee22179e4e650e4b98257",
-      "size_bytes": 3260
+      "sha256": "b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168",
+      "size_bytes": 3306
     },
     {
       "path": "dashboard/data/topics.parquet",
@@ -623,32 +638,32 @@
     },
     {
       "path": "data/reference/annual_graph_catalogue.json",
-      "sha256": "2562e753389449aa622e75b46b180744085c08c9a6884c24f932fc1b28fd402c",
+      "sha256": "32658adf6b1e69dfba2326ac2d130a3965889a45a45123e748783211767da3d4",
       "size_bytes": 1015
     },
     {
       "path": "data/reference/annual_trends_summary.json",
-      "sha256": "d9bb0f3a932cef16e2a3eb2fe16c4057d1009e58f0167d6050f6187865280f39",
+      "sha256": "118db74a3ef7eb9a87209f01d4443be281d2be5aad98a30e422511d26b4f5bdc",
       "size_bytes": 577
     },
     {
       "path": "data/reference/collaboration_edges_summary.json",
-      "sha256": "183b2bd6d90a41d4fc203d972a5912075695d708f66c82d9395309c49e9ce4ec",
+      "sha256": "cde7f201c14fb57af10b791603725fa258815c22e83bcb368eb96d17e5670229",
       "size_bytes": 885
     },
     {
       "path": "data/reference/collaboration_matrix_summary.json",
-      "sha256": "c2eeba3353badf0b7586a095eff3f9c2630f2904e366ce6e85a0f7e9f1aa35b7",
+      "sha256": "e60b96ecba34c958b083182ad3e8b7be44651791f74821b434c8672fa88fbcce",
       "size_bytes": 709
     },
     {
       "path": "data/reference/community_continuity_summary.json",
-      "sha256": "3359b8b1b2d61c104634e7979964d4a7d0c653eaf122e2ba9ad185a452cdad57",
+      "sha256": "98293f186001028b06e8c8b1d08ddd84a638137bec169864fe58488dec6b78cf",
       "size_bytes": 1184
     },
     {
       "path": "data/reference/community_detection_summary.json",
-      "sha256": "fe37ada77e06013026ee5e3e4186a67c7e2bdbd365381c38db693fdeef00ed5a",
+      "sha256": "73cd65c4227eca7b9501c7bedef645671adb252b87d7b53f9437f02b7b93228e",
       "size_bytes": 658
     },
     {
@@ -658,8 +673,8 @@
     },
     {
       "path": "data/reference/corpus_boundary_validation.json",
-      "sha256": "3945915039a3622ab26cf3bfe6f1a6cc11cd745ddbb442bd2da8573b4b95627d",
-      "size_bytes": 5069
+      "sha256": "4ad6e0fc8497897d746c6b765cccd5d4d5a4769527eeb1bcf646ef69e0428c16",
+      "size_bytes": 5640
     },
     {
       "path": "data/reference/country_regions.csv",
@@ -668,17 +683,17 @@
     },
     {
       "path": "data/reference/dashboard_bundle_summary.json",
-      "sha256": "b0725b8f0433e7b345660b1b6c02f9698e221c63fad248ec7856a489448a629a",
-      "size_bytes": 1846
+      "sha256": "015198bcb072a89d98156c92d33c13ab321e33ecb93f0137001a3fde677f9113",
+      "size_bytes": 2035
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "c33697f536297494f822152fe1557a659ec833616bd82e67ea7d489c65f06104",
-      "size_bytes": 112446
+      "sha256": "1e3f625ee1a8bd2a793a7c8e073fec1cbabd6079041029374fe11bcc19110ed1",
+      "size_bytes": 118775
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "a224a99a6a42b06804a5b33236632d702a6998eaf25b68b878bbf06a13d1058c",
+      "sha256": "61fbfe4ad1a66bf3c3566e7d83689c48a61fd7afe2b769431350588d6969694d",
       "size_bytes": 800
     },
     {
@@ -688,18 +703,18 @@
     },
     {
       "path": "data/reference/edge_arithmetic_validation.json",
-      "sha256": "2847889607b4e5492877765e051cb9b9ed47acd7d544ee78e05abdc8d8863b12",
+      "sha256": "84f618023fb5d57189abd87306ef506a9bb3a3b80dc2a5ec31332014aca3851a",
       "size_bytes": 1000
     },
     {
       "path": "data/reference/edge_intensity_summary.json",
-      "sha256": "1c90a071bc5581c569560ca8a1128537eba3e7d3610be4dfbf9e420a3f5c5c61",
+      "sha256": "2f6bcac65ff04371c082c394697e9eedf201f8f567e24fdbe95aa6aa4dec236d",
       "size_bytes": 787
     },
     {
       "path": "data/reference/geographic_map_summary.json",
-      "sha256": "89190325209bed75ca82052873a80f8d45d12cb28b1a8d66663a826bd4d36ebd",
-      "size_bytes": 910
+      "sha256": "5aac1960e01d436fe27b6bfb5ce565aca1d434edebcea1d746621f1edd56f503",
+      "size_bytes": 888
     },
     {
       "path": "data/reference/institution_extraction_summary.json",
@@ -708,28 +723,28 @@
     },
     {
       "path": "data/reference/institution_geography_summary.json",
-      "sha256": "fa3ca8a90824c2507b8ff809f41bfe388e177a98ba06768fb18862ea0baba55d",
+      "sha256": "d16481828023976846da888ee6d3a1037acdb3c7f32df7f47136ee5701077736",
       "size_bytes": 681
     },
     {
       "path": "data/reference/institution_hierarchy_summary.json",
-      "sha256": "ab3dd0ba7970b04946bd9af84823f11c58fd96fff49a2febe1b751be3e721f18",
+      "sha256": "3ad8524d007e1ebc93cb8ede0a9b47f7a6fb11fbf51f30e63c7151c9cdd75ac9",
       "size_bytes": 730
     },
     {
       "path": "data/reference/institution_master_summary.json",
-      "sha256": "9f0a357c7f7ae9a9638583946dd943a3b06b654c424b29d16339962897885dc7",
-      "size_bytes": 699
+      "sha256": "c9ff4095afe587967b1d5e65a6e8dd675de6e4350ecf41f6dae4b1ec906ebfc0",
+      "size_bytes": 1054
     },
     {
       "path": "data/reference/institution_outputs_summary.json",
-      "sha256": "263fd55f960c03896520bfd3c898ba9e4e3794b9dea7efa4adcb54c83b20b83e",
+      "sha256": "8468f872f4063ac3f6f29e457f8eb424c2ccde84363c1bade3c8ea249c64ae61",
       "size_bytes": 779
     },
     {
       "path": "data/reference/institution_ror_summary.json",
-      "sha256": "7950f588d6ab0e5dc266b4dbf71a7dbbcceafd970db9c697082c107dd4405077",
-      "size_bytes": 776
+      "sha256": "6e1d0eab8982e0181d232895260b48315d7c3b34c2b75ebd3143406da2709124",
+      "size_bytes": 1023
     },
     {
       "path": "data/reference/institution_type_profile.json",
@@ -738,28 +753,28 @@
     },
     {
       "path": "data/reference/methodology_report_summary.json",
-      "sha256": "3be6852c65e5533aeb7978e9617b58d5a31f04f4f29840f2838bd77fa62f3e55",
+      "sha256": "9cd272712b53f62bad6daf4f629357c80b1657d789a3f3fcbf53e6d3b5cda058",
       "size_bytes": 757
     },
     {
       "path": "data/reference/network_layout_summary.json",
-      "sha256": "4a2aabb2448cb970067095c1ccd0778fbcbe993232f7bd96e77a22072392b7fb",
+      "sha256": "1ac2b4e32aec4db811a4fab070403f7014506827005c3bb01275bed21118c896",
       "size_bytes": 761
     },
     {
       "path": "data/reference/network_metrics_summary.json",
-      "sha256": "3830f5cb25c200511307a737964d2dce1ad497e72faa2ef84c908b05b0ba8a10",
-      "size_bytes": 728
+      "sha256": "e39a628df67667922983c75d58d3b14e0db75cf79e89541094c15b87e05f3991",
+      "size_bytes": 729
     },
     {
       "path": "data/reference/network_view_summary.json",
-      "sha256": "26740fed6ac1e32997dbfa2d6b1591dbeeb959b1691edcf715e0d40fd9ed3b9e",
-      "size_bytes": 972
+      "sha256": "97ae6cbbfabf1623aa773073fb7dc3ebc819f494ad2544c696140e9a4f994249",
+      "size_bytes": 1005
     },
     {
       "path": "data/reference/pipeline_run_summary.json",
-      "sha256": "0d41fb1a537dcb0f463445a443cd2da6be40e32a94b7e1a61c3b0ebd29aeb0b5",
-      "size_bytes": 13345
+      "sha256": "27668187774ed2a3769501e61956df5f7ebfbcd5f3b26edbb1efc307721d0f0a",
+      "size_bytes": 13448
     },
     {
       "path": "data/reference/raw_works_download_status.json",
@@ -768,22 +783,22 @@
     },
     {
       "path": "data/reference/region_flows_summary.json",
-      "sha256": "fcd4da1b4174068b9da7e78a241665c68057bd5b823f175d793bf72c7c2f6fc0",
+      "sha256": "be58d6974c8c7ef7beffd84c3684dfab00a193b2f8dc7ea14181a1c67347b364",
       "size_bytes": 653
     },
     {
       "path": "data/reference/reproducibility_validation.json",
-      "sha256": "bec09660fb68233e57bbb1d91bddd6288f97ed34b4cd739d472a2a1ed2c3fb25",
+      "sha256": "d5f6c30b08e14621b09f5b6d26ab0b00235116ff7d26f9ec94b2c1c663e8f86f",
       "size_bytes": 7478
     },
     {
       "path": "data/reference/sensitivity_summary.json",
-      "sha256": "2db08264ddf9ac6d3966c77927413dca65b9ae6574d0efe347ba88c9e61969dd",
-      "size_bytes": 521
+      "sha256": "fe453ff29fa0ce66606015d0243271567ff7b4b90e02a750ac079759c56590d2",
+      "size_bytes": 796
     },
     {
       "path": "data/reference/top_entity_audit_summary.json",
-      "sha256": "885dd0e41cff16ff755e1263fbfba12761101186016ba51a4adb29b45e18d431",
+      "sha256": "5d2125fef5777225f3735cc2961e84ca62a198268ab2f84df2f512748e85d5a0",
       "size_bytes": 604
     },
     {
@@ -798,7 +813,7 @@
     },
     {
       "path": "data/reference/work_institutions_summary.json",
-      "sha256": "7cf44b14c90e27e88c6b3551f4b4c6c80e1e517eb5870709a40299c22438eaf7",
+      "sha256": "f28db707a81706de5fb2fc63d3799578d2e1b98f8c5f8b2fe5fe14085ec04a97",
       "size_bytes": 643
     },
     {
@@ -833,18 +848,18 @@
     },
     {
       "path": "outputs/reports/corpus_boundary_validation.md",
-      "sha256": "cc7c803663ac612bb45fcdb5cd787e35297f267bbdf077b92bd39eb7967d8c38",
-      "size_bytes": 1049
+      "sha256": "0f68b19cbd1bd5f127c56fab1d7e94841341547479d0987ee1cff994f797783c",
+      "size_bytes": 1218
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "31414cd588fcb8183bf4bec3ea0c0919b4e6e16c144a9c8f49d1d2e762d72b05",
-      "size_bytes": 57058
+      "sha256": "8c89f8d21fc9d8d695dcb3b91f49434ea02051763599c14414299bb587218649",
+      "size_bytes": 61182
     },
     {
       "path": "outputs/reports/methodology.md",
-      "sha256": "00c65d4bf9295f063b8e7d4c2ca54933a58c119687ec7ca9523e11e00a4e8b87",
-      "size_bytes": 7801
+      "sha256": "b46867993c1d94db920a14a92f607300e04ff560cb9bde4fbb496a25aa84af99",
+      "size_bytes": 7804
     },
     {
       "path": "outputs/reports/topic_review.md",
@@ -852,11 +867,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-05T23:43:46Z",
+  "generated_at_utc": "2026-08-15T15:29:47Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 162,
-  "public_size_bytes": 7819824,
+  "public_file_count": 165,
+  "public_size_bytes": 11721479,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

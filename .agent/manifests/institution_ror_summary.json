@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "7950f588d6ab0e5dc266b4dbf71a7dbbcceafd970db9c697082c107dd4405077",
-  "column_count": 16,
+  "checksum_sha256": "6e1d0eab8982e0181d232895260b48315d7c3b34c2b75ebd3143406da2709124",
+  "column_count": 22,
   "command": "python -m gisnet.cli enrich-institutions --institutions data/processed/institutions_geographic.parquet --ror-mode cache --max-ror-lookups 0 --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T21:02:09.424752Z",
+  "created_at_utc": "2026-08-06T00:43:06.564301Z",
   "dataset_name": "institution_ror_summary",
-  "git_commit": "0d202a0c53cf",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -15,12 +15,18 @@
     "api_found_count": 0,
     "api_requested_count": 0,
     "conflict_or_missing_qa_count": 0,
+    "coordinate_fallback_count": 0,
+    "coordinate_source_counts": 0,
     "generated_at_utc": 0,
     "institution_count": 0,
     "logical_input_hash": 0,
+    "missing_resolved_coordinate_count": 0,
     "mode": 0,
     "outputs": 0,
+    "partial_resolved_coordinate_count": 0,
     "record_count": 0,
+    "resolved_coordinate_count": 0,
+    "ror_coordinate_count": 0,
     "ror_dump_version": 1,
     "ror_schema_versions": 0,
     "schema_version": 0,
@@ -32,12 +38,13 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T205824Z_0d202a0c53cf",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/institutions_geographic.json"
   ],
   "source_versions": {
+    "institution_ror_policy": "institution-ror-2026-08-06-v2",
     "ror_dump": "not-used",
     "ror_schema": "2.1"
   },

@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "7cf44b14c90e27e88c6b3551f4b4c6c80e1e517eb5870709a40299c22438eaf7",
+  "checksum_sha256": "f28db707a81706de5fb2fc63d3799578d2e1b98f8c5f8b2fe5fe14085ec04a97",
   "column_count": 13,
   "command": "python -m gisnet.cli build-work-institutions --extracted data/processed/work_institutions_extracted.parquet --output data/processed/work_institutions.parquet --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-05T21:21:35.183402Z",
+  "created_at_utc": "2026-08-06T00:44:20.185849Z",
   "dataset_name": "work_institutions_summary",
-  "git_commit": "1fb9bede719e",
+  "git_commit": "568bbdbf6b3f",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -29,7 +29,7 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260805T211514Z_1fb9bede719e",
+  "run_id": "20260806T002306Z_568bbdbf6b3f",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_institutions_extracted.json",

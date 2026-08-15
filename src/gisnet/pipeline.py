@@ -32,6 +32,7 @@ class PipelineStage:
     accepts_common_options: bool = True
     preserves_raw_data: bool = False
     bundle_metadata: Path | None = None
+    policy_versions: tuple[tuple[str, str], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -88,6 +89,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
     PipelineStage(
         "validate-corpus-boundary",
         (_output("corpus_boundary_validation", "data/reference/corpus_boundary_validation.json"),),
+        policy_versions=(("corpus_boundary_policy", "corpus-boundary-2026-08-06-v2"),),
     ),
     PipelineStage(
         "profile-work-types",
@@ -130,6 +132,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
             _output("institutions", "data/processed/institutions.parquet"),
             _output("institution_metadata_qa", "data/processed/institution_metadata_qa.parquet"),
         ),
+        policy_versions=(("institution_master_policy", "institution-master-2026-08-06-v2"),),
     ),
     PipelineStage(
         "apply-geography",
@@ -145,6 +148,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
             _output("institution_ror_qa", "data/processed/institution_ror_qa.parquet"),
         ),
         ("--ror-mode", "cache", "--max-ror-lookups", "0"),
+        policy_versions=(("institution_ror_policy", "institution-ror-2026-08-06-v2"),),
     ),
     PipelineStage(
         "build-hierarchy",
@@ -275,7 +279,15 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
     ),
     PipelineStage(
         "run-sensitivity",
-        (_output("sensitivity_matrix", "data/processed/sensitivity_matrix.parquet"),),
+        (
+            _output("sensitivity_matrix", "data/processed/sensitivity_matrix.parquet"),
+            _output(
+                "institution_scope_sensitivity_year",
+                "data/processed/institution_scope_sensitivity_year.parquet",
+            ),
+            _output("sensitivity_summary", "data/reference/sensitivity_summary.json"),
+        ),
+        policy_versions=(("sensitivity_policy", "required-sensitivity-matrix-2026-08-06-v2"),),
     ),
     PipelineStage(
         "build-figures",
@@ -308,11 +320,13 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
                 "data/processed/network_accessibility_year.parquet",
             ),
         ),
+        policy_versions=(("network_view_policy", "fixed-layout-network-view-2026-08-06-v2"),),
     ),
     PipelineStage(
         "build-dashboard-data",
         (_output("dashboard_bundle_summary", "data/reference/dashboard_bundle_summary.json"),),
         bundle_metadata=Path("dashboard/data/metadata.json"),
+        policy_versions=(("dashboard_bundle_policy", "public-dashboard-bundle-2026-08-15-v5"),),
     ),
 )
 
@@ -348,6 +362,17 @@ def validate_stage(
                 return StageValidation(False, f"config input unavailable: {input_path}: {exc}")
             if current_hash != expected_hash:
                 return StageValidation(False, f"config changed: {input_path}")
+        manifest_versions = manifest.get("source_versions", {})
+        if not isinstance(manifest_versions, dict):
+            return StageValidation(
+                False, f"manifest source_versions are invalid: {output.manifest}"
+            )
+        for key, expected_version in stage.policy_versions:
+            if manifest_versions.get(key) != expected_version:
+                return StageValidation(
+                    False,
+                    f"stage policy changed: {key} expected {expected_version}",
+                )
         try:
             created = _parse_timestamp(manifest["created_at_utc"])
         except (KeyError, TypeError, ValueError):
@@ -487,7 +512,7 @@ def write_pipeline_artifact(
         primary_key=["stage"],
         run_id=run_id,
         config_hashes={"project": config_file_hash(project_config_path)},
-        source_versions={"pipeline_orchestrator": "manifest-aware-pipeline-2026-08-05-v1"},
+        source_versions={"pipeline_orchestrator": "manifest-aware-pipeline-2026-08-06-v2"},
         source_manifests=[
             str(output.manifest) for stage in DEFAULT_STAGES for output in stage.outputs
         ],
