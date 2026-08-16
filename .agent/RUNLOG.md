@@ -1904,3 +1904,118 @@ deprecation warning; Plotly is pinned below 7 and the country mapping remains ex
 
 Primary release tasks are complete. Start an optional GISNET-110+ extension only if explicitly
 requested; otherwise maintain the verified release.
+
+## Run 20260816T222352Z_306db695f048
+
+Started UTC: 2026-08-16T22:23:52Z
+Ended UTC: 2026-08-16T22:44:37Z
+Task: GISNET-095 (visualization quality and anti-slop revision)
+Initial git status: Clean on `main` at `306db69`.
+Final pre-commit status: Verified task changes only; no unrelated user work present.
+
+### Objective
+
+Remove masking and presentation-oriented AI smell while improving the dashboard and static
+scientific figures without changing the frozen evidence base, inventing identifiers, or adding
+dependencies. Lock scientific behavior with regression tests before each cleanup pass.
+
+### Cleanup plan and review separation
+
+1. Lock trend completeness, matrix precision/accessibility, visible-network semantics, and
+   dashboard interaction paths with targeted tests.
+2. Correct scientific semantics and remove masking fallbacks/dead coupling.
+3. Apply one coherent, accessible visual system to the dashboard and publication SVGs.
+4. Regenerate derived artifacts atomically, update documentation, and rebuild the release.
+5. Run an independent read-only diff review, resolve every finding, then execute the full gate.
+
+The implementation pass and independent read-only audit/reviewer passes were kept separate.
+
+### Work completed
+
+- Fixed the canonical region-pair query so the annual figure contains all six required series.
+- Scoped the organization/umbrella equivalence note to the hierarchy comparison only.
+- Preserved fractional matrix labels to three meaningful decimal places instead of rounding them.
+- Recomputed network accessibility prose from the visible filtered graph and selected counting
+  method rather than displaying a precomputed unfiltered sentence.
+- Replaced silent missing-table, legacy-snapshot, and missing-metric substitutions with explicit
+  validation and `N/A`/error states; large datasets now load only on the pages that use them.
+- Consolidated Plotly styling, deterministic color-vision-conscious palettes, line dashes, marker
+  cues, readable hover behavior, and collapsed exact-data tables.
+- Simplified navigation and page hierarchy: automatic mobile sidebar, page-aware advanced
+  controls, compact provisional status, responsive KPI grouping, and audit details moved from the
+  overview to Data quality.
+- Repaired trend legend/tick collisions and matrix clipping; added SVG title/description metadata,
+  view boxes, missing-cell texture, contrast-aware labels, and a labeled scale.
+- Embedded figures in the main README and documented visual encodings in dashboard and
+  methodology documentation.
+- Regenerated trend, matrix, methodology, provenance, and checksum-complete release artifacts.
+
+### Fallback inventory and classification
+
+- Removed: silent empty-table loading, legacy snapshot substitution, and missing scientific values
+  coerced to measured zero. These masked invalid bundle state.
+- Preserved: the deterministic SHA-256 annulus layout fallback required and tested by GISNET-074;
+  it is grounded, reproducible, and not a presentation shortcut.
+- Preserved: `BaseException` temporary-file cleanup paths because they enforce atomic transaction
+  safety rather than hide failures.
+- Preserved: explicit page-local empty-result messages because they disclose filter outcomes.
+
+### Files changed
+
+- Dashboard and theme: `.streamlit/config.toml`, `dashboard/app.py`.
+- Visualization implementation: `src/gisnet/visualization/trends.py`,
+  `src/gisnet/visualization/matrix.py`, `src/gisnet/visualization/network_view.py`,
+  `src/gisnet/cli.py`.
+- Behavior locks: `tests/integration/test_dashboard.py`, `tests/unit/test_trends.py`,
+  `tests/unit/test_matrix.py`, `tests/unit/test_network_view.py`.
+- Documentation: `README.md`, `dashboard/README.md`,
+  `src/gisnet/reporting/methodology.py`, `outputs/reports/methodology.md`.
+- Regenerated figures, reference summaries, dataset manifests, release manifest/checksum, and
+  auditable `.agent` state/backlog/run log.
+
+### Commands executed
+
+- Focused pre-change and post-change Pytest suites for dashboard, trends, matrix, network, layout,
+  methods, map data, and pair explorer behavior.
+- Direct locked regeneration through `build_annual_trends`, `build_collaboration_matrix`, and
+  `build_methodology_report` with their atomic artifact writers.
+- `uv run ruff check ...` and `uv run ruff format --check ...` during focused iterations.
+- `uv run python -m gisnet.release verify` and direct release manifest rebuild/verification.
+- `git diff --check && scripts/quality-gate.sh`.
+
+### Validation results
+
+- Ruff lint: passed. Ruff formatting: passed. Strict project mypy: passed (63 source files).
+- Pytest: all 137 repository tests passed, including the dashboard integration coverage.
+- Release: verified 165 public files (11,730,114 bytes); privacy findings: 0.
+- Static SVGs parse with accessible roles/view boxes; annual output contains all six required
+  regional series; matrix output retains fractional labels.
+- No new dependency, source identifier, measurement, API key, or raw API response was added.
+
+### Data and output hashes
+
+- Annual trend figure: `37a8cfd199c320fab9cc5141b58bb021d5b98593617bc147b2fd9c5a3ae3ab6b`
+- View comparison figure: `d0a75644e639f62bc69837ff00f9689dd69da7c2d05150f8babe45a369a78ed8`
+- Region matrix figure: `c92a9971d5c1438bd66a175b3db47e15dde835a28d4e9b512a36447598a9af15`
+- Methodology report: `55501b890284e98ff1a1b9fe13836324959777b5221258fc641b92a1b8c691ec`
+- Release manifest: `1553f8d4f1a9f4006c1bd2ce17a37dd825b0bcb41257fd80dd248f25e9233b74`
+
+### Failures or blockers
+
+Regression tests intentionally failed before the final corrections for fractional label rounding and
+false hierarchy disclosure, then passed after the fixes. Plotly 6 emits six forward-looking warnings
+for country-name choropleths. The frozen public bundle has no trustworthy ISO-3 field, so country
+names remain explicit rather than fabricating identifiers; Plotly remains pinned below version 7.
+No blocker affects current acceptance.
+
+### Decisions made
+
+- Use explicit missing/error states rather than scientifically false zeros or silent substitutions.
+- Use deterministic color plus dash/shape/texture so color is never the sole visual encoding.
+- Keep complete region/country flows primary and disclose coordinate-limited map link selection.
+- Prefer precise labels and exact collapsed tables over decorative chart density.
+
+### Exact next action
+
+Primary release work is complete. Maintenance may add a validated ISO-3 field before a future
+Plotly 7 upgrade; optional GISNET-110+ extensions remain user-triggered only.

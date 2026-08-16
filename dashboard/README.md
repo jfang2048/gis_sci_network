@@ -36,3 +36,18 @@ collaboration share. Absolute weights and denominators remain visible in details
 Institution-level geographic links are available only as an optional, tightly limited drilldown.
 They use sourced coordinates, report coordinate coverage, and must not be interpreted as a complete
 geographic census when coordinates are missing.
+
+## Reading the visuals
+
+- Macro-regions keep stable colors across views: Europe is blue, Asia amber, the Americas teal,
+  Africa magenta, Oceania sky blue, and unknown/other geography gray.
+- Ordered shares use one Cividis sequential scale. A darker or lighter position on that scale is
+  quantitative; missing matrix cells remain separately labelled and are never imputed as zero.
+- Time-series charts add line dash to color so series remain distinguishable without color alone.
+  The vertical dotted line marks the selected complete year.
+- Network node size uses the metric named beside the chart. Edge width is constant; the selected
+  full or fractional weight controls inclusion rather than width.
+- Geographic institution links and the fixed-layout network are thresholded display subsets. Their
+  absence does not prove that no collaboration exists in the full processed data.
+- Every chart retains exact values in hover text, a companion table, or the Data quality page. The
+  fixed network also provides a text description of the currently rendered filters and encodings.

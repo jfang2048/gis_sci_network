@@ -1,47 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="chart-title chart-description">
+<title id="chart-title">Strict/Broad and organization/umbrella comparison</title>
+<desc id="chart-description">Line chart with 4 series from 2010 through 2025. Line colors and dash patterns distinguish series; all years are complete calendar years.</desc>
 <rect width="100%" height="100%" fill="white"/>
-<text x="100" y="42" font-family="sans-serif" font-size="25" font-weight="700">Strict/Broad and organization/umbrella comparison</text>
-<text x="100" y="72" font-family="sans-serif" font-size="15" fill="#475569">All cross-region pairs · fractional edge weight · complete calendar years</text>
-<line x1="100" y1="620.00" x2="1160" y2="620.00" stroke="#e2e8f0"/>
-<text x="88" y="625.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
-<line x1="100" y1="518.00" x2="1160" y2="518.00" stroke="#e2e8f0"/>
-<text x="88" y="523.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">1,432</text>
-<line x1="100" y1="416.00" x2="1160" y2="416.00" stroke="#e2e8f0"/>
-<text x="88" y="421.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">2,864</text>
-<line x1="100" y1="314.00" x2="1160" y2="314.00" stroke="#e2e8f0"/>
-<text x="88" y="319.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">4,296</text>
-<line x1="100" y1="212.00" x2="1160" y2="212.00" stroke="#e2e8f0"/>
-<text x="88" y="217.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">5,728</text>
-<line x1="100" y1="110.00" x2="1160" y2="110.00" stroke="#e2e8f0"/>
-<text x="88" y="115.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">7,160</text>
-<text x="100.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2010</text>
-<text x="170.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2011</text>
-<text x="241.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2012</text>
-<text x="312.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2013</text>
-<text x="382.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2014</text>
-<text x="453.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2015</text>
-<text x="524.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2016</text>
-<text x="594.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2017</text>
-<text x="665.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2018</text>
-<text x="736.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2019</text>
-<text x="806.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2020</text>
-<text x="877.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2021</text>
-<text x="948.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2022</text>
-<text x="1018.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2023</text>
-<text x="1089.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2024</text>
-<text x="1160.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2025</text>
-<polyline points="100.00,414.91 170.67,393.97 241.33,367.26 312.00,338.11 382.67,307.18 453.33,292.22 524.00,279.09 594.67,259.40 665.33,229.04 736.00,192.83 806.67,185.14 877.33,180.30 948.00,189.35 1018.67,177.21 1089.33,171.15 1160.00,110.00" fill="none" stroke="#2563eb" stroke-width="3"/>
-<line x1="100" y1="682" x2="128" y2="682" stroke="#2563eb" stroke-width="4"/>
-<text x="136" y="687" font-family="sans-serif" font-size="13">broad / organization</text>
-<polyline points="100.00,414.91 170.67,393.97 241.33,367.26 312.00,338.11 382.67,307.18 453.33,292.22 524.00,279.09 594.67,259.40 665.33,229.04 736.00,192.83 806.67,185.14 877.33,180.30 948.00,189.35 1018.67,177.21 1089.33,171.15 1160.00,110.00" fill="none" stroke="#dc2626" stroke-width="3"/>
-<line x1="440" y1="682" x2="468" y2="682" stroke="#dc2626" stroke-width="4"/>
-<text x="476" y="687" font-family="sans-serif" font-size="13">broad / umbrella</text>
-<polyline points="100.00,563.46 170.67,558.28 241.33,555.19 312.00,545.83 382.67,545.65 453.33,540.45 524.00,541.69 594.67,540.99 665.33,539.48 736.00,537.25 806.67,537.14 877.33,541.78 948.00,548.05 1018.67,550.17 1089.33,542.13 1160.00,528.03" fill="none" stroke="#059669" stroke-width="3"/>
-<line x1="780" y1="682" x2="808" y2="682" stroke="#059669" stroke-width="4"/>
-<text x="816" y="687" font-family="sans-serif" font-size="13">strict / organization</text>
-<polyline points="100.00,563.46 170.67,558.28 241.33,555.19 312.00,545.83 382.67,545.65 453.33,540.45 524.00,541.69 594.67,540.99 665.33,539.48 736.00,537.25 806.67,537.14 877.33,541.78 948.00,548.05 1018.67,550.17 1089.33,542.13 1160.00,528.03" fill="none" stroke="#7c3aed" stroke-width="3"/>
-<line x1="100" y1="658" x2="128" y2="658" stroke="#7c3aed" stroke-width="4"/>
-<text x="136" y="663" font-family="sans-serif" font-size="13">strict / umbrella</text>
-<text transform="translate(24 365.0) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Cross-region fractional weight</text>
-<text x="630.0" y="652" text-anchor="middle" font-family="sans-serif" font-size="14">Publication year (complete calendar years only)</text>
+<text x="100" y="40" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="25" font-weight="700">Strict/Broad and organization/umbrella comparison</text>
+<text x="100" y="70" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#475569">All cross-region pairs · fractional edge weight · complete calendar years</text>
+<text x="100" y="96" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="#475569">Organization and umbrella series are identical in this release because no active collapse changes these aggregates.</text>
+<line x1="100" y1="510.00" x2="1152" y2="510.00" stroke="#e2e8f0"/>
+<text x="88" y="515.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">0</text>
+<line x1="100" y1="432.00" x2="1152" y2="432.00" stroke="#e2e8f0"/>
+<text x="88" y="437.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">2,000</text>
+<line x1="100" y1="354.00" x2="1152" y2="354.00" stroke="#e2e8f0"/>
+<text x="88" y="359.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">4,000</text>
+<line x1="100" y1="276.00" x2="1152" y2="276.00" stroke="#e2e8f0"/>
+<text x="88" y="281.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">6,000</text>
+<line x1="100" y1="198.00" x2="1152" y2="198.00" stroke="#e2e8f0"/>
+<text x="88" y="203.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">8,000</text>
+<line x1="100" y1="120.00" x2="1152" y2="120.00" stroke="#e2e8f0"/>
+<text x="88" y="125.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">10,000</text>
+<text x="100.00" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2010</text>
+<text x="240.27" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2012</text>
+<text x="380.53" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2014</text>
+<text x="520.80" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2016</text>
+<text x="661.07" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2018</text>
+<text x="801.33" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2020</text>
+<text x="941.60" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2022</text>
+<text x="1081.87" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2024</text>
+<text x="1152.00" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2025</text>
+<polyline points="100.00,397.70 170.13,386.24 240.27,371.61 310.40,355.65 380.53,338.72 450.67,330.53 520.80,323.34 590.93,312.56 661.07,295.94 731.20,276.11 801.33,271.90 871.47,269.24 941.60,274.20 1011.73,267.55 1081.87,264.24 1152.00,230.75" fill="none" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="230.75" r="4" fill="white" stroke="#0072B2" stroke-width="2"/>
+<line x1="100" y1="628" x2="128" y2="628" stroke="#0072B2" stroke-width="4"/>
+<text x="136" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">broad / organization</text>
+<polyline points="100.00,397.70 170.13,386.24 240.27,371.61 310.40,355.65 380.53,338.72 450.67,330.53 520.80,323.34 590.93,312.56 661.07,295.94 731.20,276.11 801.33,271.90 871.47,269.24 941.60,274.20 1011.73,267.55 1081.87,264.24 1152.00,230.75" fill="none" stroke="#E69F00" stroke-width="3" stroke-dasharray="10 4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="230.75" r="4" fill="white" stroke="#E69F00" stroke-width="2"/>
+<line x1="450" y1="628" x2="478" y2="628" stroke="#E69F00" stroke-width="4" stroke-dasharray="10 4"/>
+<text x="486" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">broad / umbrella</text>
+<polyline points="100.00,479.04 170.13,476.21 240.27,474.52 310.40,469.39 380.53,469.29 450.67,466.44 520.80,467.12 590.93,466.74 661.07,465.91 731.20,464.69 801.33,464.63 871.47,467.17 941.60,470.60 1011.73,471.77 1081.87,467.37 1152.00,459.64" fill="none" stroke="#009E73" stroke-width="3" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="459.64" r="4" fill="white" stroke="#009E73" stroke-width="2"/>
+<line x1="800" y1="628" x2="828" y2="628" stroke="#009E73" stroke-width="4" stroke-dasharray="3 3"/>
+<text x="836" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">strict / organization</text>
+<polyline points="100.00,479.04 170.13,476.21 240.27,474.52 310.40,469.39 380.53,469.29 450.67,466.44 520.80,467.12 590.93,466.74 661.07,465.91 731.20,464.69 801.33,464.63 871.47,467.17 941.60,470.60 1011.73,471.77 1081.87,467.37 1152.00,459.64" fill="none" stroke="#CC79A7" stroke-width="3" stroke-dasharray="10 3 3 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="459.64" r="4" fill="white" stroke="#CC79A7" stroke-width="2"/>
+<line x1="100" y1="656" x2="128" y2="656" stroke="#CC79A7" stroke-width="4" stroke-dasharray="10 3 3 3"/>
+<text x="136" y="661" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">strict / umbrella</text>
+<text transform="translate(24 315.0) rotate(-90)" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Cross-region fractional weight</text>
+<text x="626.0" y="570" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Publication year (complete calendar years only)</text>
 </svg>

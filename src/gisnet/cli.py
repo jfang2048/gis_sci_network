@@ -735,9 +735,6 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_pipeline_arguments(figures)
     figures.add_argument("--flows", default="data/processed/region_flows_year.parquet", type=Path)
-    figures.add_argument(
-        "--graph-metrics", default="data/processed/graph_metrics_year.parquet", type=Path
-    )
     figures.add_argument("--output", default="data/processed/trend_series_year.parquet", type=Path)
     figures.add_argument("--trend-figure", default="figures/annual_region_trends.svg", type=Path)
     figures.add_argument("--comparison-figure", default="figures/view_comparison.svg", type=Path)
@@ -2502,7 +2499,6 @@ def _build_figures(args: argparse.Namespace) -> int:
         with RunLock(run_id=run_id, task_id="GISNET-090"):
             summary = build_annual_trends(
                 args.flows,
-                args.graph_metrics,
                 output_path=args.output,
                 trend_figure_path=args.trend_figure,
                 comparison_figure_path=args.comparison_figure,

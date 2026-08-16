@@ -1,7 +1,9 @@
-"""Runtime smoke tests for every public dashboard page."""
+"""Runtime and semantic smoke tests for every public dashboard page."""
 
+import json
 from pathlib import Path
 
+import pandas as pd
 import pytest
 from streamlit.testing.v1 import AppTest
 
@@ -13,6 +15,10 @@ def _sidebar_controls(app: AppTest) -> dict[str, object]:
         *app.sidebar.radio,
     ]
     return {control.label: control for control in controls if control.label != "Page"}
+
+
+def _plot_specs(app: AppTest) -> list[dict[str, object]]:
+    return [json.loads(element.proto.spec) for element in app.get("plotly_chart")]
 
 
 @pytest.mark.integration
@@ -102,7 +108,10 @@ def test_public_dashboard_pages_and_global_filters() -> None:
         assert {
             label for label, control in controls.items() if not control.disabled
         } == enabled_by_page[page]
-        assert any("corpus boundary remain provisional" in warning.value for warning in app.warning)
+        assert any(
+            "Provisional corpus boundary" in warning.value and "human review" in warning.value
+            for warning in app.warning
+        )
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
     page_widget.set_value("Geographic map")
@@ -139,3 +148,58 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     app = app.run(timeout=30)
     assert not app.exception
     assert any("zero active collapse rules" in warning.value for warning in app.warning)
+
+
+@pytest.mark.integration
+def test_visual_pages_keep_scientific_encodings_and_consistent_interaction() -> None:
+    app_path = Path(__file__).resolve().parents[2] / "dashboard" / "app.py"
+    app = AppTest.from_file(app_path, default_timeout=30).run()
+    overview = _plot_specs(app)
+    assert len(overview) == 1
+    assert overview[0]["layout"]["yaxis"]["range"] == [0, 1]
+    assert overview[0]["layout"]["hovermode"] == "x unified"
+
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Region trends")
+    app = app.run(timeout=30)
+    region_specs = _plot_specs(app)
+    assert len(region_specs) == 2
+    assert region_specs[0]["layout"]["hovermode"] == "x unified"
+    assert any(trace["type"] == "heatmap" for trace in region_specs[1]["data"])
+
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Institutional network")
+    app = app.run(timeout=30)
+    network_spec = _plot_specs(app)[0]
+    assert network_spec["layout"]["xaxis"]["visible"] is False
+    assert network_spec["layout"]["yaxis"]["scaleanchor"] == "x"
+    assert any("visible core institutions" in info.value for info in app.info)
+
+
+@pytest.mark.integration
+def test_institution_explorer_renders_an_observed_pair() -> None:
+    root = Path(__file__).resolve().parents[2]
+    edges = pd.read_parquet(root / "dashboard/data/network_edges.parquet")
+    row = edges.loc[
+        (edges["corpus_view"] == "broad") & (edges["hierarchy_view"] == "organization")
+    ].iloc[0]
+
+    app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Institution explorer")
+    app = app.run(timeout=30)
+
+    institution_a = next(widget for widget in app.selectbox if widget.label == "Institution A")
+    institution_b = next(widget for widget in app.selectbox if widget.label == "Institution B")
+    institution_a.set_value(str(row["source_id"]))
+    institution_b.set_value(str(row["target_id"]))
+    app = app.run(timeout=30)
+
+    assert not app.exception
+    specs = _plot_specs(app)
+    assert len(specs) == 1
+    assert {trace["name"] for trace in specs[0]["data"]} == {
+        "Full count",
+        "Fractional count",
+    }
+    assert len(app.dataframe) >= 3

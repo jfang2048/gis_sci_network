@@ -248,6 +248,35 @@ def _accessibility_sentence(row: dict[str, Any]) -> str:
     )
 
 
+def visible_accessibility_sentence(
+    *,
+    year: int,
+    corpus_view: str,
+    hierarchy_view: str,
+    node_count: int,
+    edge_count: int,
+    cross_region_edge_count: int,
+    counting_method: str,
+    minimum_weight: float | None,
+    size_metric: str,
+    color_metric: str,
+) -> str:
+    """Describe the rendered network rather than the unfiltered source snapshot."""
+    weight_name = counting_method.casefold()
+    weight_text = f"{minimum_weight:.4g}" if minimum_weight is not None else "not applicable"
+    size_name = size_metric.replace("_", "-")
+    color_name = color_metric.replace("_", "-")
+    return (
+        f"In {year}, the {corpus_view} corpus at the {hierarchy_view} hierarchy shows "
+        f"{node_count:,} visible core institutions and {edge_count:,} visible edges after the "
+        f"current filters. Of these, {cross_region_edge_count:,} cross macro-regions. Edges use "
+        "constant "
+        f"display width; {weight_name} weight controls inclusion, and the minimum visible "
+        f"{weight_name} edge weight is {weight_text}; node size encodes {size_name}; node color "
+        f"encodes {color_name}."
+    )
+
+
 def write_network_view_artifacts(
     summary: dict[str, Any],
     *,

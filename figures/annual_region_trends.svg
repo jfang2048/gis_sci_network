@@ -1,47 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="chart-title chart-description">
+<title id="chart-title">Annual regional GIS collaboration, 2010-2025</title>
+<desc id="chart-description">Line chart with 6 series from 2010 through 2025. Line colors and dash patterns distinguish series; all years are complete calendar years.</desc>
 <rect width="100%" height="100%" fill="white"/>
-<text x="100" y="42" font-family="sans-serif" font-size="25" font-weight="700">Annual regional GIS collaboration, 2010-2025</text>
-<text x="100" y="72" font-family="sans-serif" font-size="15" fill="#475569">Broad corpus · organization hierarchy · fractional edge weight · complete years</text>
-<line x1="100" y1="620.00" x2="1160" y2="620.00" stroke="#e2e8f0"/>
-<text x="88" y="625.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
-<line x1="100" y1="518.00" x2="1160" y2="518.00" stroke="#e2e8f0"/>
-<text x="88" y="523.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">5,083</text>
-<line x1="100" y1="416.00" x2="1160" y2="416.00" stroke="#e2e8f0"/>
-<text x="88" y="421.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">10,166</text>
-<line x1="100" y1="314.00" x2="1160" y2="314.00" stroke="#e2e8f0"/>
-<text x="88" y="319.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">15,249</text>
-<line x1="100" y1="212.00" x2="1160" y2="212.00" stroke="#e2e8f0"/>
-<text x="88" y="217.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">20,332</text>
-<line x1="100" y1="110.00" x2="1160" y2="110.00" stroke="#e2e8f0"/>
-<text x="88" y="115.00" text-anchor="end" font-family="sans-serif" font-size="12" fill="#64748b">25,415</text>
-<text x="100.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2010</text>
-<text x="170.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2011</text>
-<text x="241.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2012</text>
-<text x="312.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2013</text>
-<text x="382.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2014</text>
-<text x="453.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2015</text>
-<text x="524.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2016</text>
-<text x="594.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2017</text>
-<text x="665.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2018</text>
-<text x="736.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2019</text>
-<text x="806.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2020</text>
-<text x="877.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2021</text>
-<text x="948.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2022</text>
-<text x="1018.67" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2023</text>
-<text x="1089.33" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2024</text>
-<text x="1160.00" y="648" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#475569">2025</text>
-<polyline points="100.00,554.06 170.67,551.87 241.33,547.62 312.00,548.04 382.67,545.09 453.33,541.06 524.00,538.61 594.67,537.21 665.33,531.83 736.00,528.06 806.67,521.04 877.33,523.00 948.00,526.49 1018.67,526.36 1089.33,532.45 1160.00,526.53" fill="none" stroke="#2563eb" stroke-width="3"/>
-<line x1="100" y1="682" x2="128" y2="682" stroke="#2563eb" stroke-width="4"/>
-<text x="136" y="687" font-family="sans-serif" font-size="13">Americas — Americas</text>
-<polyline points="100.00,598.46 170.67,597.16 241.33,593.72 312.00,589.82 382.67,586.57 453.33,584.62 524.00,582.84 594.67,581.91 665.33,578.16 736.00,572.97 806.67,573.86 877.33,574.94 948.00,577.31 1018.67,578.78 1089.33,577.08 1160.00,571.30" fill="none" stroke="#dc2626" stroke-width="3"/>
-<line x1="440" y1="682" x2="468" y2="682" stroke="#dc2626" stroke-width="4"/>
-<text x="476" y="687" font-family="sans-serif" font-size="13">Americas — Asia</text>
-<polyline points="100.00,514.59 170.67,509.35 241.33,504.65 312.00,496.36 382.67,481.51 453.33,479.25 524.00,461.77 594.67,452.85 665.33,420.68 736.00,382.22 806.67,370.34 877.33,323.92 948.00,263.83 1018.67,227.55 1089.33,204.31 1160.00,110.00" fill="none" stroke="#059669" stroke-width="3"/>
-<line x1="780" y1="682" x2="808" y2="682" stroke="#059669" stroke-width="4"/>
-<text x="816" y="687" font-family="sans-serif" font-size="13">Asia — Asia</text>
-<polyline points="100.00,526.34 170.67,517.28 241.33,508.88 312.00,504.20 382.67,489.19 453.33,482.06 524.00,477.69 594.67,475.40 665.33,467.43 736.00,455.02 806.67,459.80 877.33,451.16 948.00,454.42 1018.67,452.05 1089.33,464.33 1160.00,460.11" fill="none" stroke="#7c3aed" stroke-width="3"/>
-<line x1="100" y1="658" x2="128" y2="658" stroke="#7c3aed" stroke-width="4"/>
-<text x="136" y="663" font-family="sans-serif" font-size="13">Europe — Europe</text>
-<text transform="translate(24 365.0) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="14">Fractional collaboration weight</text>
-<text x="630.0" y="652" text-anchor="middle" font-family="sans-serif" font-size="14">Publication year (complete calendar years only)</text>
+<text x="100" y="40" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="25" font-weight="700">Annual regional GIS collaboration, 2010-2025</text>
+<text x="100" y="70" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#475569">Broad corpus · organization hierarchy · fractional edge weight · complete years</text>
+<line x1="100" y1="510.00" x2="1152" y2="510.00" stroke="#e2e8f0"/>
+<text x="88" y="515.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">0</text>
+<line x1="100" y1="432.00" x2="1152" y2="432.00" stroke="#e2e8f0"/>
+<text x="88" y="437.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">10,000</text>
+<line x1="100" y1="354.00" x2="1152" y2="354.00" stroke="#e2e8f0"/>
+<text x="88" y="359.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">20,000</text>
+<line x1="100" y1="276.00" x2="1152" y2="276.00" stroke="#e2e8f0"/>
+<text x="88" y="281.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">30,000</text>
+<line x1="100" y1="198.00" x2="1152" y2="198.00" stroke="#e2e8f0"/>
+<text x="88" y="203.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">40,000</text>
+<line x1="100" y1="120.00" x2="1152" y2="120.00" stroke="#e2e8f0"/>
+<text x="88" y="125.00" text-anchor="end" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">50,000</text>
+<text x="100.00" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2010</text>
+<text x="240.27" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2012</text>
+<text x="380.53" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2014</text>
+<text x="520.80" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2016</text>
+<text x="661.07" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2018</text>
+<text x="801.33" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2020</text>
+<text x="941.60" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2022</text>
+<text x="1081.87" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2024</text>
+<text x="1152.00" y="538" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#475569">2025</text>
+<polyline points="100.00,484.37 170.13,483.52 240.27,481.87 310.40,482.03 380.53,480.88 450.67,479.31 520.80,478.36 590.93,477.82 661.07,475.73 731.20,474.26 801.33,471.53 871.47,472.30 941.60,473.65 1011.73,473.60 1081.87,475.97 1152.00,473.67" fill="none" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="473.67" r="4" fill="white" stroke="#0072B2" stroke-width="2"/>
+<line x1="100" y1="628" x2="128" y2="628" stroke="#0072B2" stroke-width="4"/>
+<text x="136" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Americas — Americas</text>
+<polyline points="100.00,501.63 170.13,501.12 240.27,499.78 310.40,498.27 380.53,497.01 450.67,496.25 520.80,495.56 590.93,495.20 661.07,493.74 731.20,491.72 801.33,492.06 871.47,492.49 941.60,493.41 1011.73,493.98 1081.87,493.32 1152.00,491.07" fill="none" stroke="#E69F00" stroke-width="3" stroke-dasharray="10 4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="491.07" r="4" fill="white" stroke="#E69F00" stroke-width="2"/>
+<line x1="450" y1="628" x2="478" y2="628" stroke="#E69F00" stroke-width="4" stroke-dasharray="10 4"/>
+<text x="486" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Americas — Asia</text>
+<polyline points="100.00,501.14 170.13,500.43 240.27,499.69 310.40,499.54 380.53,498.65 450.67,498.11 520.80,498.16 590.93,497.63 661.07,497.79 731.20,496.80 801.33,497.06 871.47,497.45 941.60,498.55 1011.73,497.68 1081.87,498.59 1152.00,497.29" fill="none" stroke="#009E73" stroke-width="3" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="497.29" r="4" fill="white" stroke="#009E73" stroke-width="2"/>
+<line x1="800" y1="628" x2="828" y2="628" stroke="#009E73" stroke-width="4" stroke-dasharray="3 3"/>
+<text x="836" y="633" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Americas — Europe</text>
+<polyline points="100.00,469.03 170.13,466.99 240.27,465.16 310.40,461.94 380.53,456.17 450.67,455.29 520.80,448.50 590.93,445.03 661.07,432.52 731.20,417.57 801.33,412.95 871.47,394.91 941.60,371.56 1011.73,357.45 1081.87,348.42 1152.00,311.76" fill="none" stroke="#CC79A7" stroke-width="3" stroke-dasharray="10 3 3 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="311.76" r="4" fill="white" stroke="#CC79A7" stroke-width="2"/>
+<line x1="100" y1="656" x2="128" y2="656" stroke="#CC79A7" stroke-width="4" stroke-dasharray="10 3 3 3"/>
+<text x="136" y="661" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Asia — Asia</text>
+<polyline points="100.00,504.77 170.13,503.70 240.27,502.85 310.40,501.32 380.53,500.09 450.67,499.75 520.80,498.95 590.93,497.68 661.07,495.66 731.20,494.70 801.33,493.25 871.47,491.92 941.60,490.89 1011.73,489.85 1081.87,488.94 1152.00,485.79" fill="none" stroke="#56B4E9" stroke-width="3" stroke-dasharray="6 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="485.79" r="4" fill="white" stroke="#56B4E9" stroke-width="2"/>
+<line x1="450" y1="656" x2="478" y2="656" stroke="#56B4E9" stroke-width="4" stroke-dasharray="6 3"/>
+<text x="486" y="661" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Asia — Europe</text>
+<polyline points="100.00,473.59 170.13,470.07 240.27,466.81 310.40,464.99 380.53,459.15 450.67,456.38 520.80,454.68 590.93,453.79 661.07,450.69 731.20,445.87 801.33,447.73 871.47,444.37 941.60,445.64 1011.73,444.72 1081.87,449.49 1152.00,447.85" fill="none" stroke="#6B7280" stroke-width="3" stroke-dasharray="2 3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1152.00" cy="447.85" r="4" fill="white" stroke="#6B7280" stroke-width="2"/>
+<line x1="800" y1="656" x2="828" y2="656" stroke="#6B7280" stroke-width="4" stroke-dasharray="2 3"/>
+<text x="836" y="661" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Europe — Europe</text>
+<text transform="translate(24 315.0) rotate(-90)" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Fractional collaboration weight</text>
+<text x="626.0" y="570" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Publication year (complete calendar years only)</text>
 </svg>

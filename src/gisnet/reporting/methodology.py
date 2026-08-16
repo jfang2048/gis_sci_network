@@ -12,7 +12,7 @@ from gisnet.config import config_file_hash, load_yaml, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "methodology-report-2026-08-05-v1"
+_STAGE_VERSION = "methodology-report-2026-08-17-v2"
 
 SUMMARY_PATHS: dict[str, Path] = {
     "corpus": Path("data/reference/work_corpus_summary.json"),
@@ -252,6 +252,12 @@ command on failure. Generated static figures are:
 - `figures/view_comparison.svg`, derived from `data/processed/trend_series_year.parquet`;
 - `figures/region_matrix.svg`, derived from
   `data/processed/collaboration_matrix_year.parquet`.
+
+Visual encodings are stable across the dashboard and static figures. Macro-regions use a fixed,
+color-vision-conscious categorical palette; time series also use dash patterns so color is not the
+only cue. Share matrices and maps use one ordered Cividis scale. Missing cells remain distinct from
+observed zero, network edge width stays constant, and exact values remain available in hover text,
+accessible descriptions, or companion tables.
 
 All reported figures are generated from processed data. The trend summary covers
 {trends["trend_row_count"]} rows and reports `partial_years_included =

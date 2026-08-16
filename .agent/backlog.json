@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-15T15:31:07Z",
+  "last_updated_utc": "2026-08-16T22:44:37Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1241,13 +1241,34 @@
           "reason": "Completed and validated the eight-page processed-data-only Streamlit dashboard, all ten global filters, the compact public snapshot, and one-command launch path.",
           "run_id": "20260805T225409Z_7d66d92f0419",
           "to": "DONE"
+        },
+        {
+          "changed_at_utc": "2026-08-16T22:23:52Z",
+          "from": "DONE",
+          "reason": "New user-requested visualization quality and anti-slop requirements invalidate the prior dashboard presentation acceptance.",
+          "run_id": "20260816T222352Z_306db695f048",
+          "to": "STALE"
+        },
+        {
+          "changed_at_utc": "2026-08-16T22:23:52Z",
+          "from": "STALE",
+          "reason": "Starting a regression-locked visualization semantics, accessibility, and presentation cleanup.",
+          "run_id": "20260816T222352Z_306db695f048",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-16T22:44:37Z",
+          "from": "IN_PROGRESS",
+          "reason": "Completed the regression-locked scientific visualization cleanup: corrected all six regional series, made filtered accessibility summaries truthful, removed masking dashboard fallbacks, unified accessible encodings, repaired SVG layout and precision, and passed the full quality and release gates.",
+          "run_id": "20260816T222352Z_306db695f048",
+          "to": "DONE"
         }
       ],
       "id": "GISNET-095",
       "priority": "P1",
       "status": "DONE",
-      "status_reason": "Completed and validated the eight-page processed-data-only Streamlit dashboard, all ten global filters, the compact public snapshot, and one-command launch path.",
-      "status_updated_at_utc": "2026-08-05T23:04:33Z"
+      "status_reason": "Completed the regression-locked scientific visualization cleanup: corrected all six regional series, made filtered accessibility summaries truthful, removed masking dashboard fallbacks, unified accessible encodings, repaired SVG layout and precision, and passed the full quality and release gates.",
+      "status_updated_at_utc": "2026-08-16T22:44:37Z"
     },
     {
       "dependencies": [

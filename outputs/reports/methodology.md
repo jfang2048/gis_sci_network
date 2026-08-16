@@ -130,6 +130,12 @@ command on failure. Generated static figures are:
 - `figures/region_matrix.svg`, derived from
   `data/processed/collaboration_matrix_year.parquet`.
 
+Visual encodings are stable across the dashboard and static figures. Macro-regions use a fixed,
+color-vision-conscious categorical palette; time series also use dash patterns so color is not the
+only cue. Share matrices and maps use one ordered Cividis scale. Missing cells remain distinct from
+observed zero, network edge width stays constant, and exact values remain available in hover text,
+accessible descriptions, or companion tables.
+
 All reported figures are generated from processed data. The trend summary covers
 384 rows and reports `partial_years_included =
 false`; matrix reconciliation failures are

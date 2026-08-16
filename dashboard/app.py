@@ -17,6 +17,7 @@ from gisnet.visualization.dashboard_filters import (
     local_collaboration_profile,
     partner_share_view,
 )
+from gisnet.visualization.network_view import visible_accessibility_sentence
 from gisnet.visualization.pair_explorer import (
     build_pair_timeline,
     identity_rows,
@@ -35,12 +36,93 @@ PAGES = (
     "Methods and limitations",
     "Data quality",
 )
+PAGE_DETAILS = {
+    "Overview": (
+        "A global view of GIS collaboration",
+        "Scale, structure, and regional orientation in the selected complete year.",
+    ),
+    "Region trends": (
+        "Regional collaboration over time",
+        "Partner composition and exact region flows across complete calendar years.",
+    ),
+    "Geographic map": (
+        "Where collaboration stays local",
+        "Complete region and country flows first; sourced institution coordinates second.",
+    ),
+    "Institutional network": (
+        "The institutional collaboration core",
+        "A fixed layout for comparing structure without year-to-year position changes.",
+    ),
+    "Institution explorer": (
+        "Trace one institutional partnership",
+        "Counts, intensity, persistence, Topic families, and stable identities over time.",
+    ),
+    "Topic-family comparison": (
+        "How methodological families connect institutions",
+        "Annual collaboration weight within the thresholded fixed-layout core.",
+    ),
+    "Methods and limitations": (
+        "How to read these results",
+        "Definitions, interpretation boundaries, provisional decisions, and geographic "
+        "conventions.",
+    ),
+    "Data quality": (
+        "Evidence behind the snapshot",
+        "Sensitivity, coverage, continuity, versions, and integrity metadata.",
+    ),
+}
+
+REGION_COLORS = {
+    "Europe": "#0072B2",
+    "Asia": "#E69F00",
+    "Americas": "#009E73",
+    "Africa": "#CC79A7",
+    "Oceania": "#56B4E9",
+    "Other": "#6B7280",
+    "Unknown": "#6B7280",
+}
+CATEGORY_COLORS = (
+    "#0072B2",
+    "#E69F00",
+    "#009E73",
+    "#CC79A7",
+    "#56B4E9",
+    "#D55E00",
+    "#332288",
+    "#88CCEE",
+    "#44AA99",
+    "#999933",
+    "#882255",
+    "#661100",
+    "#6699CC",
+)
+SHARE_SCALE = px.colors.sequential.Cividis
+PLOT_CONFIG = {
+    "displaylogo": False,
+    "responsive": True,
+    "modeBarButtonsToRemove": ["lasso2d", "select2d"],
+}
+HUMAN_LABELS = {
+    "fractional_strength": "Fractional strength",
+    "macro_region": "Macro-region",
+    "community_id": "Annual community",
+    "continuity_id": "Continuity community",
+    "pagerank": "PageRank",
+    "work_count": "Works",
+    "full_count": "Full count",
+    "fractional_count": "Fractional count",
+    "normalized_intensity": "Normalized intensity",
+    "persistence_3y": "Persistence (3y)",
+    "persistence_5y": "Persistence (5y)",
+    "topic_families": "Topic families",
+    "work_ids_sample": "Supporting Work IDs",
+}
 
 st.set_page_config(
     page_title="GIS Scientific Collaboration Network",
     page_icon="🌐",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 
@@ -49,7 +131,8 @@ def load_metadata() -> dict[str, object]:
     path = DATA / "metadata.json"
     if not path.is_file():
         return {}
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    return value if isinstance(value, dict) else {}
 
 
 @st.cache_resource(show_spinner=False)
@@ -58,6 +141,25 @@ def load_table(name: str) -> pd.DataFrame:
     if not path.is_file():
         return pd.DataFrame()
     return pd.read_parquet(path)
+
+
+def require_table(name: str, *, columns: set[str] | None = None) -> pd.DataFrame:
+    """Load a required snapshot table and fail explicitly when its contract is incomplete."""
+    frame = load_table(name)
+    if frame.empty:
+        st.error(
+            f"The dashboard snapshot is incomplete: `{name}.parquet` is missing or empty. "
+            "Rebuild the processed dashboard bundle."
+        )
+        st.stop()
+    missing = sorted((columns or set()).difference(frame.columns))
+    if missing:
+        st.error(
+            f"The dashboard snapshot is incompatible: `{name}.parquet` lacks "
+            f"{', '.join(missing)}. Rebuild the processed dashboard bundle."
+        )
+        st.stop()
+    return frame
 
 
 def filtered_view(frame: pd.DataFrame, year: int, corpus: str, hierarchy: str) -> pd.DataFrame:
@@ -75,10 +177,90 @@ def show_empty(message: str) -> None:
     st.info(f"No data match this filter combination. {message}")
 
 
-def metric_value(row: pd.Series | None, column: str, default: float = 0.0) -> float:
+def metric_text(row: pd.Series | None, column: str, format_spec: str) -> str:
     if row is None or column not in row or pd.isna(row[column]):
-        return default
-    return float(row[column])
+        return "N/A"
+    return format(float(row[column]), format_spec)
+
+
+def human_label(value: object) -> str:
+    text = str(value)
+    return HUMAN_LABELS.get(text, text.replace("_", " ").capitalize())
+
+
+def category_color_map(values: pd.Series) -> dict[object, str]:
+    labels = sorted(values.dropna().unique(), key=lambda value: str(value))
+    return {
+        label: CATEGORY_COLORS[index % len(CATEGORY_COLORS)] for index, label in enumerate(labels)
+    }
+
+
+def comparison_color_map(values: pd.Series) -> dict[str, str]:
+    labels = sorted(str(value) for value in values.dropna().unique())
+    return {
+        label: REGION_COLORS.get(label.split(" → ", maxsplit=1)[0], CATEGORY_COLORS[index])
+        for index, label in enumerate(labels)
+    }
+
+
+def style_figure(
+    figure: go.Figure,
+    *,
+    height: int = 460,
+    time_series: bool = False,
+    cartesian: bool = True,
+) -> go.Figure:
+    figure.update_layout(
+        template="plotly_white",
+        colorway=list(CATEGORY_COLORS),
+        height=height,
+        margin={"l": 24, "r": 24, "t": 64, "b": 36},
+        font={"color": "#0F172A", "size": 13},
+        title={"font": {"size": 19}, "x": 0.0, "xanchor": "left"},
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "left",
+            "x": 0,
+            "title": None,
+        },
+        hoverlabel={"bgcolor": "white", "font": {"color": "#0F172A"}},
+        hovermode="x unified" if time_series else "closest",
+    )
+    if cartesian:
+        figure.update_xaxes(showgrid=False, linecolor="#CBD5E1", tickfont={"color": "#475569"})
+        figure.update_yaxes(
+            showgrid=True,
+            gridcolor="#E2E8F0",
+            zeroline=False,
+            linecolor="#CBD5E1",
+            tickfont={"color": "#475569"},
+        )
+    return figure
+
+
+def show_chart(
+    figure: go.Figure,
+    *,
+    height: int = 460,
+    time_series: bool = False,
+    cartesian: bool = True,
+) -> None:
+    st.plotly_chart(
+        style_figure(figure, height=height, time_series=time_series, cartesian=cartesian),
+        width="stretch",
+        config=PLOT_CONFIG,
+    )
+
+
+def show_data(frame: pd.DataFrame, *, columns: list[str] | None = None) -> None:
+    view = frame.loc[:, columns].copy() if columns is not None else frame.copy()
+    st.dataframe(
+        view.rename(columns={column: human_label(column) for column in view.columns}),
+        width="stretch",
+        hide_index=True,
+    )
 
 
 def region_comparison_rows(
@@ -121,33 +303,47 @@ if not metadata:
         "`uv run python -m gisnet.cli build-dashboard-data --resume`."
     )
     st.stop()
-
-map_nodes = load_table("map_nodes")
-map_edges = load_table("map_edges")
-graph_metrics = load_table("graph_metrics")
-topics = load_table("topics")
-trends = load_table("trends")
-filter_dimensions = load_table("filter_dimensions")
-if filter_dimensions.empty:
-    # Older public snapshots predate the complete filter-dimension table. The fixed-layout
-    # core is still substantially less coordinate-biased than the map-node fallback.
-    filter_dimensions = load_table("network_nodes")
-institution_identities = load_table("institution_identities")
-geography_dimensions = load_table("geography_dimensions")
-if geography_dimensions.empty and not map_nodes.empty:
-    geography_dimensions = map_nodes[
-        ["country_code", "country_name", "macro_region", "subregion"]
-    ].drop_duplicates()
-
-if graph_metrics.empty:
-    st.error("The dashboard snapshot is incomplete: graph metrics are unavailable.")
+missing_metadata = sorted(
+    {"data_version", "methods_version", "tables", "active_umbrella_collapse_count"}.difference(
+        metadata
+    )
+)
+if missing_metadata or not isinstance(metadata["tables"], dict):
+    st.error(
+        "The dashboard metadata contract is incomplete. Missing or invalid fields: "
+        f"{', '.join(missing_metadata) if missing_metadata else 'tables'}. Rebuild the bundle."
+    )
     st.stop()
+
+graph_metrics = require_table("graph_metrics", columns={"year", "corpus_view", "hierarchy_view"})
+topics = require_table("topics", columns={"year", "corpus_view", "hierarchy_view", "topic_family"})
+trends = require_table(
+    "trends",
+    columns={
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_region",
+        "target_region",
+        "region_pair",
+    },
+)
+filter_dimensions = require_table(
+    "filter_dimensions",
+    columns={
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "dimension",
+        "value",
+    },
+)
 
 years = sorted(int(value) for value in graph_metrics["year"].dropna().unique())
 corpora = sorted(str(value) for value in graph_metrics["corpus_view"].dropna().unique())
 hierarchies = sorted(str(value) for value in graph_metrics["hierarchy_view"].dropna().unique())
 
-st.sidebar.title("GIS Network")
+st.sidebar.title("GIS collaboration")
 page = st.sidebar.selectbox("Page", PAGES)
 st.sidebar.subheader("Global filters")
 year = st.sidebar.select_slider(
@@ -199,59 +395,57 @@ region_pair = st.sidebar.selectbox(
     disabled=not control_is_enabled(page, "Macro-region pair"),
     help="This control is disabled when it does not affect the selected page.",
 )
-country = st.sidebar.selectbox(
-    "Country",
-    ("All", *countries),
-    disabled=not control_is_enabled(page, "Country"),
-    help="This control is disabled when it does not affect the selected page.",
-)
-subregion = st.sidebar.selectbox(
-    "Subregion",
-    ("All", *subregions),
-    disabled=not control_is_enabled(page, "Subregion"),
-    help="This control is disabled when it does not affect the selected page.",
-)
-institution_type = st.sidebar.selectbox(
-    "Institution type",
-    ("All", *institution_types),
-    disabled=not control_is_enabled(page, "Institution type"),
-    help="This control is disabled when it does not affect the selected page.",
-)
-topic_family = st.sidebar.selectbox(
-    "Topic family",
-    ("All", *topic_families),
-    disabled=not control_is_enabled(page, "Topic family"),
-    help="This control is disabled when it does not affect the selected page.",
-)
-consortium_policy = st.sidebar.selectbox(
-    "Consortium policy",
-    ("Primary configured policy", "Exclude warning-size consortium edges"),
-    disabled=not control_is_enabled(page, "Consortium policy"),
-    help="This control is disabled when it does not affect the selected page.",
-)
-st.sidebar.divider()
-st.sidebar.caption(f"Data: {metadata.get('data_version', 'unknown')}")
-st.sidebar.caption(f"Methods: {metadata.get('methods_version', 'unknown')}")
-st.sidebar.caption("Local processed snapshot; ordinary viewing makes no OpenAlex requests.")
-
-st.title("Dynamic GIS Scientific Collaboration Network")
-st.caption(
-    "Institutional co-authorship across Europe, Asia, and the Americas · 2010-2025 complete years"
-)
-st.warning(
-    "Scientific review warning: the Topic registry and corpus boundary remain provisional until "
-    "the required human review is completed. No AI-generated judgment is treated as human review."
-)
-metadata_collapse_count = metadata.get("active_umbrella_collapse_count")
-active_collapse_count = (
-    int(metadata_collapse_count)
-    if isinstance(metadata_collapse_count, int | float)
-    else (
-        int(institution_identities["is_collapsed"].fillna(False).astype(bool).sum())
-        if "is_collapsed" in institution_identities.columns
-        else 0
+with st.sidebar.expander(
+    "Geographic and content filters",
+    expanded=page in {"Geographic map", "Institutional network"},
+):
+    country = st.selectbox(
+        "Country",
+        ("All", *countries),
+        disabled=not control_is_enabled(page, "Country"),
+        help="This control is disabled when it does not affect the selected page.",
     )
+    subregion = st.selectbox(
+        "Subregion",
+        ("All", *subregions),
+        disabled=not control_is_enabled(page, "Subregion"),
+        help="This control is disabled when it does not affect the selected page.",
+    )
+    institution_type = st.selectbox(
+        "Institution type",
+        ("All", *institution_types),
+        disabled=not control_is_enabled(page, "Institution type"),
+        help="This control is disabled when it does not affect the selected page.",
+    )
+    topic_family = st.selectbox(
+        "Topic family",
+        ("All", *topic_families),
+        disabled=not control_is_enabled(page, "Topic family"),
+        help="This control is disabled when it does not affect the selected page.",
+    )
+    consortium_policy = st.selectbox(
+        "Consortium policy",
+        ("Primary configured policy", "Exclude warning-size consortium edges"),
+        disabled=not control_is_enabled(page, "Consortium policy"),
+        help="This control is disabled when it does not affect the selected page.",
+    )
+st.sidebar.divider()
+st.sidebar.caption(f"Data: {metadata['data_version']}")
+st.sidebar.caption(f"Methods: {metadata['methods_version']}")
+st.sidebar.caption("Local processed snapshot; ordinary viewing makes no OpenAlex requests.")
+st.sidebar.warning(
+    "Provisional corpus boundary · human review pending. See Methods and limitations."
 )
+
+page_title, page_description = PAGE_DETAILS[page]
+st.caption("GIS COLLABORATION NETWORK · PROCESSED SNAPSHOT · 2010-2025 COMPLETE YEARS")
+st.title(page_title)
+st.caption(page_description)
+metadata_collapse_count = metadata.get("active_umbrella_collapse_count")
+if not isinstance(metadata_collapse_count, int | float):
+    st.error("The dashboard metadata lacks a numeric umbrella-collapse count. Rebuild the bundle.")
+    st.stop()
+active_collapse_count = int(metadata_collapse_count)
 if (
     control_is_enabled(page, "Hierarchy view")
     and hierarchy == "umbrella"
@@ -265,17 +459,17 @@ if (
 weight_column = "fractional_count" if counting == "Fractional" else "full_count"
 
 if page == "Overview":
-    st.header("Overview")
     current = filtered_view(graph_metrics, year, corpus, hierarchy)
     row = current.iloc[0] if not current.empty else None
-    columns = st.columns(5)
-    columns[0].metric("Institutions", f"{int(metric_value(row, 'node_count')):,}")
-    columns[1].metric("Edges", f"{int(metric_value(row, 'edge_count')):,}")
-    columns[2].metric("Density", f"{metric_value(row, 'density'):.4f}")
-    columns[3].metric("Modularity", f"{metric_value(row, 'modularity'):.3f}")
-    columns[4].metric(
+    primary_metrics = st.columns(3)
+    primary_metrics[0].metric("Institutions", metric_text(row, "node_count", ",.0f"))
+    primary_metrics[1].metric("Edges", metric_text(row, "edge_count", ",.0f"))
+    primary_metrics[2].metric("Density", metric_text(row, "density", ".4f"))
+    secondary_metrics = st.columns(2)
+    secondary_metrics[0].metric("Modularity", metric_text(row, "modularity", ".3f"))
+    secondary_metrics[1].metric(
         "Largest component",
-        f"{metric_value(row, 'largest_connected_component_share'):.1%}",
+        metric_text(row, "largest_connected_component_share", ".1%"),
     )
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
@@ -293,7 +487,8 @@ if page == "Overview":
             x="year",
             y="partner_share",
             color="comparison",
-            markers=True,
+            line_dash="comparison",
+            color_discrete_map=comparison_color_map(comparison["comparison"]),
             title=f"Regional partner share over time — {counting.lower()} counting",
             labels={
                 "partner_share": "Share of collaboration endpoints",
@@ -301,31 +496,21 @@ if page == "Overview":
                 "comparison": "Region / direction",
             },
         )
-        figure.add_vline(x=year, line_dash="dot", line_color="#0f172a")
+        figure.update_traces(line={"width": 2.6})
+        figure.add_vline(x=year, line_dash="dot", line_color="#64748B")
         figure.update_yaxes(tickformat=".0%", range=[0, 1])
-        st.plotly_chart(figure, width="stretch")
+        show_chart(figure, time_series=True)
         st.caption(
             "Shares use collaboration endpoints, so an internal link contributes two local "
             "endpoints while a cross-region link contributes one endpoint to each region."
         )
-    st.subheader("What this snapshot contains")
-    table_rows = metadata.get("tables", {})
-    if isinstance(table_rows, dict):
-        st.dataframe(
-            pd.DataFrame(
-                [
-                    {"table": name, "rows": info.get("row_count"), "sha256": info.get("sha256")}
-                    for name, info in table_rows.items()
-                    if isinstance(info, dict)
-                ]
-            ),
-            width="stretch",
-            hide_index=True,
-        )
+    st.info(
+        "Read shares as collaboration composition, not productivity or causal impact. "
+        "Exact values, checksums, and limitations are available on Data quality."
+    )
 
 elif page == "Region trends":
-    matrix = load_table("matrix")
-    st.header("Region trends and collaboration matrix")
+    matrix = require_table("matrix")
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
     ].copy()
@@ -342,16 +527,18 @@ elif page == "Region trends":
             x="year",
             y="partner_share",
             color="comparison",
-            markers=True,
+            line_dash="comparison",
+            color_discrete_map=comparison_color_map(comparison["comparison"]),
             title=f"Regional collaboration composition — {counting.lower()} counting",
             labels={
                 "partner_share": "Share of collaboration endpoints",
                 "comparison": "Region / direction",
             },
         )
-        figure.add_vline(x=year, line_dash="dot")
+        figure.update_traces(line={"width": 2.6})
+        figure.add_vline(x=year, line_dash="dot", line_color="#64748B")
         figure.update_yaxes(tickformat=".0%", range=[0, 1])
-        st.plotly_chart(figure, width="stretch")
+        show_chart(figure, time_series=True)
         st.caption(
             "The default compares within-region proportions, not absolute collaboration totals. "
             "Select a cross-region pair to compare each direction against its own region total."
@@ -362,17 +549,17 @@ elif page == "Region trends":
         show_empty("No matrix is available for this year and view.")
     else:
         partner_cells = partner_share_view(cells, weight_column=weight_column)
-        labels = sorted(
+        matrix_labels = sorted(
             set(partner_cells["source_geography"]) | set(partner_cells["target_geography"])
         )
-        grid = pd.DataFrame(index=labels, columns=labels, dtype=float)
+        grid = pd.DataFrame(index=matrix_labels, columns=matrix_labels, dtype=float)
         for _, cell in partner_cells.iterrows():
             value = float(cell["partner_share"])
             grid.loc[cell["source_geography"], cell["target_geography"]] = value
         figure = px.imshow(
             grid,
             text_auto=".1%",
-            color_continuous_scale="Blues",
+            color_continuous_scale=SHARE_SCALE,
             zmin=0,
             zmax=1,
             title=f"{year} partner-share matrix — {counting.lower()} counting",
@@ -382,14 +569,15 @@ elif page == "Region trends":
                 "color": "Endpoint share",
             },
         )
-        st.plotly_chart(figure, width="stretch")
+        show_chart(figure)
         st.caption(
             "Each source-region row sums to 100%. Diagonal cells are within-region shares; "
             "blank cells are missing/no observed flow, not imputed zeros."
         )
-        st.dataframe(
-            partner_cells[
-                [
+        with st.expander("View exact matrix data"):
+            show_data(
+                partner_cells,
+                columns=[
                     "source_geography",
                     "target_geography",
                     "full_count",
@@ -397,17 +585,19 @@ elif page == "Region trends":
                     "endpoint_weight",
                     "total_endpoint_weight",
                     "partner_share",
-                ]
-            ],
-            width="stretch",
-            hide_index=True,
-        )
+                ],
+            )
 
 elif page == "Geographic map":
-    map_coverage = load_table("map_coverage")
-    matrix = load_table("matrix")
+    map_nodes = require_table("map_nodes")
+    map_edges = require_table("map_edges")
+    map_coverage = require_table("map_coverage")
+    geography_dimensions = require_table(
+        "geography_dimensions",
+        columns={"country_code", "country_name", "macro_region", "subregion"},
+    )
+    matrix = require_table("matrix")
     current_matrix = filtered_view(matrix, year, corpus, hierarchy)
-    st.header("Geographic collaboration patterns")
     st.caption(
         "The primary views below use the complete country and region flow tables, not the sparse "
         "institution-coordinate subset. Color and bar length represent proportions rather than "
@@ -431,6 +621,7 @@ elif page == "Geographic map":
             x="geography",
             y="local_collaboration_share",
             color="geography",
+            color_discrete_map=REGION_COLORS,
             text="local_collaboration_share",
             title=f"{year} local partner share — {counting.lower()} counting",
             labels={
@@ -440,21 +631,19 @@ elif page == "Geographic map":
         )
         macro_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
         macro_figure.update_yaxes(tickformat=".0%", range=[0, 1])
-        macro_figure.update_layout(showlegend=False, height=420)
-        st.plotly_chart(macro_figure, width="stretch")
-        st.dataframe(
-            macro_profile[
-                [
+        macro_figure.update_layout(showlegend=False)
+        show_chart(macro_figure, height=400)
+        with st.expander("View exact macro-region data"):
+            show_data(
+                macro_profile,
+                columns=[
                     "geography",
                     "local_collaboration_share",
                     "local_collaboration_weight",
                     "external_endpoint_weight",
                     "total_endpoint_weight",
-                ]
-            ],
-            width="stretch",
-            hide_index=True,
-        )
+                ],
+            )
 
     country_profile = local_collaboration_profile(
         current_matrix,
@@ -487,7 +676,7 @@ elif page == "Geographic map":
             locationmode="country names",
             color="local_collaboration_share",
             range_color=(0, 1),
-            color_continuous_scale="Viridis",
+            color_continuous_scale=SHARE_SCALE,
             hover_name="country_name",
             hover_data={
                 "country_name": False,
@@ -514,8 +703,7 @@ elif page == "Geographic map":
             landcolor="#f8fafc",
         )
         country_figure.update_coloraxes(colorbar_tickformat=".0%")
-        country_figure.update_layout(height=600, margin={"l": 0, "r": 0, "t": 55, "b": 0})
-        st.plotly_chart(country_figure, width="stretch")
+        show_chart(country_figure, height=540, cartesian=False)
 
     if country != "All" and not geography_dimensions.empty:
         country_matches = geography_dimensions.loc[
@@ -561,8 +749,8 @@ elif page == "Geographic map":
             )
             partner_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
             partner_figure.update_xaxes(tickformat=".0%", range=[0, 1])
-            partner_figure.update_layout(height=500)
-            st.plotly_chart(partner_figure, width="stretch")
+            partner_figure.update_traces(marker_color="#0072B2")
+            show_chart(partner_figure, height=440)
             if len(partner_rows) > len(top_partners):
                 st.caption(
                     "The chart shows the 15 largest shares; the full partner row sums to 100%."
@@ -677,7 +865,7 @@ elif page == "Geographic map":
                         ),
                         mode="markers",
                         marker={
-                            "size": 6,
+                            "size": 8,
                             "color": "#64748b",
                             "opacity": 0.55,
                             "line": {"width": 0.4, "color": "white"},
@@ -696,8 +884,8 @@ elif page == "Geographic map":
                     ),
                     mode="markers",
                     marker={
-                        "size": 8,
-                        "color": "#dc2626",
+                        "size": 10,
+                        "color": "#0072B2",
                         "line": {"width": 0.5, "color": "white"},
                     },
                     name="Institutions matching node filters",
@@ -709,20 +897,18 @@ elif page == "Geographic map":
                 showcountries=True,
                 projection_type="natural earth",
             )
-            institution_figure.update_layout(height=650, margin={"l": 0, "r": 0, "t": 20, "b": 0})
-            st.plotly_chart(institution_figure, width="stretch")
+            show_chart(institution_figure, height=560, cartesian=False)
             st.caption(
                 f"Showing {len(visible_edges)} links ranked by {counting.lower()} weight; "
-                "line width "
-                "is relative within this displayed subset and is not comparable across filters."
+                "the released map subset was first capped by the non-primary visualization "
+                "score. Line width is relative within this displayed subset and is not "
+                "comparable across filters."
             )
 
 elif page == "Institutional network":
-    network_nodes = load_table("network_nodes")
-    network_edges = load_table("network_edges")
-    network_accessibility = load_table("network_accessibility")
-    community_continuity = load_table("community_continuity")
-    st.header("Fixed-layout institutional network")
+    network_nodes = require_table("network_nodes")
+    network_edges = require_table("network_edges")
+    community_continuity = require_table("community_continuity")
     nodes = filtered_view(network_nodes, year, corpus, hierarchy)
     edges = filtered_view(network_edges, year, corpus, hierarchy)
     continuity = filtered_view(community_continuity, year, corpus, hierarchy).rename(
@@ -743,17 +929,21 @@ elif page == "Institutional network":
     if topic_family != "All":
         edges = edges.loc[edges["topic_families"].apply(lambda values: topic_family in values)]
     if region_pair != "All":
-        canonical = region_pair.replace(" — ", " — ")
         pairs = edges.apply(
             lambda row: " — ".join(sorted((row["source_region"], row["target_region"]))), axis=1
         )
-        edges = edges.loc[pairs == canonical]
+        edges = edges.loc[pairs == region_pair]
     if consortium_policy.startswith("Exclude"):
         edges = edges.loc[edges["large_consortium_work_count"] == 0]
     available_metrics = ("work_count", "degree", "fractional_strength", "pagerank")
-    size_metric = st.selectbox("Node-size metric", available_metrics, index=2)
+    size_metric = st.selectbox(
+        "Node-size metric", available_metrics, index=2, format_func=human_label
+    )
     color_metric = st.radio(
-        "Node color", ("macro_region", "community_id", "continuity_id"), horizontal=True
+        "Node color",
+        ("macro_region", "community_id", "continuity_id"),
+        horizontal=True,
+        format_func=human_label,
     )
     minimum = float(edges[weight_column].quantile(0.5)) if not edges.empty else 0.0
     minimum_weight = st.number_input(
@@ -786,6 +976,11 @@ elif page == "Institutional network":
                 )
             )
         maximum_size = max(float(nodes[size_metric].max()), 1e-12)
+        color_map = (
+            REGION_COLORS
+            if color_metric == "macro_region"
+            else category_color_map(nodes[color_metric])
+        )
         for category, group in nodes.groupby(color_metric, dropna=False):
             sizes = 7 + 23 * (group[size_metric].astype(float) / maximum_size) ** 0.5
             figure.add_trace(
@@ -799,6 +994,7 @@ elif page == "Institutional network":
                     marker={
                         "size": sizes,
                         "opacity": 0.82,
+                        "color": color_map.get(category, "#6B7280"),
                         "line": {"width": 0.4, "color": "white"},
                     },
                     hovertemplate=(
@@ -809,38 +1005,60 @@ elif page == "Institutional network":
                 )
             )
         figure.update_layout(
-            height=700,
             xaxis={"visible": False},
             yaxis={"visible": False, "scaleanchor": "x", "scaleratio": 1},
             margin={"l": 0, "r": 0, "t": 15, "b": 0},
             legend_title=color_metric,
         )
-        st.plotly_chart(figure, width="stretch")
+        show_chart(figure, height=620)
         st.caption(
-            f"Node size = {size_metric}; node color = {color_metric}; edge width is constant. "
+            f"Node size = {human_label(size_metric)}; node color = {human_label(color_metric)}; "
+            "edge width is constant. "
             f"The {counting.lower()} collaboration weight controls edge inclusion, with visible "
             f"minimum {minimum_weight:.4g}."
         )
-    summary = filtered_view(network_accessibility, year, corpus, hierarchy)
-    if not summary.empty:
-        st.info(summary.iloc[0]["summary_text"])
+        st.info(
+            visible_accessibility_sentence(
+                year=year,
+                corpus_view=corpus,
+                hierarchy_view=hierarchy,
+                node_count=len(nodes),
+                edge_count=len(edges),
+                cross_region_edge_count=int(
+                    (edges["source_region"] != edges["target_region"]).sum()
+                ),
+                counting_method=counting,
+                minimum_weight=(float(edges[weight_column].min()) if not edges.empty else None),
+                size_metric=size_metric,
+                color_metric=human_label(color_metric).casefold(),
+            )
+        )
 
 elif page == "Institution explorer":
-    network_edges = load_table("network_edges")
-    st.header("Institution-pair explorer")
+    network_edges = require_table("network_edges")
+    institution_identities = require_table("institution_identities")
     pair_data = network_edges.loc[
         (network_edges["corpus_view"] == corpus) & (network_edges["hierarchy_view"] == hierarchy)
     ].copy()
-    labels = institution_labels(pair_data)
-    ordered_ids = sorted(labels, key=lambda identifier: (labels[identifier].casefold(), identifier))
+    institution_names = institution_labels(pair_data)
+    ordered_ids = sorted(
+        institution_names,
+        key=lambda identifier: (institution_names[identifier].casefold(), identifier),
+    )
     if len(ordered_ids) < 2:
         show_empty("No institution pairs are available in this view.")
     else:
         left, right = st.columns(2)
-        institution_a = left.selectbox("Institution A", ordered_ids, format_func=labels.get)
-        institution_b = right.selectbox(
-            "Institution B", ordered_ids, index=min(1, len(ordered_ids) - 1), format_func=labels.get
+        institution_a = left.selectbox(
+            "Institution A", ordered_ids, format_func=institution_names.get
         )
+        institution_b = right.selectbox(
+            "Institution B",
+            ordered_ids,
+            index=min(1, len(ordered_ids) - 1),
+            format_func=institution_names.get,
+        )
+        pair = pd.DataFrame()
         if institution_a == institution_b:
             show_empty("Choose two different stable institution IDs.")
         else:
@@ -855,7 +1073,11 @@ elif page == "Institution explorer":
             figure = go.Figure()
             figure.add_trace(
                 go.Scatter(
-                    x=pair["year"], y=pair["full_count"], name="Full count", mode="lines+markers"
+                    x=pair["year"],
+                    y=pair["full_count"],
+                    name="Full count",
+                    mode="lines",
+                    line={"color": "#0072B2", "width": 2.6},
                 )
             )
             figure.add_trace(
@@ -863,17 +1085,19 @@ elif page == "Institution explorer":
                     x=pair["year"],
                     y=pair["fractional_count"],
                     name="Fractional count",
-                    mode="lines+markers",
+                    mode="lines",
+                    line={"color": "#E69F00", "dash": "dash", "width": 2.6},
                 )
             )
             figure.update_layout(
-                title=f"{labels[institution_a]} ↔ {labels[institution_b]}",
+                title=f"{institution_names[institution_a]} ↔ {institution_names[institution_b]}",
                 yaxis_title="Collaboration weight",
             )
-            st.plotly_chart(figure, width="stretch")
-            st.dataframe(
-                pair[
-                    [
+            show_chart(figure, time_series=True)
+            with st.expander("View annual partnership data"):
+                show_data(
+                    pair,
+                    columns=[
                         "year",
                         "full_count",
                         "fractional_count",
@@ -882,19 +1106,16 @@ elif page == "Institution explorer":
                         "persistence_5y",
                         "topic_families",
                         "work_ids_sample",
-                    ]
-                ],
-                width="stretch",
-                hide_index=True,
-            )
+                    ],
+                )
             st.caption(
                 "Stable institution IDs are shown in brackets; missing years use zero counts "
                 "and missing intensity/persistence."
             )
         st.subheader("Organization and umbrella identities")
         for selected_id, selected_label in (
-            (institution_a, labels[institution_a]),
-            (institution_b, labels[institution_b]),
+            (institution_a, institution_names[institution_a]),
+            (institution_b, institution_names[institution_b]),
         ):
             st.markdown(f"**{selected_label}**")
             identities = identity_rows(
@@ -903,10 +1124,9 @@ elif page == "Institution explorer":
             if identities.empty:
                 st.caption("No released hierarchy mapping is available for this ID.")
             else:
-                st.dataframe(identities, width="stretch", hide_index=True)
+                show_data(identities)
 
 elif page == "Topic-family comparison":
-    st.header("Topic-family comparison")
     view = topics.loc[
         (topics["corpus_view"] == corpus) & (topics["hierarchy_view"] == hierarchy)
     ].copy()
@@ -922,18 +1142,22 @@ elif page == "Topic-family comparison":
             x="year",
             y=weight_column,
             color="topic_family",
-            markers=True,
-            labels={weight_column: f"{counting} visible-core edge weight"},
+            line_dash="topic_family",
+            color_discrete_map=category_color_map(view["topic_family"]),
+            labels={
+                weight_column: f"{counting} visible-core edge weight",
+                "topic_family": "Topic family",
+            },
         )
-        figure.add_vline(x=year, line_dash="dot")
-        st.plotly_chart(figure, width="stretch")
+        figure.update_traces(line={"width": 2.4})
+        figure.add_vline(x=year, line_dash="dot", line_color="#64748B")
+        show_chart(figure, time_series=True)
         st.caption(
             "Topic-family comparison covers the thresholded fixed-layout core, "
             "not all stored edges."
         )
 
 elif page == "Methods and limitations":
-    st.header("Methods and limitations")
     st.markdown(
         """
 ### Primary analysis
@@ -951,7 +1175,8 @@ elif page == "Methods and limitations":
 ### Interpretation boundaries
 - The visualization score is **non-primary** and only ranks edges for display.
 - Map coordinates are shown only when sourced; no missing coordinate is guessed or imputed.
-- Topic classifications are provisional and have not received human review.
+- Topic classifications are provisional and have not received human review; no automated
+  judgment is presented as human review.
 - Collaboration is co-authorship, not citation flow, knowledge flow, or research similarity.
 - Missing matrix cells mean no observed flow in the sparse table; they are not silently
   replaced by zero.
@@ -970,33 +1195,29 @@ labels do not express a political position.
             st.write(f"- {limitation}")
 
 elif page == "Data quality":
-    sensitivity = load_table("sensitivity")
-    map_coverage = load_table("map_coverage")
-    community_continuity = load_table("community_continuity")
-    community_transitions = load_table("community_transitions")
-    st.header("Data quality and sensitivity")
+    sensitivity = require_table("sensitivity")
+    map_coverage = require_table("map_coverage")
+    community_continuity = require_table("community_continuity")
+    community_transitions = require_table("community_transitions")
     st.subheader("Required sensitivity matrix")
-    st.dataframe(
-        sensitivity[
-            [
-                "comparison_id",
-                "comparison",
-                "baseline_label",
-                "alternative_label",
-                "absolute_relative_change",
-                "major_change",
-                "status",
-            ]
+    show_data(
+        sensitivity,
+        columns=[
+            "comparison_id",
+            "comparison",
+            "baseline_label",
+            "alternative_label",
+            "absolute_relative_change",
+            "major_change",
+            "status",
         ],
-        width="stretch",
-        hide_index=True,
     )
     st.subheader("Coordinate coverage")
     coverage = filtered_view(map_coverage, year, corpus, hierarchy)
     if coverage.empty:
         show_empty("No coverage row exists for this view.")
     else:
-        st.dataframe(coverage, width="stretch", hide_index=True)
+        show_data(coverage)
     st.subheader("Community continuity")
     continuity_view = filtered_view(community_continuity, year, corpus, hierarchy)
     transition_view = community_transitions.loc[
@@ -1012,17 +1233,24 @@ elif page == "Data quality":
         columns[1].metric("Uncertain matches", int(continuity_view["low_overlap_uncertain"].sum()))
         columns[2].metric("Transition events", len(transition_view))
         if not transition_view.empty:
-            st.dataframe(
-                transition_view["event_type"]
-                .value_counts()
-                .rename_axis("event_type")
-                .reset_index(),
-                width="stretch",
-                hide_index=True,
+            show_data(
+                transition_view["event_type"].value_counts().rename_axis("event_type").reset_index()
             )
         st.caption(
             "Continuity uses deterministic adjacent-year Jaccard assignment; "
             "selected matches below 0.25 are explicitly uncertain."
         )
     st.subheader("Version and integrity metadata")
-    st.json(metadata)
+    table_rows = metadata.get("tables", {})
+    if isinstance(table_rows, dict):
+        inventory = pd.DataFrame(
+            [
+                {"table": name, "rows": info.get("row_count"), "sha256": info.get("sha256")}
+                for name, info in table_rows.items()
+                if isinstance(info, dict)
+            ]
+        )
+        with st.expander("Snapshot table inventory"):
+            show_data(inventory)
+    with st.expander("Raw machine-readable metadata"):
+        st.json(metadata)

@@ -2,7 +2,7 @@
   "categories": {
     ".agent/manifests": {
       "file_count": 91,
-      "size_bytes": 135910
+      "size_bytes": 135814
     },
     "config": {
       "file_count": 11,
@@ -18,11 +18,11 @@
     },
     "figures": {
       "file_count": 3,
-      "size_bytes": 13649
+      "size_bytes": 21939
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 131653
+      "size_bytes": 132094
     }
   },
   "dashboard_table_count": 16,
@@ -48,8 +48,8 @@
     },
     {
       "path": ".agent/manifests/annual_trends_summary.json",
-      "sha256": "6f990589a7e7083ec8f571298d43886fd2ccdd4660b4a1306ff6fbd4e67884d0",
-      "size_bytes": 1094
+      "sha256": "b901d66401e0399bb8efc81a50fa263faf5eb3f9c4be1de88f85e7a0f91137a3",
+      "size_bytes": 1046
     },
     {
       "path": ".agent/manifests/collaboration_edges_summary.json",
@@ -58,12 +58,12 @@
     },
     {
       "path": ".agent/manifests/collaboration_matrix_summary.json",
-      "sha256": "b1948fb2ff5844e1988b2989fe22817966a7d53bbb40692c095d66e28625fd9b",
+      "sha256": "e6fd8c61e76f7261ae1425794dd5d374b2d992974cdac698ef9b8c9e7c1d5092",
       "size_bytes": 1126
     },
     {
       "path": ".agent/manifests/collaboration_matrix_year.json",
-      "sha256": "3b0d76b9e8d88cb768adb06a850eafd6a077bc9ef7aafe776035d2cfec1af369",
+      "sha256": "d2abfc316edb8b2bfdc3f33169b1c9e7b7873d6371563cfaa05b5fbcf6f2338c",
       "size_bytes": 1317
     },
     {
@@ -288,12 +288,12 @@
     },
     {
       "path": ".agent/manifests/methodology_report.json",
-      "sha256": "d275d6816d3cf70304733992f525b66d336f07f58c5150d773a889243ae07b6e",
+      "sha256": "caca4327eeccc775d578ab27fdb84b72d6fa47aa642ee8ba889ffae762e6f527",
       "size_bytes": 1696
     },
     {
       "path": ".agent/manifests/methodology_report_summary.json",
-      "sha256": "5a1d1955b6b4f9c86c2fc0821971ccced41ca281b8ec57287be28eaaa0d970e8",
+      "sha256": "b97a0799940a7f9a773b26536f9cc4bf96233500808dbbdf4c9729b251453473",
       "size_bytes": 2121
     },
     {
@@ -413,8 +413,8 @@
     },
     {
       "path": ".agent/manifests/trend_series_year.json",
-      "sha256": "87608c4f0bcdd289e050dc9e4e394e8b764556fe8ebbe2f4a7735429fa0ff71c",
-      "size_bytes": 1257
+      "sha256": "720caa7265dd33c2c4dac71f0f72cec5815ae262c718b64d2b1d0cfb11841dc9",
+      "size_bytes": 1209
     },
     {
       "path": ".agent/manifests/work_ambiguous_version_candidates.json",
@@ -643,7 +643,7 @@
     },
     {
       "path": "data/reference/annual_trends_summary.json",
-      "sha256": "118db74a3ef7eb9a87209f01d4443be281d2be5aad98a30e422511d26b4f5bdc",
+      "sha256": "5342f0a202fff82a3689129cf920af53e6133a8d58896ba32edb5f9af854d78e",
       "size_bytes": 577
     },
     {
@@ -653,7 +653,7 @@
     },
     {
       "path": "data/reference/collaboration_matrix_summary.json",
-      "sha256": "e60b96ecba34c958b083182ad3e8b7be44651791f74821b434c8672fa88fbcce",
+      "sha256": "f7125e43b19db64c4542dd242855749a6d47febd7b9911ad88b81bb6dc06fbaa",
       "size_bytes": 709
     },
     {
@@ -753,7 +753,7 @@
     },
     {
       "path": "data/reference/methodology_report_summary.json",
-      "sha256": "9cd272712b53f62bad6daf4f629357c80b1657d789a3f3fcbf53e6d3b5cda058",
+      "sha256": "1982628f75c018712784b2e18ef9e910b332d802fd1b4472827c720260e7371e",
       "size_bytes": 757
     },
     {
@@ -833,18 +833,18 @@
     },
     {
       "path": "figures/annual_region_trends.svg",
-      "sha256": "e8cd5819b1271d1ed0e0befd5f8a9bb552393727964cea252f1dfd74bdbb1cc9",
-      "size_bytes": 5447
+      "sha256": "37a8cfd199c320fab9cc5141b58bb021d5b98593617bc147b2fd9c5a3ae3ab6b",
+      "size_bytes": 8386
     },
     {
       "path": "figures/region_matrix.svg",
-      "sha256": "5b8b52cbbf0ce494cd90b678ecca75ba4c6a14cdab25f609621592d65bb39c0e",
-      "size_bytes": 2756
+      "sha256": "c92a9971d5c1438bd66a175b3db47e15dde835a28d4e9b512a36447598a9af15",
+      "size_bytes": 6302
     },
     {
       "path": "figures/view_comparison.svg",
-      "sha256": "de4f24766ac352a97d751ab9c54fdd17d637b30d9b0ba3ac2498a13594126e07",
-      "size_bytes": 5446
+      "sha256": "d0a75644e639f62bc69837ff00f9689dd69da7c2d05150f8babe45a369a78ed8",
+      "size_bytes": 7251
     },
     {
       "path": "outputs/reports/corpus_boundary_validation.md",
@@ -858,8 +858,8 @@
     },
     {
       "path": "outputs/reports/methodology.md",
-      "sha256": "b46867993c1d94db920a14a92f607300e04ff560cb9bde4fbb496a25aa84af99",
-      "size_bytes": 7804
+      "sha256": "55501b890284e98ff1a1b9fe13836324959777b5221258fc641b92a1b8c691ec",
+      "size_bytes": 8245
     },
     {
       "path": "outputs/reports/topic_review.md",
@@ -867,11 +867,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-15T15:29:47Z",
+  "generated_at_utc": "2026-08-16T22:43:15Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
   "public_file_count": 165,
-  "public_size_bytes": 11721479,
+  "public_size_bytes": 11730114,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

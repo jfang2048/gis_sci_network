@@ -14,7 +14,20 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics, write_parquet_manifest
 
-_STAGE_VERSION = "region-collaboration-matrix-2026-08-05-v1"
+_STAGE_VERSION = "region-collaboration-matrix-2026-08-17-v2"
+_FONT = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+_CIVIDIS = (
+    "#00224E",
+    "#123570",
+    "#3B496C",
+    "#575D6D",
+    "#707173",
+    "#8A8678",
+    "#A59C74",
+    "#C3B369",
+    "#E1CC55",
+    "#FDE737",
+)
 
 
 def build_collaboration_matrix(
@@ -223,54 +236,126 @@ def _write_matrix_svg(path: Path, year: int, rows: list[tuple[Any, ...]]) -> Non
     labels = sorted({str(row[0]) for row in rows} | {str(row[1]) for row in rows})
     values = {(str(source), str(target)): float(value) for source, target, value in rows}
     maximum = max(values.values(), default=1.0) or 1.0
-    cell, left, top = 86, 210, 110
-    width, height = left + cell * len(labels) + 40, top + cell * len(labels) + 90
+    cell, left, top = 86, 220, 170
+    grid_width = cell * len(labels)
+    width = max(820, left + grid_width + 72)
+    height = max(520, top + cell * len(labels) + 150)
+    description = (
+        f"Matrix of fractional collaboration weight across {len(labels)} macro-regions in "
+        f"{year}. Missing cells have no observed flow and are not imputed as zero."
+    )
     parts = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        (
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+            f'viewBox="0 0 {width} {height}" role="img" '
+            'aria-labelledby="matrix-title matrix-description">'
+        ),
+        f'<title id="matrix-title">Broad organization macro-region matrix, {year}</title>',
+        f'<desc id="matrix-description">{html.escape(description)}</desc>',
+        "<defs>",
+        (
+            '<pattern id="missing-cell" width="8" height="8" patternUnits="userSpaceOnUse">'
+            '<rect width="8" height="8" fill="#F8FAFC"/>'
+            '<path d="M0 8L8 0" stroke="#CBD5E1" stroke-width="1"/></pattern>'
+        ),
+        '<linearGradient id="matrix-scale" x1="0%" x2="100%" y1="0%" y2="0%">',
+        *[
+            f'<stop offset="{index / (len(_CIVIDIS) - 1):.1%}" stop-color="{color}"/>'
+            for index, color in enumerate(_CIVIDIS)
+        ],
+        "</linearGradient>",
+        "</defs>",
         '<rect width="100%" height="100%" fill="white"/>',
         (
-            '<text x="24" y="36" font-family="sans-serif" font-size="23" '
+            f'<text x="{left}" y="38" font-family="{_FONT}" font-size="23" '
             f'font-weight="700">Broad organization macro-region matrix, {year}</text>'
         ),
         (
-            '<text x="24" y="66" font-family="sans-serif" font-size="14" '
+            f'<text x="{left}" y="68" font-family="{_FONT}" font-size="14" '
             'fill="#475569">Fractional collaboration weight; exact values are in '
             "collaboration_matrix_year.parquet</text>"
+        ),
+        (
+            f'<text x="{left + grid_width / 2}" y="100" text-anchor="middle" '
+            f'font-family="{_FONT}" font-size="13" fill="#475569">'
+            "Partner macro-region</text>"
         ),
     ]
     for row_index, source in enumerate(labels):
         y = top + row_index * cell
         parts.append(
             f'<text x="{left - 12}" y="{y + cell / 2 + 5}" text-anchor="end" '
-            f'font-family="sans-serif" font-size="13">{html.escape(source)}</text>'
+            f'font-family="{_FONT}" font-size="13">{html.escape(source)}</text>'
         )
         for column_index, target in enumerate(labels):
             x = left + column_index * cell
             value = values.get((source, target), values.get((target, source)))
             if value is None:
-                color, label = "#f8fafc", "missing"
+                color, label, text_color = "url(#missing-cell)", "missing", "#475569"
             else:
-                shade = int(245 - 185 * value / maximum)
-                color, label = f"rgb({shade},{shade + 12},255)", f"{value:,.0f}"
+                normalized = value / maximum
+                color = _CIVIDIS[min(int(normalized * (len(_CIVIDIS) - 1)), len(_CIVIDIS) - 1)]
+                label = _format_matrix_value(value)
+                text_color = "#ffffff" if normalized < 0.55 else "#0F172A"
             parts.append(
                 f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" '
                 f'fill="{color}" stroke="white"/>'
             )
             parts.append(
                 f'<text x="{x + cell / 2}" y="{y + cell / 2 + 5}" '
-                f'text-anchor="middle" font-family="sans-serif" font-size="11">{label}</text>'
+                f'text-anchor="middle" font-family="{_FONT}" font-size="12" '
+                f'font-weight="600" fill="{text_color}">{label}</text>'
             )
     for column_index, target in enumerate(labels):
         x_position = left + column_index * cell + cell / 2
         parts.append(
             f'<text transform="translate({x_position} {top - 10}) rotate(-40)" '
-            f'text-anchor="start" font-family="sans-serif" font-size="13">'
+            f'text-anchor="start" font-family="{_FONT}" font-size="13">'
             f"{html.escape(target)}</text>"
         )
+    legend_y = top + cell * len(labels) + 48
+    parts.extend(
+        [
+            (
+                f'<text transform="translate(28 {top + cell * len(labels) / 2}) rotate(-90)" '
+                f'text-anchor="middle" font-family="{_FONT}" font-size="13" fill="#475569">'
+                "Source macro-region</text>"
+            ),
+            (
+                f'<text x="{left}" y="{legend_y - 12}" font-family="{_FONT}" font-size="12" '
+                'font-weight="600" fill="#475569">Color scale · fractional weight</text>'
+            ),
+            (
+                f'<rect x="{left}" y="{legend_y}" width="{grid_width}" height="14" '
+                'fill="url(#matrix-scale)" rx="2"/>'
+            ),
+            (
+                f'<text x="{left}" y="{legend_y + 34}" font-family="{_FONT}" font-size="12" '
+                'fill="#475569">0</text>'
+            ),
+            (
+                f'<text x="{left + grid_width}" y="{legend_y + 34}" text-anchor="end" '
+                f'font-family="{_FONT}" font-size="12" fill="#475569">'
+                f"{maximum:,.0f}</text>"
+            ),
+            (
+                f'<rect x="{left}" y="{legend_y + 52}" width="14" height="14" '
+                'fill="url(#missing-cell)" stroke="#CBD5E1"/>'
+            ),
+            (
+                f'<text x="{left + 22}" y="{legend_y + 64}" font-family="{_FONT}" '
+                'font-size="12" fill="#475569">Missing / no observed flow</text>'
+            ),
+        ]
+    )
     parts.append("</svg>\n")
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text("\n".join(parts), encoding="utf-8")
     os.replace(temporary, path)
+
+
+def _format_matrix_value(value: float) -> str:
+    return f"{value:,.3f}".rstrip("0").rstrip(".")
 
 
 def _literal(path: Path) -> str:

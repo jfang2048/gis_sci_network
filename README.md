@@ -7,11 +7,15 @@ remain represented so mixed-region collaboration is not discarded.
 
 ## View the results
 
-Static figures can be opened directly on GitHub:
+The checked-in figures are publication-ready SVGs generated from processed data. Line color and
+dash both identify series; matrix shading is accompanied by readable cell labels and a scale
+legend, while exact values remain in the processed table.
 
-- [Annual regional collaboration trends](figures/annual_region_trends.svg)
-- [Strict/Broad and organization/umbrella comparison](figures/view_comparison.svg)
-- [Latest macro-region collaboration matrix](figures/region_matrix.svg)
+[![Annual regional collaboration trends, showing six intra- and cross-region series from 2010 to 2025](figures/annual_region_trends.svg)](figures/annual_region_trends.svg)
+
+[![Strict and Broad corpus comparison across organization and umbrella hierarchy views](figures/view_comparison.svg)](figures/view_comparison.svg)
+
+[![2025 macro-region collaboration matrix with fractional weights and a sequential scale](figures/region_matrix.svg)](figures/region_matrix.svg)
 
 The interactive visualization is a local Streamlit application. From the repository root:
 
