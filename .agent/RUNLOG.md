@@ -2219,3 +2219,86 @@ vector-eligible, zero-vector, and core counts separately.
 ### Exact next action
 
 Task: GISNET-112 — Multiplex comparison. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260816T232036Z_2dcb27a19560
+
+Started UTC: 2026-08-16T23:20:36Z
+Ended UTC: 2026-08-16T23:30:46Z
+Task: GISNET-112 — Multiplex comparison
+Initial git status: Clean and synchronized on `main` at `2dcb27a`.
+Final pre-commit status: Verified GISNET-112 changes only; no unrelated user work present.
+
+### Objective
+
+Compare co-authorship, citation flow, and Topic proximity as distinct annual network layers, with
+explicit semantics and coverage boundaries and without inventing a composite weight.
+
+### Work completed
+
+- Added annual per-layer summaries retaining directionality, node/edge/self-edge/dyad counts,
+  density, native weight units, and coverage scope.
+- Added pairwise unweighted node and dyad presence overlap with Jaccard and overlap coefficients.
+- Preserved citation direction in its layer; direction is ignored only when projecting citation
+  edges to undirected dyad presence for cross-layer matching.
+- Kept Topic proximity bounded to its deterministic 500-institution annual core.
+- Added atomic Parquet outputs, tracked summary/manifests, CLI dry-run/build paths, documentation,
+  and deterministic synthetic regression tests.
+- Defined no merged graph, cross-layer edge weight, or composite score.
+
+### Files changed
+
+- `src/gisnet/network/multiplex.py`, `src/gisnet/cli.py`
+- `tests/unit/test_multiplex.py`, `tests/unit/test_cli.py`
+- `README.md`, `RELEASE.md`, `outputs/reports/methodology.md`
+- `data/reference/multiplex_comparison_summary.json` and three multiplex manifests
+- `.agent` state/backlog/run log and release checksums
+- Local ignored annual layer-summary and overlap Parquet outputs under `data/processed/`
+
+### Commands executed
+
+- Synthetic separate-layer, directed-projection, overlap, and deterministic-checksum tests.
+- `uv run python -m gisnet.cli build-multiplex --dry-run`
+- Full builds with `--duckdb-memory-limit 8GB --duckdb-threads 1`.
+- DuckDB cardinality, primary-key, layer-presence, range, projection, and no-composite audits.
+- `scripts/quality-gate.sh` and `uv run python -m gisnet.release verify`.
+
+### Validation results
+
+- Layer-summary rows: 192; pairwise-overlap rows: 192; years: 2010–2025.
+- Every corpus/hierarchy/year has three layer summaries and three layer-pair comparisons.
+- Merged or composite records: 0; duplicate annual keys: 0.
+- Mean dyad Jaccard: citation/co-authorship 0.078238; citation/Topic 0.015274;
+  co-authorship/Topic 0.017469. These are presence diagnostics, not weighted effects.
+- Citation projection disclosure rows: 128; both-undirected not-applicable rows: 64.
+- Ruff lint/format and strict mypy passed; all 143 repository tests passed.
+- Six known Plotly country-name deprecation warnings remain because no trusted ISO-3 source field
+  exists; no identifier was fabricated.
+- Release verified 178 files (11,750,517 bytes) with zero privacy findings.
+
+### Data and configuration hashes
+
+- Layer summaries: `b15bc21ef1cc04526250180425445fc2ebcc3a6ebc5b46b8ec2c351ae3adc623`
+- Pairwise overlaps: `3c260691986b2eb1c9452a984a2f82003dfa30aecfbfe102660a4cbb79299743`
+- Multiplex summary: `028a7995fa99c40f577e5247e9eee6cea552df8f3ccbb48f50d9d8855ba84615`
+- Release manifest: `8e947d8686033b093b03c19a87d2f0a16193f97542d4d7a3d191a27939fcf6a8`
+
+### Checkpoints written
+
+Both Parquet outputs plus the summary and manifests were atomically written and registered in
+project state. No API access, raw response, credential, or invented source identifier was used.
+
+### Failures or blockers
+
+No unresolved failure. The initial DuckDB view parameterization and an ambiguous join were caught
+by the regression test and corrected before the full-data build.
+
+### Decisions made
+
+- Keep native layer weights incomparable rather than normalize them into a synthetic score.
+- Compare unweighted presence only, with citation direction removed solely for dyad matching.
+- Preserve the Topic core coverage caveat in every interpretation of cross-layer overlap.
+- Require explicit weights plus sensitivity analysis before any future composite network.
+
+### Exact next action
+
+Task: GISNET-113 — Author mobility layer. Command: `uv run python -m gisnet.cli next-task`.

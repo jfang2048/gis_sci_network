@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-16T23:19:38Z",
+  "last_updated_utc": "2026-08-16T23:30:46Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1500,12 +1500,27 @@
         "GISNET-111",
         "GISNET-104"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-16T23:20:36Z",
+          "from": "TODO",
+          "reason": "Comparing co-authorship, citation flow, and Topic proximity as separate layers with no composite weights or merged network.",
+          "run_id": "20260816T232036Z_2dcb27a19560",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-16T23:30:46Z",
+          "from": "IN_PROGRESS",
+          "reason": "Compared co-authorship, citation flow, and Topic proximity as separate annual layers; all acceptance checks passed with no merged graph or composite weight.",
+          "run_id": "20260816T232036Z_2dcb27a19560",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-112",
       "priority": "OPTIONAL",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Compared co-authorship, citation flow, and Topic proximity as separate annual layers; all acceptance checks passed with no merged graph or composite weight.",
+      "status_updated_at_utc": "2026-08-16T23:30:46Z"
     },
     {
       "dependencies": [

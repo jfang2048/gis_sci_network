@@ -1,0 +1,49 @@
+{
+  "checksum_sha256": "b15bc21ef1cc04526250180425445fc2ebcc3a6ebc5b46b8ec2c351ae3adc623",
+  "column_count": 16,
+  "command": "python -m gisnet.cli build-multiplex --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-16T23:28:54.516748Z",
+  "dataset_name": "multiplex_layer_summary_year",
+  "git_commit": "2dcb27a19560",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "comparison_boundary": 0,
+    "composite_weight_defined": 0,
+    "corpus_view": 0,
+    "coverage_scope": 0,
+    "density": 0,
+    "directionality": 0,
+    "edge_count": 0,
+    "hierarchy_view": 0,
+    "layer": 0,
+    "node_count": 0,
+    "possible_edge_count": 0,
+    "self_edge_count": 0,
+    "total_layer_weight": 0,
+    "undirected_dyad_count": 0,
+    "weight_semantics": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "layer"
+  ],
+  "row_count": 192,
+  "run_id": "20260816T232036Z_2dcb27a19560",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/edges_year.json",
+    ".agent/manifests/citation_edges_year.json",
+    ".agent/manifests/topic_similarity_edges_year.json"
+  ],
+  "source_versions": {
+    "multiplex_comparison_policy": "multiplex-separate-layer-comparison-2026-08-17-v1"
+  },
+  "status": "valid"
+}

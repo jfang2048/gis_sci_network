@@ -58,6 +58,7 @@ from gisnet.network.flows import build_geographic_flows, write_flow_artifacts
 from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_artifacts
 from gisnet.network.intensity import build_edge_intensity, write_intensity_artifacts
 from gisnet.network.metrics import build_network_metrics, write_metric_artifacts
+from gisnet.network.multiplex import build_multiplex_comparison, write_multiplex_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
 from gisnet.network.topic_similarity import (
     build_topic_similarity,
@@ -546,6 +547,39 @@ def build_parser() -> argparse.ArgumentParser:
     topic_similarity.add_argument("--duckdb-memory-limit", default="8GB")
     topic_similarity.add_argument("--duckdb-threads", default=1, type=int)
     topic_similarity.set_defaults(handler=_build_topic_similarity)
+
+    multiplex = subparsers.add_parser(
+        "build-multiplex",
+        help="compare co-authorship, citation, and Topic-proximity layers without merging",
+    )
+    _add_pipeline_arguments(multiplex)
+    multiplex.add_argument(
+        "--collaboration-edges", default="data/processed/edges_year.parquet", type=Path
+    )
+    multiplex.add_argument(
+        "--citation-edges", default="data/processed/citation_edges_year.parquet", type=Path
+    )
+    multiplex.add_argument(
+        "--topic-similarity-edges",
+        default="data/processed/topic_similarity_edges_year.parquet",
+        type=Path,
+    )
+    multiplex.add_argument(
+        "--layer-summary",
+        default="data/processed/multiplex_layer_summary_year.parquet",
+        type=Path,
+    )
+    multiplex.add_argument(
+        "--output",
+        default="data/processed/multiplex_pairwise_overlap_year.parquet",
+        type=Path,
+    )
+    multiplex.add_argument(
+        "--summary", default="data/reference/multiplex_comparison_summary.json", type=Path
+    )
+    multiplex.add_argument("--duckdb-memory-limit", default="8GB")
+    multiplex.add_argument("--duckdb-threads", default=1, type=int)
+    multiplex.set_defaults(handler=_build_multiplex)
 
     build_outputs = subparsers.add_parser(
         "build-outputs", help="build annual institutional full/fractional output tables"
@@ -2145,6 +2179,50 @@ def _build_topic_similarity(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['vector_component_count']} Topic-vector components and "
         f"{summary['annual_similarity_edge_count']} sparse annual proximity edges."
+    )
+    return 0
+
+
+def _build_multiplex(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(
+            "Would compare co-authorship, directed citation flow, and Topic proximity as "
+            "separate layers using unweighted node/dyad presence; no layer weights are "
+            "combined and no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-112"):
+            summary = build_multiplex_comparison(
+                args.collaboration_edges,
+                args.citation_edges,
+                args.topic_similarity_edges,
+                layer_summary_path=args.layer_summary,
+                overlap_path=args.output,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = "python -m gisnet.cli build-multiplex --resume"
+            write_multiplex_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "multiplex_layer_summary_year",
+                "multiplex_pairwise_overlap_year",
+                "multiplex_comparison_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Multiplex comparison failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Compared {summary['layers']} as separate layers across "
+        f"{summary['pairwise_overlap_row_count']} annual layer pairs; no composite defined."
     )
     return 0
 

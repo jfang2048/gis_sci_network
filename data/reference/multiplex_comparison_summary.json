@@ -1,0 +1,24 @@
+{
+  "citation_direction_preserved_in_layer_summary": true,
+  "citation_overlap_projection": "direction ignored for dyad presence only",
+  "comparison_weighting": "unweighted presence only; no layer weights applied",
+  "composite_weight_defined": false,
+  "generated_at_utc": "2026-08-16T23:28:54.486469Z",
+  "layer_summary_row_count": 192,
+  "layers": [
+    "coauthorship",
+    "citation_flow",
+    "topic_proximity"
+  ],
+  "layers_merged": false,
+  "logical_input_hash": "53718b5f6b8bb2f6f60403356da2cfe3bafa3f84c7fa9781722c210fa831a785",
+  "outputs": {
+    "multiplex_layer_summary_year": "data/processed/multiplex_layer_summary_year.parquet",
+    "multiplex_pairwise_overlap_year": "data/processed/multiplex_pairwise_overlap_year.parquet"
+  },
+  "pairwise_overlap_row_count": 192,
+  "schema_version": 1,
+  "stage_version": "multiplex-separate-layer-comparison-2026-08-17-v1",
+  "year_maximum": 2025,
+  "year_minimum": 2010
+}

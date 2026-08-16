@@ -25,3 +25,10 @@ def test_topic_similarity_dry_run_names_the_layer_boundary(capsys: object) -> No
     captured = capsys.readouterr()  # type: ignore[attr-defined]
     assert "cosine proximity" in captured.out
     assert "not collaboration" in captured.out
+
+
+def test_multiplex_dry_run_preserves_layer_boundaries(capsys: object) -> None:
+    assert main(["build-multiplex", "--dry-run"]) == 0
+    captured = capsys.readouterr()  # type: ignore[attr-defined]
+    assert "separate layers" in captured.out
+    assert "no layer weights are combined" in captured.out

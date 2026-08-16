@@ -111,6 +111,14 @@ coordinate coverage ranges from 99.92% to
 network dashboard is a thresholded view and must not be used to infer absence from a hidden edge.
 No partial 2026 data are included; 2025 is the last complete calendar year.
 
+Optional layer analysis preserves three distinct network meanings. Co-authorship is an undirected
+fractional collaboration layer; citation flow is directed from citing to cited institution; and
+cosine Topic similarity is an undirected research-proximity layer over a deterministic annual
+500-institution core. The multiplex comparison reports each layer separately and computes only
+unweighted node and dyad presence overlap. Citation direction is ignored for dyad matching only.
+No layer weights are combined, no composite score is defined, and Topic-layer overlap inherits the
+annual-core coverage boundary.
+
 ## 11. Reproducibility
 
 Run from the repository root:
@@ -160,5 +168,6 @@ Unknown rather than being guessed.
 - Community continuity: `data/reference/community_continuity_summary.json`
 - Sensitivity: `data/reference/sensitivity_summary.json`
 - Reproducibility: `data/reference/reproducibility_validation.json`
+- Optional multiplex comparison: `data/reference/multiplex_comparison_summary.json`
 - Figures: `data/reference/annual_trends_summary.json` and
   `data/reference/collaboration_matrix_summary.json`

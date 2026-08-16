@@ -44,6 +44,8 @@ uv run python -m gisnet.cli build-data-dictionary --resume
 uv run python -m gisnet.cli build-citation-flows --resume
 # Optional research-proximity extension; this is not a collaboration layer.
 uv run python -m gisnet.cli build-topic-similarity --resume
+# Optional separate-layer comparison; this does not define a composite network.
+uv run python -m gisnet.cli build-multiplex --resume
 uv run python -m gisnet.release build
 uv run python -m gisnet.release verify
 ```
@@ -71,6 +73,10 @@ The API key is not written to configuration, manifests, datasets, or logs.
 - The optional Topic-similarity layer is a union-top-k network over a deterministic annual core,
   not a complete all-institution similarity matrix. Its coverage table reports the omitted
   institution-year rows and the edge-selection boundary.
+- The optional multiplex comparison keeps co-authorship, directed citation flow, and Topic
+  proximity separate. Pairwise overlaps are unweighted node/dyad-presence diagnostics; citation
+  direction is ignored only for dyad matching, and no cross-layer weight or composite score is
+  defined. Topic-layer comparisons retain the 500-institution annual-core boundary.
 
 See [`outputs/reports/methodology.md`](outputs/reports/methodology.md) for the full
 method and limitations, and [`outputs/reports/data_dictionary.md`](outputs/reports/data_dictionary.md)

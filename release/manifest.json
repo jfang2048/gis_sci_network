@@ -1,8 +1,8 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 98,
-      "size_bytes": 147358
+      "file_count": 101,
+      "size_bytes": 151582
     },
     "config": {
       "file_count": 11,
@@ -13,8 +13,8 @@
       "size_bytes": 10244692
     },
     "data/reference": {
-      "file_count": 41,
-      "size_bytes": 1047806
+      "file_count": 42,
+      "size_bytes": 1048734
     },
     "figures": {
       "file_count": 3,
@@ -22,7 +22,7 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 132094
+      "size_bytes": 132789
     }
   },
   "dashboard_table_count": 16,
@@ -315,6 +315,21 @@
       "path": ".agent/manifests/methodology_report_summary.json",
       "sha256": "b97a0799940a7f9a773b26536f9cc4bf96233500808dbbdf4c9729b251453473",
       "size_bytes": 2121
+    },
+    {
+      "path": ".agent/manifests/multiplex_comparison_summary.json",
+      "sha256": "4fd4d1f0b3c8c6026374a03f054d085f37ebe6dddca8a0cd4913e1b2669283cb",
+      "size_bytes": 1366
+    },
+    {
+      "path": ".agent/manifests/multiplex_layer_summary_year.json",
+      "sha256": "6471ac29437fff640913ef0ac3ba8cb11aafa272229f66cee37d86443d683f38",
+      "size_bytes": 1364
+    },
+    {
+      "path": ".agent/manifests/multiplex_pairwise_overlap_year.json",
+      "sha256": "214befae56c975f92a3a5887cb0b0685b0c0b0cca09c1e141d8474118135a1e3",
+      "size_bytes": 1494
     },
     {
       "path": ".agent/manifests/network_accessibility_year.json",
@@ -797,6 +812,11 @@
       "size_bytes": 757
     },
     {
+      "path": "data/reference/multiplex_comparison_summary.json",
+      "sha256": "028a7995fa99c40f577e5247e9eee6cea552df8f3ccbb48f50d9d8855ba84615",
+      "size_bytes": 928
+    },
+    {
       "path": "data/reference/network_layout_summary.json",
       "sha256": "1ac2b4e32aec4db811a4fab070403f7014506827005c3bb01275bed21118c896",
       "size_bytes": 761
@@ -903,8 +923,8 @@
     },
     {
       "path": "outputs/reports/methodology.md",
-      "sha256": "55501b890284e98ff1a1b9fe13836324959777b5221258fc641b92a1b8c691ec",
-      "size_bytes": 8245
+      "sha256": "ce7071ef71e734a360da45b570f2245e47fd0de9cf9b036189d35eea8f383a89",
+      "size_bytes": 8940
     },
     {
       "path": "outputs/reports/topic_review.md",
@@ -912,11 +932,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-16T23:18:40Z",
+  "generated_at_utc": "2026-08-16T23:29:40Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 174,
-  "public_size_bytes": 11744670,
+  "public_file_count": 178,
+  "public_size_bytes": 11750517,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

@@ -85,6 +85,7 @@ uv run python -m gisnet.cli build-work-institutions --resume
 uv run python -m gisnet.cli build-edges --resume
 uv run python -m gisnet.cli build-citation-flows --resume
 uv run python -m gisnet.cli build-topic-similarity --resume
+uv run python -m gisnet.cli build-multiplex --resume
 uv run python -m gisnet.cli build-outputs --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
@@ -171,6 +172,23 @@ table reports all in-scope institutions, nonzero-vector and zero-vector cases, c
 vector dimensions, all candidate pairs, pairs passing the similarity threshold, and retained
 edges. Full vectors and edges remain local processed outputs; tracked provenance and current totals
 are in `data/reference/topic_similarity_summary.json`.
+
+## Optional multiplex comparison
+
+`build-multiplex` compares the co-authorship, directed citation-flow, and Topic-proximity
+networks without creating a merged graph or composite edge weight. Each annual layer summary
+retains its own directionality, coverage boundary, weight definition, node and edge counts,
+density, and total weight. Those totals have different units and are not compared as though they
+were interchangeable.
+
+Pairwise overlap uses only node and undirected dyad presence. Citation direction is discarded for
+that dyad-presence calculation only; it remains explicit in the citation layer itself. The
+Topic-proximity layer is still limited to its deterministic 500-institution annual core, so its
+overlap values describe that bounded layer rather than all institutions. Defining a multiplex
+score would require explicit layer weights and sensitivity analysis and is intentionally outside
+this command. Tracked provenance and current totals are in
+`data/reference/multiplex_comparison_summary.json`; the full annual tables remain local processed
+outputs.
 
 ## Topic registry status
 
