@@ -1,0 +1,58 @@
+{
+  "checksum_sha256": "fa7c04da549cf18c75f19e00345b5f1ce5f37674d1c1f07ab89ec8e6e5c5f276",
+  "column_count": 25,
+  "command": "python -m gisnet.cli build-topic-similarity --corpus all --hierarchy all --maximum-institutions-per-view 500 --top-k 20 --minimum-similarity 0.0 --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-16T23:18:25.288887Z",
+  "dataset_name": "topic_similarity_edges_year",
+  "git_commit": "4f680a75ac03",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "corpus_view": 0,
+    "cosine_similarity": 0,
+    "edge_selection_policy": 0,
+    "hierarchy_view": 0,
+    "layer_semantics": 0,
+    "maximum_institutions_per_view": 0,
+    "minimum_similarity": 0,
+    "shared_topic_count": 0,
+    "source_category": 0,
+    "source_country": 0,
+    "source_id": 0,
+    "source_name": 0,
+    "source_neighbor_rank": 0,
+    "source_region": 0,
+    "source_work_count": 0,
+    "target_category": 0,
+    "target_country": 0,
+    "target_id": 0,
+    "target_name": 0,
+    "target_neighbor_rank": 0,
+    "target_region": 0,
+    "target_work_count": 0,
+    "threshold_eligible_pair_count": 0,
+    "top_k": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "source_id",
+    "target_id"
+  ],
+  "row_count": 432848,
+  "run_id": "20260816T231005Z_4f680a75ac03",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_topics.json",
+    ".agent/manifests/work_institutions.json"
+  ],
+  "source_versions": {
+    "topic_similarity_policy": "institution-topic-similarity-2026-08-17-v3"
+  },
+  "status": "valid"
+}

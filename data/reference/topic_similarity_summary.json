@@ -1,0 +1,36 @@
+{
+  "annual_similarity_edge_count": 432848,
+  "corpus_views": [
+    "strict",
+    "broad"
+  ],
+  "coverage_row_count": 64,
+  "edge_selection_policy": "union of top-k neighbors per institution",
+  "generated_at_utc": "2026-08-16T23:18:24.800762Z",
+  "hierarchy_views": [
+    "organization",
+    "umbrella"
+  ],
+  "layer_semantics": "Topic-profile research proximity, not collaboration",
+  "logical_input_hash": "78d443354717aa83b8fe241562bcf2ffe732c0e01c33c7a76e7658945f7168ba",
+  "maximum_institutions_per_view": 500,
+  "maximum_selected_similarity": 1.0,
+  "maximum_vector_norm_error": 6.661338147750939e-16,
+  "maximum_weight_reconciliation_error": 5.529727786779404e-10,
+  "minimum_selected_similarity": 0.21534035194109488,
+  "minimum_similarity": 0.0,
+  "outputs": {
+    "institution_topic_vectors_year": "data/processed/institution_topic_vectors_year.parquet",
+    "topic_similarity_coverage_year": "data/processed/topic_similarity_coverage_year.parquet",
+    "topic_similarity_edges_year": "data/processed/topic_similarity_edges_year.parquet"
+  },
+  "schema_version": 1,
+  "similarity_metric": "cosine similarity of L2-normalized institutional Topic vectors",
+  "stage_version": "institution-topic-similarity-2026-08-17-v3",
+  "top_k": 20,
+  "topic_dimensions": "frozen registry Topics eligible for each selected corpus; uncertain and excluded Topics are omitted",
+  "topic_weight_policy": "source Topic score divided across in-scope institutions on each Work",
+  "vector_component_count": 1645174,
+  "view_source_topic_score_sum": 2530639.663476243,
+  "view_vector_topic_weight_sum": 2530639.6634762427
+}

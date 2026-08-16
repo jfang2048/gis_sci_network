@@ -55,7 +55,8 @@
     "GISNET-094",
     "GISNET-104",
     "GISNET-105",
-    "GISNET-110"
+    "GISNET-110",
+    "GISNET-111"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -117,6 +118,7 @@
     "institution_ror_qa": ".agent/manifests/institution_ror_qa.json",
     "institution_ror_summary": ".agent/manifests/institution_ror_summary.json",
     "institution_scope_sensitivity_year": ".agent/manifests/institution_scope_sensitivity_year.json",
+    "institution_topic_vectors_year": ".agent/manifests/institution_topic_vectors_year.json",
     "institution_type_profile": ".agent/manifests/institution_type_profile.json",
     "institutions": ".agent/manifests/institutions.json",
     "institutions_geographic": ".agent/manifests/institutions_geographic.json",
@@ -148,6 +150,9 @@
     "top_institution_audit": ".agent/manifests/top_institution_audit.json",
     "topic_candidates": ".agent/manifests/topic_candidates.json",
     "topic_registry": ".agent/manifests/topic_registry.json",
+    "topic_similarity_coverage_year": ".agent/manifests/topic_similarity_coverage_year.json",
+    "topic_similarity_edges_year": ".agent/manifests/topic_similarity_edges_year.json",
+    "topic_similarity_summary": ".agent/manifests/topic_similarity_summary.json",
     "topic_work_samples": ".agent/manifests/topic_work_samples.json",
     "trend_series_year": ".agent/manifests/trend_series_year.json",
     "work_ambiguous_version_candidates": ".agent/manifests/work_ambiguous_version_candidates.json",
@@ -170,8 +175,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260816T224937Z_7d9065f5e6c9",
-  "last_updated_utc": "2026-08-16T23:07:28Z",
+  "last_successful_run_id": "20260816T231005Z_4f680a75ac03",
+  "last_updated_utc": "2026-08-16T23:19:38Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

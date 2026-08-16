@@ -2126,3 +2126,96 @@ then passed at an observed absolute error below `5.7e-08`. No blocker remains.
 ### Exact next action
 
 Task: GISNET-111 — Topic-similarity network. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260816T231005Z_4f680a75ac03
+
+Started UTC: 2026-08-16T23:10:05Z
+Ended UTC: 2026-08-16T23:19:38Z
+Task: GISNET-111 — Topic-similarity network
+Initial git status: Clean and synchronized on `main` at `4f680a7`.
+Final pre-commit status: Verified GISNET-111 changes only; no unrelated user work present.
+
+### Objective
+
+Build institutional Topic vectors and annual cosine-similarity edges as a reproducible research-
+proximity layer, never as collaboration, while explicitly reporting vector and core coverage.
+
+### Work completed
+
+- Built annual Strict/Broad organization/umbrella institutional vectors over frozen registry
+  Topics; uncertain and excluded Topics are omitted.
+- Divided each source Topic score across the in-scope institutions on its Work before aggregation.
+- Stored raw Topic weight, L2 norm, normalized component, Topic hierarchy labels, Work support,
+  institution metadata, deterministic core rank, and layer semantics.
+- Computed exact cosine similarity inside a 500-institution annual core and retained the union of
+  each institution's top 20 neighbors.
+- Added coverage for all in-scope institutions, nonzero/zero vectors, core inclusion, candidate
+  pairs, threshold-eligible pairs, retained edges, similarity range, and score reconciliation.
+- Added atomic outputs, manifests, CLI dry-run/build paths, documentation, and deterministic
+  synthetic tests.
+
+### Files changed
+
+- `src/gisnet/network/topic_similarity.py`
+- `src/gisnet/cli.py`
+- `tests/unit/test_topic_similarity.py`, `tests/unit/test_cli.py`
+- `README.md`, `RELEASE.md`
+- `data/reference/topic_similarity_summary.json`
+- Four Topic-similarity manifests, `.agent` state/backlog/run log, and release checksums
+- Local ignored vector, edge, and coverage Parquet outputs under `data/processed/`
+
+### Commands executed
+
+- Synthetic Topic-vector, cosine, top-k, coverage, and checksum regression iterations.
+- `uv run python -m gisnet.cli build-topic-similarity --dry-run`
+- Full builds with `--duckdb-memory-limit 8GB --duckdb-threads 1`.
+- DuckDB vector-norm, score-reconciliation, coverage, range, ranking, direction, and year audits.
+- Focused Ruff, format, mypy, and Pytest checks.
+- `scripts/quality-gate.sh` and `uv run python -m gisnet.release verify`.
+
+### Validation results
+
+- Vector components: 1,645,174; sparse annual proximity edges: 432,848; years: 2010–2025.
+- Topic dimensions per annual Strict view: 6; per Broad view: 23.
+- In-scope institution-year rows: Broad 169,881 per hierarchy; Strict 81,064 per hierarchy.
+- Zero-vector institution-year rows: Broad 3 per hierarchy; Strict 0.
+- Selected core rows: 8,000 per corpus/hierarchy (500 x 16 years).
+- Core share of in-scope rows: Broad 4.71%; Strict 9.87%, disclosed in coverage.
+- Maximum vector norm error: `6.661338147750939e-16`.
+- Maximum Topic-weight reconciliation error: `5.529727786779404e-10`.
+- Selected cosine range: 0.21534035194109488–1.0.
+- Invalid ordering, range, top-k, or layer-semantics rows: 0.
+- Ruff lint/format and strict mypy passed; all 141 repository tests passed.
+- Release verified 174 files (11,744,670 bytes) with zero privacy findings.
+
+### Data and configuration hashes
+
+- Topic vectors: `5421d5ff7cca0dec0020bf5596ab5a81e2284445722f2827c17166712ccbb4aa`
+- Similarity edges: `fa7c04da549cf18c75f19e00345b5f1ce5f37674d1c1f07ab89ec8e6e5c5f276`
+- Similarity coverage: `ef5c973f14875c1df1bb722e4040c4cc1aeee8cd56c82ad3257c14eeabe5a852`
+- Similarity summary: `eb990aefe19afb64c4bd41b10ba3393eab207557ed294c8d92bacc21db381b84`
+- Release manifest: `234b8c560df3b40582740b83e2c616edfbc78954cf0693b3a945ab4964d640ef`
+
+### Checkpoints written
+
+The vector, edge, and coverage Parquet outputs plus summary/manifests were atomically written and
+registered in project state. No API access, raw response, or credential was used.
+
+### Failures or blockers
+
+No unresolved failure. Review identified that a vector-only denominator would hide zero-vector
+institutions; the coverage schema was corrected before completion to report all in-scope,
+vector-eligible, zero-vector, and core counts separately.
+
+### Decisions made
+
+- Use only frozen corpus-eligible registry Topics, excluding uncertain/excluded dimensions.
+- Fractionally allocate each Work Topic score across its in-scope institutions.
+- Interpret cosine exclusively as Topic-profile research proximity.
+- Bound exact pairwise computation to a deterministic Work-count core and expose that coverage.
+- Retain the union of top-k neighbors so a less prolific institution's nearest edge is not removed
+  merely because the other endpoint ranks it below k.
+
+### Exact next action
+
+Task: GISNET-112 — Multiplex comparison. Command: `uv run python -m gisnet.cli next-task`.

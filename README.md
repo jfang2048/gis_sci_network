@@ -84,6 +84,7 @@ uv run python -m gisnet.cli build-corpus --resume
 uv run python -m gisnet.cli build-work-institutions --resume
 uv run python -m gisnet.cli build-edges --resume
 uv run python -m gisnet.cli build-citation-flows --resume
+uv run python -m gisnet.cli build-topic-similarity --resume
 uv run python -m gisnet.cli build-outputs --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
@@ -154,6 +155,22 @@ without an in-scope institution, and negative citation lags remain counted in
 `data/reference/citation_flow_summary.json` and the generated
 `citation_flow_coverage_year.parquet`; they are not silently treated as observed network edges.
 The full edge and coverage tables are local processed outputs excluded from Git because of size.
+
+## Optional Topic-similarity layer
+
+`build-topic-similarity` constructs annual institutional vectors from the frozen registry Topics
+eligible for each corpus. Each Work's source Topic score is divided across its in-scope
+institutions, institutional vectors are L2-normalized, and cosine similarity is interpreted as
+research proximity—not collaboration, citation, or causal influence. Uncertain and excluded
+Topics do not enter the vectors.
+
+Exact pairwise similarity is computed within a deterministic annual core ranked by Work count.
+The default core contains at most 500 institutions per corpus/hierarchy/year, and the stored
+undirected network is the union of each institution's 20 nearest neighbors. The generated coverage
+table reports all in-scope institutions, nonzero-vector and zero-vector cases, core inclusion,
+vector dimensions, all candidate pairs, pairs passing the similarity threshold, and retained
+edges. Full vectors and edges remain local processed outputs; tracked provenance and current totals
+are in `data/reference/topic_similarity_summary.json`.
 
 ## Topic registry status
 

@@ -59,6 +59,10 @@ from gisnet.network.graphs import build_annual_graph_catalogue, write_graph_arti
 from gisnet.network.intensity import build_edge_intensity, write_intensity_artifacts
 from gisnet.network.metrics import build_network_metrics, write_metric_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
+from gisnet.network.topic_similarity import (
+    build_topic_similarity,
+    write_topic_similarity_artifacts,
+)
 from gisnet.network.work_institutions import (
     build_normalized_work_institutions,
     write_work_institution_artifacts,
@@ -508,6 +512,40 @@ def build_parser() -> argparse.ArgumentParser:
     citation_flows.add_argument("--duckdb-memory-limit", default="8GB")
     citation_flows.add_argument("--duckdb-threads", default=1, type=int)
     citation_flows.set_defaults(handler=_build_citation_flows)
+
+    topic_similarity = subparsers.add_parser(
+        "build-topic-similarity",
+        help="build institutional Topic vectors and sparse cosine-proximity edges",
+    )
+    _add_pipeline_arguments(topic_similarity)
+    topic_similarity.add_argument(
+        "--work-topics", default="data/processed/work_topics.parquet", type=Path
+    )
+    topic_similarity.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    topic_similarity.add_argument(
+        "--vectors",
+        default="data/processed/institution_topic_vectors_year.parquet",
+        type=Path,
+    )
+    topic_similarity.add_argument(
+        "--output", default="data/processed/topic_similarity_edges_year.parquet", type=Path
+    )
+    topic_similarity.add_argument(
+        "--coverage",
+        default="data/processed/topic_similarity_coverage_year.parquet",
+        type=Path,
+    )
+    topic_similarity.add_argument(
+        "--summary", default="data/reference/topic_similarity_summary.json", type=Path
+    )
+    topic_similarity.add_argument("--maximum-institutions-per-view", default=500, type=int)
+    topic_similarity.add_argument("--top-k", default=20, type=int)
+    topic_similarity.add_argument("--minimum-similarity", default=0.0, type=float)
+    topic_similarity.add_argument("--duckdb-memory-limit", default="8GB")
+    topic_similarity.add_argument("--duckdb-threads", default=1, type=int)
+    topic_similarity.set_defaults(handler=_build_topic_similarity)
 
     build_outputs = subparsers.add_parser(
         "build-outputs", help="build annual institutional full/fractional output tables"
@@ -2045,6 +2083,68 @@ def _build_citation_flows(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['annual_edge_count']} annual directed citation-flow edges; "
         f"institution-resolved references={summary['view_institution_resolved_reference_count']}."
+    )
+    return 0
+
+
+def _build_topic_similarity(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Topic-similarity configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            f"Would build {corpora} x {hierarchies} institutional Topic vectors and cosine "
+            f"proximity edges from {args.work_topics}; no output is changed. This layer is not "
+            "collaboration."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-111"):
+            summary = build_topic_similarity(
+                args.work_topics,
+                args.work_institutions,
+                vectors_path=args.vectors,
+                edges_path=args.output,
+                coverage_path=args.coverage,
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                maximum_institutions_per_view=args.maximum_institutions_per_view,
+                top_k=args.top_k,
+                minimum_similarity=args.minimum_similarity,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-topic-similarity "
+                f"--corpus {args.corpus} --hierarchy {args.hierarchy} "
+                f"--maximum-institutions-per-view {args.maximum_institutions_per_view} "
+                f"--top-k {args.top_k} --minimum-similarity {args.minimum_similarity} --resume"
+            )
+            write_topic_similarity_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "institution_topic_vectors_year",
+                "topic_similarity_edges_year",
+                "topic_similarity_coverage_year",
+                "topic_similarity_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Topic-similarity build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['vector_component_count']} Topic-vector components and "
+        f"{summary['annual_similarity_edge_count']} sparse annual proximity edges."
     )
     return 0
 
