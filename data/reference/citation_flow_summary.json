@@ -1,0 +1,33 @@
+{
+  "annual_edge_count": 32724174,
+  "annual_fractional_count": 13115523.999980893,
+  "annual_full_count": 87320762,
+  "citation_direction": "citing institution to cited institution",
+  "corpus_views": [
+    "strict",
+    "broad"
+  ],
+  "coverage_denominator": "references made by selected-corpus Works with at least one in-scope citing institution",
+  "coverage_row_count": 64,
+  "fractional_weight_policy": "one unit per Work-to-Work citation divided by citing institutions times cited institutions",
+  "generated_at_utc": "2026-08-16T23:04:04.617348Z",
+  "hierarchy_views": [
+    "organization",
+    "umbrella"
+  ],
+  "institution_pair_contribution_count": 87320762,
+  "layer_semantics": "directed corpus-internal citation flow, not collaboration",
+  "logical_input_hash": "ab10fa13c6e52d03e097990d98320353a9f3fa7bc09a3b0ece75857425c6787e",
+  "maximum_fractional_reconciliation_error": 5.698530003428459e-08,
+  "outputs": {
+    "citation_edges_year": "data/processed/citation_edges_year.parquet",
+    "citation_flow_coverage_year": "data/processed/citation_flow_coverage_year.parquet"
+  },
+  "schema_version": 1,
+  "self_flows_preserved": true,
+  "stage_version": "directed-citation-flow-2026-08-17-v1",
+  "view_institution_resolved_reference_count": 13115524,
+  "view_internal_corpus_reference_count": 13320010,
+  "view_negative_lag_reference_count": 28512,
+  "view_reference_count": 61487192
+}

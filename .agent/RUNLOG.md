@@ -2019,3 +2019,110 @@ No blocker affects current acceptance.
 
 Primary release work is complete. Maintenance may add a validated ISO-3 field before a future
 Plotly 7 upgrade; optional GISNET-110+ extensions remain user-triggered only.
+
+## Run 20260816T224937Z_7d9065f5e6c9
+
+Started UTC: 2026-08-16T22:49:37Z
+Ended UTC: 2026-08-16T23:07:28Z
+Task: GISNET-110 — Directed institution citation-flow network
+Initial git status: Clean and synchronized on `main` at `7d9065f`.
+Final pre-commit status: Verified GISNET-110 changes only; no unrelated user work present.
+
+### Objective
+
+Build a reproducible directed annual institution layer from citing institution to cited
+institution, keep it scientifically separate from co-authorship collaboration, and disclose the
+closed-corpus and institution-resolution coverage boundary.
+
+### Work completed
+
+- Added an atomic DuckDB citation-flow builder over normalized Works, corpus membership, and
+  canonical organization/umbrella institution views.
+- Stored annual direction as citing institution to cited institution using the citing Work year.
+- Added full weights and one-unit-per-Work-citation fractional allocation across the Cartesian
+  citing/cited institution pairs.
+- Preserved institution self-flows and negative citation lags with explicit fields.
+- Added annual coverage rows for total references, internal-corpus matches, institution-resolved
+  references, outside/out-of-corpus references, internal Works without scoped institutions,
+  source-data lag anomalies, and expansion counts.
+- Added CLI dry-run/build paths, manifests, state registration, documentation, and synthetic
+  regression coverage including deterministic reruns.
+- Generated the complete 2010–2025 local processed citation layer and rebuilt the release manifest.
+
+### Files changed
+
+- `src/gisnet/network/citations.py`
+- `src/gisnet/cli.py`
+- `tests/unit/test_citations.py`
+- `tests/unit/test_cli.py`
+- `README.md`
+- `RELEASE.md`
+- `data/reference/citation_flow_summary.json`
+- `.agent/manifests/citation_edges_year.json`
+- `.agent/manifests/citation_flow_coverage_year.json`
+- `.agent/manifests/citation_flow_summary.json`
+- `.agent/state.json`, `.agent/backlog.json`, `.agent/RUNLOG.md`
+- `release/manifest.json`, `release/manifest.json.sha256`
+- Local ignored outputs: `data/processed/citation_edges_year.parquet` and
+  `data/processed/citation_flow_coverage_year.parquet`
+
+### Commands executed
+
+- `git push origin main` for the preceding visualization commit.
+- `uv run python -m gisnet.cli next-task`
+- Synthetic citation-flow Pytest iterations and deterministic checksum comparison.
+- `uv run python -m gisnet.cli build-citation-flows --dry-run`
+- Full build with `--duckdb-memory-limit 8GB --duckdb-threads 1`.
+- DuckDB coverage, direction, self-flow, year, null, weight, and lag audits.
+- Focused Ruff, formatting, mypy, Pytest, and release verification.
+- `scripts/quality-gate.sh` and `uv run python -m gisnet.release verify`.
+
+### Validation results
+
+- Annual directed edge rows: 32,724,174 across complete years 2010–2025.
+- View-counted institution-resolved Work references: 13,115,524.
+- View-counted full institution-pair contributions: 87,320,762.
+- Full contributions reconcile exactly; maximum aggregate fractional error is
+  `5.698530003428459e-08` against 13.1 million fractional units.
+- Broad institution-resolved reference share: 23.18% in both hierarchy views.
+- Strict institution-resolved reference share: 11.44% in both hierarchy views.
+- View-counted negative citation lags retained and disclosed: 28,512.
+- Null endpoint IDs, non-positive weights, direction-label failures, and layer-label failures: 0.
+- Ruff lint/format: passed. Strict mypy: passed over 64 source files.
+- Pytest: all 139 repository tests passed.
+- Release: 169 files, 11,736,246 bytes, zero privacy findings.
+
+### Data and configuration hashes
+
+- Citation edges: `e6fcb8d8d0481e3a2892e71e938888369bdec712639c8afa29f443c43a6c17b4`
+- Citation coverage: `c2a6989ca13d34733b85d45826268c451d42f91628dbfeca5cf6f40921db77f8`
+- Citation summary: `566dd42e6649aeee7399d12d1c8015ca50c352993f70ff27713e43b2b928177a`
+- Release manifest: `08c7fe1dba9917bd9f5a072943670c578179f3d5d5d489df9fd64a27838b08cd`
+- Project configuration: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+The two Parquet outputs, JSON summary, and three manifests were written atomically. Project state
+registers all three manifests. No raw response, cache page, or credential was changed.
+
+### Failures or blockers
+
+The first full-data pass exhausted the 4 GB DuckDB cap and removed every temporary output safely.
+The second pass generated all shards but exposed that a fixed `1e-9` absolute reconciliation
+tolerance was too strict for millions of floating-point additions. Validation was separated into
+exact integral full counts plus a scale-aware fractional tolerance; the unchanged scientific build
+then passed at an observed absolute error below `5.7e-08`. No blocker remains.
+
+### Decisions made
+
+- The layer is closed within each selected corpus: both citing and cited Works must be members.
+- Reference coverage starts from selected-corpus Works with an in-scope citing institution.
+- Each resolved Work citation has total fractional weight one, preventing multi-institution Works
+  from dominating solely through Cartesian expansion.
+- Institution self-flows are analytically meaningful here and are preserved.
+- Negative lags are source-data anomalies to disclose, not silently delete.
+- Large processed edges remain Git-ignored; the tracked summary and manifests preserve provenance.
+
+### Exact next action
+
+Task: GISNET-111 — Topic-similarity network. Command: `uv run python -m gisnet.cli next-task`.

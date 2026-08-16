@@ -40,6 +40,8 @@ uv run python -m gisnet.cli run-pipeline \
   --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume
 uv run python -m gisnet.cli report --resume
 uv run python -m gisnet.cli build-data-dictionary --resume
+# Optional knowledge-flow extension; this is not a collaboration layer.
+uv run python -m gisnet.cli build-citation-flows --resume
 uv run python -m gisnet.release build
 uv run python -m gisnet.release verify
 ```
@@ -61,6 +63,9 @@ The API key is not written to configuration, manifests, datasets, or logs.
 - Community matches below Jaccard 0.25 are retained but explicitly uncertain.
 - The visualization score ranks display edges only and is not a primary research metric.
 - 2025 is the last complete calendar year; partial 2026 observations are excluded.
+- The optional citation layer is corpus-internal. Its coverage table reports references whose
+  cited Work or in-scope cited institution is unavailable, and preserves negative citation lags
+  as source-data anomalies rather than silently excluding them.
 
 See [`outputs/reports/methodology.md`](outputs/reports/methodology.md) for the full
 method and limitations, and [`outputs/reports/data_dictionary.md`](outputs/reports/data_dictionary.md)

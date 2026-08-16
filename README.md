@@ -83,6 +83,7 @@ uv run python -m gisnet.cli diagnose-versions --resume
 uv run python -m gisnet.cli build-corpus --resume
 uv run python -m gisnet.cli build-work-institutions --resume
 uv run python -m gisnet.cli build-edges --resume
+uv run python -m gisnet.cli build-citation-flows --resume
 uv run python -m gisnet.cli build-outputs --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
@@ -138,6 +139,21 @@ code hash, and known issue is documented in
 machine-readable companion at [`data/reference/data_dictionary.json`](data/reference/data_dictionary.json).
 Release contents, verification, upstream large-data links, and clean-clone reproduction
 steps are collected in [`RELEASE.md`](RELEASE.md).
+
+## Optional directed citation-flow layer
+
+`build-citation-flows` creates a separate knowledge-flow layer; it never relabels citation links
+as collaboration. The stored direction is citing institution to cited institution, and the annual
+key is the citing Work's publication year. Both Works must belong to the selected Strict or Broad
+corpus and both endpoints must have an in-scope institution. A Work-to-Work citation contributes
+one fractional unit divided across the Cartesian product of its citing and cited institutions;
+institution self-flows remain explicit.
+
+The builder makes no API request. References to Works outside the frozen corpus, internal Works
+without an in-scope institution, and negative citation lags remain counted in
+`data/reference/citation_flow_summary.json` and the generated
+`citation_flow_coverage_year.parquet`; they are not silently treated as observed network edges.
+The full edge and coverage tables are local processed outputs excluded from Git because of size.
 
 ## Topic registry status
 

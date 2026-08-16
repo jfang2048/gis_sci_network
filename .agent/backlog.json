@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-16T22:44:37Z",
+  "last_updated_utc": "2026-08-16T23:07:28Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1446,12 +1446,27 @@
       "dependencies": [
         "GISNET-104"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-16T22:49:37Z",
+          "from": "TODO",
+          "reason": "Building a regression-locked corpus-internal directed institution citation-flow layer with explicit coverage accounting.",
+          "run_id": "20260816T224937Z_7d9065f5e6c9",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-16T23:07:28Z",
+          "from": "IN_PROGRESS",
+          "reason": "Built and validated the directed corpus-internal institution citation-flow layer with explicit direction, full/fractional weighting, self-flow preservation, coverage accounting, source-anomaly disclosure, manifests, and CLI reproduction.",
+          "run_id": "20260816T224937Z_7d9065f5e6c9",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-110",
       "priority": "OPTIONAL",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status": "DONE",
+      "status_reason": "Built and validated the directed corpus-internal institution citation-flow layer with explicit direction, full/fractional weighting, self-flow preservation, coverage accounting, source-anomaly disclosure, manifests, and CLI reproduction.",
+      "status_updated_at_utc": "2026-08-16T23:07:28Z"
     },
     {
       "dependencies": [

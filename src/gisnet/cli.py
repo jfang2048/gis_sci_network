@@ -50,6 +50,7 @@ from gisnet.institutions.types import (
     profile_institution_types,
     write_institution_type_profile,
 )
+from gisnet.network.citations import build_citation_flows, write_citation_artifacts
 from gisnet.network.communities import build_annual_communities, write_community_artifacts
 from gisnet.network.continuity import build_community_continuity, write_continuity_artifacts
 from gisnet.network.edges import build_collaboration_edges, write_edge_artifacts
@@ -480,6 +481,33 @@ def build_parser() -> argparse.ArgumentParser:
     build_edges.add_argument("--duckdb-memory-limit", default="4GB")
     build_edges.add_argument("--duckdb-threads", default=1, type=int)
     build_edges.set_defaults(handler=_build_edges)
+
+    citation_flows = subparsers.add_parser(
+        "build-citation-flows",
+        help="build directed corpus-internal institution citation-flow edges",
+    )
+    _add_pipeline_arguments(citation_flows)
+    citation_flows.add_argument("--works", default="data/processed/works.parquet", type=Path)
+    citation_flows.add_argument(
+        "--work-corpus", default="data/processed/work_corpus.parquet", type=Path
+    )
+    citation_flows.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    citation_flows.add_argument(
+        "--output", default="data/processed/citation_edges_year.parquet", type=Path
+    )
+    citation_flows.add_argument(
+        "--coverage",
+        default="data/processed/citation_flow_coverage_year.parquet",
+        type=Path,
+    )
+    citation_flows.add_argument(
+        "--summary", default="data/reference/citation_flow_summary.json", type=Path
+    )
+    citation_flows.add_argument("--duckdb-memory-limit", default="8GB")
+    citation_flows.add_argument("--duckdb-threads", default=1, type=int)
+    citation_flows.set_defaults(handler=_build_citation_flows)
 
     build_outputs = subparsers.add_parser(
         "build-outputs", help="build annual institutional full/fractional output tables"
@@ -1962,6 +1990,61 @@ def _build_edges(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['work_edge_count']} Work-edge contributions and "
         f"{summary['annual_edge_count']} annual edges."
+    )
+    return 0
+
+
+def _build_citation_flows(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Citation-flow configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            f"Would build {corpora} x {hierarchies} directed citation-flow edges from "
+            f"{args.works}; no output is changed. This layer is not collaboration."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-110"):
+            summary = build_citation_flows(
+                args.works,
+                args.work_corpus,
+                args.work_institutions,
+                edges_year_path=args.output,
+                coverage_year_path=args.coverage,
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-citation-flows "
+                f"--corpus {args.corpus} --hierarchy {args.hierarchy} --resume"
+            )
+            write_citation_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                command=command,
+            )
+            for name in (
+                "citation_edges_year",
+                "citation_flow_coverage_year",
+                "citation_flow_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Directed citation-flow build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['annual_edge_count']} annual directed citation-flow edges; "
+        f"institution-resolved references={summary['view_institution_resolved_reference_count']}."
     )
     return 0
 

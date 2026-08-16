@@ -1,8 +1,8 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 91,
-      "size_bytes": 135814
+      "file_count": 94,
+      "size_bytes": 140547
     },
     "config": {
       "file_count": 11,
@@ -13,8 +13,8 @@
       "size_bytes": 10244692
     },
     "data/reference": {
-      "file_count": 39,
-      "size_bytes": 1044794
+      "file_count": 40,
+      "size_bytes": 1046193
     },
     "figures": {
       "file_count": 3,
@@ -50,6 +50,21 @@
       "path": ".agent/manifests/annual_trends_summary.json",
       "sha256": "b901d66401e0399bb8efc81a50fa263faf5eb3f9c4be1de88f85e7a0f91137a3",
       "size_bytes": 1046
+    },
+    {
+      "path": ".agent/manifests/citation_edges_year.json",
+      "sha256": "e8cab11a34c65fdfd33c6b36ad5808fe3483910c46ef66b5166ccb253597d3dd",
+      "size_bytes": 1571
+    },
+    {
+      "path": ".agent/manifests/citation_flow_coverage_year.json",
+      "sha256": "30221072653bf786e511845e443ee2e489cebcb338cd3d1f0fe54b7d1c762c7e",
+      "size_bytes": 1540
+    },
+    {
+      "path": ".agent/manifests/citation_flow_summary.json",
+      "sha256": "8131ec33f116da1fe4bedf9391c2aee65ec5dc0b591e50c3665af96a7b7f2d1c",
+      "size_bytes": 1622
     },
     {
       "path": ".agent/manifests/collaboration_edges_summary.json",
@@ -647,6 +662,11 @@
       "size_bytes": 577
     },
     {
+      "path": "data/reference/citation_flow_summary.json",
+      "sha256": "566dd42e6649aeee7399d12d1c8015ca50c352993f70ff27713e43b2b928177a",
+      "size_bytes": 1399
+    },
+    {
       "path": "data/reference/collaboration_edges_summary.json",
       "sha256": "cde7f201c14fb57af10b791603725fa258815c22e83bcb368eb96d17e5670229",
       "size_bytes": 885
@@ -867,11 +887,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-16T22:43:15Z",
+  "generated_at_utc": "2026-08-16T23:05:58Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 165,
-  "public_size_bytes": 11730114,
+  "public_file_count": 169,
+  "public_size_bytes": 11736246,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

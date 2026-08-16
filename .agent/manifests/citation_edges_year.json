@@ -1,0 +1,57 @@
+{
+  "checksum_sha256": "e6fcb8d8d0481e3a2892e71e938888369bdec712639c8afa29f443c43a6c17b4",
+  "column_count": 23,
+  "command": "python -m gisnet.cli build-citation-flows --corpus all --hierarchy all --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-08-16T23:04:12.991183Z",
+  "dataset_name": "citation_edges_year",
+  "git_commit": "7d9065f5e6c9",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "citation_direction": 0,
+    "corpus_view": 0,
+    "fractional_count": 0,
+    "full_count": 0,
+    "hierarchy_view": 0,
+    "is_institution_self_flow": 0,
+    "layer_semantics": 0,
+    "maximum_citation_lag_years": 0,
+    "minimum_citation_lag_years": 0,
+    "negative_lag_full_count": 0,
+    "source_category": 0,
+    "source_country": 0,
+    "source_id": 0,
+    "source_name": 0,
+    "source_region": 0,
+    "source_subregion": 0,
+    "target_category": 0,
+    "target_country": 0,
+    "target_id": 0,
+    "target_name": 0,
+    "target_region": 0,
+    "target_subregion": 0,
+    "year": 0
+  },
+  "primary_key": [
+    "year",
+    "corpus_view",
+    "hierarchy_view",
+    "source_id",
+    "target_id"
+  ],
+  "row_count": 32724174,
+  "run_id": "20260816T224937Z_7d9065f5e6c9",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/works.json",
+    ".agent/manifests/work_corpus.json",
+    ".agent/manifests/work_institutions.json"
+  ],
+  "source_versions": {
+    "citation_flow_policy": "directed-citation-flow-2026-08-17-v1"
+  },
+  "status": "valid"
+}
