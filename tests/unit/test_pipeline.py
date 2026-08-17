@@ -264,3 +264,20 @@ def test_publication_date_qa_precedes_annual_network_stages() -> None:
         "publication_date_coverage_topic_family.parquet",
         "publication_date_qa_summary.json",
     }
+
+
+def test_subannual_facts_follow_annual_edge_and_output_inputs() -> None:
+    commands = [stage.command for stage in DEFAULT_STAGES]
+    subannual_index = commands.index("build-subannual-facts")
+    assert commands[subannual_index - 1] == "build-outputs"
+    assert commands[subannual_index + 1] == "build-region-flows"
+    outputs = {output.data.name for output in DEFAULT_STAGES[subannual_index].outputs}
+    assert outputs == {
+        "institution_outputs_month.parquet",
+        "institution_outputs_quarter.parquet",
+        "collaboration_edges_month.parquet",
+        "collaboration_edges_quarter.parquet",
+        "subannual_reconciliation.parquet",
+        "subannual_sparsity.parquet",
+        "subannual_temporal_summary.json",
+    }

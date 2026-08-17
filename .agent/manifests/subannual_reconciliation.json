@@ -1,0 +1,50 @@
+{
+  "checksum_sha256": "42825328b5dc8a2695d98a5bf57a8336827009b35f0ab3bbfe9806996225c26c",
+  "column_count": 14,
+  "command": "python -m gisnet.cli build-subannual-facts --corpus all --hierarchy all --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-17T12:45:03.227265Z",
+  "dataset_name": "subannual_reconciliation",
+  "git_commit": "a639db52eaea",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "actual_fractional_count": 0,
+    "actual_full_count": 0,
+    "actual_work_observation_count": 0,
+    "corpus_view": 0,
+    "dimension": 0,
+    "expected_distinct_work_count": 0,
+    "expected_fractional_count": 0,
+    "expected_full_count": 0,
+    "fractional_count_difference": 0,
+    "full_count_difference": 0,
+    "hierarchy_view": 0,
+    "publication_year": 0,
+    "reconciliation_passed": 0,
+    "temporal_grain": 0
+  },
+  "primary_key": [
+    "dimension",
+    "temporal_grain",
+    "publication_year",
+    "corpus_view",
+    "hierarchy_view"
+  ],
+  "row_count": 256,
+  "run_id": "20260817T120017Z_a639db52eaea",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_publication_dates.json",
+    ".agent/manifests/work_institutions.json",
+    ".agent/manifests/school_decision_contract.json"
+  ],
+  "source_versions": {
+    "entity_scope": "primary_research",
+    "subannual_fact_policy": "subannual-school-facts-2026-08-17-v1"
+  },
+  "status": "valid"
+}

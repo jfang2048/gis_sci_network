@@ -11,7 +11,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 
-_VALIDATION_VERSION = "reproducibility-validation-2026-08-17-v2"
+_VALIDATION_VERSION = "reproducibility-validation-2026-08-17-v3"
 
 CORE_DATASETS: dict[str, str] = {
     "works": "data/processed/works.parquet",
@@ -34,6 +34,12 @@ CORE_DATASETS: dict[str, str] = {
     "edges_year": "data/processed/edges_year.parquet",
     "edge_work_diagnostics": "data/processed/edge_work_diagnostics.parquet",
     "institution_outputs_year": "data/processed/institution_outputs_year.parquet",
+    "institution_outputs_month": "data/processed/institution_outputs_month.parquet",
+    "institution_outputs_quarter": "data/processed/institution_outputs_quarter.parquet",
+    "collaboration_edges_month": "data/processed/collaboration_edges_month.parquet",
+    "collaboration_edges_quarter": "data/processed/collaboration_edges_quarter.parquet",
+    "subannual_reconciliation": "data/processed/subannual_reconciliation.parquet",
+    "subannual_sparsity": "data/processed/subannual_sparsity.parquet",
     "region_flows_year": "data/processed/region_flows_year.parquet",
 }
 
@@ -44,6 +50,8 @@ RECOVERY_TESTS = [
     "tests/unit/test_state.py::test_state_round_trip_and_invalid_backup",
     "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic",
     "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic",
+    "tests/unit/test_subannual_facts.py::test_subannual_outputs_are_deterministic_and_do_not_modify_annual_inputs",
+    "tests/unit/test_subannual_facts.py::test_failed_subannual_group_promotion_restores_every_prior_output",
 ]
 
 

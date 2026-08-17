@@ -64,6 +64,7 @@ from gisnet.network.intensity import build_edge_intensity, write_intensity_artif
 from gisnet.network.metrics import build_network_metrics, write_metric_artifacts
 from gisnet.network.multiplex import build_multiplex_comparison, write_multiplex_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
+from gisnet.network.subannual import build_subannual_facts, write_subannual_artifacts
 from gisnet.network.topic_similarity import (
     build_topic_similarity,
     write_topic_similarity_artifacts,
@@ -678,6 +679,55 @@ def build_parser() -> argparse.ArgumentParser:
     build_outputs.add_argument("--duckdb-memory-limit", default="4GB")
     build_outputs.add_argument("--duckdb-threads", default=1, type=int)
     build_outputs.set_defaults(handler=_build_outputs)
+
+    subannual = subparsers.add_parser(
+        "build-subannual-facts",
+        help="build sparse monthly/quarterly school-decision facts and sparsity QA",
+    )
+    _add_pipeline_arguments(subannual)
+    subannual.add_argument(
+        "--work-dates", default="data/processed/work_publication_dates.parquet", type=Path
+    )
+    subannual.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    subannual.add_argument(
+        "--institution-month",
+        default="data/processed/institution_outputs_month.parquet",
+        type=Path,
+    )
+    subannual.add_argument(
+        "--institution-quarter",
+        default="data/processed/institution_outputs_quarter.parquet",
+        type=Path,
+    )
+    subannual.add_argument(
+        "--edge-month",
+        default="data/processed/collaboration_edges_month.parquet",
+        type=Path,
+    )
+    subannual.add_argument(
+        "--edge-quarter",
+        default="data/processed/collaboration_edges_quarter.parquet",
+        type=Path,
+    )
+    subannual.add_argument(
+        "--reconciliation",
+        default="data/processed/subannual_reconciliation.parquet",
+        type=Path,
+    )
+    subannual.add_argument(
+        "--sparsity", default="data/processed/subannual_sparsity.parquet", type=Path
+    )
+    subannual.add_argument(
+        "--summary", default="data/reference/subannual_temporal_summary.json", type=Path
+    )
+    subannual.add_argument("--school-decision", default="config/school_decision.yml", type=Path)
+    subannual.add_argument("--observation-start-month")
+    subannual.add_argument("--observation-end-month")
+    subannual.add_argument("--duckdb-memory-limit", default="4GB")
+    subannual.add_argument("--duckdb-threads", default=1, type=int)
+    subannual.set_defaults(handler=_build_subannual_facts)
 
     build_flows = subparsers.add_parser(
         "build-region-flows", help="aggregate institution pairs to region, subregion, and country"
@@ -2449,6 +2499,76 @@ def _build_outputs(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['node_year_count']} node-year outputs; zero-edge output rows="
         f"{summary['zero_edge_output_node_year_count']}."
+    )
+    return 0
+
+
+def _build_subannual_facts(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Subannual configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            "Would build sparse school-decision month and quarter facts from exact "
+            "bibliographic publication-time observations. Publication time is not a "
+            "collaboration, research, project, or mobility start date; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-122"):
+            summary = build_subannual_facts(
+                args.work_dates,
+                args.work_institutions,
+                institution_month_path=args.institution_month,
+                institution_quarter_path=args.institution_quarter,
+                edge_month_path=args.edge_month,
+                edge_quarter_path=args.edge_quarter,
+                reconciliation_path=args.reconciliation,
+                sparsity_path=args.sparsity,
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                warning_institution_count=project.consortium.warning_institution_count,
+                exclusion_institution_count=(project.consortium.exclusion_institution_count),
+                observation_start_month=args.observation_start_month,
+                observation_end_month=args.observation_end_month,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-subannual-facts "
+                f"--corpus {args.corpus} --hierarchy {args.hierarchy} --resume"
+            )
+            write_subannual_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            for name in (
+                "institution_outputs_month",
+                "institution_outputs_quarter",
+                "collaboration_edges_month",
+                "collaboration_edges_quarter",
+                "subannual_reconciliation",
+                "subannual_sparsity",
+                "subannual_temporal_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Subannual fact build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        "Built subannual school-decision facts for "
+        f"{summary['observation_start_month']} through {summary['observation_end_month']}; "
+        f"institution-month rows={summary['row_counts']['institution_outputs_month']}, "
+        f"edge-month rows={summary['row_counts']['collaboration_edges_month']}."
     )
     return 0
 

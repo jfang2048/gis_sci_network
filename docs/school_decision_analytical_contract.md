@@ -44,9 +44,10 @@ view has zero active collapses and is therefore non-informative until supported 
 
 1. **Historical scientific mode** uses complete-calendar-year annual outputs for 2010-2025.
 2. **Current school-decision mode** remains dependency-gated through GISNET-124. GISNET-121 now
-   provides the validated publication-date facts and coverage QA; GISNET-122 through GISNET-124
-   will add subannual facts, rolling windows, and safe incremental current-year acquisition. A raw
-   partial year is never compared with a complete year.
+   provides validated publication-date facts and coverage QA, and GISNET-122 provides sparse
+   month/quarter institution and collaboration facts across the complete primary-research scope.
+   GISNET-123 and GISNET-124 will add rolling windows and safe incremental current-year
+   acquisition. A raw partial year is never compared with a complete year.
 
 The primary stored keys are `publication_month`, `publication_quarter`, `publication_year`,
 `window_start`, `window_end`, and `window_months`. Missing month/day values are never fabricated.
@@ -69,6 +70,14 @@ differences are 7 Strict and 14 Broad Works.
 
 Recommended defaults are rolling 12 months for recent trend, rolling 24 months for a stable recent
 profile, rolling 36 months for longer stability, and annual data for long-term history.
+
+Measured 2010-2025 school-scope sparsity supports those defaults rather than assuming them:
+Broad/Strict organization institution-month zero rates are 87.86%/93.54%, and edge-month zero
+rates are 98.78%/99.11%; median positive institution-month and edge-month cells contain one Work.
+Quarter-level zero rates are lower, while high-activity institutions are materially less sparse.
+The fact schemas, exact denominators, activity bands, and benchmarks are documented in
+[`subannual_facts.md`](subannual_facts.md). Publication-time recurrence remains an observation of
+repeated co-publication, not evidence of when a relationship began.
 
 ## Independent analytical dimensions
 

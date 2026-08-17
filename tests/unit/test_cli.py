@@ -39,3 +39,11 @@ def test_publication_date_qa_dry_run_names_time_semantics(capsys: object) -> Non
     captured = capsys.readouterr()  # type: ignore[attr-defined]
     assert "bibliographic publication-time" in captured.out
     assert "not collaboration" in captured.out
+
+
+def test_subannual_fact_dry_run_names_time_and_scope_semantics(capsys: object) -> None:
+    assert main(["build-subannual-facts", "--dry-run"]) == 0
+    captured = capsys.readouterr()  # type: ignore[attr-defined]
+    assert "bibliographic publication-time" in captured.out
+    assert "not a collaboration" in captured.out
+    assert "school-decision" in captured.out

@@ -1,6 +1,6 @@
 {
   "checksum_mismatch_count": 0,
-  "dataset_check_count": 17,
+  "dataset_check_count": 23,
   "dataset_checks": [
     {
       "actual_checksum_sha256": "a6d3e6b40336142c8d2f4084a7553fafd68613a92d5b07c2ac3de7b71ceebad6",
@@ -179,6 +179,72 @@
       "row_count": 501890
     },
     {
+      "actual_checksum_sha256": "5725554ceccd82c949b45d9f98801398e22d264d06e477b48fe73309ba830fb5",
+      "checksum_matches": true,
+      "dataset_name": "institution_outputs_month",
+      "expected_checksum_sha256": "5725554ceccd82c949b45d9f98801398e22d264d06e477b48fe73309ba830fb5",
+      "manifest_path": ".agent/manifests/institution_outputs_month.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/institution_outputs_month.parquet",
+      "row_count": 1745888
+    },
+    {
+      "actual_checksum_sha256": "cde98a11fd0e56efc6f2da77e695a6fedd84d8cb4b9dce8bcbf6195970c903e4",
+      "checksum_matches": true,
+      "dataset_name": "institution_outputs_quarter",
+      "expected_checksum_sha256": "cde98a11fd0e56efc6f2da77e695a6fedd84d8cb4b9dce8bcbf6195970c903e4",
+      "manifest_path": ".agent/manifests/institution_outputs_quarter.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/institution_outputs_quarter.parquet",
+      "row_count": 1117588
+    },
+    {
+      "actual_checksum_sha256": "9d022b7afaa84050359c8f8fe03c0aa7439eb4ec97f4d541c66e8962068855a0",
+      "checksum_matches": true,
+      "dataset_name": "collaboration_edges_month",
+      "expected_checksum_sha256": "9d022b7afaa84050359c8f8fe03c0aa7439eb4ec97f4d541c66e8962068855a0",
+      "manifest_path": ".agent/manifests/collaboration_edges_month.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/collaboration_edges_month.parquet",
+      "row_count": 4407772
+    },
+    {
+      "actual_checksum_sha256": "a78d43a4350e5cc10b09f0d8c363a66ce47072f6a95389fbdc6e1316b7ef5e75",
+      "checksum_matches": true,
+      "dataset_name": "collaboration_edges_quarter",
+      "expected_checksum_sha256": "a78d43a4350e5cc10b09f0d8c363a66ce47072f6a95389fbdc6e1316b7ef5e75",
+      "manifest_path": ".agent/manifests/collaboration_edges_quarter.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/collaboration_edges_quarter.parquet",
+      "row_count": 4066652
+    },
+    {
+      "actual_checksum_sha256": "42825328b5dc8a2695d98a5bf57a8336827009b35f0ab3bbfe9806996225c26c",
+      "checksum_matches": true,
+      "dataset_name": "subannual_reconciliation",
+      "expected_checksum_sha256": "42825328b5dc8a2695d98a5bf57a8336827009b35f0ab3bbfe9806996225c26c",
+      "manifest_path": ".agent/manifests/subannual_reconciliation.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/subannual_reconciliation.parquet",
+      "row_count": 256
+    },
+    {
+      "actual_checksum_sha256": "d3233aa9dceedbc75a4f584778d245cb290d68152daa42c1da1f8294838b5dc9",
+      "checksum_matches": true,
+      "dataset_name": "subannual_sparsity",
+      "expected_checksum_sha256": "d3233aa9dceedbc75a4f584778d245cb290d68152daa42c1da1f8294838b5dc9",
+      "manifest_path": ".agent/manifests/subannual_sparsity.json",
+      "manifest_run_id": "20260817T120017Z_a639db52eaea",
+      "manifest_status": "valid",
+      "path": "data/processed/subannual_sparsity.parquet",
+      "row_count": 452
+    },
+    {
       "actual_checksum_sha256": "cbba334fc5dc1bcc58fe373aa0d748a9e33af5f7b5ce50bbec7df5ba18c22f21",
       "checksum_matches": true,
       "dataset_name": "region_flows_year",
@@ -190,8 +256,8 @@
       "row_count": 97762
     }
   ],
-  "generated_at_utc": "2026-08-17T11:57:28.323656Z",
-  "logical_input_hash": "e5d4b77c91d7ede13bdcd7b81a681a81bc27877b8e9485fccb4e119fd615cdba",
+  "generated_at_utc": "2026-08-17T12:45:19.968083Z",
+  "logical_input_hash": "e8ee1132bef8f3cfdbcc12143263309f6abd6d12b0e86a72b552c71dd2a4162e",
   "recovery_contracts": {
     "atomic_write_preserves_previous_output": true,
     "corrupt_cache_quarantined": true,
@@ -206,10 +272,12 @@
     "tests/unit/test_openalex_cache.py::test_corrupt_cache_is_quarantined",
     "tests/unit/test_state.py::test_state_round_trip_and_invalid_backup",
     "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic",
-    "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic"
+    "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic",
+    "tests/unit/test_subannual_facts.py::test_subannual_outputs_are_deterministic_and_do_not_modify_annual_inputs",
+    "tests/unit/test_subannual_facts.py::test_failed_subannual_group_promotion_restores_every_prior_output"
   ],
   "schema_version": 1,
   "status": "passed",
   "temporary_output_count": 0,
-  "validation_version": "reproducibility-validation-2026-08-17-v2"
+  "validation_version": "reproducibility-validation-2026-08-17-v3"
 }

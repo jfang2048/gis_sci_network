@@ -132,3 +132,22 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Preserve the released exact-DOI representative policy for primary Strict/Broad facts. Do not
   merge version-family dates or choose a new family date. Relative to all-version sensitivity, the
   policy removes 129 Strict and 360 Broad exact-date-eligible records across 71 and 119 months.
+
+## 2026-08-17 — Subannual school-decision facts and sparsity
+
+- Use `is_primary_research_scope` across every stored geography for school-decision month/quarter
+  facts. This intentionally includes Africa, Oceania, and unknown geography and does not alter the
+  legacy annual `is_primary_network_scope` files.
+- Preserve stable-ID Work arithmetic: each institution receives `1/k`; each unordered pair receives
+  full weight 1 and fractional weight `2 / (k * (k - 1))`. Publication month changes grouping only.
+- Store sparse positive Parquet facts and derive zero cells from recoverable entity and period
+  denominators. Diagnostic activity bands are transparent full-Work ranges 1–4, 5–19, 20–99, and
+  100+; they are descriptive strata, not quality tiers.
+- For custom month bounds, exact-dated entities enter the sparsity universe only inside the bounds.
+  Annual-only entities remain when their publication year overlaps because no evidence can locate
+  them within that year.
+- Current raw month networks are highly sparse (Broad/Strict edge-month zero rates 98.78%/99.11%);
+  retain raw facts for exact analysis and rolling inputs, but prefer rolling 12/24-month decision
+  defaults rather than a raw-month ranking.
+- Keep single Zstandard Parquet files for GISNET-122: measured predicate reads are 4–17 ms and the
+  six outputs total about 155 MB, so partitioning is not justified.

@@ -13,7 +13,8 @@ research-based school-decision system built without discarding or relabelling th
 | Separate citation-flow, Topic-proximity, and multiplex comparison layers | Available |
 | Versioned school-decision analytical contract | Available |
 | Publication-date QA | Available |
-| Subannual facts and rolling windows | Planned: GISNET-122–124 |
+| Subannual month/quarter facts and sparsity QA | Available |
+| Rolling windows and safe current-year acquisition | Planned: GISNET-123–124 |
 | Complete School Finder, profiles, comparison, and ego maps | Planned: GISNET-126–138 |
 
 The current dashboard remains the annual regional-analysis application until the planned school
@@ -104,6 +105,7 @@ uv run python -m gisnet.cli build-citation-flows --resume
 uv run python -m gisnet.cli build-topic-similarity --resume
 uv run python -m gisnet.cli build-multiplex --resume
 uv run python -m gisnet.cli build-outputs --resume
+uv run python -m gisnet.cli build-subannual-facts --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
 uv run python -m gisnet.cli verify-reproducibility
@@ -199,6 +201,29 @@ Strict and 360 Broad exact-date-eligible Work records, affecting 71 Strict and 1
 months in this snapshot (maximum monthly differences 7 and 14). Detailed counts, hashes, and output
 paths are recorded in
 [`data/reference/publication_date_qa_summary.json`](data/reference/publication_date_qa_summary.json).
+
+### Subannual school-decision facts
+
+`build-subannual-facts` adds sparse positive institution and collaboration facts at publication
+month and quarter grain without changing any released annual file. These facts use the complete
+`is_primary_research_scope` school-decision universe, including Africa, Oceania, and unknown
+geography; this is intentionally broader than the legacy annual network's
+Europe/Asia/Americas-only scope. Stable institution IDs and canonical organization/umbrella views
+remain the join keys. A Work with `k` distinct eligible institutions contributes `1/k` to each
+institution and `2 / (k * (k - 1))` to each unordered pair, so pair fractions sum to one.
+
+The positive facts remain compact single Zstandard-compressed Parquet files. A separate sparsity
+table derives zero cells arithmetically from the complete entity universe and 192 observed months
+rather than materializing an entity-by-calendar Cartesian table. In the current snapshot,
+Broad/Strict organization institution-month zero rates are 87.86%/93.54%; quarter rates are
+77.70%/86.01%. Broad/Strict edge-month zero rates are 98.78%/99.11%, and the median active
+institution month and edge month each contain one Work. Raw monthly views are therefore retained
+for exact analysis and rolling inputs, but are not selected as a default ranking display.
+
+Schemas, formulas, reconciliations, activity-tier definitions, storage sizes, and query benchmarks
+are documented in [`docs/subannual_facts.md`](docs/subannual_facts.md). Current counts and hashes
+are recorded in
+[`data/reference/subannual_temporal_summary.json`](data/reference/subannual_temporal_summary.json).
 
 ## Optional directed citation-flow layer
 

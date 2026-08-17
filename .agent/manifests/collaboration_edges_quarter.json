@@ -1,0 +1,62 @@
+{
+  "checksum_sha256": "a78d43a4350e5cc10b09f0d8c363a66ce47072f6a95389fbdc6e1316b7ef5e75",
+  "column_count": 26,
+  "command": "python -m gisnet.cli build-subannual-facts --corpus all --hierarchy all --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-17T12:45:03.202972Z",
+  "dataset_name": "collaboration_edges_quarter",
+  "git_commit": "a639db52eaea",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "corpus_view": 0,
+    "distinct_topic_family_count": 0,
+    "distinct_work_count": 0,
+    "excluded_threshold_work_count": 0,
+    "fractional_count": 0,
+    "full_count": 0,
+    "hierarchy_view": 0,
+    "large_consortium_work_count": 0,
+    "maximum_consortium_size": 0,
+    "publication_quarter": 0,
+    "publication_year": 0,
+    "scope": 0,
+    "source_category": 0,
+    "source_country": 0,
+    "source_id": 0,
+    "source_name": 0,
+    "source_region": 0,
+    "source_subregion": 0,
+    "target_category": 0,
+    "target_country": 0,
+    "target_id": 0,
+    "target_name": 0,
+    "target_region": 0,
+    "target_subregion": 0,
+    "topic_families": 0,
+    "work_ids_sample": 0
+  },
+  "primary_key": [
+    "publication_quarter",
+    "corpus_view",
+    "hierarchy_view",
+    "source_id",
+    "target_id"
+  ],
+  "row_count": 4066652,
+  "run_id": "20260817T120017Z_a639db52eaea",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/work_publication_dates.json",
+    ".agent/manifests/work_institutions.json",
+    ".agent/manifests/school_decision_contract.json"
+  ],
+  "source_versions": {
+    "entity_scope": "primary_research",
+    "subannual_fact_policy": "subannual-school-facts-2026-08-17-v1"
+  },
+  "status": "valid"
+}
