@@ -1,11 +1,25 @@
-# Dynamic GIS Institutional Collaboration Network
+# GIS Research Collaboration and Institution Comparison
 
-This repository builds a reproducible annual network of GIS and broader geospatial
-research collaboration among universities and research institutions in Europe, Asia,
-and the Americas. Complete-year results cover 2010–2025 by default. Africa and Oceania
-remain represented so mixed-region collaboration is not discarded.
+This repository builds a reproducible GIS and broader geospatial research system around
+universities and research institutions. Its released scientific layer covers complete-year
+collaboration networks from 2010–2025. The next product layer is an institution-first,
+research-based school-decision system built without discarding or relabelling those annual outputs.
 
-## View the results
+[![Architecture showing the available historical annual layer and the planned subannual school-decision extension](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
+
+| Capability | Status on `main` |
+| --- | --- |
+| Complete-year annual collaboration analysis | Available |
+| Separate citation-flow, Topic-proximity, and multiplex comparison layers | Available |
+| Versioned school-decision analytical contract | Available |
+| Publication-date QA, subannual facts, and rolling windows | Planned: GISNET-121–124 |
+| Complete School Finder, profiles, comparison, and ego maps | Planned: GISNET-126–138 |
+
+The current dashboard remains the annual regional-analysis application until the planned school
+datasets and interfaces pass their acceptance checks. This roadmap is not presented as an already
+released School Finder.
+
+## View the current annual results
 
 The checked-in figures are publication-ready SVGs generated from processed data. Line color and
 dash both identify series; matrix shading is accompanied by readable cell labels and a scale
@@ -129,7 +143,7 @@ prints the exact recovery command.
 
 ## Dashboard snapshot and documentation
 
-The checked-in eight-page dashboard includes regional trends,
+The checked-in eight-page annual dashboard includes regional trends,
 collaboration matrices, geographic and fixed-layout network views, an institution-pair
 explorer, Topic-family comparisons, methods, and data-quality metadata. See
 [`dashboard/README.md`](dashboard/README.md) for snapshot rebuild details.
@@ -145,10 +159,10 @@ steps are collected in [`RELEASE.md`](RELEASE.md).
 
 ## School-decision analytical contract
 
-The next product layer is institution-first: it will support complete-universe school search,
-research profiles, rolling publication-time windows, per-school collaboration partners, geographic
-flows, and direct institutional comparison while preserving the existing complete-year annual
-analysis. The versioned contract is documented in
+The institution-first layer is under active development: it will support complete-universe school
+search, research profiles, rolling publication-time windows, per-school collaboration partners,
+geographic flows, and direct institutional comparison while preserving the existing complete-year
+annual analysis. The versioned contract is documented in
 [`docs/school_decision_analytical_contract.md`](docs/school_decision_analytical_contract.md), with
 its strict machine-readable source in
 [`config/school_decision.yml`](config/school_decision.yml).

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="architecture-title architecture-description">
+  <title id="architecture-title">GIS research system architecture and implementation status</title>
+  <desc id="architecture-description">OpenAlex Works feed a released complete-year annual scientific layer and a planned publication-date layer. The planned layer will create monthly, quarterly, and rolling windows before complete school indexes, profiles, partners, comparisons, and geographic flows. Co-authorship, citation flow, and Topic similarity remain separate evidence layers.</desc>
+  <rect width="1400" height="820" fill="#F8FAFC"/>
+  <text x="700" y="48" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#0F172A">GIS research system: preserved annual science + school-decision extension</text>
+  <text x="700" y="78" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#475569">Solid borders are available on main · dashed borders are dependency-gated planned work</text>
+
+  <rect x="535" y="105" width="330" height="62" rx="31" fill="#0F172A"/>
+  <text x="700" y="143" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">Normalized OpenAlex Works</text>
+  <line x1="700" y1="167" x2="700" y2="198" stroke="#64748B" stroke-width="3"/>
+  <line x1="350" y1="198" x2="1050" y2="198" stroke="#64748B" stroke-width="3"/>
+  <line x1="350" y1="198" x2="350" y2="220" stroke="#64748B" stroke-width="3"/>
+  <line x1="1050" y1="198" x2="1050" y2="220" stroke="#64748B" stroke-width="3"/>
+  <circle cx="700" cy="198" r="5" fill="#64748B"/>
+
+  <rect x="70" y="220" width="560" height="335" rx="20" fill="#FFFFFF" stroke="#15803D" stroke-width="4"/>
+  <rect x="70" y="220" width="560" height="62" rx="20" fill="#DCFCE7"/>
+  <path d="M70 262 V282 H630 V262" fill="#DCFCE7"/>
+  <text x="100" y="258" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#166534">AVAILABLE · historical scientific mode</text>
+  <text x="100" y="316" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0F172A">Complete calendar years · 2010–2025</text>
+  <text x="100" y="350" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Annual institution outputs and collaboration edges</text>
+  <text x="100" y="382" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Regional flows, metrics, communities, and sensitivity</text>
+  <text x="100" y="414" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Geographic and fixed-layout annual visualizations</text>
+  <text x="100" y="446" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Existing public outputs stay named and reproducible</text>
+  <rect x="100" y="478" width="500" height="50" rx="10" fill="#F0FDF4" stroke="#86EFAC" stroke-width="2"/>
+  <text x="350" y="509" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="700" fill="#166534">Default interpretation: long-term annual context</text>
+
+  <rect x="770" y="220" width="560" height="335" rx="20" fill="#FFFFFF" stroke="#D97706" stroke-width="4" stroke-dasharray="12 9"/>
+  <rect x="770" y="220" width="560" height="62" rx="20" fill="#FEF3C7"/>
+  <path d="M770 262 V282 H1330 V262" fill="#FEF3C7"/>
+  <text x="800" y="258" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#92400E">PLANNED · current school-decision mode</text>
+  <text x="800" y="316" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0F172A">Publication-time observation · exact dates only</text>
+  <text x="800" y="350" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Date QA without fabricated months or days</text>
+  <text x="800" y="382" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Monthly, quarterly, and rolling 12m / 24m / 36m facts</text>
+  <text x="800" y="414" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Complete school index and per-school partner index</text>
+  <text x="800" y="446" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="#334155">• Profiles, comparisons, ego maps, and geographic flows</text>
+  <rect x="800" y="478" width="500" height="50" rx="10" fill="#FFFBEB" stroke="#FCD34D" stroke-width="2"/>
+  <text x="1050" y="509" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="700" fill="#92400E">Default target: stable rolling 24-month profile</text>
+
+  <text x="700" y="604" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="21" font-weight="700" fill="#0F172A">Independent evidence layers — never merged into one scientific edge weight</text>
+
+  <rect x="70" y="632" width="390" height="112" rx="16" fill="#EFF6FF" stroke="#2563EB" stroke-width="3"/>
+  <text x="265" y="672" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="19" font-weight="700" fill="#1E40AF">Co-authorship</text>
+  <text x="265" y="704" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#334155">Observed publication collaboration</text>
+  <text x="265" y="728" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="#64748B">Undirected institutional relationship</text>
+
+  <rect x="505" y="632" width="390" height="112" rx="16" fill="#F5F3FF" stroke="#7C3AED" stroke-width="3"/>
+  <text x="700" y="672" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="19" font-weight="700" fill="#5B21B6">Citation flow</text>
+  <text x="700" y="704" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#334155">Knowledge-flow proxy</text>
+  <text x="700" y="728" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="#64748B">Directed citing → cited relationship</text>
+
+  <rect x="940" y="632" width="390" height="112" rx="16" fill="#ECFDF5" stroke="#059669" stroke-width="3"/>
+  <text x="1135" y="672" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="19" font-weight="700" fill="#047857">Topic similarity</text>
+  <text x="1135" y="704" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#334155">Research proximity, not collaboration</text>
+  <text x="1135" y="728" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="#64748B">Provisional GIS Topic registry</text>
+
+  <text x="700" y="790" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="#475569">Research activity and fit are not university quality, admissions probability, teaching quality, cost, or programme availability.</text>
+</svg>

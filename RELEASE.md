@@ -1,9 +1,22 @@
-# GIS Scientific Collaboration Network 0.1.0
+# Release guide
 
-This is the first reproducible public release of the 2010–2025 GIS institutional
-collaboration network. The repository includes source code, frozen configuration,
-compact processed aggregates, static figures, the interactive dashboard, methods,
-the data dictionary, provenance manifests, limitations, and reproduction commands.
+The stable `v0.1.0` release is the first reproducible public release of the 2010–2025 GIS
+institutional collaboration network. It includes source code, frozen configuration, compact
+processed aggregates, static figures, the interactive annual dashboard, methods, the data
+dictionary, provenance manifests, limitations, and reproduction commands.
+
+## Published channels
+
+| Channel | Tag | Meaning |
+| --- | --- | --- |
+| Stable scientific release | [`v0.1.0`](https://github.com/jfang2048/gis_sci_network/releases/tag/v0.1.0) | Reproducible complete-year annual analysis |
+| Development prerelease | [`school-decision-contract-v1`](https://github.com/jfang2048/gis_sci_network/releases/tag/school-decision-contract-v1) | Versioned institution-comparison contract and post-0.1.0 analytical layers; school UI remains planned |
+
+The development prerelease does not replace the stable annual release and does not claim that the
+School Finder or rolling-window datasets are complete. It publishes the validated analytical
+contract, current documentation, and an explicit current-versus-planned architecture.
+
+[![Architecture showing the released historical layer and planned school-decision extension](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
 ## See the result
 
@@ -67,6 +80,8 @@ The API key is not written to configuration, manifests, datasets, or logs.
 - Community matches below Jaccard 0.25 are retained but explicitly uncertain.
 - The visualization score ranks display edges only and is not a primary research metric.
 - 2025 is the last complete calendar year; partial 2026 observations are excluded.
+- The school-decision analytical contract is implemented, but subannual facts, rolling windows,
+  complete school search, school profiles, comparison pages, and ego maps remain planned work.
 - The optional citation layer is corpus-internal. Its coverage table reports references whose
   cited Work or in-scope cited institution is unavailable, and preserves negative citation lags
   as source-data anomalies rather than silently excluding them.

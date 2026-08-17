@@ -17,8 +17,8 @@
       "size_bytes": 1048678
     },
     "figures": {
-      "file_count": 3,
-      "size_bytes": 21939
+      "file_count": 4,
+      "size_bytes": 30067
     },
     "outputs/reports": {
       "file_count": 4,
@@ -917,6 +917,11 @@
       "size_bytes": 6302
     },
     {
+      "path": "figures/school_decision_architecture.svg",
+      "sha256": "c28ee7c45187e4b060a5c9677ace9998df3d23ae9be825c2815081f3951cf9ce",
+      "size_bytes": 8128
+    },
+    {
       "path": "figures/view_comparison.svg",
       "sha256": "d0a75644e639f62bc69837ff00f9689dd69da7c2d05150f8babe45a369a78ed8",
       "size_bytes": 7251
@@ -942,11 +947,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-17T10:15:37Z",
+  "generated_at_utc": "2026-08-17T10:41:57Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 180,
-  "public_size_bytes": 11780183,
+  "public_file_count": 181,
+  "public_size_bytes": 11788311,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1
