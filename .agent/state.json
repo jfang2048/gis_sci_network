@@ -57,7 +57,8 @@
     "GISNET-105",
     "GISNET-110",
     "GISNET-111",
-    "GISNET-112"
+    "GISNET-112",
+    "GISNET-120"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -68,6 +69,7 @@
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
     "region_overrides": "df1e5876cf694c53db4ce763514b354ae854b324a74f56c81ec3221a4a5a35b3",
     "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e",
+    "school_decision_contract": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03",
     "topic_decisions": "ca8a7c835a97bf69cfb61d452efb4db145641b61b8a8a23638c8de49c1e0b6d7",
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377",
     "work_types": "c3f641eff35e4e90c1a24da98286422619e64ba692059479ff4338e078c573ff"
@@ -147,6 +149,7 @@
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
     "region_flows_year": ".agent/manifests/region_flows_year.json",
     "reproducibility_validation": ".agent/manifests/reproducibility_validation.json",
+    "school_decision_contract": ".agent/manifests/school_decision_contract.json",
     "sensitivity_matrix": ".agent/manifests/sensitivity_matrix.json",
     "sensitivity_summary": ".agent/manifests/sensitivity_summary.json",
     "top_edge_audit": ".agent/manifests/top_edge_audit.json",
@@ -179,8 +182,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260816T232036Z_2dcb27a19560",
-  "last_updated_utc": "2026-08-16T23:30:46Z",
+  "last_successful_run_id": "20260817T095315Z_47ae09a41f59",
+  "last_updated_utc": "2026-08-17T10:17:15Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

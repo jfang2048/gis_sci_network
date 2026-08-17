@@ -1,0 +1,562 @@
+schema_version: 1
+contract_version: school-decision-2026-08-17-v1
+title: Research-based GIS school selection and institutional comparison
+product_claim: >-
+  The system describes research activity, specialization, collaboration structure, network
+  position, bibliometric influence, research proximity, momentum, and user-defined research fit
+  for eligible universities and research institutions.
+non_claims:
+  - This is not an admissions ranking system.
+  - Publication volume is not university quality.
+  - The system does not directly measure teaching quality, admissions probability, tuition,
+    funding, student satisfaction, or degree-program availability.
+  - No metric identifies a universally best university or research institution.
+metric_classes:
+  descriptive: Direct counts, shares, identifiers, and distributions with stated denominators.
+  normalized: A descriptive quantity divided by an explicit exposure or baseline.
+  bibliometric: Publication- or citation-based evidence with source and coverage limitations.
+  network_derived: A quantity that depends on a declared graph, edge definition, and window.
+  user_defined: A value produced from user-selected inputs or weights and not a scientific fact.
+analytical_modes:
+  historical_scientific:
+    label: Historical scientific mode
+    definition: Complete-calendar-year annual analysis using the preserved 2010-2025 outputs.
+    time_basis: publication_year
+    default_window: annual_complete_year
+    partial_current_year: false
+    comparison_policy: Compare only like complete years under the same corpus and hierarchy view.
+    availability: current
+  current_school_decision:
+    label: Current school-decision mode
+    definition: >-
+      Subannual publication observations through the latest completed month, interpreted through
+      rolling 12-, 24-, or 36-month windows rather than raw partial-year totals.
+    time_basis: publication_date_where_exact
+    default_window: rolling_24_months
+    partial_current_year: true
+    comparison_policy: >-
+      Compare identical rolling boundaries, corpus, identity view, and date-coverage rules; never
+      compare a raw partial calendar year with a complete calendar year.
+    availability: planned
+primary_time_keys:
+  - publication_month
+  - publication_quarter
+  - publication_year
+  - window_start
+  - window_end
+  - window_months
+school_profile:
+  primary_entity: eligible_research_institution
+  interface_term: school
+  interface_term_scope: >-
+    School is concise interface language for a university or research institution. It does not
+    imply that every included organization awards degrees.
+  eligible_entity_definition: >-
+    A stable source organization, or an evidence-backed canonical school, with at least one Work
+    in the selected GIS corpus and primary research scope during a supported observation period.
+    Eligibility is independent of visualization rank and coordinate availability.
+  eligibility_flag: is_primary_research_scope
+  primary_scope_categories:
+    - education
+    - government_research
+    - nonprofit_research
+    - research_facility
+  secondary_entity_policy: >-
+    Secondary organization types remain retained and explicitly filterable but are not silently
+    promoted into the default school universe or merged with a school.
+  geographic_scope:
+    - Europe
+    - Asia
+    - Americas
+    - Africa
+    - Oceania
+    - Unknown
+  stable_join_keys:
+    - institution_id
+    - canonical_school_id
+  forbidden_membership_thresholds:
+    - global_top_node_rank
+    - global_top_edge_rank
+    - map_top_n
+    - visualization_score
+    - coordinate_presence
+  coordinate_policy: Missing sourced coordinates affect maps only, never search or profile eligibility.
+  canonical_identity_policy: >-
+    Preserve the organization identity. Assign a different canonical_school_id only from
+    documented OpenAlex lineage, ROR relationships, or explicit overrides with rule, reason,
+    evidence, and provenance.
+  unresolved_identity_policy: Expose unresolved or fragmented entities and never guess a collapse.
+metrics:
+  full_work_count:
+    label: Full Work count
+    metric_class: descriptive
+    definition: Number of distinct included Works associated with the institution in the period.
+    unit: works
+    time_basis: selected annual or rolling period
+    source_layer: publication
+    availability: current_annual
+    interpretation: Research activity under full institutional counting.
+    forbidden_interpretations: [research quality, teaching quality]
+    comparability: Requires the same corpus, institution scope, identity view, and period.
+  fractional_work_count:
+    label: Fractional Work count
+    metric_class: normalized
+    definition: >-
+      Sum over included Works of 1 divided by the number of distinct in-scope institutions on the
+      Work under the selected identity view.
+    unit: fractional works
+    time_basis: selected annual or rolling period
+    source_layer: publication
+    availability: current_annual
+    interpretation: Institutionally apportioned research activity.
+    forbidden_interpretations: [research quality, author contribution share]
+    comparability: Requires identical institution-scope and identity rules.
+  recent_12m_work_count:
+    label: Recent 12-month Work count
+    metric_class: descriptive
+    definition: Full Work count in the inclusive rolling 12-month publication window.
+    unit: works
+    time_basis: rolling_12_months
+    source_layer: publication
+    availability: planned
+    interpretation: Recent observed publication activity.
+    forbidden_interpretations: [collaboration start date, research quality]
+    comparability: Compare identical window_end and date-eligibility rules.
+  recent_24m_work_count:
+    label: Recent 24-month Work count
+    metric_class: descriptive
+    definition: Full Work count in the inclusive rolling 24-month publication window.
+    unit: works
+    time_basis: rolling_24_months
+    source_layer: publication
+    availability: planned
+    interpretation: Stable recent observed publication activity.
+    forbidden_interpretations: [collaboration start date, research quality]
+    comparability: Compare identical window_end and date-eligibility rules.
+  recent_36m_work_count:
+    label: Recent 36-month Work count
+    metric_class: descriptive
+    definition: Full Work count in the inclusive rolling 36-month publication window.
+    unit: works
+    time_basis: rolling_36_months
+    source_layer: publication
+    availability: planned
+    interpretation: Longer recent observed publication activity.
+    forbidden_interpretations: [collaboration start date, research quality]
+    comparability: Compare identical window_end and date-eligibility rules.
+  topic_family_share:
+    label: Topic-family share
+    metric_class: descriptive
+    definition: >-
+      Institution fractional Topic weight for a family divided by its total eligible fractional
+      Topic weight in the same corpus and period.
+    unit: proportion
+    time_basis: selected annual or rolling period
+    source_layer: topic_profile
+    availability: planned
+    interpretation: Research concentration within the selected Topic family.
+    forbidden_interpretations: [quality, scientific authority, collaboration]
+    comparability: Requires the same provisional Topic registry version and corpus.
+  specialization_lift_global:
+    label: Global specialization lift
+    metric_class: normalized
+    definition: Institution Topic-family share divided by the global eligible GIS baseline share.
+    unit: ratio
+    time_basis: selected annual or rolling period
+    source_layer: topic_profile
+    availability: planned
+    interpretation: Relative concentration above or below the global GIS baseline; 1 means equal.
+    forbidden_interpretations: [quality, superiority]
+    comparability: Baseline population, corpus, period, and registry version must match.
+  specialization_lift_macro_region:
+    label: Macro-region specialization lift
+    metric_class: normalized
+    definition: Institution Topic-family share divided by its macro-region baseline share.
+    unit: ratio
+    time_basis: selected annual or rolling period
+    source_layer: topic_profile
+    availability: planned
+    interpretation: Relative concentration compared with the institution's macro-region.
+    forbidden_interpretations: [quality, superiority]
+    comparability: Region convention, corpus, period, and registry version must match.
+  specialization_lift_country:
+    label: Country specialization lift
+    metric_class: normalized
+    definition: Institution Topic-family share divided by its country baseline share.
+    unit: ratio
+    time_basis: selected annual or rolling period
+    source_layer: topic_profile
+    availability: planned
+    interpretation: Relative concentration compared with the institution's country.
+    forbidden_interpretations: [quality, superiority]
+    comparability: Country convention, corpus, period, and registry version must match.
+  international_collaboration_share:
+    label: International collaboration share
+    metric_class: normalized
+    definition: >-
+      Distinct included institutional Works containing at least two countries divided by all
+      distinct included Works associated with the institution in the period.
+    unit: proportion
+    time_basis: selected annual or rolling period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Share of the institution's included research output with international co-authorship.
+    forbidden_interpretations: [quality, partner diversity]
+    comparability: Requires identical corpus, period, scope, and country-resolution rules.
+  cross_region_collaboration_share:
+    label: Cross-region collaboration share
+    metric_class: normalized
+    definition: >-
+      Distinct included institutional Works containing at least two macro-regions divided by all
+      distinct included Works associated with the institution in the period.
+    unit: proportion
+    time_basis: selected annual or rolling period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Share of included output spanning macro-regions.
+    forbidden_interpretations: [quality, geographic distance]
+    comparability: Requires identical corpus, period, scope, and region convention.
+  partner_institution_count:
+    label: Partner institution count
+    metric_class: descriptive
+    definition: Number of distinct co-authorship partner institution IDs with positive edge weight.
+    unit: institutions
+    time_basis: selected annual or rolling period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Breadth of observed institutional collaboration reach.
+    forbidden_interpretations: [quality, relationship strength]
+    comparability: Requires the same edge inclusion, identity view, corpus, and period.
+  partner_country_count:
+    label: Partner country count
+    metric_class: descriptive
+    definition: Number of distinct non-null countries represented by observed partner institutions.
+    unit: countries
+    time_basis: selected annual or rolling period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Geographic breadth of observed partners.
+    forbidden_interpretations: [quality, collaboration volume]
+    comparability: Requires the same country mapping, corpus, and period.
+  effective_partner_count:
+    label: Effective partner count
+    metric_class: normalized
+    definition: >-
+      exp(-sum(p_i * ln(p_i))) where p_i is partner i's share of the institution's positive
+      fractional collaboration strength in the period; zero when no partner exists.
+    unit: effective partners
+    time_basis: selected annual or rolling period
+    source_layer: coauthorship
+    availability: planned
+    interpretation: Partner diversity adjusted for concentration.
+    forbidden_interpretations: [quality, literal partner count]
+    comparability: Requires identical partner universe, edge weighting, corpus, and period.
+  repeat_partner_ratio:
+    label: Repeat-partner ratio
+    metric_class: normalized
+    definition: >-
+      Partners active in at least two distinct eligible months in the selected rolling window
+      divided by all partners active in that window; null when no partner is observed.
+    unit: proportion
+    time_basis: selected rolling period
+    source_layer: coauthorship
+    availability: planned
+    interpretation: Recurrence of observed publication collaboration within the window.
+    forbidden_interpretations: [relationship duration, collaboration start date]
+    comparability: Requires the same rolling boundaries and date coverage threshold.
+  edge_persistence:
+    label: Edge persistence
+    metric_class: normalized
+    definition: >-
+      Eligible months with positive fractional collaboration weight for the pair divided by
+      window_months; incomplete coverage is flagged and not silently shortened.
+    unit: proportion
+    time_basis: selected rolling period
+    source_layer: coauthorship
+    availability: planned
+    interpretation: Frequency of publication-time collaboration observations.
+    forbidden_interpretations: [relationship duration, collaboration start date]
+    comparability: Requires identical rolling boundaries and date-eligibility rules.
+  degree:
+    label: Degree
+    metric_class: network_derived
+    definition: Number of partner nodes in the declared co-authorship graph.
+    unit: nodes
+    time_basis: declared graph period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Local network connectivity.
+    forbidden_interpretations: [quality, causal influence]
+    comparability: Only within graphs with the same node/edge scope, corpus, identity, and period.
+  pagerank:
+    label: PageRank
+    metric_class: network_derived
+    definition: PageRank computed on the declared weighted co-authorship graph.
+    unit: graph-relative score
+    time_basis: declared graph period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Graph-relative network position under the stored PageRank method.
+    forbidden_interpretations: [quality, cross-graph absolute influence]
+    comparability: Requires identical graph construction and PageRank parameters.
+  betweenness:
+    label: Betweenness centrality
+    metric_class: network_derived
+    definition: Stored exact or explicitly approximated betweenness on the declared graph.
+    unit: graph-relative score
+    time_basis: declared graph period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Potential brokerage position under the declared graph and method.
+    forbidden_interpretations: [quality, causal brokerage]
+    comparability: Method, sample/cutoff, graph scope, and period must match.
+  community_id:
+    label: Community
+    metric_class: network_derived
+    definition: Leiden community membership in the declared annual or rolling co-authorship graph.
+    unit: categorical identifier
+    time_basis: declared graph period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Cluster membership under a declared resolution and seed.
+    forbidden_interpretations: [quality, permanent school grouping]
+    comparability: Annual IDs require continuity mapping and identical community parameters.
+  bridge_score:
+    label: Cross-region bridge score
+    metric_class: network_derived
+    definition: Cross-macro-region fractional strength divided by total fractional strength.
+    unit: proportion
+    time_basis: declared graph period
+    source_layer: coauthorship
+    availability: current_annual
+    interpretation: Share of collaboration strength crossing macro-region boundaries.
+    forbidden_interpretations: [quality, causal brokerage]
+    comparability: Requires identical region convention, graph scope, weighting, and period.
+  citation_count_full:
+    label: Full citation count
+    metric_class: bibliometric
+    definition: Sum of source cited_by_count over distinct included Works associated with the institution.
+    unit: citations attributed in full
+    time_basis: selected publication cohort and retrieval date
+    source_layer: publication
+    availability: planned
+    interpretation: Citation influence proxy with full institutional attribution.
+    forbidden_interpretations: [teaching quality, causal impact, field-normalized quality]
+    comparability: Requires the same citation retrieval date, cohort, corpus, and coverage.
+  citation_count_fractional:
+    label: Fractional citation count
+    metric_class: bibliometric
+    definition: >-
+      Sum over included Works of source cited_by_count divided by the number of distinct in-scope
+      institutions on the Work.
+    unit: fractionally attributed citations
+    time_basis: selected publication cohort and retrieval date
+    source_layer: publication
+    availability: planned
+    interpretation: Citation influence proxy apportioned across institutions.
+    forbidden_interpretations: [teaching quality, causal impact, field-normalized quality]
+    comparability: Requires the same citation retrieval date, cohort, corpus, and scope.
+  mean_fwci:
+    label: Mean FWCI
+    metric_class: bibliometric
+    definition: Arithmetic mean of non-null source FWCI over distinct included institutional Works.
+    unit: ratio
+    time_basis: selected publication cohort and retrieval date
+    source_layer: publication
+    availability: planned
+    interpretation: Field-normalized citation proxy with explicit non-null coverage.
+    forbidden_interpretations: [universal quality, teaching quality]
+    comparability: Requires the same source version, cohort, corpus, and FWCI coverage threshold.
+  citation_flow_fractional_in_strength:
+    label: Fractional incoming citation-flow strength
+    metric_class: network_derived
+    definition: Sum of directed fractional citation-flow edge weight targeting the institution.
+    unit: fractional Work-reference flows
+    time_basis: citing Work publication period
+    source_layer: citation_flow
+    availability: planned
+    interpretation: Knowledge-flow proxy inside the closed selected corpus.
+    forbidden_interpretations: [co-authorship, universal citation impact, causal knowledge transfer]
+    comparability: Requires identical closed-corpus, institution, citation, and time boundaries.
+  topic_similarity:
+    label: Topic similarity
+    metric_class: normalized
+    definition: Cosine similarity between normalized institutional Topic vectors.
+    unit: cosine similarity
+    time_basis: declared Topic-vector period
+    source_layer: topic_similarity
+    availability: current_annual_core_limited
+    interpretation: Research-profile proximity within the declared Topic and core coverage.
+    forbidden_interpretations: [collaboration, citation flow, quality]
+    comparability: Requires the same Topic registry, vector construction, corpus, core, and period.
+  rolling_12m_activity_change:
+    label: Rolling 12-month activity change
+    metric_class: normalized
+    definition: >-
+      Current rolling-12-month full Work count minus the immediately preceding non-overlapping
+      12-month count, divided by the preceding count; null when the preceding count is zero.
+    unit: relative change
+    time_basis: two adjacent non-overlapping 12-month periods
+    source_layer: publication
+    availability: planned
+    interpretation: Recent publication momentum, not a forecast.
+    forbidden_interpretations: [quality growth, forecast, causal trend]
+    comparability: Requires identical window end, corpus, identity, and date-coverage rules.
+  rolling_12m_fractional_activity_change:
+    label: Rolling 12-month fractional activity change
+    metric_class: normalized
+    definition: >-
+      Current rolling-12-month fractional Work count minus the immediately preceding
+      non-overlapping 12-month count, divided by the preceding count; null when it is zero.
+    unit: relative change
+    time_basis: two adjacent non-overlapping 12-month periods
+    source_layer: publication
+    availability: planned
+    interpretation: Recent apportioned publication momentum, not a forecast.
+    forbidden_interpretations: [quality growth, forecast, causal trend]
+    comparability: Requires identical window end, corpus, identity, and date-coverage rules.
+  topic_fit_similarity:
+    label: User-defined Topic fit
+    metric_class: user_defined
+    definition: >-
+      Cosine similarity between the user's non-negative Topic-family preference vector and the
+      institution's Topic-family distribution under the selected corpus and period.
+    unit: cosine similarity
+    time_basis: selected annual or rolling period
+    source_layer: user_input
+    availability: ui_only
+    interpretation: Fit to the user's stated research interests.
+    forbidden_interpretations: [quality, admissions suitability, collaboration]
+    comparability: Requires the same user vector, Topic registry, corpus, and period.
+  user_defined_fit_score:
+    label: User-defined research fit score
+    metric_class: user_defined
+    definition: >-
+      Weighted arithmetic mean of the displayed 0-to-1 component scores over the current filtered
+      candidate set: sum(weight * component) divided by sum(weight); null when all weights are zero.
+    unit: user-defined score from 0 to 1
+    time_basis: selected annual or rolling period
+    source_layer: user_input
+    availability: ui_only
+    interpretation: Transparent ordering under the user's chosen components and weights.
+    forbidden_interpretations: [university quality, admissions ranking, scientific fact]
+    comparability: Only within the same filtered candidate set, transformations, and user weights.
+dimensions:
+  research_activity:
+    label: Research activity
+    definition: Amount of included GIS research observed for the institution.
+    metric_ids: [full_work_count, fractional_work_count, recent_12m_work_count,
+      recent_24m_work_count, recent_36m_work_count]
+  research_specialization:
+    label: Research specialization
+    definition: Topic concentration and relative concentration, never quality.
+    metric_ids: [topic_family_share, specialization_lift_global,
+      specialization_lift_macro_region, specialization_lift_country]
+  collaboration_reach:
+    label: Collaboration reach
+    definition: Institutional and geographic breadth of observed co-authorship.
+    metric_ids: [international_collaboration_share, cross_region_collaboration_share,
+      partner_institution_count, partner_country_count, effective_partner_count]
+  collaboration_persistence:
+    label: Collaboration persistence
+    definition: Recurrence of publication-time collaboration observations within a declared window.
+    metric_ids: [repeat_partner_ratio, edge_persistence]
+  network_position:
+    label: Network position
+    definition: Graph-relative connectivity, centrality, community, and bridging.
+    metric_ids: [degree, pagerank, betweenness, community_id, bridge_score]
+  citation_influence:
+    label: Citation influence
+    definition: Bibliometric and directed citation-flow proxies with explicit coverage.
+    metric_ids: [citation_count_full, citation_count_fractional, mean_fwci,
+      citation_flow_fractional_in_strength]
+  research_proximity:
+    label: Research proximity
+    definition: Similarity of research Topic profiles, not actual collaboration.
+    metric_ids: [topic_similarity]
+  recent_momentum:
+    label: Recent momentum
+    definition: Change between comparable recent publication windows, never a forecast.
+    metric_ids: [rolling_12m_activity_change, rolling_12m_fractional_activity_change]
+  user_defined_research_fit:
+    label: User-defined research fit
+    definition: Alignment with explicit user preferences, not universal institutional quality.
+    metric_ids: [topic_fit_similarity, user_defined_fit_score]
+layers:
+  coauthorship:
+    label: Co-authorship collaboration
+    directionality: undirected
+    meaning: Institutions appearing on the same included publication.
+    must_not_mean: Citation, Topic similarity, collaboration start date, or causal relationship.
+    merge_policy: never_merge_into_scientific_edge_weight
+  citation_flow:
+    label: Citation flow
+    directionality: directed_citing_institution_to_cited_institution
+    meaning: Closed-corpus knowledge-flow proxy based on Work references.
+    must_not_mean: Co-authorship, collaboration, or causal knowledge transfer.
+    merge_policy: never_merge_into_scientific_edge_weight
+  topic_similarity:
+    label: Topic similarity
+    directionality: undirected_similarity
+    meaning: Cosine research-profile proximity under the provisional Topic registry.
+    must_not_mean: Collaboration, citation, quality, or causal influence.
+    merge_policy: never_merge_into_scientific_edge_weight
+fit_score_policy:
+  global_quality_score_allowed: false
+  allowed_combined_score_name: user_defined_fit_score
+  definition: >-
+    Optional UI-only score calculated from explicit user weights and displayed component
+    transformations; it is not an empirical university-quality estimate.
+  allowed_component_metric_ids:
+    - topic_fit_similarity
+    - recent_24m_work_count
+    - international_collaboration_share
+    - bridge_score
+    - rolling_12m_activity_change
+  transform_definitions:
+    identity_0_1: >-
+      Use the displayed component unchanged after validating that it is between 0 and 1.
+    average_percentile_rank_0_1: >-
+      Rank non-missing values ascending in the current filtered candidate set using average ranks
+      for ties, then compute (average_rank - 1) / (candidate_count - 1). Use 0.5 when the candidate
+      count is one; all-tied sets also evaluate to 0.5.
+  component_transforms:
+    topic_fit_similarity:
+      method: identity_0_1
+      reference_set: Natural cosine-similarity bounds in the selected Topic vector space.
+      missing_policy: A positive-weight missing value makes user_defined_fit_score null.
+      degenerate_reference_value: 0.5
+    recent_24m_work_count:
+      method: average_percentile_rank_0_1
+      reference_set: Current filtered candidate set after all eligibility and coverage filters.
+      missing_policy: A positive-weight missing value makes user_defined_fit_score null.
+      degenerate_reference_value: 0.5
+    international_collaboration_share:
+      method: identity_0_1
+      reference_set: Natural proportion bounds under the selected corpus and window.
+      missing_policy: A positive-weight missing value makes user_defined_fit_score null.
+      degenerate_reference_value: 0.5
+    bridge_score:
+      method: identity_0_1
+      reference_set: Natural proportion bounds in the declared co-authorship graph.
+      missing_policy: A positive-weight missing value makes user_defined_fit_score null.
+      degenerate_reference_value: 0.5
+    rolling_12m_activity_change:
+      method: average_percentile_rank_0_1
+      reference_set: Current filtered candidate set after all eligibility and coverage filters.
+      missing_policy: A positive-weight missing value makes user_defined_fit_score null.
+      degenerate_reference_value: 0.5
+  weight_storage: streamlit_session_state_only
+  persisted_to_scientific_datasets: false
+  missing_component_policy: >-
+    The score is null when any positive-weight component is missing; zero-weight components are
+    ignored rather than imputed.
+  zero_weight_policy: The score is null when all component weights are zero.
+  required_disclosure: Show all weights, component values, transformations, candidate set, and window.
+topic_quality_policy:
+  registry_status: provisional_ai_reviewed
+  human_review_complete: false
+  required_warning: >-
+    GIS Topic membership is provisional and human review is incomplete; school comparisons are
+    exploratory bibliometric evidence, not authoritative scientific rankings.
+  ranking_authority_claim_allowed: false

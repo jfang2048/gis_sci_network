@@ -59,7 +59,7 @@ Work. The stored maximum fractional reconciliation error is
 thresholds are 25 and
 100 institutions. Primary annual output contains
 2,999,736 edge observations. Normalized intensity divides fractional edge
-weight by the geometric mean of the two institutions' fractional output.
+weight by the geometric mean of the two institutions' full Work counts.
 
 ## 7. Dynamic network metrics
 

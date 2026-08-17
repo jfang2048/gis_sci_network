@@ -1955,11 +1955,428 @@ Compare co-authorship, citation flow, and Topic similarity as separate layers. N
 
 #### GISNET-113: Author mobility layer
 
+Dependencies: GISNET-104, GISNET-139
+
 Estimate researcher movement between institutions using author affiliation histories. Add strong uncertainty and identity-disambiguation warnings.
 
 #### GISNET-114: Forecasting
 
+Dependencies: GISNET-104, GISNET-139
+
 Forecast region-pair trends only after structural breaks, missingness, and partial-year issues have been evaluated. Label all forecasts as model outputs.
+
+### P12. Research-based school decision and institutional comparison
+
+This work evolves the released annual regional analysis without replacing it. The institution is
+the primary interactive entity for this product layer. `School` is concise interface language for
+an eligible university or research institution; it is not an admissions ranking or a claim that
+every included organization awards degrees. The annual 2010-2025 historical layer remains
+backward compatible, while publication-date, rolling-window, school-profile, and decision-oriented
+tables are added in parallel.
+
+Do not start GISNET-113 author mobility or GISNET-114 forecasting until GISNET-120 through
+GISNET-139 are complete. The provisional GIS Topic registry and pending human-review warning apply
+to every school-level result.
+
+#### GISNET-120: Define school-decision analytical contract
+
+Priority: P0
+Dependencies: GISNET-104
+
+Work:
+
+1. Define an eligible school/institution profile, its stable identity, geographic scope, corpus,
+   time-window, and data-quality context.
+2. Classify every metric as descriptive, normalized, bibliometric, network-derived, or
+   user-defined, with exact denominators, units, comparison boundaries, and forbidden
+   interpretations.
+3. Distinguish research activity, research specialization, collaboration reach, collaboration
+   persistence, network position, citation influence, research proximity, recent momentum, and
+   user-defined research fit.
+4. Keep co-authorship, citation flow, and Topic similarity as separate layers.
+5. Explicitly prohibit an unexplained global university-quality score. If a fit score exists, its
+   name is `user_defined_fit_score`; its weights are UI state and never scientific source data.
+6. Preserve the provisional Topic-registry and non-admissions limitations.
+
+Acceptance:
+
+1. The contract is documented and has a versioned machine-readable representation.
+2. A strict validator rejects missing required dimensions, unknown metric references, layer
+   conflation, a persisted fit score, or any global quality-score policy.
+3. Definitions state which metrics exist now and which are planned by later GISNET-120+ tasks.
+
+#### GISNET-121: Build publication-date QA layer
+
+Priority: P0
+Dependencies: GISNET-120, GISNET-043, GISNET-060, GISNET-061
+
+Work:
+
+1. Parse existing normalized `publication_date` deterministically without fabricating missing
+   month or day values.
+2. Create `publication_month`, `publication_quarter`, `publication_year`,
+   `has_exact_publication_date`, and `subannual_date_eligible`.
+3. Report date coverage globally and by institution, corpus, year, and Topic family.
+4. Preserve malformed, partial, missing, and year-conflicting values as explicit QA states.
+
+Acceptance:
+
+1. Annual Work counts reconcile into exact-date-eligible records plus annual-only records.
+2. No artificial dates exist and no invalid date participates in subannual analysis.
+3. Coverage tables and manifests are deterministic and atomically written.
+
+#### GISNET-122: Build subannual temporal facts
+
+Priority: P0
+Dependencies: GISNET-121, GISNET-061, GISNET-062, GISNET-063
+
+Work:
+
+1. Preserve all annual outputs and add month- and quarter-level institution Work facts and
+   collaboration facts.
+2. Create `institution_outputs_month.parquet`, `institution_outputs_quarter.parquet`,
+   `collaboration_edges_month.parquet`, and `collaboration_edges_quarter.parquet`, partitioning
+   only when measured performance justifies it.
+3. Quantify raw monthly and quarterly sparsity before choosing UI interpretation defaults.
+
+Acceptance:
+
+1. Monthly and quarterly totals reconcile with exact-date-eligible annual source records.
+2. Existing annual datasets and public names are unchanged.
+3. Repeated builds are deterministic, resumable, validated, and atomic.
+
+#### GISNET-123: Build rolling collaboration windows
+
+Priority: P0
+Dependencies: GISNET-122, GISNET-064, GISNET-071
+
+Work:
+
+1. Build rolling 12-, 24-, and 36-month institution metrics and collaboration edges, stepped
+   monthly.
+2. Store exact `window_start`, `window_end`, and `window_months` on every result.
+3. Default decision views to rolling 12 or 24 months rather than sparse raw-month networks.
+4. Document publication time as an observation time, not collaboration-start time.
+
+Acceptance:
+
+1. Window boundaries are correct across calendar years and early incomplete windows are explicit.
+2. Rolling aggregates reconcile with their eligible monthly facts.
+3. The annual scientific layer remains the long-term historical reference.
+
+#### GISNET-124: Support recent partial-calendar data safely
+
+Priority: P1
+Dependencies: GISNET-123, GISNET-020, GISNET-022, GISNET-042
+
+Work:
+
+1. Verify current official OpenAlex date-filter semantics before implementation.
+2. Add incremental retrieval through the latest completed calendar month determined at runtime.
+3. Reuse raw cache, query planning, checkpointing, deduplication, redaction, and secret handling.
+4. Avoid re-downloading valid historical data and never compare raw partial-year totals with
+   complete-year totals.
+5. Label retrieval date, window end, date coverage, and partial-current-year state.
+
+Acceptance:
+
+1. Current-decision rolling views can include the current partial calendar year safely.
+2. Historical 2010-2025 complete-year outputs remain reproducible and unchanged.
+3. Incremental reruns request only missing date ranges and persist no API key.
+
+#### GISNET-125: Strengthen school identity resolution
+
+Priority: P0
+Dependencies: GISNET-123, GISNET-054
+
+Work:
+
+1. Preserve the organization view and create a school-level canonical view only from OpenAlex
+   lineage, ROR relationships, explicit overrides, and documented evidence.
+2. Do not automatically collapse academies, federated systems, hospitals, laboratories, research
+   councils, or other ambiguous structures.
+3. Retain original ID, canonical school ID, rule ID, reason, evidence, and provenance for every
+   collapse; expose unresolved entities instead of guessing.
+4. Hide or clearly mark an umbrella view that remains equivalent to organization view.
+
+Acceptance:
+
+1. Every collapse is evidence-backed, cycle-free, reversible, and auditable.
+2. The original organization identity is byte-for-byte unaffected by the school view.
+3. Ambiguous fragmentation remains visible through data-quality flags.
+
+#### GISNET-126: Build complete school index
+
+Priority: P0
+Dependencies: GISNET-121, GISNET-125, GISNET-063
+
+Work:
+
+1. Build a compact index over the complete eligible institution universe, independent of global
+   node, edge, map, or visualization thresholds.
+2. Include institution ID, canonical school ID, display and alternate names, country, subregion,
+   macro-region, category, OpenAlex ID, ROR ID, sourced coordinates, first/last observed date,
+   recent Work count, Topic-family availability, and date coverage.
+3. Use stable IDs as join keys and surface ambiguous name matches instead of silently choosing.
+
+Acceptance:
+
+1. A school outside the prior top-500 visualization core is searchable.
+2. Index membership reconciles with the declared eligibility contract.
+3. The index is compact, deterministic, provenance-linked, and complete across eligible regions.
+
+#### GISNET-127: Build school profile datasets
+
+Priority: P0
+Dependencies: GISNET-123, GISNET-126, GISNET-071, GISNET-110, GISNET-111
+
+Work:
+
+1. Create selectable-window school profiles with full/fractional Work counts; recent 12/24/36m
+   activity; international and cross-region shares; partner institution/country counts;
+   collaboration strength; PageRank/betweenness where valid; community; repeat-partner ratio;
+   top partners; Topic distributions and specialization; existing citation metrics; existing
+   Topic similarity; date coverage; and quality flags.
+2. Keep activity, specialization, collaboration, centrality, citation, and proximity independent.
+3. Do not create an opaque quality score.
+
+Acceptance:
+
+1. Every eligible institution has either a valid profile or an explicit coverage reason.
+2. Metric formulas, graph boundaries, time windows, and null semantics match GISNET-120.
+3. Citation, co-authorship, and Topic similarity remain separate datasets and concepts.
+
+#### GISNET-128: Build per-school partner index
+
+Priority: P0
+Dependencies: GISNET-123, GISNET-126, GISNET-064
+
+Work:
+
+1. Store each school's own top institutional partners for each supported window, with a retained
+   size justified by measured storage and query performance.
+2. Store absolute and fractional collaboration weight, normalized intensity, persistence, and
+   repeat metrics.
+3. Do not derive partner availability from a global top-N edge table.
+
+Acceptance:
+
+1. A school outside the global top-1,000 edge core still exposes its ego partners.
+2. Partner ranking is deterministic with stable tie-breaking and exact values.
+3. Per-school retrieval meets a documented interactive performance budget.
+
+#### GISNET-129: Build school research-fit comparison
+
+Priority: P1
+Dependencies: GISNET-127, GISNET-128
+
+Work:
+
+1. Filter by region, country, subregion, Topic family, Strict/Broad corpus, time window, minimum
+   recent activity, and minimum date coverage.
+2. Sort independently by recent activity, Topic specialization, international collaboration,
+   partner diversity, centrality, citation influence, and momentum.
+3. If enabled, compute only `user_defined_fit_score` from user-selected UI weights for Topic fit,
+   activity, international collaboration, bridge position, and momentum.
+
+Acceptance:
+
+1. No combined metric is labelled university quality or persisted in scientific source tables.
+2. Exact component values and user weights are visible and reproducible within the UI session.
+3. Search uses the complete index and stable IDs.
+
+#### GISNET-130: Redesign macro geographic collaboration visualization
+
+Priority: P1
+Dependencies: GISNET-129, GISNET-065
+
+Work:
+
+1. Build a Geographic Flow Explorer at macro-region, subregion, and country levels.
+2. Control source geography, level, time window, corpus, counting method, and metric.
+3. Support fractional volume, partner share, and defined normalized intensity in both geographic
+   flow map and origin-destination matrix modes.
+4. Use versioned sourced geometry or anchors, with recorded provenance and license; never invent
+   coordinates.
+
+Acceptance:
+
+1. The primary question is which geography collaborates with which geography, not domestic share.
+2. Macro-region, subregion, and country values reconcile to institution flows under the same scope.
+3. Map and matrix show the same exact selected values.
+
+#### GISNET-131: Build readable flow arcs
+
+Priority: P1
+Dependencies: GISNET-130
+
+Work:
+
+1. Render only meaningful selected flows using Top N, minimum weight, and minimum partner share.
+2. Use stable calibrated width semantics and document any mathematical transformation.
+3. Show exact values in tooltips and use selected-source or region-pair color emphasis.
+
+Acceptance:
+
+1. Line widths remain comparable when filters change.
+2. Macro-region relationships are understandable without hovering every edge.
+3. The map avoids one-color global spaghetti and retains an exact companion table.
+
+#### GISNET-132: Build School Ego Map
+
+Priority: P1
+Dependencies: GISNET-128, GISNET-131
+
+Work:
+
+1. Center the map on a selected school and show only its top partner institutions, countries, and
+   regions, with the rest hidden or strongly de-emphasized.
+2. Source edges from the per-school partner index.
+3. Toggle fractional volume, normalized intensity, and persistence over rolling 12/24/36m,
+   quarterly, and annual windows.
+
+Acceptance:
+
+1. Exact source and target institution names and stable IDs are visible.
+2. The same school exposes partners even when absent from global visualization cores.
+3. Map values and the adjacent table reconcile exactly.
+
+#### GISNET-133: Redesign dashboard information architecture
+
+Priority: P1
+Dependencies: GISNET-129, GISNET-132
+
+Work:
+
+1. Make the primary pages School Finder, School Profile, Compare Schools, Geographic Flows,
+   Institutional Network, Global Trends, and Methods and Data Quality.
+2. Make School Finder the first decision-oriented page and School Profile entity-first.
+3. Compare two to four institutions on aligned, common scales without per-school hidden
+   normalization.
+
+Acceptance:
+
+1. A specific eligible institution can be found without interpreting a dense global network.
+2. Existing annual functionality remains available under the revised architecture.
+3. Provisional-corpus, time-window, identity, and data-quality context remain visible.
+
+#### GISNET-134: Build School Profile UI
+
+Priority: P1
+Dependencies: GISNET-127, GISNET-128, GISNET-133
+
+Work:
+
+1. Present identity/geography, recent activity and trend, Topic profile, institutional partners,
+   partner geography, network position, citation influence, research-neighbour institutions, and
+   date/data quality in that order.
+2. Use rolling windows for recent trend and separate annual long-term context.
+3. Do not lead with a global network visualization.
+
+Acceptance:
+
+1. Profile values state corpus, window boundaries, coverage, and metric semantics.
+2. Topic proximity is never labelled collaboration.
+3. Empty or low-coverage results are explicit rather than imputed.
+
+#### GISNET-135: Improve school comparison visualization
+
+Priority: P1
+Dependencies: GISNET-134
+
+Work:
+
+1. Compare recent output, rolling trend, Topic distribution, international share, partner
+   diversity, regional orientation, centrality, and citation influence for two to four schools.
+2. Prefer common-scale small multiples, ranked bars, and aligned tables; do not use radar charts as
+   the primary representation.
+3. Always expose exact values.
+
+Acceptance:
+
+1. The same selected school/window yields identical source metrics in Profile and Compare.
+2. Scales and denominators are aligned and disclosed.
+3. The UI makes no universal-best-school claim.
+
+#### GISNET-136: Surface existing citation and Topic-similarity layers
+
+Priority: P1
+Dependencies: GISNET-110, GISNET-111, GISNET-134
+
+Work:
+
+1. Expose co-authorship as actual publication collaboration, citation flow as a knowledge-flow
+   proxy, and Topic similarity as research proximity.
+2. Reuse existing validated layers rather than recomputing or merging them unnecessarily.
+3. Never combine the three into one scientific edge weight.
+
+Acceptance:
+
+1. Directionality, coverage, core thresholds, and limitations remain visible.
+2. Topic similarity is never implied to be collaboration.
+3. No composite scientific network is created.
+
+#### GISNET-137: Refactor dashboard implementation
+
+Priority: P1
+Dependencies: GISNET-133, GISNET-134, GISNET-135, GISNET-136
+
+Work:
+
+1. Separate data access, filters, components, charts/maps, school profiles, and school comparison
+   from the oversized `dashboard/app.py` while preserving behavior.
+2. Use DuckDB or Polars predicate pushdown for complete school queries; do not eagerly load all
+   edges into pandas or commit an enormous unfiltered dashboard table.
+3. Benchmark current and redesigned loading/query paths.
+
+Acceptance:
+
+1. Behavior is regression-locked before refactoring.
+2. Complete-school query performance and memory use meet documented budgets.
+3. No new dependency is added without explicit approval.
+
+#### GISNET-138: Validate school-decision system
+
+Priority: P0
+Dependencies: GISNET-124, GISNET-125, GISNET-126, GISNET-127, GISNET-128, GISNET-129,
+GISNET-130, GISNET-131, GISNET-132, GISNET-133, GISNET-134, GISNET-135, GISNET-136, GISNET-137
+
+Work and acceptance checks:
+
+1. A school outside the previous top-500 core is searchable.
+2. A school outside the previous top-1,000-edge core still shows ego partners.
+3. Monthly and quarterly eligible records reconcile with annual eligible records.
+4. Rolling 12m boundaries are correct across year boundaries.
+5. Missing exact dates are never assigned fake months.
+6. Region-flow totals reconcile with institution-flow totals.
+7. Country-flow map values reconcile with origin-destination matrix values.
+8. Edge width uses documented comparable semantics.
+9. School Profile and Compare Schools use the same source metrics.
+10. Strict remains a subset of Broad.
+11. No API key is present in any output.
+12. Repeated builds are deterministic.
+13. Existing annual pipeline regression tests continue to pass.
+
+#### GISNET-139: Update release and documentation
+
+Priority: P1
+Dependencies: GISNET-138
+
+Work:
+
+1. Update README, methodology, data dictionary, dashboard documentation, known limitations,
+   manifests, release bundle, backlog, state, decisions, and run log.
+2. Document historical scientific mode (complete-year annual analysis) and current
+   school-decision mode (subannual and rolling-window analysis).
+3. Verify methodology/data-dictionary wording remains aligned with implemented formulas and the
+   GISNET-120 contract.
+4. Preserve provisional GIS corpus warnings and avoid admissions or universal-quality claims.
+
+Acceptance:
+
+1. A clean environment can reproduce both analytical modes from documented commands.
+2. Every released table has a data dictionary, manifest, checksum, provenance, and limitation.
+3. Release verification, privacy scan, quality gate, and all GISNET-138 checks pass.
 
 ## 9. Backlog scheduling rules
 

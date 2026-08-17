@@ -63,6 +63,7 @@ will use temporary files, validate them, and atomically replace final outputs.
 uv run python -m gisnet.cli status
 uv run python -m gisnet.cli next-task
 uv run python -m gisnet.cli check-env
+uv run python -m gisnet.cli validate-school-contract --resume
 uv run python -m gisnet.cli validate-regions
 uv run python -m gisnet.cli discover-topics --resume
 uv run python -m gisnet.cli sample-topic-works --resume
@@ -141,6 +142,23 @@ code hash, and known issue is documented in
 machine-readable companion at [`data/reference/data_dictionary.json`](data/reference/data_dictionary.json).
 Release contents, verification, upstream large-data links, and clean-clone reproduction
 steps are collected in [`RELEASE.md`](RELEASE.md).
+
+## School-decision analytical contract
+
+The next product layer is institution-first: it will support complete-universe school search,
+research profiles, rolling publication-time windows, per-school collaboration partners, geographic
+flows, and direct institutional comparison while preserving the existing complete-year annual
+analysis. The versioned contract is documented in
+[`docs/school_decision_analytical_contract.md`](docs/school_decision_analytical_contract.md), with
+its strict machine-readable source in
+[`config/school_decision.yml`](config/school_decision.yml).
+
+This is research-based institutional comparison, not an admissions ranking. Activity,
+specialization, collaboration reach and persistence, network position, citation influence,
+research proximity, momentum, and user-defined fit remain independent dimensions. An unexplained
+global university-quality score is prohibited; the optional `user_defined_fit_score` is UI-only
+and its weights are never persisted in scientific source datasets. The provisional GIS Topic
+registry and pending human-review warning remain in force.
 
 ## Optional directed citation-flow layer
 

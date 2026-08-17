@@ -2302,3 +2302,140 @@ by the regression test and corrected before the full-data build.
 ### Exact next action
 
 Task: GISNET-113 — Author mobility layer. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20260817T095315Z_47ae09a41f59
+
+Started UTC: 2026-08-17T09:53:15Z
+Ended UTC: 2026-08-17T10:17:15Z
+Task: GISNET-120 — Define school-decision analytical contract
+Initial git status: main with pre-existing uncommitted .agent/backlog.json and
+.agent/state.json marking optional GISNET-113 IN_PROGRESS; no implementation or run-log entry
+existed for that interrupted task.
+Final pre-commit status:
+
+    ## main...origin/main
+     M .agent/backlog.json
+     M .agent/decisions.md
+     M .agent/manifests/data_dictionary_summary.json
+     M .agent/manifests/data_provenance_report.json
+     M .agent/manifests/methodology_report.json
+     M .agent/manifests/methodology_report_summary.json
+     M .agent/manifests/public_data_dictionary.json
+     M .agent/state.json
+     M AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md
+     M README.md
+     M data/reference/data_dictionary.json
+     M data/reference/data_dictionary_summary.json
+     M data/reference/methodology_report_summary.json
+     M outputs/reports/data_dictionary.md
+     M outputs/reports/methodology.md
+     M release/manifest.json
+     M release/manifest.json.sha256
+     M src/gisnet/cli.py
+     M src/gisnet/reporting/data_dictionary.py
+     M src/gisnet/reporting/methodology.py
+    ?? .agent/manifests/school_decision_contract.json
+    ?? config/school_decision.yml
+    ?? docs/
+    ?? src/gisnet/schools/
+    ?? tests/unit/test_school_decision_contract.py
+
+### Objective
+
+Extend the canonical and machine-readable backlog through GISNET-139, preserve the mature annual
+pipeline, and define a strict research-based school/institution comparison contract without an
+admissions ranking or opaque university-quality score.
+
+### Work completed
+
+- Added dependency-ordered GISNET-120 through GISNET-139 tasks to both backlog surfaces.
+- Preserved the interrupted GISNET-113 history, returned it to TODO, and machine-gated GISNET-113
+  and GISNET-114 behind GISNET-139.
+- Added a versioned YAML contract and strict Pydantic validator for eligible school identity,
+  complete-universe membership, temporal modes, 30 metrics, nine independent dimensions, evidence
+  layers, Topic-quality status, and user-defined fit policy.
+- Defined deterministic fit transformations and prohibited persistence of user weights/scores.
+- Added a reproducible validate-school-contract CLI and a source-linked manifest.
+- Corrected legacy methodology and data-dictionary wording to match implemented denominators.
+- Preserved the optional citation/Topic/multiplex methodology disclosure during regeneration.
+- Rebuilt affected methodology, data dictionary, provenance manifests, and release checksums.
+
+### Files changed
+
+- Contract and documentation: config/school_decision.yml,
+  docs/school_decision_analytical_contract.md, README.md.
+- Validation and CLI: src/gisnet/schools/__init__.py,
+  src/gisnet/schools/contract.py, src/gisnet/cli.py,
+  tests/unit/test_school_decision_contract.py.
+- Backlog/audit: AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md,
+  .agent/backlog.json, .agent/state.json, .agent/decisions.md,
+  .agent/manifests/school_decision_contract.json, .agent/RUNLOG.md.
+- Corrected generated documentation/provenance:
+  src/gisnet/reporting/methodology.py, src/gisnet/reporting/data_dictionary.py,
+  outputs/reports/methodology.md, outputs/reports/data_dictionary.md,
+  data/reference/data_dictionary.json, related summaries/manifests, and release checksums.
+
+### Commands executed
+
+- Mandatory baseline: git status, repository/tree inspection, complete contract/state reads,
+  uv sync --extra dev, uv run python -m gisnet.cli status, and scripts/quality-gate.sh.
+- Evidence probes over local Parquet schemas/counts, date coverage, dashboard core thresholds, and
+  hierarchy-collapse coverage.
+- Focused Pytest, Ruff, format, and strict mypy iterations.
+- uv run python -m gisnet.cli report --resume,
+  build-data-dictionary --resume, and validate-school-contract --resume.
+- git diff --check, full scripts/quality-gate.sh, and release build/verification.
+- Independent read-only repository audit and final diff review.
+
+### Validation results
+
+- Strict contract tests: 9 passed, covering required dimensions/time modes, layer separation,
+  complete-index thresholds, normalized categories, fit-score semantics, backlog gating, manifest
+  provenance, and CLI dry-run behavior.
+- Full quality gate: Ruff lint and format passed; strict mypy passed; all 152 offline tests passed
+  across the gate batches.
+- Release: 180 public files,
+  11780183 bytes, zero privacy findings.
+- Contract: 30 metrics; semantic config hash
+  1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03.
+- Existing annual datasets were not renamed or rebuilt; no API request or API key was used.
+
+### Data and configuration hashes
+
+- School-decision YAML SHA-256: f6e7416db1b51a62725b1ecb84476ee79fd8f2ede1ac81a772e14a62adc97901
+- School-decision semantic hash: 1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03
+- Methodology report SHA-256: 476cfafd19db336198d8989247242556fd28c6d8f596958525a5141121394c19
+- Data dictionary JSON SHA-256: 777e9a11a19dfebb7dff11f487829b29c07a2549758ea1866a0f2663c8e98f66
+- Release manifest SHA-256: 297c85fc6e164ac685da428477a936dae192627ba8aea8456c67eb79709bd78b
+
+### Checkpoints written
+
+No OpenAlex download checkpoint or scientific dataset was changed. State, backlog, run log,
+contract manifest, documentation summaries, and release files were written atomically by existing
+writers.
+
+### Failures or blockers
+
+- The first final diff check found Markdown hard-break trailing spaces in the new backlog section;
+  they were removed without changing pre-existing content.
+- Independent review found weak semantic validation, optional-task scheduler leakage, normalized
+  category ambiguity, and legacy formula wording. All findings were corrected and regression-tested.
+- Regenerating methodology initially removed an existing optional multiplex disclosure because it
+  was not encoded in the generator; the source template was repaired and the disclosure preserved.
+- No blocker remains for GISNET-120.
+
+### Decisions made
+
+- School eligibility derives from is_primary_research_scope, spans every stored macro-region, and
+  never depends on visualization rank or coordinate presence.
+- Organization identity remains immutable; canonical school collapse requires explicit evidence.
+- Co-authorship, citation flow, and Topic similarity remain separate.
+- Current school-decision mode is planned until GISNET-121 through GISNET-124 complete.
+- user_defined_fit_score is transparent UI state, never university quality or scientific source
+  data.
+
+### Exact next action
+
+Task: GISNET-121 — Build publication-date QA layer. Run
+uv run python -m gisnet.cli next-task, then add regression-first exact-date parsing and
+annual-versus-subannual reconciliation without fabricating month or day values.

@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "1e3f625ee1a8bd2a793a7c8e073fec1cbabd6079041029374fe11bcc19110ed1",
+  "checksum_sha256": "777e9a11a19dfebb7dff11f487829b29c07a2549758ea1866a0f2663c8e98f66",
   "column_count": 1,
   "command": "python -m gisnet.cli build-data-dictionary --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-15T15:29:41.112703Z",
+  "created_at_utc": "2026-08-17T10:13:57.746847Z",
   "dataset_name": "public_data_dictionary",
-  "git_commit": "568bbdbf6b3f",
+  "git_commit": "47ae09a41f59",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -17,7 +17,7 @@
     "checksum_sha256"
   ],
   "row_count": 1,
-  "run_id": "20260806T002306Z_568bbdbf6b3f",
+  "run_id": "20260817T095315Z_47ae09a41f59",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/collaboration_matrix_year.json",

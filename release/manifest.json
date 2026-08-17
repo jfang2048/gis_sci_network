@@ -1,12 +1,12 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 101,
-      "size_bytes": 151582
+      "file_count": 102,
+      "size_bytes": 153397
     },
     "config": {
-      "file_count": 11,
-      "size_bytes": 150781
+      "file_count": 12,
+      "size_bytes": 178735
     },
     "dashboard/data": {
       "file_count": 17,
@@ -14,7 +14,7 @@
     },
     "data/reference": {
       "file_count": 42,
-      "size_bytes": 1048734
+      "size_bytes": 1048678
     },
     "figures": {
       "file_count": 3,
@@ -22,7 +22,7 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 132789
+      "size_bytes": 132742
     }
   },
   "dashboard_table_count": 16,
@@ -138,12 +138,12 @@
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "705057ff613450d2eaadae6f267b2822f0d2c8d09f683b5a2bd8bb52edf7aa08",
+      "sha256": "124a0ad6dc81fce3957e046971e33696aab65deb59a1663dd23ab01ac69a0de6",
       "size_bytes": 1884
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "a40c4b6f4b736e41cfc4b981fd917a7af3b12d8b90515c738033b647dab08119",
+      "sha256": "03ae8e6fa076efe5dc4db47e1b8a12aaf5d87edd379148dc7d88c6342dbf895d",
       "size_bytes": 1487
     },
     {
@@ -308,12 +308,12 @@
     },
     {
       "path": ".agent/manifests/methodology_report.json",
-      "sha256": "caca4327eeccc775d578ab27fdb84b72d6fa47aa642ee8ba889ffae762e6f527",
+      "sha256": "cd2525345cc4cece686e502cf0ebfc813ea9d9982a3d0952edb0e1533242b405",
       "size_bytes": 1696
     },
     {
       "path": ".agent/manifests/methodology_report_summary.json",
-      "sha256": "b97a0799940a7f9a773b26536f9cc4bf96233500808dbbdf4c9729b251453473",
+      "sha256": "0df3a38f53e0081f252308fc5a7c00f65a1263966c30d7bf154249f63e0ecd07",
       "size_bytes": 2121
     },
     {
@@ -378,7 +378,7 @@
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "7fd07b0497f6f8ee8a5173e24db303f2065d37171f289a5a06ea3dc68e250f6c",
+      "sha256": "fe842493eb677eb019f2de99bd230cd5389690164a14aff8321013560c52188f",
       "size_bytes": 1487
     },
     {
@@ -405,6 +405,11 @@
       "path": ".agent/manifests/reproducibility_validation.json",
       "sha256": "6008b9f731c14d7f8168a3870206b8d6dbd9a0543eeead273cfdf98e249cf481",
       "size_bytes": 1538
+    },
+    {
+      "path": ".agent/manifests/school_decision_contract.json",
+      "sha256": "a57b3f61e6c5ddf7fb988f4d0e36d4999fe6e93100269480edd6e6a388243845",
+      "size_bytes": 1815
     },
     {
       "path": ".agent/manifests/sensitivity_matrix.json",
@@ -587,6 +592,11 @@
       "size_bytes": 68068
     },
     {
+      "path": "config/school_decision.yml",
+      "sha256": "f6e7416db1b51a62725b1ecb84476ee79fd8f2ede1ac81a772e14a62adc97901",
+      "size_bytes": 27954
+    },
+    {
       "path": "config/topic_decisions.yml",
       "sha256": "09a16964cbfad96ae01613aa777fa5d8cf276edd11c6903773f1de9ab3869410",
       "size_bytes": 8321
@@ -743,12 +753,12 @@
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "1e3f625ee1a8bd2a793a7c8e073fec1cbabd6079041029374fe11bcc19110ed1",
-      "size_bytes": 118775
+      "sha256": "777e9a11a19dfebb7dff11f487829b29c07a2549758ea1866a0f2663c8e98f66",
+      "size_bytes": 118719
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "61fbfe4ad1a66bf3c3566e7d83689c48a61fd7afe2b769431350588d6969694d",
+      "sha256": "2485dbb7b889e9f9fca03272d30c93d5583a1fa2a63eea116bd24b3afb17988b",
       "size_bytes": 800
     },
     {
@@ -808,7 +818,7 @@
     },
     {
       "path": "data/reference/methodology_report_summary.json",
-      "sha256": "1982628f75c018712784b2e18ef9e910b332d802fd1b4472827c720260e7371e",
+      "sha256": "11200d0f219cffd834c1686abd43eb4f5c616df72477a6516415063eea0efd92",
       "size_bytes": 757
     },
     {
@@ -918,13 +928,13 @@
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "8c89f8d21fc9d8d695dcb3b91f49434ea02051763599c14414299bb587218649",
-      "size_bytes": 61182
+      "sha256": "a396ef4380f06ffbb18e82389f2f2b71f719111434be9d0d7d39a8815c3b4b4c",
+      "size_bytes": 61136
     },
     {
       "path": "outputs/reports/methodology.md",
-      "sha256": "ce7071ef71e734a360da45b570f2245e47fd0de9cf9b036189d35eea8f383a89",
-      "size_bytes": 8940
+      "sha256": "476cfafd19db336198d8989247242556fd28c6d8f596958525a5141121394c19",
+      "size_bytes": 8939
     },
     {
       "path": "outputs/reports/topic_review.md",
@@ -932,11 +942,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-16T23:29:40Z",
+  "generated_at_utc": "2026-08-17T10:15:37Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 178,
-  "public_size_bytes": 11750517,
+  "public_file_count": 180,
+  "public_size_bytes": 11780183,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

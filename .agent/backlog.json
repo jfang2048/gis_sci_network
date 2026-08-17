@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-16T23:30:46Z",
+  "last_updated_utc": "2026-08-17T10:17:15Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1524,18 +1524,35 @@
     },
     {
       "dependencies": [
-        "GISNET-104"
+        "GISNET-104",
+        "GISNET-139"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-16T23:31:23Z",
+          "from": "TODO",
+          "reason": "Building an author-affiliation mobility layer with conservative transition rules, identity-disambiguation warnings, and explicit uncertainty.",
+          "run_id": "20260816T233123Z_47ae09a41f59",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-17T10:00:50Z",
+          "from": "IN_PROGRESS",
+          "reason": "Paused before implementation because the user reprioritized GISNET-120 through GISNET-139 ahead of optional author mobility.",
+          "run_id": "20260817T095315Z_47ae09a41f59",
+          "to": "TODO"
+        }
+      ],
       "id": "GISNET-113",
       "priority": "OPTIONAL",
       "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null
+      "status_reason": "Paused before implementation because the user reprioritized GISNET-120 through GISNET-139 ahead of optional author mobility.",
+      "status_updated_at_utc": "2026-08-17T10:00:50Z"
     },
     {
       "dependencies": [
-        "GISNET-104"
+        "GISNET-104",
+        "GISNET-139"
       ],
       "history": [],
       "id": "GISNET-114",
@@ -1543,6 +1560,494 @@
       "status": "TODO",
       "status_reason": null,
       "status_updated_at_utc": null
+    },
+    {
+      "acceptance": [
+        "The definitions are documented and versioned in a strict machine-readable contract.",
+        "Validation rejects missing dimensions, layer conflation, persisted fit scores, and global quality scores.",
+        "Current versus planned metric availability is explicit."
+      ],
+      "dependencies": [
+        "GISNET-104"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-17T10:00:50Z",
+          "from": "TODO",
+          "reason": "Defining and validating the versioned school-decision analytical contract.",
+          "run_id": "20260817T095315Z_47ae09a41f59",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-17T10:17:15Z",
+          "from": "IN_PROGRESS",
+          "reason": "Versioned school-decision definitions, strict semantic validation, backlog dependencies, provenance, corrected public metric wording, tests, quality gate, and release verification all passed.",
+          "run_id": "20260817T095315Z_47ae09a41f59",
+          "to": "DONE"
+        }
+      ],
+      "id": "GISNET-120",
+      "priority": "P0",
+      "status": "DONE",
+      "status_reason": "Versioned school-decision definitions, strict semantic validation, backlog dependencies, provenance, corrected public metric wording, tests, quality gate, and release verification all passed.",
+      "status_updated_at_utc": "2026-08-17T10:17:15Z",
+      "title": "Define school-decision analytical contract",
+      "work": [
+        "Define the eligible school/institution profile, identity, scope, time, and quality context.",
+        "Classify and distinguish activity, specialization, reach, persistence, network position, citation influence, research proximity, momentum, and user-defined fit.",
+        "Prohibit unexplained global university-quality scores and keep evidence layers separate."
+      ]
+    },
+    {
+      "acceptance": [
+        "Annual Works reconcile into exact-date eligible plus annual-only records.",
+        "No artificial date participates in subannual analysis.",
+        "QA outputs are deterministic, validated, manifested, and atomic."
+      ],
+      "dependencies": [
+        "GISNET-120",
+        "GISNET-043",
+        "GISNET-060",
+        "GISNET-061"
+      ],
+      "history": [],
+      "id": "GISNET-121",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build publication-date QA layer",
+      "work": [
+        "Parse publication_date without fabricating month or day values.",
+        "Create publication_month, publication_quarter, publication_year, has_exact_publication_date, and subannual_date_eligible.",
+        "Report coverage globally and by institution, corpus, year, and Topic family."
+      ]
+    },
+    {
+      "acceptance": [
+        "Monthly and quarterly totals reconcile with exact-date eligible annual source records.",
+        "Existing annual datasets and public names are unchanged.",
+        "Repeated builds are deterministic and atomic."
+      ],
+      "dependencies": [
+        "GISNET-121",
+        "GISNET-061",
+        "GISNET-062",
+        "GISNET-063"
+      ],
+      "history": [],
+      "id": "GISNET-122",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build subannual temporal facts",
+      "work": [
+        "Add monthly and quarterly institutional Work and collaboration facts in parallel with annual outputs.",
+        "Quantify raw subannual sparsity before selecting UI defaults."
+      ]
+    },
+    {
+      "acceptance": [
+        "Window boundaries are correct across years and incomplete windows are explicit.",
+        "Rolling aggregates reconcile with eligible monthly facts.",
+        "Annual scientific outputs remain the historical reference."
+      ],
+      "dependencies": [
+        "GISNET-122",
+        "GISNET-064",
+        "GISNET-071"
+      ],
+      "history": [],
+      "id": "GISNET-123",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build rolling collaboration windows",
+      "work": [
+        "Build rolling 12-, 24-, and 36-month institution metrics and collaboration edges stepped monthly.",
+        "Store window_start, window_end, and window_months.",
+        "Document publication time as observation time, not collaboration-start time."
+      ]
+    },
+    {
+      "acceptance": [
+        "Current-decision rolling views may include a partial current year safely.",
+        "Historical complete-year outputs remain unchanged.",
+        "No API key is persisted and incremental reruns fetch only missing ranges."
+      ],
+      "dependencies": [
+        "GISNET-123",
+        "GISNET-020",
+        "GISNET-022",
+        "GISNET-042"
+      ],
+      "history": [],
+      "id": "GISNET-124",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Support recent partial-calendar data safely",
+      "work": [
+        "Verify official OpenAlex date-filter semantics.",
+        "Incrementally retrieve through the runtime-derived latest completed month.",
+        "Reuse cache, checkpoints, deduplication, and secret handling without redownloading valid history."
+      ]
+    },
+    {
+      "acceptance": [
+        "Every collapse is evidence-backed, reversible, cycle-free, and auditable.",
+        "The organization view is unchanged.",
+        "Non-informative umbrella identity is hidden or clearly marked."
+      ],
+      "dependencies": [
+        "GISNET-123",
+        "GISNET-054"
+      ],
+      "history": [],
+      "id": "GISNET-125",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Strengthen school identity resolution",
+      "work": [
+        "Preserve organization identity and add only evidence-backed canonical school mappings.",
+        "Retain rule, reason, evidence, provenance, and unresolved fragmentation.",
+        "Never guess collapses for ambiguous organization structures."
+      ]
+    },
+    {
+      "acceptance": [
+        "A school outside the prior top-500 core is searchable.",
+        "Membership reconciles with the eligibility contract.",
+        "The index is deterministic, compact, and provenance-linked."
+      ],
+      "dependencies": [
+        "GISNET-121",
+        "GISNET-125",
+        "GISNET-063"
+      ],
+      "history": [],
+      "id": "GISNET-126",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build complete school index",
+      "work": [
+        "Build a compact complete eligible institution index independent of all visualization thresholds.",
+        "Include stable identity, name, geography, category, source IDs, coordinates, observed dates, recent activity, Topic availability, and date coverage.",
+        "Expose ambiguous names instead of silently resolving them."
+      ]
+    },
+    {
+      "acceptance": [
+        "Every eligible institution has a valid profile or explicit coverage reason.",
+        "Metric definitions match GISNET-120.",
+        "Profile datasets are deterministic, validated, and manifested."
+      ],
+      "dependencies": [
+        "GISNET-123",
+        "GISNET-126",
+        "GISNET-071",
+        "GISNET-110",
+        "GISNET-111"
+      ],
+      "history": [],
+      "id": "GISNET-127",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build school profile datasets",
+      "work": [
+        "Build selectable-window profile metrics across independent activity, collaboration, network, citation, Topic, and data-quality dimensions.",
+        "Keep co-authorship, citation, and Topic similarity separate.",
+        "Create no opaque quality score."
+      ]
+    },
+    {
+      "acceptance": [
+        "A school outside the global top-1,000 edge core exposes ego partners.",
+        "Ranking is deterministic with stable ties and exact values.",
+        "Interactive retrieval meets a measured performance budget."
+      ],
+      "dependencies": [
+        "GISNET-123",
+        "GISNET-126",
+        "GISNET-064"
+      ],
+      "history": [],
+      "id": "GISNET-128",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build per-school partner index",
+      "work": [
+        "Store each school's own top partners per supported window.",
+        "Include absolute/fractional weight, normalized intensity, persistence, and repeat metrics.",
+        "Do not derive availability from global top-N edges."
+      ]
+    },
+    {
+      "acceptance": [
+        "No combined metric is labelled university quality or stored in scientific source data.",
+        "Weights, components, and transformations are visible.",
+        "Search uses stable IDs and the complete index."
+      ],
+      "dependencies": [
+        "GISNET-127",
+        "GISNET-128"
+      ],
+      "history": [],
+      "id": "GISNET-129",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build school research-fit comparison",
+      "work": [
+        "Filter and sort the complete index by independent research dimensions.",
+        "Optionally compute only user_defined_fit_score from explicit UI weights."
+      ]
+    },
+    {
+      "acceptance": [
+        "The primary view answers which geography collaborates with which geography.",
+        "Flows reconcile with institution edges.",
+        "Map and matrix values match exactly."
+      ],
+      "dependencies": [
+        "GISNET-129",
+        "GISNET-065"
+      ],
+      "history": [],
+      "id": "GISNET-130",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Redesign macro geographic collaboration visualization",
+      "work": [
+        "Build macro-region, subregion, and country flow map and origin-destination matrix views.",
+        "Use versioned sourced geometry or anchors with provenance and license."
+      ]
+    },
+    {
+      "acceptance": [
+        "Line widths remain comparable across filters.",
+        "Macro-region relationships are immediately readable.",
+        "An exact companion table is always available."
+      ],
+      "dependencies": [
+        "GISNET-130"
+      ],
+      "history": [],
+      "id": "GISNET-131",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build readable flow arcs",
+      "work": [
+        "Filter meaningful flows by Top N, minimum weight, and minimum partner share.",
+        "Use stable documented width semantics and exact tooltips."
+      ]
+    },
+    {
+      "acceptance": [
+        "Exact source/target identities are visible.",
+        "Global visualization thresholds do not suppress ego partners.",
+        "Map and adjacent table reconcile."
+      ],
+      "dependencies": [
+        "GISNET-128",
+        "GISNET-131"
+      ],
+      "history": [],
+      "id": "GISNET-132",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build School Ego Map",
+      "work": [
+        "Center on one school and show its partner institutions, countries, and regions.",
+        "Use per-school partners and support fractional volume, intensity, and persistence across rolling, quarterly, and annual windows."
+      ]
+    },
+    {
+      "acceptance": [
+        "A school is findable without interpreting a dense global network.",
+        "Two to four institutions compare on common scales.",
+        "Corpus, time, identity, and quality context remains visible."
+      ],
+      "dependencies": [
+        "GISNET-129",
+        "GISNET-132"
+      ],
+      "history": [],
+      "id": "GISNET-133",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Redesign dashboard information architecture",
+      "work": [
+        "Create School Finder, School Profile, Compare Schools, Geographic Flows, Institutional Network, Global Trends, and Methods and Data Quality pages.",
+        "Make decision-oriented school search primary while preserving annual functions."
+      ]
+    },
+    {
+      "acceptance": [
+        "Profile values disclose corpus, boundaries, coverage, and semantics.",
+        "Topic proximity is never labelled collaboration.",
+        "Missingness and low coverage are explicit."
+      ],
+      "dependencies": [
+        "GISNET-127",
+        "GISNET-128",
+        "GISNET-133"
+      ],
+      "history": [],
+      "id": "GISNET-134",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Build School Profile UI",
+      "work": [
+        "Present identity, recent activity/trend, Topic profile, partners/geography, network position, citation influence, research neighbours, and quality context.",
+        "Use rolling recent context and separate annual history."
+      ]
+    },
+    {
+      "acceptance": [
+        "Profile and Compare use identical source metrics.",
+        "Scales and denominators are aligned and disclosed.",
+        "No universal-best-school claim appears."
+      ],
+      "dependencies": [
+        "GISNET-134"
+      ],
+      "history": [],
+      "id": "GISNET-135",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Improve school comparison visualization",
+      "work": [
+        "Compare activity, trend, Topics, international share, partner diversity, regional orientation, centrality, and citations.",
+        "Use common-scale small multiples, ranked bars, and exact tables rather than primary radar charts."
+      ]
+    },
+    {
+      "acceptance": [
+        "Directionality, coverage, thresholds, and limitations are visible.",
+        "Topic similarity never implies collaboration.",
+        "No composite scientific network is created."
+      ],
+      "dependencies": [
+        "GISNET-110",
+        "GISNET-111",
+        "GISNET-134"
+      ],
+      "history": [],
+      "id": "GISNET-136",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Surface existing citation and Topic-similarity layers",
+      "work": [
+        "Expose co-authorship, citation flow, and Topic similarity as separate concepts.",
+        "Reuse existing validated layers without merged scientific weights."
+      ]
+    },
+    {
+      "acceptance": [
+        "Existing behavior remains regression-covered.",
+        "Complete-school query performance and memory meet documented budgets.",
+        "No unapproved dependency is added."
+      ],
+      "dependencies": [
+        "GISNET-133",
+        "GISNET-134",
+        "GISNET-135",
+        "GISNET-136"
+      ],
+      "history": [],
+      "id": "GISNET-137",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Refactor dashboard implementation",
+      "work": [
+        "Separate data access, filters, components, maps, profiles, and comparison after regression locking.",
+        "Use predicate pushdown and avoid eager all-edge pandas loads or enormous unfiltered dashboard files.",
+        "Benchmark current and redesigned paths."
+      ]
+    },
+    {
+      "acceptance": [
+        "Complete school search and per-school ego coverage pass outside old global cores.",
+        "Subannual, rolling, geography, map/matrix, and Profile/Compare values reconcile.",
+        "Strict subset, secret safety, deterministic reruns, and annual regressions pass."
+      ],
+      "dependencies": [
+        "GISNET-124",
+        "GISNET-125",
+        "GISNET-126",
+        "GISNET-127",
+        "GISNET-128",
+        "GISNET-129",
+        "GISNET-130",
+        "GISNET-131",
+        "GISNET-132",
+        "GISNET-133",
+        "GISNET-134",
+        "GISNET-135",
+        "GISNET-136",
+        "GISNET-137"
+      ],
+      "history": [],
+      "id": "GISNET-138",
+      "priority": "P0",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Validate school-decision system",
+      "work": [
+        "Run synthetic and real-data coverage, reconciliation, temporal-boundary, visual-semantic, identity, privacy, determinism, and annual-regression checks."
+      ]
+    },
+    {
+      "acceptance": [
+        "Both modes are reproducible from documented commands.",
+        "All release tables have dictionaries, manifests, checksums, provenance, and limitations.",
+        "Release verification, privacy scan, quality gate, and GISNET-138 checks pass."
+      ],
+      "dependencies": [
+        "GISNET-138"
+      ],
+      "history": [],
+      "id": "GISNET-139",
+      "priority": "P1",
+      "status": "TODO",
+      "status_reason": null,
+      "status_updated_at_utc": null,
+      "title": "Update release and documentation",
+      "work": [
+        "Update documentation, limitations, dictionaries, manifests, release, and agent audit state.",
+        "Document historical scientific and current school-decision modes.",
+        "Verify methodology and data-dictionary wording remains aligned with implemented GISNET-120 definitions."
+      ]
     }
   ]
 }

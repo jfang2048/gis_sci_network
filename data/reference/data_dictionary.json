@@ -1481,7 +1481,7 @@
           "type": "int64"
         },
         {
-          "description": "International Works divided by collaborative Works.",
+          "description": "International Works divided by all included Works.",
           "name": "international_collaboration_share",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1489,7 +1489,7 @@
           "type": "double"
         },
         {
-          "description": "Cross-region Works divided by collaborative Works.",
+          "description": "Cross-region Works divided by all included Works.",
           "name": "cross_region_collaboration_share",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1643,7 +1643,7 @@
       "transformation_command": "python -m gisnet.cli build-map-data --resume"
     },
     {
-      "code_commit": "568bbdbf6b3f",
+      "code_commit": "306db695f048",
       "column_count": 16,
       "columns": [
         {
@@ -1796,7 +1796,7 @@
         ".agent/manifests/region_flows_year.json"
       ],
       "source_versions": {
-        "matrix_policy": "region-collaboration-matrix-2026-08-05-v1"
+        "matrix_policy": "region-collaboration-matrix-2026-08-17-v2"
       },
       "table": "matrix",
       "transformation_command": "python -m gisnet.cli build-matrix --resume"
@@ -2486,7 +2486,7 @@
           "type": "int64"
         },
         {
-          "description": "International Works divided by collaborative Works.",
+          "description": "International Works divided by all included Works.",
           "name": "international_collaboration_share",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2494,7 +2494,7 @@
           "type": "double"
         },
         {
-          "description": "Cross-region Works divided by collaborative Works.",
+          "description": "Cross-region Works divided by all included Works.",
           "name": "cross_region_collaboration_share",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2929,7 +2929,7 @@
       "transformation_command": "python -m gisnet.cli build-network-view --resume"
     },
     {
-      "code_commit": "568bbdbf6b3f",
+      "code_commit": "306db695f048",
       "column_count": 14,
       "columns": [
         {
@@ -3062,11 +3062,10 @@
       "sha256": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820",
       "source_manifest": ".agent/manifests/trend_series_year.json",
       "source_manifests": [
-        ".agent/manifests/region_flows_year.json",
-        ".agent/manifests/graph_metrics_year.json"
+        ".agent/manifests/region_flows_year.json"
       ],
       "source_versions": {
-        "trend_figure_policy": "annual-region-trends-2026-08-05-v1"
+        "trend_figure_policy": "annual-region-trends-2026-08-17-v2"
       },
       "table": "trends",
       "transformation_command": "python -m gisnet.cli build-figures --resume"

@@ -329,8 +329,8 @@ Annual institution metrics for nodes with source-provided coordinates.
 | `single_institution_work_count` | `int64` | Distinct Works containing only this institution. | Not null in this public release. | 0 |
 | `international_work_count` | `int64` | Distinct Works with institutions from multiple countries. | Not null in this public release. | 0 |
 | `cross_region_work_count` | `int64` | Distinct Works with institutions from multiple macro-regions. | Not null in this public release. | 0 |
-| `international_collaboration_share` | `double` | International Works divided by collaborative Works. | Not null in this public release. | 0 |
-| `cross_region_collaboration_share` | `double` | Cross-region Works divided by collaborative Works. | Not null in this public release. | 0 |
+| `international_collaboration_share` | `double` | International Works divided by all included Works. | Not null in this public release. | 0 |
+| `cross_region_collaboration_share` | `double` | Cross-region Works divided by all included Works. | Not null in this public release. | 0 |
 | `degree` | `int64` | Number of distinct institutional partners in the annual graph. | Not null in this public release. | 0 |
 | `full_strength` | `double` | Sum of incident full-count collaboration edge weights. | Not null in this public release. | 0 |
 | `fractional_strength` | `double` | Sum of incident fractional collaboration edge weights. | Not null in this public release. | 0 |
@@ -358,8 +358,8 @@ Sparse macro-region, subregion, and country collaboration matrix cells.
 - Direct source manifest: `.agent/manifests/collaboration_matrix_year.json`
 - Source manifests: `.agent/manifests/region_flows_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"matrix_policy": "region-collaboration-matrix-2026-08-05-v1"}`
-- Code commit: `568bbdbf6b3f`
+- Source versions: `{"matrix_policy": "region-collaboration-matrix-2026-08-17-v2"}`
+- Code commit: `306db695f048`
 - Transformation: `python -m gisnet.cli build-matrix --resume`
 - Known issue: An absent row is missing/no observed flow, never an imputed zero.
 
@@ -515,8 +515,8 @@ Fixed-coordinate annual core-node metrics and primary communities.
 | `single_institution_work_count` | `int64` | Distinct Works containing only this institution. | Not null in this public release. | 0 |
 | `international_work_count` | `int64` | Distinct Works with institutions from multiple countries. | Not null in this public release. | 0 |
 | `cross_region_work_count` | `int64` | Distinct Works with institutions from multiple macro-regions. | Not null in this public release. | 0 |
-| `international_collaboration_share` | `double` | International Works divided by collaborative Works. | Not null in this public release. | 0 |
-| `cross_region_collaboration_share` | `double` | Cross-region Works divided by collaborative Works. | Not null in this public release. | 0 |
+| `international_collaboration_share` | `double` | International Works divided by all included Works. | Not null in this public release. | 0 |
+| `cross_region_collaboration_share` | `double` | Cross-region Works divided by all included Works. | Not null in this public release. | 0 |
 | `degree` | `int64` | Number of distinct institutional partners in the annual graph. | Not null in this public release. | 0 |
 | `full_strength` | `double` | Sum of incident full-count collaboration edge weights. | Not null in this public release. | 0 |
 | `fractional_strength` | `double` | Sum of incident fractional collaboration edge weights. | Not null in this public release. | 0 |
@@ -607,10 +607,10 @@ Annual macro-region collaboration trend series for complete calendar years.
 - Primary key: `year, corpus_view, hierarchy_view, source_region, target_region`
 - SHA-256: `0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820`
 - Direct source manifest: `.agent/manifests/trend_series_year.json`
-- Source manifests: `.agent/manifests/region_flows_year.json, .agent/manifests/graph_metrics_year.json`
+- Source manifests: `.agent/manifests/region_flows_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"trend_figure_policy": "annual-region-trends-2026-08-05-v1"}`
-- Code commit: `568bbdbf6b3f`
+- Source versions: `{"trend_figure_policy": "annual-region-trends-2026-08-17-v2"}`
+- Code commit: `306db695f048`
 - Transformation: `python -m gisnet.cli build-figures --resume`
 - Known issue: The last included year is 2025; partial 2026 observations are excluded.
 

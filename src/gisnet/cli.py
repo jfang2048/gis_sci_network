@@ -96,6 +96,10 @@ from gisnet.reporting.data_dictionary import (
 )
 from gisnet.reporting.methodology import build_methodology_report, write_methodology_artifacts
 from gisnet.ror.enrich import enrich_institutions_with_ror, write_ror_artifacts
+from gisnet.schools.contract import (
+    load_school_decision_contract,
+    write_school_decision_contract_manifest,
+)
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
     BacklogStore,
@@ -143,6 +147,23 @@ def build_parser() -> argparse.ArgumentParser:
         "--offline", action="store_true", help="check key presence without making a request"
     )
     check_env.set_defaults(handler=_check_env)
+
+    school_contract = subparsers.add_parser(
+        "validate-school-contract",
+        help="validate the versioned school-decision analytical contract",
+    )
+    _add_pipeline_arguments(school_contract)
+    school_contract.add_argument("--contract", default="config/school_decision.yml", type=Path)
+    school_contract.add_argument(
+        "--institution-types", default="config/institution_types.yml", type=Path
+    )
+    school_contract.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
+    school_contract.add_argument(
+        "--manifest",
+        default=".agent/manifests/school_decision_contract.json",
+        type=Path,
+    )
+    school_contract.set_defaults(handler=_validate_school_contract)
 
     regions = subparsers.add_parser(
         "validate-regions", help="validate the frozen geographic registry"
@@ -1079,6 +1100,35 @@ def _check_env(args: argparse.Namespace) -> int:
     remaining = response.rate_limit.get("x-ratelimit-remaining")
     suffix = f" Rate-limit remaining: {remaining}." if remaining is not None else ""
     print(f"OpenAlex authenticated request succeeded.{suffix}")
+    return 0
+
+
+def _validate_school_contract(args: argparse.Namespace) -> int:
+    try:
+        contract = load_school_decision_contract(args.contract)
+        if args.dry_run:
+            print(
+                f"Validated {len(contract.metrics)} school-decision metrics from "
+                f"{args.contract}; no manifest was written."
+            )
+            return 0
+        run_id = _resolve_run_id(args.run_id)
+        command = "python -m gisnet.cli validate-school-contract --resume"
+        with RunLock(run_id=run_id, task_id="GISNET-120"):
+            manifest = write_school_decision_contract_manifest(
+                contract_path=args.contract,
+                institution_types_path=args.institution_types,
+                topic_registry_path=args.topic_registry,
+                project_path=args.config,
+                manifest_path=args.manifest,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest("school_decision_contract", str(args.manifest))
+    except (OSError, KeyError, TypeError, ValidationError, ValueError) as exc:
+        print(f"School-decision contract validation failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(f"Validated {manifest.row_count} school-decision metrics and wrote {args.manifest}.")
     return 0
 
 

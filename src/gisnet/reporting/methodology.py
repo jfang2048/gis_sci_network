@@ -182,7 +182,7 @@ Work. The stored maximum fractional reconciliation error is
 thresholds are {consortium["warning_institution_count"]} and
 {consortium["exclusion_institution_count"]} institutions. Primary annual output contains
 {edges["annual_edge_count"]:,} edge observations. Normalized intensity divides fractional edge
-weight by the geometric mean of the two institutions' fractional output.
+weight by the geometric mean of the two institutions' full Work counts.
 
 ## 7. Dynamic network metrics
 
@@ -234,6 +234,14 @@ coordinate coverage ranges from {map_summary["minimum_node_coordinate_coverage_s
 network dashboard is a thresholded view and must not be used to infer absence from a hidden edge.
 No partial 2026 data are included; {trends["year_maximum"]} is the last complete calendar year.
 
+Optional layer analysis preserves three distinct network meanings. Co-authorship is an undirected
+fractional collaboration layer; citation flow is directed from citing to cited institution; and
+cosine Topic similarity is an undirected research-proximity layer over a deterministic annual
+500-institution core. The multiplex comparison reports each layer separately and computes only
+unweighted node and dyad presence overlap. Citation direction is ignored for dyad matching only.
+No layer weights are combined, no composite score is defined, and Topic-layer overlap inherits the
+annual-core coverage boundary.
+
 ## 11. Reproducibility
 
 Run from the repository root:
@@ -283,6 +291,7 @@ Unknown rather than being guessed.
 - Community continuity: `data/reference/community_continuity_summary.json`
 - Sensitivity: `data/reference/sensitivity_summary.json`
 - Reproducibility: `data/reference/reproducibility_validation.json`
+- Optional multiplex comparison: `data/reference/multiplex_comparison_summary.json`
 - Figures: `data/reference/annual_trends_summary.json` and
   `data/reference/collaboration_matrix_summary.json`
 """

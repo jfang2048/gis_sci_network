@@ -84,3 +84,26 @@ This replaces DuckDB's host-relative default, which reserved 80% of the 30 GiB m
 a kernel OOM kill. Parquet checksums are streamed. Work-Topic staging rejects orphan rows before
 export, and referenced-work parsing uses a distinct identifier so it cannot overwrite `work_id`.
 Large raw, interim, and processed data remain ignored and are rebuilt locally from OpenAlex.
+
+## 2026-08-17 — School-decision analytical contract
+
+The institution becomes the primary interactive entity for the school-decision layer while the
+existing complete-year annual regional analysis remains intact. `School` is interface shorthand
+for an eligible university or research institution; it neither asserts degree-program availability
+nor changes the organization identity. The complete eligible search universe uses primary research
+scope across all stored macro-regions and never depends on global node/edge ranks, visualization
+score, map thresholds, or coordinate presence.
+
+Activity, specialization, collaboration reach, persistence, network position, citation influence,
+research proximity, momentum, and user-defined fit are independent dimensions. Co-authorship,
+directed citation flow, and Topic similarity remain separate layers and are never merged into one
+scientific edge weight. A global university-quality score is prohibited. The only permitted
+combined score name is `user_defined_fit_score`; it is transparent, UI-only, and not persisted in
+scientific datasets.
+
+Current code behavior is authoritative where legacy wording conflicts: normalized collaboration
+intensity uses full Work-count denominators, international and cross-region shares divide by all
+included institutional Works, and bridge score is cross-region fractional strength divided by
+total fractional strength. The methodology and data-dictionary generators were corrected during
+GISNET-120; GISNET-139 must retain those definitions. The GIS Topic registry remains provisional
+and its incomplete human review must be disclosed on all school-oriented results.
