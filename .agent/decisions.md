@@ -118,3 +118,17 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Ship the checksum-complete public manifest and a deterministic figure bundle containing SVG
   sources and PNG renditions. Preserve citation flow, Topic similarity, and co-authorship as
   separate evidence layers in both the release text and architecture image.
+
+## 2026-08-17 — Publication-date QA and source precision
+
+- Preserve `publication_date` as bibliographic observation-time metadata and never interpret it as
+  collaboration, research, project, or author-mobility start time.
+- A source literal is subannual-eligible only when it is a full calendar-valid date, agrees with
+  `publication_year`, and lies within the configured supported range. Null, malformed or partial,
+  year-conflicting, and out-of-range values remain annual-only; no month or day is imputed.
+- The current normalized snapshot contains 1,176,947 exact-valid source dates, but the source has
+  no independent precision flag and 261,950 values fall on January 1. Retain and measure these
+  values rather than inventing a January-1 exclusion heuristic.
+- Preserve the released exact-DOI representative policy for primary Strict/Broad facts. Do not
+  merge version-family dates or choose a new family date. Relative to all-version sensitivity, the
+  policy removes 129 Strict and 360 Broad exact-date-eligible records across 71 and 119 months.

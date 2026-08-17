@@ -8,7 +8,14 @@ import pytest
 from gisnet.atomic import atomic_write_json
 from gisnet.config import config_file_hash
 from gisnet.dataset import file_sha256
-from gisnet.pipeline import CONFIG_INPUTS, PipelineStage, StageOutput, run_pipeline, validate_stage
+from gisnet.pipeline import (
+    CONFIG_INPUTS,
+    DEFAULT_STAGES,
+    PipelineStage,
+    StageOutput,
+    run_pipeline,
+    validate_stage,
+)
 
 
 def _write_manifest(
@@ -241,3 +248,19 @@ def test_config_change_rebuilds_only_affected_branch(
         "rebuilt_stale",
         "skipped_valid",
     ]
+
+
+def test_publication_date_qa_precedes_annual_network_stages() -> None:
+    commands = [stage.command for stage in DEFAULT_STAGES]
+    date_index = commands.index("build-publication-date-qa")
+    assert commands[date_index - 1] == "build-work-institutions"
+    assert commands[date_index + 1] == "build-edges"
+    date_outputs = {output.data.name for output in DEFAULT_STAGES[date_index].outputs}
+    assert date_outputs == {
+        "work_publication_dates.parquet",
+        "publication_date_coverage_corpus.parquet",
+        "publication_date_coverage_year.parquet",
+        "publication_date_coverage_institution.parquet",
+        "publication_date_coverage_topic_family.parquet",
+        "publication_date_qa_summary.json",
+    }

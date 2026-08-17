@@ -1,0 +1,54 @@
+{
+  "checksum_sha256": "df0ff0d23dd6d4d83414ff5989de07a00739aacef2264217a9f185161bae2fd9",
+  "column_count": 20,
+  "command": "python -m gisnet.cli build-publication-date-qa --start-year 2010 --end-year 2025 --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-17T11:57:27.485792Z",
+  "dataset_name": "publication_date_coverage_year",
+  "git_commit": "573ec1eb19cb",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "annual_only_work_count": 0,
+    "annual_work_count": 0,
+    "corpus_view": 0,
+    "coverage_reconciliation_difference": 0,
+    "date_coverage_ratio": 0,
+    "exact_valid_work_count": 0,
+    "first_day_of_month_source_date_share": 0,
+    "first_day_of_month_work_count": 0,
+    "has_exact_publication_date_work_count": 0,
+    "january_first_source_date_share": 0,
+    "january_first_work_count": 0,
+    "malformed_work_count": 0,
+    "missing_work_count": 0,
+    "outside_supported_range_work_count": 0,
+    "publication_year": 0,
+    "reconciliation_passed": 0,
+    "status_reconciliation_difference": 0,
+    "subannual_date_eligible_work_count": 0,
+    "version_policy": 0,
+    "year_conflict_work_count": 0
+  },
+  "primary_key": [
+    "corpus_view",
+    "publication_year"
+  ],
+  "row_count": 48,
+  "run_id": "20260817T113144Z_573ec1eb19cb",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/works.json",
+    ".agent/manifests/work_corpus.json",
+    ".agent/manifests/work_institutions.json",
+    ".agent/manifests/work_topics.json",
+    ".agent/manifests/work_version_diagnostics.json"
+  ],
+  "source_versions": {
+    "publication_date_policy": "publication-date-qa-2026-08-17-v1"
+  },
+  "status": "valid"
+}

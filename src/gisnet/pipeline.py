@@ -53,6 +53,7 @@ CONFIG_INPUTS: dict[str, Path] = {
     "region_overrides": Path("config/region_overrides.yml"),
     "regions": Path("config/regions.yml"),
     "sample_registry": Path("data/interim/topic_work_samples.json"),
+    "school_decision": Path("config/school_decision.yml"),
     "topic_decisions": Path("config/topic_decisions.yml"),
     "topic_registry": Path("config/topic_registry.yml"),
     "work_types": Path("config/work_types.yml"),
@@ -194,6 +195,33 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
         (_output("work_institutions", "data/processed/work_institutions.parquet"),),
     ),
     PipelineStage(
+        "build-publication-date-qa",
+        (
+            _output("work_publication_dates", "data/processed/work_publication_dates.parquet"),
+            _output(
+                "publication_date_coverage_corpus",
+                "data/processed/publication_date_coverage_corpus.parquet",
+            ),
+            _output(
+                "publication_date_coverage_year",
+                "data/processed/publication_date_coverage_year.parquet",
+            ),
+            _output(
+                "publication_date_coverage_institution",
+                "data/processed/publication_date_coverage_institution.parquet",
+            ),
+            _output(
+                "publication_date_coverage_topic_family",
+                "data/processed/publication_date_coverage_topic_family.parquet",
+            ),
+            _output(
+                "publication_date_qa_summary",
+                "data/reference/publication_date_qa_summary.json",
+            ),
+        ),
+        policy_versions=(("publication_date_policy", "publication-date-qa-2026-08-17-v1"),),
+    ),
+    PipelineStage(
         "build-edges",
         (
             _output("work_edges", "data/processed/work_edges.parquet"),
@@ -228,6 +256,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
     PipelineStage(
         "verify-reproducibility",
         (_output("reproducibility_validation", "data/reference/reproducibility_validation.json"),),
+        policy_versions=(("reproducibility_policy", "reproducibility-validation-2026-08-17-v2"),),
     ),
     PipelineStage(
         "compute-edge-intensity",

@@ -1,6 +1,6 @@
 {
   "checksum_mismatch_count": 0,
-  "dataset_check_count": 12,
+  "dataset_check_count": 17,
   "dataset_checks": [
     {
       "actual_checksum_sha256": "a6d3e6b40336142c8d2f4084a7553fafd68613a92d5b07c2ac3de7b71ceebad6",
@@ -80,6 +80,61 @@
       "row_count": 4809352
     },
     {
+      "actual_checksum_sha256": "202b2f5c63e726a0db7a9a2353f502f02b1bd16ecfcc7a34b6bffdab4a8ae3a0",
+      "checksum_matches": true,
+      "dataset_name": "work_publication_dates",
+      "expected_checksum_sha256": "202b2f5c63e726a0db7a9a2353f502f02b1bd16ecfcc7a34b6bffdab4a8ae3a0",
+      "manifest_path": ".agent/manifests/work_publication_dates.json",
+      "manifest_run_id": "20260817T113144Z_573ec1eb19cb",
+      "manifest_status": "valid",
+      "path": "data/processed/work_publication_dates.parquet",
+      "row_count": 1176947
+    },
+    {
+      "actual_checksum_sha256": "f3edaf42023a392e8802dd5599ba3e22207fea5b94d1412c1f0c0019b00a465e",
+      "checksum_matches": true,
+      "dataset_name": "publication_date_coverage_corpus",
+      "expected_checksum_sha256": "f3edaf42023a392e8802dd5599ba3e22207fea5b94d1412c1f0c0019b00a465e",
+      "manifest_path": ".agent/manifests/publication_date_coverage_corpus.json",
+      "manifest_run_id": "20260817T113144Z_573ec1eb19cb",
+      "manifest_status": "valid",
+      "path": "data/processed/publication_date_coverage_corpus.parquet",
+      "row_count": 3
+    },
+    {
+      "actual_checksum_sha256": "df0ff0d23dd6d4d83414ff5989de07a00739aacef2264217a9f185161bae2fd9",
+      "checksum_matches": true,
+      "dataset_name": "publication_date_coverage_year",
+      "expected_checksum_sha256": "df0ff0d23dd6d4d83414ff5989de07a00739aacef2264217a9f185161bae2fd9",
+      "manifest_path": ".agent/manifests/publication_date_coverage_year.json",
+      "manifest_run_id": "20260817T113144Z_573ec1eb19cb",
+      "manifest_status": "valid",
+      "path": "data/processed/publication_date_coverage_year.parquet",
+      "row_count": 48
+    },
+    {
+      "actual_checksum_sha256": "851a1c8c48383d61643a96da6be6ab3f3deadccd29fedf49908b3d9a25127e49",
+      "checksum_matches": true,
+      "dataset_name": "publication_date_coverage_institution",
+      "expected_checksum_sha256": "851a1c8c48383d61643a96da6be6ab3f3deadccd29fedf49908b3d9a25127e49",
+      "manifest_path": ".agent/manifests/publication_date_coverage_institution.json",
+      "manifest_run_id": "20260817T113144Z_573ec1eb19cb",
+      "manifest_status": "valid",
+      "path": "data/processed/publication_date_coverage_institution.parquet",
+      "row_count": 136758
+    },
+    {
+      "actual_checksum_sha256": "139b6857291b82234085a8111ffb8224a4b7e6d8469e96be9b6ea3cea5ad1b69",
+      "checksum_matches": true,
+      "dataset_name": "publication_date_coverage_topic_family",
+      "expected_checksum_sha256": "139b6857291b82234085a8111ffb8224a4b7e6d8469e96be9b6ea3cea5ad1b69",
+      "manifest_path": ".agent/manifests/publication_date_coverage_topic_family.json",
+      "manifest_run_id": "20260817T113144Z_573ec1eb19cb",
+      "manifest_status": "valid",
+      "path": "data/processed/publication_date_coverage_topic_family.parquet",
+      "row_count": 18
+    },
+    {
       "actual_checksum_sha256": "77aa672fef5375012ea9bbdfc777dccb9c266e5c455bc7b433fb1683c1c18c13",
       "checksum_matches": true,
       "dataset_name": "work_edges",
@@ -135,24 +190,26 @@
       "row_count": 97762
     }
   ],
-  "generated_at_utc": "2026-08-06T00:45:20.051784Z",
-  "logical_input_hash": "ee627698453d6328e46f6662d85d09631c087d4d624bd02ffaeb8c5c2ba2dea0",
+  "generated_at_utc": "2026-08-17T11:57:28.323656Z",
+  "logical_input_hash": "e5d4b77c91d7ede13bdcd7b81a681a81bc27877b8e9485fccb4e119fd615cdba",
   "recovery_contracts": {
     "atomic_write_preserves_previous_output": true,
     "corrupt_cache_quarantined": true,
     "corrupt_state_backed_up_and_surfaced": true,
     "normalization_repeat_hashes_match": true,
-    "pagination_resume_without_duplication": true
+    "pagination_resume_without_duplication": true,
+    "publication_date_repeat_hashes_match": true
   },
   "required_recovery_tests": [
     "tests/unit/test_pagination.py::test_interrupted_pagination_resumes_at_next_unwritten_page",
     "tests/unit/test_atomic.py::test_failed_validation_preserves_previous_file",
     "tests/unit/test_openalex_cache.py::test_corrupt_cache_is_quarantined",
     "tests/unit/test_state.py::test_state_round_trip_and_invalid_backup",
-    "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic"
+    "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic",
+    "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic"
   ],
   "schema_version": 1,
   "status": "passed",
   "temporary_output_count": 0,
-  "validation_version": "reproducibility-validation-2026-08-05-v1"
+  "validation_version": "reproducibility-validation-2026-08-17-v2"
 }

@@ -32,3 +32,10 @@ def test_multiplex_dry_run_preserves_layer_boundaries(capsys: object) -> None:
     captured = capsys.readouterr()  # type: ignore[attr-defined]
     assert "separate layers" in captured.out
     assert "no layer weights are combined" in captured.out
+
+
+def test_publication_date_qa_dry_run_names_time_semantics(capsys: object) -> None:
+    assert main(["build-publication-date-qa", "--dry-run"]) == 0
+    captured = capsys.readouterr()  # type: ignore[attr-defined]
+    assert "bibliographic publication-time" in captured.out
+    assert "not collaboration" in captured.out

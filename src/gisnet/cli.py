@@ -15,6 +15,10 @@ from pydantic import ValidationError
 from gisnet.config import config_file_hash, load_project_config, load_yaml
 from gisnet.corpus.build import build_work_corpus, write_corpus_artifacts
 from gisnet.corpus.normalize import normalize_raw_works, write_normalization_artifacts
+from gisnet.corpus.publication_dates import (
+    build_publication_date_qa,
+    write_publication_date_artifacts,
+)
 from gisnet.corpus.topics import (
     discover_candidate_topics,
     freeze_topic_registry,
@@ -488,6 +492,57 @@ def build_parser() -> argparse.ArgumentParser:
     build_work_institutions.add_argument("--duckdb-memory-limit", default="4GB")
     build_work_institutions.add_argument("--duckdb-threads", default=1, type=int)
     build_work_institutions.set_defaults(handler=_build_work_institutions)
+
+    publication_dates = subparsers.add_parser(
+        "build-publication-date-qa",
+        help="build exact publication-date facts and recoverable coverage QA",
+    )
+    _add_pipeline_arguments(publication_dates)
+    publication_dates.add_argument("--works", default="data/processed/works.parquet", type=Path)
+    publication_dates.add_argument(
+        "--work-corpus", default="data/processed/work_corpus.parquet", type=Path
+    )
+    publication_dates.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    publication_dates.add_argument(
+        "--work-topics", default="data/processed/work_topics.parquet", type=Path
+    )
+    publication_dates.add_argument(
+        "--versions", default="data/processed/work_version_diagnostics.parquet", type=Path
+    )
+    publication_dates.add_argument(
+        "--work-dates", default="data/processed/work_publication_dates.parquet", type=Path
+    )
+    publication_dates.add_argument(
+        "--corpus-coverage",
+        default="data/processed/publication_date_coverage_corpus.parquet",
+        type=Path,
+    )
+    publication_dates.add_argument(
+        "--year-coverage",
+        default="data/processed/publication_date_coverage_year.parquet",
+        type=Path,
+    )
+    publication_dates.add_argument(
+        "--institution-coverage",
+        default="data/processed/publication_date_coverage_institution.parquet",
+        type=Path,
+    )
+    publication_dates.add_argument(
+        "--topic-family-coverage",
+        default="data/processed/publication_date_coverage_topic_family.parquet",
+        type=Path,
+    )
+    publication_dates.add_argument(
+        "--summary", default="data/reference/publication_date_qa_summary.json", type=Path
+    )
+    publication_dates.add_argument(
+        "--school-decision", default="config/school_decision.yml", type=Path
+    )
+    publication_dates.add_argument("--duckdb-memory-limit", default="4GB")
+    publication_dates.add_argument("--duckdb-threads", default=1, type=int)
+    publication_dates.set_defaults(handler=_build_publication_date_qa)
 
     build_edges = subparsers.add_parser(
         "build-edges", help="build per-Work pairs and annual full/fractional edges"
@@ -2054,6 +2109,73 @@ def _build_work_institutions(args: argparse.Namespace) -> int:
     print(
         f"Built {summary['row_count']} Work-institution rows; organization Works="
         f"{summary['organization_work_count']}, umbrella Works={summary['umbrella_work_count']}."
+    )
+    return 0
+
+
+def _build_publication_date_qa(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Publication-date configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    start_year = args.start_year or project.analysis.start_year
+    end_year = args.end_year or project.analysis.end_year
+    if args.dry_run:
+        print(
+            "Would build bibliographic publication-time facts and date-coverage QA; "
+            "publication dates are not collaboration, research, project, or mobility start dates."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-121"):
+            summary = build_publication_date_qa(
+                args.works,
+                args.work_corpus,
+                args.work_institutions,
+                args.work_topics,
+                args.versions,
+                work_dates_path=args.work_dates,
+                corpus_coverage_path=args.corpus_coverage,
+                year_coverage_path=args.year_coverage,
+                institution_coverage_path=args.institution_coverage,
+                topic_family_coverage_path=args.topic_family_coverage,
+                start_year=start_year,
+                end_year=end_year,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-publication-date-qa "
+                f"--start-year {start_year} --end-year {end_year} --resume"
+            )
+            write_publication_date_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            for name in (
+                "work_publication_dates",
+                "publication_date_coverage_corpus",
+                "publication_date_coverage_year",
+                "publication_date_coverage_institution",
+                "publication_date_coverage_topic_family",
+                "publication_date_qa_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Publication-date QA failed safely: {exc}", file=sys.stderr)
+        return 3
+    corpus_rows = {row["corpus_view"]: row for row in summary["corpus_coverage"]}
+    normalized = corpus_rows["normalized_all"]
+    print(
+        f"Built {summary['work_fact_row_count']} publication-date facts; "
+        f"eligible={normalized['subannual_date_eligible_work_count']}, "
+        f"annual-only={normalized['annual_only_work_count']}."
     )
     return 0
 

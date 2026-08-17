@@ -2483,3 +2483,112 @@ GISNET-139 remains dependency-gated behind GISNET-138.
 Task: GISNET-121 — Build publication-date QA layer. Run
 `uv run python -m gisnet.cli next-task`, then implement exact-date parsing and reconciliation
 without fabricating months or days.
+
+## Run 20260817T113144Z_573ec1eb19cb
+
+Started UTC: 2026-08-17T11:31:44Z
+Ended UTC: 2026-08-17T11:59:14Z
+Task: GISNET-121 — Build publication-date QA layer
+Initial git status: Clean `main` at `573ec1e`; no unrelated user changes.
+Final pre-commit status: GISNET-121 implementation, generated QA/reproducibility artifacts, and
+agent audit state only.
+
+### Objective
+
+Preserve normalized bibliographic publication time in a parallel temporal fact, classify unusable
+dates without fabrication, and produce deterministic recoverable coverage by corpus, year,
+institution, and Topic family while leaving all released annual outputs unchanged.
+
+### Work completed
+
+- Added one-row-per-Work publication-date facts with raw source value, canonical exact date,
+  `YYYY-MM`, `YYYY-Qn`, exact/eligibility flags, and five explicit quality statuses.
+- Added corpus, year, institution/hierarchy, and Topic-family coverage tables with exact numerators,
+  annual-only counts, status counts, ratios, and two independent reconciliation differences.
+- Added source-precision diagnostics for January 1 and first-of-month concentration without an
+  unsupported heuristic exclusion.
+- Preserved the exact-DOI primary representative policy and recorded primary/all-version eligible
+  deltas, affected months, maximum monthly differences, and multi-date/month/year family counts.
+- Added bounded DuckDB execution, deterministic sorting, validated temporary outputs, rollback of
+  the complete prior generation on promotion failure, manifests, state registration, CLI, pipeline
+  resume tracking, reproducibility coverage, documentation, and regression tests.
+- Addressed independent review findings: pipeline summary resumability, group-promotion rollback,
+  eligible version-policy deltas, and regenerated v2 reproducibility evidence.
+
+### Files changed
+
+- Implementation: `src/gisnet/corpus/publication_dates.py`, `src/gisnet/cli.py`,
+  `src/gisnet/pipeline.py`, `src/gisnet/validation/reproducibility.py`.
+- Tests: `tests/unit/test_publication_dates.py`, `tests/unit/test_cli.py`,
+  `tests/unit/test_pipeline.py`.
+- Documentation: `README.md`, `docs/school_decision_analytical_contract.md`.
+- Evidence: `data/reference/publication_date_qa_summary.json`, refreshed
+  `data/reference/reproducibility_validation.json`, six new manifests, and the refreshed
+  reproducibility manifest.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, `.agent/decisions.md`,
+  `.agent/RUNLOG.md`.
+- Local ignored outputs: five Parquet datasets under `data/processed/`.
+
+### Commands executed
+
+- Mandatory baseline: `git status`, complete required-file/state reads, repository inspection,
+  `uv sync --extra dev`, CLI `status`/`next-task`, and `scripts/quality-gate.sh`.
+- DuckDB schema, date-shape, corpus, institution, Topic-family, and version-family evidence probes.
+- Regression-first focused Pytest, Ruff lint/format, strict mypy, CLI dry-run, and full-data build.
+- Full-data repeat build to independent temporary paths with five checksum comparisons.
+- `uv run python -m gisnet.cli verify-reproducibility --resume` and two final quality gates.
+- Independent read-only architecture, data, test, and final code-review lanes.
+
+### Validation results
+
+- Normalized facts: 1,176,947 = 1,176,947 eligible + 0 annual-only; invalid status rows: 0.
+- Strict: 190,205 = 190,205 + 0; Broad: 1,005,606 = 1,005,606 + 0.
+- Coverage rows: corpus 3; year 48; institution 136,758; Topic family 18.
+- Reconciliation failures across all coverage tables: 0.
+- Current January-1 source dates: 261,950 / 1,176,947 normalized Works; this is a source-precision
+  limitation, not an invented missing-date category.
+- Exact-DOI families: 763 multi-member families / 1,527 records; 414 span source dates, 348 months,
+  and 133 years. Primary/all-version eligible deltas: Strict 129 across 71 months (max 7); Broad
+  360 across 119 months (max 14).
+- Five independent full-data repeat hashes matched exactly.
+- Reproducibility v2 passed for 17 core datasets with zero temporary outputs.
+- Final quality gate: Ruff lint/format and strict mypy passed; all 158 offline tests passed. Six
+  known Plotly country-name deprecation warnings remain unrelated to this task.
+
+### Data and configuration hashes
+
+- Work dates: `202b2f5c63e726a0db7a9a2353f502f02b1bd16ecfcc7a34b6bffdab4a8ae3a0`
+- Corpus coverage: `f3edaf42023a392e8802dd5599ba3e22207fea5b94d1412c1f0c0019b00a465e`
+- Year coverage: `df0ff0d23dd6d4d83414ff5989de07a00739aacef2264217a9f185161bae2fd9`
+- Institution coverage: `851a1c8c48383d61643a96da6be6ab3f3deadccd29fedf49908b3d9a25127e49`
+- Topic-family coverage: `139b6857291b82234085a8111ffb8224a4b7e6d8469e96be9b6ea3cea5ad1b69`
+- QA summary: `0fb41b12c285343e9f899ed3a53f1ef4db9d40999833af071fe98a49c1b66db1`
+- Reproducibility v2: `d2a1eb10862a1a24de25556426761b71ab92022bff8fb0c77e397189a76d411a`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- School-decision contract: `1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03`
+
+### Checkpoints written
+
+Five Parquet outputs, the QA summary, six manifests, refreshed reproducibility JSON/manifest, and
+agent state were atomically written. No OpenAlex request, API key, or invented identifier was used.
+
+### Failures or blockers
+
+- The regression-first test initially failed because the new module did not exist, then passed
+  after implementation.
+- Ruff identified formatting-only differences, which were corrected.
+- Independent review found three recoverable design gaps; all were fixed and regression-tested.
+- No blocker remains for GISNET-121.
+
+### Decisions made
+
+- Use only the five evidence-supported quality statuses; partial source strings remain explicit raw
+  values classified as malformed rather than receiving an invented date.
+- Do not infer source precision from January 1 frequency and do not alter primary version policy.
+- Keep all new data products parallel to annual files and track the QA summary in pipeline resume.
+
+### Exact next action
+
+Task: GISNET-122 — Build subannual temporal facts. Command:
+`uv run python -m gisnet.cli next-task`, then construct monthly/quarterly institution and edge facts
+from `work_publication_dates.parquet` while preserving annual edge arithmetic.

@@ -58,7 +58,8 @@
     "GISNET-110",
     "GISNET-111",
     "GISNET-112",
-    "GISNET-120"
+    "GISNET-120",
+    "GISNET-121"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -144,6 +145,11 @@
     "nodes_year": ".agent/manifests/nodes_year.json",
     "pipeline_run_summary": ".agent/manifests/pipeline_run_summary.json",
     "public_data_dictionary": ".agent/manifests/public_data_dictionary.json",
+    "publication_date_coverage_corpus": ".agent/manifests/publication_date_coverage_corpus.json",
+    "publication_date_coverage_institution": ".agent/manifests/publication_date_coverage_institution.json",
+    "publication_date_coverage_topic_family": ".agent/manifests/publication_date_coverage_topic_family.json",
+    "publication_date_coverage_year": ".agent/manifests/publication_date_coverage_year.json",
+    "publication_date_qa_summary": ".agent/manifests/publication_date_qa_summary.json",
     "raw_works_download_status": ".agent/manifests/raw_works_download_status.json",
     "region_flow_reconciliation": ".agent/manifests/region_flow_reconciliation.json",
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
@@ -172,6 +178,7 @@
     "work_institutions_summary": ".agent/manifests/work_institutions_summary.json",
     "work_institutions_unresolved": ".agent/manifests/work_institutions_unresolved.json",
     "work_malformed": ".agent/manifests/work_malformed.json",
+    "work_publication_dates": ".agent/manifests/work_publication_dates.json",
     "work_topics": ".agent/manifests/work_topics.json",
     "work_type_profile": ".agent/manifests/work_type_profile.json",
     "work_version_diagnostics": ".agent/manifests/work_version_diagnostics.json",
@@ -182,8 +189,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260817T104437Z_c2d4be9_release",
-  "last_updated_utc": "2026-08-17T10:44:37Z",
+  "last_successful_run_id": "20260817T113144Z_573ec1eb19cb",
+  "last_updated_utc": "2026-08-17T11:59:28Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

@@ -11,7 +11,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 
-_VALIDATION_VERSION = "reproducibility-validation-2026-08-05-v1"
+_VALIDATION_VERSION = "reproducibility-validation-2026-08-17-v2"
 
 CORE_DATASETS: dict[str, str] = {
     "works": "data/processed/works.parquet",
@@ -21,6 +21,15 @@ CORE_DATASETS: dict[str, str] = {
     "work_version_diagnostics": "data/processed/work_version_diagnostics.parquet",
     "work_corpus": "data/processed/work_corpus.parquet",
     "work_institutions": "data/processed/work_institutions.parquet",
+    "work_publication_dates": "data/processed/work_publication_dates.parquet",
+    "publication_date_coverage_corpus": ("data/processed/publication_date_coverage_corpus.parquet"),
+    "publication_date_coverage_year": "data/processed/publication_date_coverage_year.parquet",
+    "publication_date_coverage_institution": (
+        "data/processed/publication_date_coverage_institution.parquet"
+    ),
+    "publication_date_coverage_topic_family": (
+        "data/processed/publication_date_coverage_topic_family.parquet"
+    ),
     "work_edges": "data/processed/work_edges.parquet",
     "edges_year": "data/processed/edges_year.parquet",
     "edge_work_diagnostics": "data/processed/edge_work_diagnostics.parquet",
@@ -34,6 +43,7 @@ RECOVERY_TESTS = [
     "tests/unit/test_openalex_cache.py::test_corrupt_cache_is_quarantined",
     "tests/unit/test_state.py::test_state_round_trip_and_invalid_backup",
     "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic",
+    "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic",
 ]
 
 
@@ -109,6 +119,7 @@ def verify_reproducibility(
             "corrupt_cache_quarantined": True,
             "corrupt_state_backed_up_and_surfaced": True,
             "normalization_repeat_hashes_match": True,
+            "publication_date_repeat_hashes_match": True,
         },
         "generated_at_utc": _timestamp(),
     }

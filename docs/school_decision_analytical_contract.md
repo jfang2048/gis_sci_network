@@ -43,13 +43,29 @@ view has zero active collapses and is therefore non-informative until supported 
 ## Two temporal modes
 
 1. **Historical scientific mode** uses complete-calendar-year annual outputs for 2010-2025.
-2. **Current school-decision mode** is planned for GISNET-121 through GISNET-124. It will use exact
-   `publication_date` where available and compare rolling 12-, 24-, or 36-month windows through the
-   latest completed month. A raw partial year is never compared with a complete year.
+2. **Current school-decision mode** remains dependency-gated through GISNET-124. GISNET-121 now
+   provides the validated publication-date facts and coverage QA; GISNET-122 through GISNET-124
+   will add subannual facts, rolling windows, and safe incremental current-year acquisition. A raw
+   partial year is never compared with a complete year.
 
 The primary stored keys are `publication_month`, `publication_quarter`, `publication_year`,
 `window_start`, `window_end`, and `window_months`. Missing month/day values are never fabricated.
-Publication time is an observation time; it is not when collaboration began.
+The implemented date fact preserves `publication_date_raw`, stores a canonical date/month/quarter
+only for an exact calendar-valid, year-consistent date within the supported range, and distinguishes
+`exact_valid`, `missing`, `malformed`, `year_conflict`, and `outside_supported_range`. Year-only and
+month-only source strings are malformed for subannual use rather than completed with an invented
+month or day. Publication time is bibliographic observation time; it is not collaboration start,
+research start, project start, or author-mobility time.
+
+The current source snapshot supplies full valid dates for every normalized Work, but it has no
+independent precision field and 261,950 of 1,176,947 values fall on January 1. These source values
+remain eligible because there is no evidence-backed alternative rule; their concentration is
+reported with its numerator and denominator. The exact-DOI version-family policy is also unchanged:
+primary Strict/Broad facts retain the existing recommended representative, while ambiguous
+title-only families remain separate. No new date-based family deduplication is applied. Compared
+with the declared all-version sensitivity, the primary policy removes 129 Strict and 360 Broad
+exact-date-eligible records across 71 and 119 publication months respectively; the largest monthly
+differences are 7 Strict and 14 Broad Works.
 
 Recommended defaults are rolling 12 months for recent trend, rolling 24 months for a stable recent
 profile, rolling 36 months for longer stability, and annual data for long-term history.

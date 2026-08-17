@@ -12,7 +12,8 @@ research-based school-decision system built without discarding or relabelling th
 | Complete-year annual collaboration analysis | Available |
 | Separate citation-flow, Topic-proximity, and multiplex comparison layers | Available |
 | Versioned school-decision analytical contract | Available |
-| Publication-date QA, subannual facts, and rolling windows | Planned: GISNET-121–124 |
+| Publication-date QA | Available |
+| Subannual facts and rolling windows | Planned: GISNET-122–124 |
 | Complete School Finder, profiles, comparison, and ego maps | Planned: GISNET-126–138 |
 
 The current dashboard remains the annual regional-analysis application until the planned school
@@ -97,6 +98,7 @@ uv run python -m gisnet.cli build-hierarchy --resume
 uv run python -m gisnet.cli diagnose-versions --resume
 uv run python -m gisnet.cli build-corpus --resume
 uv run python -m gisnet.cli build-work-institutions --resume
+uv run python -m gisnet.cli build-publication-date-qa --resume
 uv run python -m gisnet.cli build-edges --resume
 uv run python -m gisnet.cli build-citation-flows --resume
 uv run python -m gisnet.cli build-topic-similarity --resume
@@ -173,6 +175,30 @@ research proximity, momentum, and user-defined fit remain independent dimensions
 global university-quality score is prohibited; the optional `user_defined_fit_score` is UI-only
 and its weights are never persisted in scientific source datasets. The provisional GIS Topic
 registry and pending human-review warning remain in force.
+
+### Publication-date QA layer
+
+`build-publication-date-qa` preserves the released annual products and adds a parallel,
+one-row-per-Work temporal fact plus recoverable coverage tables by corpus, year, institution, and
+Topic family. Exact eligible months use `YYYY-MM`; quarters use `YYYY-Q1` through `YYYY-Q4`.
+Missing, malformed, year-conflicting, or out-of-range values remain annual-only, and no month or
+day is fabricated.
+
+In the current frozen 2010–2025 snapshot, all 1,176,947 normalized Works have a source-supplied,
+calendar-valid, year-consistent full date; Strict reconciles 190,205 eligible plus zero annual-only
+Works and Broad reconciles 1,005,606 plus zero. These values describe source metadata coverage,
+not independently verified date precision: 261,950 normalized Works use January 1 and the source
+provides no separate precision flag. The QA layer measures and discloses that concentration rather
+than inventing a January-1 exclusion rule.
+
+Publication date is bibliographic observation time. It is not collaboration start, research
+start, project start, or author-mobility time. Primary Strict/Broad counts continue to use the
+released exact-DOI representative policy; the date layer does not merge version families or select
+a new family date. Relative to the explicit all-version sensitivity, that policy excludes 129
+Strict and 360 Broad exact-date-eligible Work records, affecting 71 Strict and 119 Broad publication
+months in this snapshot (maximum monthly differences 7 and 14). Detailed counts, hashes, and output
+paths are recorded in
+[`data/reference/publication_date_qa_summary.json`](data/reference/publication_date_qa_summary.json).
 
 ## Optional directed citation-flow layer
 
