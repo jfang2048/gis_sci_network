@@ -107,3 +107,14 @@ included institutional Works, and bridge score is cross-region fractional streng
 total fractional strength. The methodology and data-dictionary generators were corrected during
 GISNET-120; GISNET-139 must retain those definitions. The GIS Topic registry remains provisional
 and its incomplete human review must be disclosed on all school-oriented results.
+
+## 2026-08-17 — Publish the school-decision contract as a prerelease snapshot
+
+- Keep the stable `v0.1.0` tag immutable because it identifies the original complete-year annual
+  scientific release.
+- Publish `school-decision-contract-v1` as a GitHub prerelease at commit `c2d4be9`; this exposes
+  the validated analytical contract and post-0.1.0 research layers without claiming the planned
+  School Finder, rolling-window datasets, profiles, comparison UI, or ego maps are complete.
+- Ship the checksum-complete public manifest and a deterministic figure bundle containing SVG
+  sources and PNG renditions. Preserve citation flow, Topic similarity, and co-authorship as
+  separate evidence layers in both the release text and architecture image.

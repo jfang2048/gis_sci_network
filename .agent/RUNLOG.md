@@ -2439,3 +2439,47 @@ writers.
 Task: GISNET-121 — Build publication-date QA layer. Run
 uv run python -m gisnet.cli next-task, then add regression-first exact-date parsing and
 annual-versus-subannual reconciliation without fabricating month or day values.
+
+## Run 20260817T104437Z_c2d4be9_release
+
+Started UTC: 2026-08-17T10:43:27Z
+Ended UTC: 2026-08-17T10:44:37Z
+Task: GISNET-120 release collateral follow-up — no backlog task transition
+
+### Objective
+
+Update GitHub-facing Markdown, images, and release publication while keeping the stable annual
+release immutable and avoiding any claim that dependency-gated school interfaces already exist.
+
+### Work completed
+
+- Reframed README and dashboard documentation around the available annual layer and planned
+  institution-first extension.
+- Added an accessible, deterministic SVG architecture figure with explicit available/planned
+  status and separate co-authorship, citation-flow, and Topic-similarity semantics.
+- Added versioned prerelease notes and updated the release guide.
+- Rebuilt the public manifest to include the new figure.
+- Published annotated tag and GitHub prerelease `school-decision-contract-v1` at `c2d4be9`.
+- Uploaded the public manifest, its checksum, and a deterministic eight-file SVG/PNG figure bundle
+  with its checksum.
+
+### Validation results
+
+- Full quality gate passed: Ruff lint and format, strict mypy, and 152 offline tests.
+- Release verification passed for 181 files and 11788311 bytes with zero privacy findings.
+- All four SVGs parsed with accessible title/description metadata; local Markdown links resolved.
+- The new architecture image was rasterized and visually inspected at 1400 by 820 pixels.
+- GitHub prerelease: https://github.com/jfang2048/gis_sci_network/releases/tag/school-decision-contract-v1
+- Stable `v0.1.0` tag and release were not modified.
+
+### State and backlog
+
+No scientific dataset, source configuration, task status, or completed-task list changed. The
+backlog audit timestamp was refreshed; GISNET-121 remains the highest-priority unblocked task and
+GISNET-139 remains dependency-gated behind GISNET-138.
+
+### Exact next action
+
+Task: GISNET-121 — Build publication-date QA layer. Run
+`uv run python -m gisnet.cli next-task`, then implement exact-date parsing and reconciliation
+without fabricating months or days.
