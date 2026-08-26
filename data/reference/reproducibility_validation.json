@@ -1,6 +1,6 @@
 {
   "checksum_mismatch_count": 0,
-  "dataset_check_count": 23,
+  "dataset_check_count": 27,
   "dataset_checks": [
     {
       "actual_checksum_sha256": "a6d3e6b40336142c8d2f4084a7553fafd68613a92d5b07c2ac3de7b71ceebad6",
@@ -245,6 +245,50 @@
       "row_count": 452
     },
     {
+      "actual_checksum_sha256": "affbcbbf87f400b8d3d90167bfc943437d8dbb322875f9abcd3fb8ebed9f16c1",
+      "checksum_matches": true,
+      "dataset_name": "institution_outputs_rolling",
+      "expected_checksum_sha256": "affbcbbf87f400b8d3d90167bfc943437d8dbb322875f9abcd3fb8ebed9f16c1",
+      "manifest_path": ".agent/manifests/institution_outputs_rolling.json",
+      "manifest_run_id": "20260817T124756Z_22166f48b065",
+      "manifest_status": "valid",
+      "path": "data/processed/institution_outputs_rolling.parquet",
+      "row_count": 23476936
+    },
+    {
+      "actual_checksum_sha256": "439293639419fda07f4120ed57d0d1ca816b633684b2e0911cb2955a594141f7",
+      "checksum_matches": true,
+      "dataset_name": "collaboration_edge_window_intervals",
+      "expected_checksum_sha256": "439293639419fda07f4120ed57d0d1ca816b633684b2e0911cb2955a594141f7",
+      "manifest_path": ".agent/manifests/collaboration_edge_window_intervals.json",
+      "manifest_run_id": "20260817T124756Z_22166f48b065",
+      "manifest_status": "valid",
+      "path": "data/processed/collaboration_edge_window_intervals.parquet",
+      "row_count": 7598244
+    },
+    {
+      "actual_checksum_sha256": "8c0546fde12bafa038522865fbe60798c34bae413a28104fa941a93fecbbbd8f",
+      "checksum_matches": true,
+      "dataset_name": "rolling_window_coverage",
+      "expected_checksum_sha256": "8c0546fde12bafa038522865fbe60798c34bae413a28104fa941a93fecbbbd8f",
+      "manifest_path": ".agent/manifests/rolling_window_coverage.json",
+      "manifest_run_id": "20260817T124756Z_22166f48b065",
+      "manifest_status": "valid",
+      "path": "data/processed/rolling_window_coverage.parquet",
+      "row_count": 2304
+    },
+    {
+      "actual_checksum_sha256": "1960631ed4e8a56471712ec74899206f77e77e0a66bec6c53fc33bf520f68605",
+      "checksum_matches": true,
+      "dataset_name": "rolling_reconciliation",
+      "expected_checksum_sha256": "1960631ed4e8a56471712ec74899206f77e77e0a66bec6c53fc33bf520f68605",
+      "manifest_path": ".agent/manifests/rolling_reconciliation.json",
+      "manifest_run_id": "20260817T124756Z_22166f48b065",
+      "manifest_status": "valid",
+      "path": "data/processed/rolling_reconciliation.parquet",
+      "row_count": 4608
+    },
+    {
       "actual_checksum_sha256": "cbba334fc5dc1bcc58fe373aa0d748a9e33af5f7b5ce50bbec7df5ba18c22f21",
       "checksum_matches": true,
       "dataset_name": "region_flows_year",
@@ -256,15 +300,17 @@
       "row_count": 97762
     }
   ],
-  "generated_at_utc": "2026-08-17T12:45:19.968083Z",
-  "logical_input_hash": "e8ee1132bef8f3cfdbcc12143263309f6abd6d12b0e86a72b552c71dd2a4162e",
+  "generated_at_utc": "2026-08-26T21:27:50.996602Z",
+  "logical_input_hash": "476d9af6c176a07f9c19fb2183b8a1da67f6c0d0771e56b1aa742cc165b1ddfa",
   "recovery_contracts": {
     "atomic_write_preserves_previous_output": true,
     "corrupt_cache_quarantined": true,
     "corrupt_state_backed_up_and_surfaced": true,
     "normalization_repeat_hashes_match": true,
     "pagination_resume_without_duplication": true,
-    "publication_date_repeat_hashes_match": true
+    "publication_date_repeat_hashes_match": true,
+    "rolling_repeat_hashes_match": true,
+    "subannual_repeat_hashes_match": true
   },
   "required_recovery_tests": [
     "tests/unit/test_pagination.py::test_interrupted_pagination_resumes_at_next_unwritten_page",
@@ -274,10 +320,12 @@
     "tests/unit/test_normalize_works.py::test_normalization_deduplicates_quarantines_and_is_deterministic",
     "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic",
     "tests/unit/test_subannual_facts.py::test_subannual_outputs_are_deterministic_and_do_not_modify_annual_inputs",
-    "tests/unit/test_subannual_facts.py::test_failed_subannual_group_promotion_restores_every_prior_output"
+    "tests/unit/test_subannual_facts.py::test_failed_subannual_group_promotion_restores_every_prior_output",
+    "tests/unit/test_rolling_facts.py::test_rolling_build_is_deterministic_atomic_and_preserves_inputs",
+    "tests/unit/test_rolling_facts.py::test_failed_group_promotion_recovers_interrupted_backup_and_prior_generation"
   ],
   "schema_version": 1,
   "status": "passed",
   "temporary_output_count": 0,
-  "validation_version": "reproducibility-validation-2026-08-17-v3"
+  "validation_version": "reproducibility-validation-2026-08-17-v4"
 }

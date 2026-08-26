@@ -47,3 +47,11 @@ def test_subannual_fact_dry_run_names_time_and_scope_semantics(capsys: object) -
     assert "bibliographic publication-time" in captured.out
     assert "not a collaboration" in captured.out
     assert "school-decision" in captured.out
+
+
+def test_rolling_fact_dry_run_names_exact_windows_and_time_semantics(capsys: object) -> None:
+    assert main(["build-rolling-facts", "--dry-run"]) == 0
+    captured = capsys.readouterr()  # type: ignore[attr-defined]
+    assert "exact rolling 12/24/36-month" in captured.out
+    assert "bibliographic publication-month" in captured.out
+    assert "no output is changed" in captured.out

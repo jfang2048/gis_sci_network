@@ -11,7 +11,7 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 
-_VALIDATION_VERSION = "reproducibility-validation-2026-08-17-v3"
+_VALIDATION_VERSION = "reproducibility-validation-2026-08-17-v4"
 
 CORE_DATASETS: dict[str, str] = {
     "works": "data/processed/works.parquet",
@@ -40,6 +40,12 @@ CORE_DATASETS: dict[str, str] = {
     "collaboration_edges_quarter": "data/processed/collaboration_edges_quarter.parquet",
     "subannual_reconciliation": "data/processed/subannual_reconciliation.parquet",
     "subannual_sparsity": "data/processed/subannual_sparsity.parquet",
+    "institution_outputs_rolling": "data/processed/institution_outputs_rolling.parquet",
+    "collaboration_edge_window_intervals": (
+        "data/processed/collaboration_edge_window_intervals.parquet"
+    ),
+    "rolling_window_coverage": "data/processed/rolling_window_coverage.parquet",
+    "rolling_reconciliation": "data/processed/rolling_reconciliation.parquet",
     "region_flows_year": "data/processed/region_flows_year.parquet",
 }
 
@@ -52,6 +58,8 @@ RECOVERY_TESTS = [
     "tests/unit/test_publication_dates.py::test_publication_date_outputs_are_deterministic",
     "tests/unit/test_subannual_facts.py::test_subannual_outputs_are_deterministic_and_do_not_modify_annual_inputs",
     "tests/unit/test_subannual_facts.py::test_failed_subannual_group_promotion_restores_every_prior_output",
+    "tests/unit/test_rolling_facts.py::test_rolling_build_is_deterministic_atomic_and_preserves_inputs",
+    "tests/unit/test_rolling_facts.py::test_failed_group_promotion_recovers_interrupted_backup_and_prior_generation",
 ]
 
 
@@ -128,6 +136,8 @@ def verify_reproducibility(
             "corrupt_state_backed_up_and_surfaced": True,
             "normalization_repeat_hashes_match": True,
             "publication_date_repeat_hashes_match": True,
+            "subannual_repeat_hashes_match": True,
+            "rolling_repeat_hashes_match": True,
         },
         "generated_at_utc": _timestamp(),
     }

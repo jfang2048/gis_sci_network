@@ -64,6 +64,7 @@ from gisnet.network.intensity import build_edge_intensity, write_intensity_artif
 from gisnet.network.metrics import build_network_metrics, write_metric_artifacts
 from gisnet.network.multiplex import build_multiplex_comparison, write_multiplex_artifacts
 from gisnet.network.outputs import build_institution_outputs, write_output_artifacts
+from gisnet.network.rolling import build_rolling_facts, write_rolling_artifacts
 from gisnet.network.subannual import build_subannual_facts, write_subannual_artifacts
 from gisnet.network.topic_similarity import (
     build_topic_similarity,
@@ -728,6 +729,57 @@ def build_parser() -> argparse.ArgumentParser:
     subannual.add_argument("--duckdb-memory-limit", default="4GB")
     subannual.add_argument("--duckdb-threads", default=1, type=int)
     subannual.set_defaults(handler=_build_subannual_facts)
+
+    rolling = subparsers.add_parser(
+        "build-rolling-facts",
+        help="build exact rolling 12/24/36-month school-decision facts",
+    )
+    _add_pipeline_arguments(rolling)
+    rolling.add_argument(
+        "--institution-month",
+        default="data/processed/institution_outputs_month.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--edge-month",
+        default="data/processed/collaboration_edges_month.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--work-dates", default="data/processed/work_publication_dates.parquet", type=Path
+    )
+    rolling.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    rolling.add_argument(
+        "--institution-rolling",
+        default="data/processed/institution_outputs_rolling.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--edge-intervals",
+        default="data/processed/collaboration_edge_window_intervals.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--coverage",
+        default="data/processed/rolling_window_coverage.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--reconciliation",
+        default="data/processed/rolling_reconciliation.parquet",
+        type=Path,
+    )
+    rolling.add_argument(
+        "--summary", default="data/reference/rolling_temporal_summary.json", type=Path
+    )
+    rolling.add_argument("--school-decision", default="config/school_decision.yml", type=Path)
+    rolling.add_argument("--observation-start-month")
+    rolling.add_argument("--observation-end-month")
+    rolling.add_argument("--duckdb-memory-limit", default="4GB")
+    rolling.add_argument("--duckdb-threads", default=1, type=int)
+    rolling.set_defaults(handler=_build_rolling_facts)
 
     build_flows = subparsers.add_parser(
         "build-region-flows", help="aggregate institution pairs to region, subregion, and country"
@@ -2569,6 +2621,78 @@ def _build_subannual_facts(args: argparse.Namespace) -> int:
         f"{summary['observation_start_month']} through {summary['observation_end_month']}; "
         f"institution-month rows={summary['row_counts']['institution_outputs_month']}, "
         f"edge-month rows={summary['row_counts']['collaboration_edges_month']}."
+    )
+    return 0
+
+
+def _build_rolling_facts(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"Rolling configuration failed validation: {exc}", file=sys.stderr)
+        return 2
+    corpora = list(project.corpus_views) if args.corpus == "all" else [args.corpus]
+    hierarchies = list(project.hierarchy_views) if args.hierarchy == "all" else [args.hierarchy]
+    if args.dry_run:
+        print(
+            "Would build exact rolling 12/24/36-month school-decision facts from accepted "
+            "bibliographic publication-month facts; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-123"):
+            summary = build_rolling_facts(
+                args.institution_month,
+                args.edge_month,
+                args.work_dates,
+                args.work_institutions,
+                institution_rolling_path=args.institution_rolling,
+                edge_intervals_path=args.edge_intervals,
+                coverage_path=args.coverage,
+                reconciliation_path=args.reconciliation,
+                observation_start_month=(
+                    args.observation_start_month or f"{project.analysis.start_year:04d}-01"
+                ),
+                observation_end_month=(
+                    args.observation_end_month or f"{project.analysis.end_year:04d}-12"
+                ),
+                corpus_views=corpora,
+                hierarchy_views=hierarchies,
+                memory_limit=args.duckdb_memory_limit,
+                threads=args.duckdb_threads,
+            )
+            command = (
+                "python -m gisnet.cli build-rolling-facts "
+                f"--corpus {args.corpus} --hierarchy {args.hierarchy} "
+                f"--observation-start-month {summary['observation_start_month']} "
+                f"--observation-end-month {summary['observation_end_month']} --resume"
+            )
+            write_rolling_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            for name in (
+                "institution_outputs_rolling",
+                "collaboration_edge_window_intervals",
+                "rolling_window_coverage",
+                "rolling_reconciliation",
+                "rolling_temporal_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"Rolling fact build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        "Built exact rolling school-decision facts for "
+        f"{summary['observation_start_month']} through {summary['observation_end_month']}; "
+        f"institution rows={summary['row_counts']['institution_outputs_rolling']}, "
+        "edge intervals="
+        f"{summary['row_counts']['collaboration_edge_window_intervals']}."
     )
     return 0
 

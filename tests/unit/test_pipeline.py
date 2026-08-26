@@ -270,7 +270,7 @@ def test_subannual_facts_follow_annual_edge_and_output_inputs() -> None:
     commands = [stage.command for stage in DEFAULT_STAGES]
     subannual_index = commands.index("build-subannual-facts")
     assert commands[subannual_index - 1] == "build-outputs"
-    assert commands[subannual_index + 1] == "build-region-flows"
+    assert commands[subannual_index + 1] == "build-rolling-facts"
     outputs = {output.data.name for output in DEFAULT_STAGES[subannual_index].outputs}
     assert outputs == {
         "institution_outputs_month.parquet",
@@ -280,4 +280,19 @@ def test_subannual_facts_follow_annual_edge_and_output_inputs() -> None:
         "subannual_reconciliation.parquet",
         "subannual_sparsity.parquet",
         "subannual_temporal_summary.json",
+    }
+
+
+def test_rolling_facts_follow_accepted_subannual_inputs() -> None:
+    commands = [stage.command for stage in DEFAULT_STAGES]
+    rolling_index = commands.index("build-rolling-facts")
+    assert commands[rolling_index - 1] == "build-subannual-facts"
+    assert commands[rolling_index + 1] == "build-region-flows"
+    outputs = {output.data.name for output in DEFAULT_STAGES[rolling_index].outputs}
+    assert outputs == {
+        "institution_outputs_rolling.parquet",
+        "collaboration_edge_window_intervals.parquet",
+        "rolling_window_coverage.parquet",
+        "rolling_reconciliation.parquet",
+        "rolling_temporal_summary.json",
     }

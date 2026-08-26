@@ -1,0 +1,62 @@
+{
+  "checksum_sha256": "439293639419fda07f4120ed57d0d1ca816b633684b2e0911cb2955a594141f7",
+  "column_count": 20,
+  "command": "python -m gisnet.cli build-rolling-facts --corpus all --hierarchy all --observation-start-month 2010-01 --observation-end-month 2025-12 --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-26T21:27:28.038128Z",
+  "dataset_name": "collaboration_edge_window_intervals",
+  "git_commit": "22166f48b065",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "corpus_view": 0,
+    "hierarchy_view": 0,
+    "scope": 0,
+    "source_category": 0,
+    "source_country": 0,
+    "source_id": 0,
+    "source_name": 0,
+    "source_region": 0,
+    "source_subregion": 0,
+    "target_category": 0,
+    "target_country": 0,
+    "target_id": 0,
+    "target_name": 0,
+    "target_region": 0,
+    "target_subregion": 0,
+    "valid_from_month_index": 0,
+    "valid_from_window_end": 0,
+    "valid_through_month_index": 0,
+    "valid_through_window_end": 0,
+    "window_months": 0
+  },
+  "primary_key": [
+    "corpus_view",
+    "hierarchy_view",
+    "source_id",
+    "target_id",
+    "window_months",
+    "valid_from_window_end"
+  ],
+  "row_count": 7598244,
+  "run_id": "20260817T124756Z_22166f48b065",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/institution_outputs_month.json",
+    ".agent/manifests/collaboration_edges_month.json",
+    ".agent/manifests/work_publication_dates.json",
+    ".agent/manifests/work_institutions.json",
+    ".agent/manifests/school_decision_contract.json"
+  ],
+  "source_versions": {
+    "entity_scope": "primary_research",
+    "rolling_corpus_views": "strict,broad",
+    "rolling_fact_policy": "rolling-school-facts-2026-08-17-v1",
+    "rolling_hierarchy_views": "organization,umbrella",
+    "rolling_observation_bounds": "2010-01:2025-12"
+  },
+  "status": "valid"
+}

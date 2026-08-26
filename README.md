@@ -14,7 +14,8 @@ research-based school-decision system built without discarding or relabelling th
 | Versioned school-decision analytical contract | Available |
 | Publication-date QA | Available |
 | Subannual month/quarter facts and sparsity QA | Available |
-| Rolling windows and safe current-year acquisition | Planned: GISNET-123–124 |
+| Rolling 12/24/36-month facts | Available |
+| Safe current-year acquisition | Planned: GISNET-124 |
 | Complete School Finder, profiles, comparison, and ego maps | Planned: GISNET-126–138 |
 
 The current dashboard remains the annual regional-analysis application until the planned school
@@ -106,6 +107,8 @@ uv run python -m gisnet.cli build-topic-similarity --resume
 uv run python -m gisnet.cli build-multiplex --resume
 uv run python -m gisnet.cli build-outputs --resume
 uv run python -m gisnet.cli build-subannual-facts --resume
+
+uv run python -m gisnet.cli build-rolling-facts --resume
 uv run python -m gisnet.cli build-region-flows --resume
 uv run python -m gisnet.cli validate
 uv run python -m gisnet.cli verify-reproducibility
@@ -224,6 +227,13 @@ Schemas, formulas, reconciliations, activity-tier definitions, storage sizes, an
 are documented in [`docs/subannual_facts.md`](docs/subannual_facts.md). Current counts and hashes
 are recorded in
 [`data/reference/subannual_temporal_summary.json`](data/reference/subannual_temporal_summary.json).
+
+`build-rolling-facts` adds exact rolling 12-, 24-, and 36-month institution metrics and a compact
+exact edge-interval index. Calendar coverage is explicit and is not inferred from positive rows;
+annual-only Works are never assigned fabricated months. The metric formulas, physical representation,
+current cardinalities, query measurements, and deferred graph-metric policy are documented in
+[`docs/rolling_facts.md`](docs/rolling_facts.md) and recorded in
+[`data/reference/rolling_temporal_summary.json`](data/reference/rolling_temporal_summary.json).
 
 ## Optional directed citation-flow layer
 

@@ -60,7 +60,8 @@
     "GISNET-112",
     "GISNET-120",
     "GISNET-121",
-    "GISNET-122"
+    "GISNET-122",
+    "GISNET-123"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -83,6 +84,7 @@
     "citation_edges_year": ".agent/manifests/citation_edges_year.json",
     "citation_flow_coverage_year": ".agent/manifests/citation_flow_coverage_year.json",
     "citation_flow_summary": ".agent/manifests/citation_flow_summary.json",
+    "collaboration_edge_window_intervals": ".agent/manifests/collaboration_edge_window_intervals.json",
     "collaboration_edges_month": ".agent/manifests/collaboration_edges_month.json",
     "collaboration_edges_quarter": ".agent/manifests/collaboration_edges_quarter.json",
     "collaboration_edges_summary": ".agent/manifests/collaboration_edges_summary.json",
@@ -122,6 +124,7 @@
     "institution_output_reconciliation": ".agent/manifests/institution_output_reconciliation.json",
     "institution_outputs_month": ".agent/manifests/institution_outputs_month.json",
     "institution_outputs_quarter": ".agent/manifests/institution_outputs_quarter.json",
+    "institution_outputs_rolling": ".agent/manifests/institution_outputs_rolling.json",
     "institution_outputs_summary": ".agent/manifests/institution_outputs_summary.json",
     "institution_outputs_year": ".agent/manifests/institution_outputs_year.json",
     "institution_ror_qa": ".agent/manifests/institution_ror_qa.json",
@@ -160,6 +163,9 @@
     "region_flows_summary": ".agent/manifests/region_flows_summary.json",
     "region_flows_year": ".agent/manifests/region_flows_year.json",
     "reproducibility_validation": ".agent/manifests/reproducibility_validation.json",
+    "rolling_reconciliation": ".agent/manifests/rolling_reconciliation.json",
+    "rolling_temporal_summary": ".agent/manifests/rolling_temporal_summary.json",
+    "rolling_window_coverage": ".agent/manifests/rolling_window_coverage.json",
     "school_decision_contract": ".agent/manifests/school_decision_contract.json",
     "sensitivity_matrix": ".agent/manifests/sensitivity_matrix.json",
     "sensitivity_summary": ".agent/manifests/sensitivity_summary.json",
@@ -197,8 +203,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260817T120017Z_a639db52eaea",
-  "last_updated_utc": "2026-08-17T12:47:30Z",
+  "last_successful_run_id": "20260817T124756Z_22166f48b065",
+  "last_updated_utc": "2026-08-26T21:29:57Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

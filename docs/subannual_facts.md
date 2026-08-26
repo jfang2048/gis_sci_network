@@ -118,7 +118,7 @@ were:
 | One institution's 24-month ego edges, top 50 | 6.130 ms |
 | One Broad organization quarter, top 100 | 3.986 ms |
 
-These results do not justify partitioning the present files. GISNET-123 should build rolling facts
+These results do not justify partitioning the present files. GISNET-123 builds rolling facts
 from these sparse positives rather than an all-school × all-partner × all-month Cartesian product.
 
 ## Reproducibility and provenance

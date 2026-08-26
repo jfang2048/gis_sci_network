@@ -151,3 +151,21 @@ and its incomplete human review must be disclosed on all school-oriented results
   defaults rather than a raw-month ranking.
 - Keep single Zstandard Parquet files for GISNET-122: measured predicate reads are 4–17 ms and the
   six outputs total about 155 MB, so partitioning is not justified.
+
+## 2026-08-26 — Exact rolling-window physical representation
+
+- Materialize positive institution-window facts, but store rolling collaboration edges as maximal
+  inclusive positive window-end intervals. This is a lossless index over 187,718,512 positive edge
+  endpoints, not an approximation; `query_rolling_edges` returns exact `window_start`, `window_end`,
+  `window_months`, weights, active months, persistence, and coverage after verifying the accepted
+  monthly-edge checksum.
+- Keep the explicit coverage ledger independent of positive rows so zero-activity and early
+  incomplete months remain observable. Publication dates are bibliographic observation time, never
+  collaboration, research, project, or mobility start time.
+- Do not store rolling normalized intensity inside the interval index. GISNET-128 must join queried
+  fractional edge counts to both endpoint full-Work denominators in
+  `institution_outputs_rolling.parquet` and apply the existing declared formula, avoiding duplicated
+  denominators or stale derived values.
+- Preserve complete-year annual outputs as the long-term historical reference. Organization and
+  umbrella rolling views remain identity views; GISNET-125 must rebuild any evidence-backed school
+  view from Work memberships rather than summing organization rows.

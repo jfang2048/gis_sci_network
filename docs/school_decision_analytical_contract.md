@@ -43,11 +43,11 @@ view has zero active collapses and is therefore non-informative until supported 
 ## Two temporal modes
 
 1. **Historical scientific mode** uses complete-calendar-year annual outputs for 2010-2025.
-2. **Current school-decision mode** remains dependency-gated through GISNET-124. GISNET-121 now
-   provides validated publication-date facts and coverage QA, and GISNET-122 provides sparse
-   month/quarter institution and collaboration facts across the complete primary-research scope.
-   GISNET-123 and GISNET-124 will add rolling windows and safe incremental current-year
-   acquisition. A raw partial year is never compared with a complete year.
+2. **Current school-decision mode** remains dependency-gated through GISNET-124. GISNET-121
+   provides validated publication-date facts and coverage QA, GISNET-122 provides sparse
+   month/quarter institution and collaboration facts across the complete primary-research scope,
+   and GISNET-123 provides exact rolling 12/24/36-month facts. GISNET-124 will add safe incremental
+   current-year acquisition. A raw partial year is never compared with a complete year.
 
 The primary stored keys are `publication_month`, `publication_quarter`, `publication_year`,
 `window_start`, `window_end`, and `window_months`. Missing month/day values are never fabricated.

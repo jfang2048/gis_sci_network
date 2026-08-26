@@ -1,0 +1,54 @@
+{
+  "checksums_sha256": {
+    "collaboration_edge_window_intervals": "439293639419fda07f4120ed57d0d1ca816b633684b2e0911cb2955a594141f7",
+    "institution_outputs_rolling": "affbcbbf87f400b8d3d90167bfc943437d8dbb322875f9abcd3fb8ebed9f16c1",
+    "rolling_reconciliation": "1960631ed4e8a56471712ec74899206f77e77e0a66bec6c53fc33bf520f68605",
+    "rolling_window_coverage": "8c0546fde12bafa038522865fbe60798c34bae413a28104fa941a93fecbbbd8f"
+  },
+  "corpus_views": [
+    "strict",
+    "broad"
+  ],
+  "coverage_policy": "Observed and eligible months are the exact calendar intersection with declared dataset coverage; they are never inferred from positive fact rows.",
+  "date_coverage_policy": "Exact Works are counted inside the rolling boundary. Annual-only Works are counted only as overlapping-year candidates; a ratio is emitted only when every affected calendar year is fully contained by the rolling window.",
+  "edge_physical_representation": "Exact maximal positive window-end intervals; edge metrics are reconstructed from the accepted monthly edge facts for the selected exact calendar window.",
+  "generated_at_utc": "2026-08-26T21:27:19.045146Z",
+  "graph_metric_policy": "Exact degree/strength inputs include isolates. PageRank/community are deferred to explicit selected windows; rolling betweenness is not precomputed and no approximation is silently substituted.",
+  "hierarchy_views": [
+    "organization",
+    "umbrella"
+  ],
+  "logical_input_hash": "46d5b1115842f11cd2c2e59e3320a412157aa01a9ad44ade418b819415363498",
+  "observation_bounds_source": "explicit_declared_bounds",
+  "observation_end_month": "2025-12",
+  "observation_start_month": "2010-01",
+  "outputs": {
+    "collaboration_edge_window_intervals": "data/processed/collaboration_edge_window_intervals.parquet",
+    "institution_outputs_rolling": "data/processed/institution_outputs_rolling.parquet",
+    "rolling_reconciliation": "data/processed/rolling_reconciliation.parquet",
+    "rolling_window_coverage": "data/processed/rolling_window_coverage.parquet"
+  },
+  "physical_representation_metrics": {
+    "avoided_materialized_edge_window_rows": 180120268,
+    "edge_interval_count": 7598244,
+    "endpoint_to_interval_ratio": 24.705512484200298,
+    "interval_file_size_bytes": 59063152,
+    "represented_positive_edge_window_count": 187718512
+  },
+  "publication_time_semantics": "Bibliographic publication-time observation; not collaboration, research, project, or author-mobility start time.",
+  "reconciliation_tolerance": 1e-06,
+  "row_counts": {
+    "collaboration_edge_window_intervals": 7598244,
+    "institution_outputs_rolling": 23476936,
+    "rolling_reconciliation": 4608,
+    "rolling_window_coverage": 2304
+  },
+  "schema_version": 1,
+  "scope": "primary_research",
+  "stage_version": "rolling-school-facts-2026-08-17-v1",
+  "window_months": [
+    12,
+    24,
+    36
+  ]
+}

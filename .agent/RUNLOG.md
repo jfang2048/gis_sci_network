@@ -2684,3 +2684,121 @@ every released annual file and arithmetic contract.
 Task: GISNET-123 — Build rolling collaboration windows. Run
 `uv run python -m gisnet.cli next-task`, then build exact calendar 12/24/36-month sparse rolling
 institution and edge facts from the accepted GISNET-122 monthly positives with explicit coverage.
+
+## Run 20260817T124756Z_22166f48b065
+
+Started UTC: 2026-08-17T12:47:56Z
+Ended UTC: 2026-08-26T21:29:00Z
+Task: GISNET-123 — Build rolling collaboration windows
+Initial git status: Clean `main` at `22166f4` except agent state marking GISNET-123 active.
+Final git status: Pre-commit GISNET-123 implementation, evidence, documentation, tests, and audit state only.
+
+### Objective
+
+Build exact calendar 12-, 24-, and 36-month institution and collaboration facts stepped monthly,
+make early incomplete coverage explicit, preserve publication-time semantics, and leave the released
+complete-year annual scientific layer unchanged.
+
+### Work completed
+
+- Added `build-rolling-facts` with exact inclusive calendar boundaries, explicit observed/eligible
+  coverage, sparse positive institution-window metrics, lossless maximal edge-interval indexing,
+  exact edge reconstruction queries, full source reconciliation, CLI/pipeline resume integration,
+  manifests, and reproducibility v4 coverage.
+- Added rolling Work, collaboration-share, partner breadth/concentration, repeat-partner, date
+  coverage, and edge-persistence metrics without averaging monthly ratios or fabricating dates.
+- Added deterministic group promotion/rollback, interrupted-backup recovery, source-checksum guards,
+  bounded DuckDB execution, schema/primary-key validation, and annual-input preservation tests.
+- Documented the exact interval representation, publication-observation semantics, measured size and
+  query behavior, graph-metric deferral, rolling normalized-intensity join boundary, and current
+  roadmap status.
+- Added regression coverage for exact year-crossing boundaries, sparse expiry, early incomplete
+  windows, partial-year date semantics, metric arithmetic, edge queries, deterministic reruns,
+  atomic rollback, stale source rejection, artifact policy provenance, CLI dry-run semantics, and
+  pipeline ordering/resume contracts.
+
+### Files changed
+
+- Implementation: `src/gisnet/network/rolling.py`, `src/gisnet/cli.py`,
+  `src/gisnet/pipeline.py`, `src/gisnet/validation/reproducibility.py`.
+- Tests: `tests/unit/test_rolling_facts.py`, `tests/unit/test_pipeline.py`,
+  `tests/unit/test_cli.py`.
+- Documentation: `README.md`, `docs/rolling_facts.md`, `docs/subannual_facts.md`,
+  `docs/school_decision_analytical_contract.md`.
+- Evidence: `data/reference/rolling_temporal_summary.json`, refreshed
+  `data/reference/reproducibility_validation.json`, five rolling manifests, and the refreshed
+  reproducibility manifest.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, `.agent/decisions.md`,
+  `.agent/RUNLOG.md`.
+- Local ignored outputs: four Parquet datasets under `data/processed/`.
+
+### Commands executed
+
+- Mandatory repository/status/tree/backlog/README/agent-state inspection and full authoritative
+  backlog read.
+- Focused Ruff lint/format, rolling/CLI/pipeline/reproducibility tests, CLI rolling dry-run, and
+  pipeline dry-run validation.
+- Full-data rolling rebuild under the project run lock with `/usr/bin/time -v`, followed by checksum
+  comparison with the prior accepted generation.
+- `uv run python -m gisnet.cli verify-reproducibility --resume` and
+  `scripts/quality-gate.sh`.
+- Read-only independent implementation and repository-state review lanes.
+
+### Validation results
+
+- Rows: institution windows 23,476,936; edge intervals 7,598,244; represented positive edge-window
+  endpoints 187,718,512; coverage rows 2,304; reconciliation rows 4,608.
+- Reconciliation failures: 0. Maximum full-count difference: 0; maximum fractional difference:
+  1.3137469068169594e-07 under the declared 1e-06 tolerance.
+- Boundary probes show nominal starts `2009-02`/`2008-02`/`2007-02` for the first 2010-01 endpoint,
+  explicit 1/12, 1/24, and 1/36 coverage, and complete 12/24/36-month windows at their first full
+  endpoints and at 2025-12.
+- The full rebuild completed in 7:30.98 with maximum RSS 4,665,048 KiB. All four Parquet hashes
+  matched the prior generation exactly.
+- Reproducibility v4 passed for 27 core datasets with zero checksum mismatches and zero rolling
+  temporary outputs. Pipeline dry-run skips both rolling and reproducibility as valid/resumable.
+- Annual hashes remain unchanged: work edges `77aa672f...c18c13`, annual edges
+  `bccfe253...33cbb9b`, and annual institution outputs `4842fb88...5767e29`.
+- Final quality gate passed Ruff lint/format, strict mypy, all 176 offline tests, and CLI status.
+  Six known Plotly country-name deprecation warnings remain unrelated.
+
+### Data and configuration hashes
+
+- Institution rolling: `affbcbbf87f400b8d3d90167bfc943437d8dbb322875f9abcd3fb8ebed9f16c1`
+- Edge interval index: `439293639419fda07f4120ed57d0d1ca816b633684b2e0911cb2955a594141f7`
+- Coverage ledger: `8c0546fde12bafa038522865fbe60798c34bae413a28104fa941a93fecbbbd8f`
+- Reconciliation: `1960631ed4e8a56471712ec74899206f77e77e0a66bec6c53fc33bf520f68605`
+- Rolling summary JSON: `722ec6a05f5eafbc1b3916ca81c13cff3faef7d8a19d31de76b41fe098ea48d4`
+- Reproducibility v4 JSON: `2d2ed052ddd781f6cb9c35e035f77e94eca3cdbfe9c6d0d823bd4add1acac7da`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- School-decision contract: `1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03`
+
+### Checkpoints written
+
+Four atomically promoted rolling Parquet outputs, the rolling summary, five rolling manifests,
+refreshed reproducibility JSON/manifest, and final agent state were written. No OpenAlex request,
+API key, invented identifier, or fabricated date was used.
+
+### Failures or blockers
+
+- Resumption found generated rolling manifests and reproducibility evidence stale relative to the
+  final source policy keys. A full rebuild under current code regenerated matching Parquet hashes,
+  refreshed complete provenance, and made both pipeline stages resumable.
+- The complete school-decision product remains dependency-gated through GISNET-124 and later tasks;
+  this does not block GISNET-123 acceptance.
+- No blocker remains for GISNET-123.
+
+### Decisions made
+
+- Use the compact exact interval index instead of materializing 187,718,512 duplicate edge endpoints;
+  every queried edge result still carries exact window boundaries and metrics.
+- Defer rolling normalized-intensity storage to GISNET-128's exact endpoint-denominator join rather
+  than duplicating rolling institution denominators in the interval index.
+- Keep annual products as the scientific historical reference and subannual/rolling facts parallel.
+
+### Exact next action
+
+Task: GISNET-125 — Strengthen school identity resolution. Run
+`uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
+evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
+and explicit overrides.

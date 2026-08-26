@@ -271,6 +271,37 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
         policy_versions=(("subannual_fact_policy", "subannual-school-facts-2026-08-17-v1"),),
     ),
     PipelineStage(
+        "build-rolling-facts",
+        (
+            _output(
+                "institution_outputs_rolling",
+                "data/processed/institution_outputs_rolling.parquet",
+            ),
+            _output(
+                "collaboration_edge_window_intervals",
+                "data/processed/collaboration_edge_window_intervals.parquet",
+            ),
+            _output(
+                "rolling_window_coverage",
+                "data/processed/rolling_window_coverage.parquet",
+            ),
+            _output(
+                "rolling_reconciliation",
+                "data/processed/rolling_reconciliation.parquet",
+            ),
+            _output(
+                "rolling_temporal_summary",
+                "data/reference/rolling_temporal_summary.json",
+            ),
+        ),
+        policy_versions=(
+            ("rolling_fact_policy", "rolling-school-facts-2026-08-17-v1"),
+            ("rolling_corpus_views", "strict,broad"),
+            ("rolling_hierarchy_views", "organization,umbrella"),
+            ("rolling_observation_bounds", "2010-01:2025-12"),
+        ),
+    ),
+    PipelineStage(
         "build-region-flows",
         (
             _output("region_flows_year", "data/processed/region_flows_year.parquet"),
@@ -287,7 +318,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
     PipelineStage(
         "verify-reproducibility",
         (_output("reproducibility_validation", "data/reference/reproducibility_validation.json"),),
-        policy_versions=(("reproducibility_policy", "reproducibility-validation-2026-08-17-v3"),),
+        policy_versions=(("reproducibility_policy", "reproducibility-validation-2026-08-17-v4"),),
     ),
     PipelineStage(
         "compute-edge-intensity",
