@@ -10,13 +10,14 @@ dictionary, provenance manifests, limitations, and reproduction commands.
 | Channel | Tag | Meaning |
 | --- | --- | --- |
 | Stable scientific release | [`v0.1.0`](https://github.com/jfang2048/gis_sci_network/releases/tag/v0.1.0) | Reproducible complete-year annual analysis |
-| Development prerelease | [`school-decision-contract-v1`](https://github.com/jfang2048/gis_sci_network/releases/tag/school-decision-contract-v1) | Versioned institution-comparison contract and post-0.1.0 analytical layers; school UI remains planned |
+| Development prerelease | [`school-decision-contract-v1`](https://github.com/jfang2048/gis_sci_network/releases/tag/school-decision-contract-v1) | Immutable contract snapshot; later temporal facts on `main` are not part of this tag |
 
-The development prerelease does not replace the stable annual release and does not claim that the
-School Finder or rolling-window datasets are complete. It publishes the validated analytical
-contract, current documentation, and an explicit current-versus-planned architecture.
+The development prerelease does not replace the stable annual release. At that tagged snapshot it
+did not claim that the School Finder or rolling-window datasets were complete. Since the tag,
+publication-date QA, subannual facts, and rolling 12/24/36-month facts have become available on
+`main`; the School Finder and other school-oriented interfaces remain planned.
 
-[![Architecture showing the released historical layer and planned school-decision extension](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
+[![Current architecture showing available annual and temporal foundations plus the remaining planned school-decision product](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
 ## See the result
 
@@ -38,6 +39,8 @@ scripts/quality-gate.sh
 `release/manifest.json` contains the size and SHA-256 checksum of every public
 configuration file, compact table, reference artifact, static figure, report, and
 provenance manifest. `release/manifest.json.sha256` protects the manifest itself.
+The manifest checked in on `main` follows the current public asset set; immutable release tags
+retain the manifest that was published at their tagged commit.
 
 ## Reproduce the data pipeline
 
@@ -51,6 +54,10 @@ export OPENALEX_API_KEY='...'
 uv run python -m gisnet.cli check-env
 uv run python -m gisnet.cli run-pipeline \
   --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume
+# Current temporal foundations for school-decision work.
+uv run python -m gisnet.cli build-publication-date-qa --resume
+uv run python -m gisnet.cli build-subannual-facts --resume
+uv run python -m gisnet.cli build-rolling-facts --resume
 uv run python -m gisnet.cli report --resume
 uv run python -m gisnet.cli build-data-dictionary --resume
 # Optional knowledge-flow extension; this is not a collaboration layer.
@@ -80,8 +87,9 @@ The API key is not written to configuration, manifests, datasets, or logs.
 - Community matches below Jaccard 0.25 are retained but explicitly uncertain.
 - The visualization score ranks display edges only and is not a primary research metric.
 - 2025 is the last complete calendar year; partial 2026 observations are excluded.
-- The school-decision analytical contract is implemented, but subannual facts, rolling windows,
-  complete school search, school profiles, comparison pages, and ego maps remain planned work.
+- The school-decision analytical contract, publication-date QA, subannual facts, and rolling
+  12/24/36-month facts are available on `main`. Safe partial-current-year acquisition, complete
+  school search, school profiles, comparison pages, and ego maps remain planned work.
 - The optional citation layer is corpus-internal. Its coverage table reports references whose
   cited Work or in-scope cited institution is unavailable, and preserves negative citation lags
   as source-data anomalies rather than silently excluding them.

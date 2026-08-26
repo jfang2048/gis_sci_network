@@ -1,8 +1,8 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 102,
-      "size_bytes": 153397
+      "file_count": 120,
+      "size_bytes": 188067
     },
     "config": {
       "file_count": 12,
@@ -13,12 +13,12 @@
       "size_bytes": 10244692
     },
     "data/reference": {
-      "file_count": 42,
-      "size_bytes": 1048678
+      "file_count": 45,
+      "size_bytes": 1098273
     },
     "figures": {
       "file_count": 4,
-      "size_bytes": 30067
+      "size_bytes": 30302
     },
     "outputs/reports": {
       "file_count": 4,
@@ -65,6 +65,21 @@
       "path": ".agent/manifests/citation_flow_summary.json",
       "sha256": "8131ec33f116da1fe4bedf9391c2aee65ec5dc0b591e50c3665af96a7b7f2d1c",
       "size_bytes": 1622
+    },
+    {
+      "path": ".agent/manifests/collaboration_edge_window_intervals.json",
+      "sha256": "c4f9f5dc6bc87f09a4c66bf653196ccf36d9689285370ff7ee238c6f7c5e0b30",
+      "size_bytes": 2025
+    },
+    {
+      "path": ".agent/manifests/collaboration_edges_month.json",
+      "sha256": "3e1b2c5b6e91fdbe33e9c05db2722c3c0e6526dbcef3bf3c0677ae6f7a9f6acd",
+      "size_bytes": 1841
+    },
+    {
+      "path": ".agent/manifests/collaboration_edges_quarter.json",
+      "sha256": "f8c8e5285a66632be916a88d8529ce6645e15a53aa8ab86d1d1b8609086c0944",
+      "size_bytes": 1847
     },
     {
       "path": ".agent/manifests/collaboration_edges_summary.json",
@@ -242,6 +257,21 @@
       "size_bytes": 1279
     },
     {
+      "path": ".agent/manifests/institution_outputs_month.json",
+      "sha256": "9b0742510761da2c78a512f1259b305ac877f0bb304b5d8feb4f8988d5299569",
+      "size_bytes": 1801
+    },
+    {
+      "path": ".agent/manifests/institution_outputs_quarter.json",
+      "sha256": "9cfe77d77575b6c4cf0ee84bdece98fc165a33a6e5a77b0abcce178bf7d8017b",
+      "size_bytes": 1807
+    },
+    {
+      "path": ".agent/manifests/institution_outputs_rolling.json",
+      "sha256": "44bd5ae5f04480b2dc009cd2992629193e6c206bc4e327e10544a2595daf4708",
+      "size_bytes": 2685
+    },
+    {
       "path": ".agent/manifests/institution_outputs_summary.json",
       "sha256": "cf7db62433032d3b61be0f03b24f8598dab494bb6c6da6f06744cb9b444282d2",
       "size_bytes": 1271
@@ -382,6 +412,31 @@
       "size_bytes": 1487
     },
     {
+      "path": ".agent/manifests/publication_date_coverage_corpus.json",
+      "sha256": "8c3d4a7476b176440bdc3cd68a831f068a34202eae0024ce190264ce48ba3b36",
+      "size_bytes": 1797
+    },
+    {
+      "path": ".agent/manifests/publication_date_coverage_institution.json",
+      "sha256": "931935def79cac426369424bc0094747afba79702c88d112d7a530ad018d149b",
+      "size_bytes": 1981
+    },
+    {
+      "path": ".agent/manifests/publication_date_coverage_topic_family.json",
+      "sha256": "7e45b44e3b7f8bc5f85dc2bae960bd2996846cf29571a5dcc5e89bb80b2bcea2",
+      "size_bytes": 1824
+    },
+    {
+      "path": ".agent/manifests/publication_date_coverage_year.json",
+      "sha256": "8409f782398274d1674c3dc19b9425648d5437e0ab1fc084d8f8663c64f3d67d",
+      "size_bytes": 1847
+    },
+    {
+      "path": ".agent/manifests/publication_date_qa_summary.json",
+      "sha256": "59809fc6f37428b9a916f57f6a7915f17fe802b1a2965427f7d23e1cbf2b0ad8",
+      "size_bytes": 1474
+    },
+    {
       "path": ".agent/manifests/raw_works_download_status.json",
       "sha256": "8f825ccac30ed30c905df36423c39cca122a289792031fc998fcc4885b2ec9da",
       "size_bytes": 1379
@@ -403,8 +458,23 @@
     },
     {
       "path": ".agent/manifests/reproducibility_validation.json",
-      "sha256": "6008b9f731c14d7f8168a3870206b8d6dbd9a0543eeead273cfdf98e249cf481",
-      "size_bytes": 1538
+      "sha256": "a29b8bb3e45a6d77674b52a121197aa4f4d95210aa86a0dd2143c4033770c18b",
+      "size_bytes": 2400
+    },
+    {
+      "path": ".agent/manifests/rolling_reconciliation.json",
+      "sha256": "5157ed4091621ca7275ab72b5012bda2f7cb3e1b237ac05ffc771fea5ca941c6",
+      "size_bytes": 1835
+    },
+    {
+      "path": ".agent/manifests/rolling_temporal_summary.json",
+      "sha256": "b06337b599cec71f7485c360d3fe4f17499a5678e5fe79a8b57b05133cddf0c3",
+      "size_bytes": 2000
+    },
+    {
+      "path": ".agent/manifests/rolling_window_coverage.json",
+      "sha256": "90ca1f7aaf911235b90aa0aeff75c57690e5e02494a1a2d5f5e0272be67115f7",
+      "size_bytes": 1871
     },
     {
       "path": ".agent/manifests/school_decision_contract.json",
@@ -420,6 +490,21 @@
       "path": ".agent/manifests/sensitivity_summary.json",
       "sha256": "afe81595d68a81d9b465aa494daf16a463d9ab476d2b0a2d03ca5a47cbc4c3a5",
       "size_bytes": 1493
+    },
+    {
+      "path": ".agent/manifests/subannual_reconciliation.json",
+      "sha256": "2365bd1dc822a4914ed40536dab96b10e77db533457cc910b2ed63571ddb4d58",
+      "size_bytes": 1583
+    },
+    {
+      "path": ".agent/manifests/subannual_sparsity.json",
+      "sha256": "afca8fb7498159d496c92132e452c6d02d5f41368e7ece6fe1f31e8546433b96",
+      "size_bytes": 2674
+    },
+    {
+      "path": ".agent/manifests/subannual_temporal_summary.json",
+      "sha256": "d1765f9d5a8286c9d306d37cffa10edb638bfce0f04dbdbc5b06423424111e30",
+      "size_bytes": 1554
     },
     {
       "path": ".agent/manifests/top_edge_audit.json",
@@ -520,6 +605,11 @@
       "path": ".agent/manifests/work_malformed.json",
       "sha256": "2c6271c6ebdbcc7647ad6fad3e9d9a81d1b0e730c2be8ddba00096993266235e",
       "size_bytes": 1104
+    },
+    {
+      "path": ".agent/manifests/work_publication_dates.json",
+      "sha256": "df7182529472090814bd12162931336e639854d66a66ac66d62617f02ba6ec4d",
+      "size_bytes": 1362
     },
     {
       "path": ".agent/manifests/work_topics.json",
@@ -847,6 +937,11 @@
       "size_bytes": 13448
     },
     {
+      "path": "data/reference/publication_date_qa_summary.json",
+      "sha256": "0fb41b12c285343e9f899ed3a53f1ef4db9d40999833af071fe98a49c1b66db1",
+      "size_bytes": 5844
+    },
+    {
       "path": "data/reference/raw_works_download_status.json",
       "sha256": "1fa81c82248c7397e9fc9c46d78b831f10c66c593b0f56e3f00239bcc80bf891",
       "size_bytes": 224823
@@ -858,13 +953,23 @@
     },
     {
       "path": "data/reference/reproducibility_validation.json",
-      "sha256": "d5f6c30b08e14621b09f5b6d26ab0b00235116ff7d26f9ec94b2c1c663e8f86f",
-      "size_bytes": 7478
+      "sha256": "2d2ed052ddd781f6cb9c35e035f77e94eca3cdbfe9c6d0d823bd4add1acac7da",
+      "size_bytes": 16589
+    },
+    {
+      "path": "data/reference/rolling_temporal_summary.json",
+      "sha256": "722ec6a05f5eafbc1b3916ca81c13cff3faef7d8a19d31de76b41fe098ea48d4",
+      "size_bytes": 2867
     },
     {
       "path": "data/reference/sensitivity_summary.json",
       "sha256": "fe453ff29fa0ce66606015d0243271567ff7b4b90e02a750ac079759c56590d2",
       "size_bytes": 796
+    },
+    {
+      "path": "data/reference/subannual_temporal_summary.json",
+      "sha256": "4ef4e4ee28cc5e4f69a6e6542ef429bd2af78544af5f805a1c1b05ada202c876",
+      "size_bytes": 31773
     },
     {
       "path": "data/reference/top_entity_audit_summary.json",
@@ -918,8 +1023,8 @@
     },
     {
       "path": "figures/school_decision_architecture.svg",
-      "sha256": "c28ee7c45187e4b060a5c9677ace9998df3d23ae9be825c2815081f3951cf9ce",
-      "size_bytes": 8128
+      "sha256": "a1428c2a62d4aa185c5ac0d6b8cf2b21039ab020d2f5ca4726721f674b91085c",
+      "size_bytes": 8363
     },
     {
       "path": "figures/view_comparison.svg",
@@ -947,11 +1052,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-17T10:41:57Z",
+  "generated_at_utc": "2026-08-26T23:09:10Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 181,
-  "public_size_bytes": 11788311,
+  "public_file_count": 202,
+  "public_size_bytes": 11872811,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

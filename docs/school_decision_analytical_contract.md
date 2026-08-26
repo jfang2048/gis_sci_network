@@ -107,8 +107,8 @@ Current code semantics retained by the contract include:
 - PageRank and betweenness are graph-relative and cannot be compared without matching graph and
   method boundaries.
 
-Later GISNET-120+ tasks must reconcile any legacy report wording that differs from these implemented
-definitions.
+Remaining school-decision tasks must reconcile any legacy report wording that differs from these
+implemented definitions.
 
 ## Separate evidence layers
 

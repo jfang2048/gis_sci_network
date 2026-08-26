@@ -120,6 +120,8 @@ were:
 
 These results do not justify partitioning the present files. GISNET-123 builds rolling facts
 from these sparse positives rather than an all-school × all-partner × all-month Cartesian product.
+The completed exact-calendar representation is documented in
+[`rolling_facts.md`](rolling_facts.md).
 
 ## Reproducibility and provenance
 

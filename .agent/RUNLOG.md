@@ -2802,3 +2802,100 @@ Task: GISNET-125 — Strengthen school identity resolution. Run
 `uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
 evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
 and explicit overrides.
+
+## Run 20260826T230559Z_4c6f8c9206ce
+
+Started UTC: 2026-08-26T23:05:59Z
+Ended UTC: 2026-08-26T23:11:52Z
+Task: Documentation and architecture-status currency follow-up — no backlog task transition
+Initial git status: Clean `main` at `4c6f8c9`, synchronized with `origin/main`.
+Final git status: Pre-commit documentation, architecture SVG, release manifest, and audit-state changes only.
+
+### Objective
+
+Bring every current-facing Markdown status statement and its relative visual assets into alignment
+with completed GISNET-121–123 work, preserve immutable historical records, validate the public asset
+set, and push the result to GitHub.
+
+### Work completed
+
+- Audited all 16 tracked Markdown files and all six Markdown image references. Updated current-facing
+  status language in the root README, release guide, dashboard guide, school-decision contract,
+  subannual documentation, and rolling documentation.
+- Distinguished the immutable `school-decision-contract-v1` snapshot from current `main`: the tag
+  remains a contract snapshot, while publication-date QA, subannual facts, and rolling 12/24/36-month
+  facts are now explicitly available on `main`.
+- Redrew the repository-native SVG architecture status panel as mixed `IN PROGRESS`, with explicit
+  text labels showing date/subannual/rolling foundations as `AVAILABLE` and partial-year acquisition,
+  identity/index work, and school-facing interfaces as `PLANNED`.
+- Added direct rolling build/reproducibility guidance and cross-linked subannual facts to their
+  completed rolling representation.
+- Rebuilt the checksum-complete public manifest so it includes the current publication-date,
+  subannual, rolling, and revised architecture assets.
+- Preserved `docs/releases/school-decision-contract-v1.md`, authoritative backlogs, audit history,
+  and generated v0.1.0 reports as historical/versioned records rather than rewriting past claims.
+
+### Files changed
+
+- Current documentation: `README.md`, `RELEASE.md`, `dashboard/README.md`,
+  `docs/rolling_facts.md`, `docs/subannual_facts.md`, and
+  `docs/school_decision_analytical_contract.md`.
+- Visual asset: `figures/school_decision_architecture.svg`.
+- Release integrity: `release/manifest.json`, `release/manifest.json.sha256`.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/backlog/README/agent-state inspection and current task/status checks.
+- Complete tracked-Markdown and image inventory, stale-claim grep, relative-link validation, SVG
+  XML/accessibility validation, native 1400×820 SVG raster render, and visual inspection.
+- `uv run python -m gisnet.release build`, `uv run python -m gisnet.release verify`, and
+  `scripts/quality-gate.sh`.
+- Independent read-only Markdown-currency and visual/link review lanes.
+
+### Validation results
+
+- Markdown inventory: 16 tracked files, six image references (five relative and one tag-pinned
+  external), 32 ordinary links, and zero missing relative targets.
+- All four tracked SVGs parse, retain `role=img`, nonempty title/description metadata, valid
+  `aria-labelledby` targets, dimensions/viewBox, and unique IDs. The revised architecture rendered
+  cleanly at 1400×820 with no visible clipping or overlap.
+- Current-facing stale-claim search found no remaining statement that publication-date, subannual,
+  or rolling facts are still planned.
+- Release verification passed for 202 files and 11,872,811 bytes with zero privacy findings; the
+  architecture SVG checksum is `a1428c2a62d4aa185c5ac0d6b8cf2b21039ab020d2f5ca4726721f674b91085c`.
+- Full quality gate passed Ruff lint/format, strict mypy, all 176 offline tests, and CLI status.
+  Six known Plotly country-name deprecation warnings remain unrelated.
+
+### Data and configuration hashes
+
+- Architecture SVG: `a1428c2a62d4aa185c5ac0d6b8cf2b21039ab020d2f5ca4726721f674b91085c`
+- Release manifest: `cf0f905c5e2b244f7fd8d47aef9902bb65168abb7e71cf0d3478eb4594b96aac`
+- README: `49cdbd8f72a06a792aa3ba78c2116467afda1d719b6b0b5ae0ac3ec45f31427b`
+- Project config remains `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`.
+
+### Checkpoints written
+
+Agent state/backlog were atomically refreshed; the public release manifest and its checksum were
+atomically rebuilt. No scientific dataset, source configuration, measured result, API key, or source
+identifier changed.
+
+### Failures or blockers
+
+- The preferred SVG rasterizer was unavailable; ImageMagick rendered the SVG at its native 1400×820
+  dimensions for equivalent visual inspection.
+- No blocker remains.
+
+### Decisions made
+
+- Treat tag-specific release notes, prior run logs/decisions, authoritative backlog contracts, and
+  generated v0.1.0 reports as immutable historical records; update only live current-facing guides.
+- Keep the current school-decision extension explicitly mixed-status rather than labelling the whole
+  layer available or planned.
+
+### Exact next action
+
+Task: GISNET-125 — Strengthen school identity resolution. Run
+`uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
+evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
+and explicit overrides.

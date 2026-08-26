@@ -4,6 +4,16 @@ GISNET-123 adds a parallel rolling layer without changing the released annual pr
 keys describe **bibliographic publication-time observations**. They do not describe collaboration,
 research, project, or author-mobility start dates.
 
+Build and validate the local processed datasets with:
+
+```bash
+uv run python -m gisnet.cli build-rolling-facts --resume
+```
+
+The command reads accepted local monthly facts and makes no OpenAlex request. Current counts,
+checksums, policies, and output paths are recorded in
+[`rolling_temporal_summary.json`](../data/reference/rolling_temporal_summary.json).
+
 ## Calendar and coverage contract
 
 Windows contain 12, 24, or 36 inclusive calendar months and advance one calendar month at a time.

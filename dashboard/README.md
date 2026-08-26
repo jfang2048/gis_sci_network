@@ -2,8 +2,9 @@
 
 > **Current scope:** this is the released complete-year annual analysis dashboard. The
 > institution-first School Finder, School Profile, Compare Schools, geographic-flow explorer, and
-> rolling-window views are planned work under GISNET-121–138; their presence in the analytical
-> contract does not mean they are already implemented here.
+> rolling-window views are not implemented here. Their publication-date, subannual, and rolling
+> source facts are available on `main`, while the school-oriented dashboard views remain planned
+> under GISNET-126–138.
 
 Launch from the repository root:
 
