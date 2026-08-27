@@ -2899,3 +2899,96 @@ Task: GISNET-125 — Strengthen school identity resolution. Run
 `uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
 evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
 and explicit overrides.
+
+## Run 20260826T234653Z_8baef5920149
+
+Started UTC: 2026-08-26T23:46:53Z
+Ended UTC: 2026-08-26T23:55:17Z
+Task: Visual-first README and expanded result gallery — no backlog task transition
+Initial git status: Clean `main` at `8baef59`, synchronized with `origin/main`.
+Final git status: Pre-commit README, gallery generator/test, two SVGs, release manifest, and audit-state changes only.
+
+### Objective
+
+Show more scientific results directly on GitHub, simplify the root documentation, preserve exact
+measured values and scope caveats, verify the public release, and push the completed change.
+
+### Work completed
+
+- Replaced the 319-line, 2,260-word root README with a 102-line, 526-word visual-first overview.
+- Added a deterministic repository-native gallery builder that reads only the checked-in public
+  dashboard snapshot and writes SVG outputs atomically under the project writer lock.
+- Added a 2025 fixed-layout network snapshot for the top 100 institutions and 220 strongest
+  fractional collaboration edges within that core.
+- Added a 2025 horizontal profile of the eight Topic families with the greatest fractional edge
+  weight in the thresholded Broad organization-view dashboard core.
+- Added unit coverage for view selection, measured row counts, SVG structure, accessibility IDs,
+  and output generation.
+- Rebuilt the checksum-complete public release manifest with both new figures.
+
+### Files changed
+
+- Documentation: `README.md`.
+- Generator and tests: `src/gisnet/visualization/gallery.py`, `tests/unit/test_gallery.py`.
+- Visual results: `figures/network_snapshot.svg`, `figures/topic_family_profile.svg`.
+- Release integrity: `release/manifest.json`, `release/manifest.json.sha256`.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory repository, backlog, README, dashboard snapshot, and agent-state inspection.
+- Dashboard Parquet schema/value inspection for trends, matrices, network nodes/edges, Topics, and
+  graph metrics.
+- `uv run python -m gisnet.visualization.gallery` with byte-for-byte repeatability comparison.
+- Markdown relative-target audit, SVG XML/accessibility checks, ImageMagick raster rendering, and
+  visual inspection at the native 1200×720 dimensions.
+- `uv run python -m gisnet.release build`, `uv run python -m gisnet.release verify`,
+  `git diff --check`, and `scripts/quality-gate.sh`.
+
+### Validation results
+
+- Gallery reproduction produced identical SVG hashes on consecutive builds.
+- All 16 tracked Markdown files have valid relative targets; eight image references and 30 ordinary
+  link references were audited with zero missing targets.
+- All six SVGs parse as XML and retain dimensions/viewBox, `role=img`, nonempty title/description,
+  valid `aria-labelledby` targets, and unique IDs. Both new figures rendered cleanly without visible
+  clipping or overlap.
+- Release verification passed for 204 files and 11,922,513 bytes with zero privacy findings.
+- Full quality gate passed Ruff lint/format, strict mypy, all 177 offline tests, and CLI status.
+  Six known Plotly country-name deprecation warnings remain unrelated.
+
+### Data and configuration hashes
+
+- Network snapshot SVG: `4663bdc9051896d813b4b6d063334f43af01de674742c4de7ba2234eae24325f`
+- Topic profile SVG: `cedcd57608d079b889333cd0f424728ea2262938817498e38ffbfaf880b59d92`
+- README: `b3301979d160d00a74a821caf1402fe0144a8e29c30f0da031632a0c0a733a82`
+- Release manifest: `060a47b054472bc02499274bcd51b5b1b3b525a0ac2a2059d97c1d14d1232504`
+- Source network nodes: `9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7`
+- Source network edges: `920878da893802281d54dfd696b1452a764e395db33d49a94ee2085aac2290e4`
+- Source Topics: `d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9`
+
+### Checkpoints written
+
+Agent state/backlog were atomically refreshed; the two SVGs and public release manifest were written
+atomically. No scientific source dataset, configuration, API key, raw response, source identifier,
+or measured result was changed or invented.
+
+### Failures or blockers
+
+- Direct SVG preview was unavailable, so both figures were rasterized with ImageMagick for equivalent
+  native-size visual inspection.
+- No blocker remains.
+
+### Decisions made
+
+- Keep the root README short and results-first; move detailed semantics and procedures to the
+  existing dashboard, methods, data-dictionary, subannual, rolling, and release documents.
+- Use the public thresholded dashboard core for the new figures and label that scope explicitly
+  rather than implying full-corpus network or Topic totals.
+
+### Exact next action
+
+Task: GISNET-125 — Strengthen school identity resolution. Run
+`uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
+evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
+and explicit overrides.

@@ -17,8 +17,8 @@
       "size_bytes": 1098273
     },
     "figures": {
-      "file_count": 4,
-      "size_bytes": 30302
+      "file_count": 6,
+      "size_bytes": 80004
     },
     "outputs/reports": {
       "file_count": 4,
@@ -1017,6 +1017,11 @@
       "size_bytes": 8386
     },
     {
+      "path": "figures/network_snapshot.svg",
+      "sha256": "4663bdc9051896d813b4b6d063334f43af01de674742c4de7ba2234eae24325f",
+      "size_bytes": 43312
+    },
+    {
       "path": "figures/region_matrix.svg",
       "sha256": "c92a9971d5c1438bd66a175b3db47e15dde835a28d4e9b512a36447598a9af15",
       "size_bytes": 6302
@@ -1025,6 +1030,11 @@
       "path": "figures/school_decision_architecture.svg",
       "sha256": "a1428c2a62d4aa185c5ac0d6b8cf2b21039ab020d2f5ca4726721f674b91085c",
       "size_bytes": 8363
+    },
+    {
+      "path": "figures/topic_family_profile.svg",
+      "sha256": "cedcd57608d079b889333cd0f424728ea2262938817498e38ffbfaf880b59d92",
+      "size_bytes": 6390
     },
     {
       "path": "figures/view_comparison.svg",
@@ -1052,11 +1062,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-26T23:09:10Z",
+  "generated_at_utc": "2026-08-26T23:53:52Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 202,
-  "public_size_bytes": 11872811,
+  "public_file_count": 204,
+  "public_size_bytes": 11922513,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

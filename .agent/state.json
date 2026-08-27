@@ -203,8 +203,8 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260826T230559Z_4c6f8c9206ce",
-  "last_updated_utc": "2026-08-26T23:11:52Z",
+  "last_successful_run_id": "20260826T234653Z_8baef5920149",
+  "last_updated_utc": "2026-08-26T23:55:18Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
