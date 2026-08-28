@@ -7,6 +7,7 @@ import json
 import sys
 from collections import Counter
 from collections.abc import Sequence
+from datetime import date
 from pathlib import Path
 
 import duckdb
@@ -94,6 +95,16 @@ from gisnet.openalex.planner import (
     preview_query_plan,
     validate_query_plan,
     write_query_plan,
+)
+from gisnet.openalex.recent import (
+    build_recent_query_plan,
+    completed_recent_plan,
+    label_recent_normalization,
+    load_recent_ledger,
+    update_recent_ledger,
+    write_recent_outputs,
+    write_recent_plan,
+    write_recent_status,
 )
 from gisnet.pipeline import DEFAULT_STAGES, run_pipeline, write_pipeline_artifact
 from gisnet.reporting.data_dictionary import (
@@ -279,6 +290,52 @@ def build_parser() -> argparse.ArgumentParser:
     download_works.add_argument("--max-queries", type=int)
     download_works.add_argument("--workers", type=int, default=4)
     download_works.set_defaults(handler=_download_works)
+
+    recent_works = subparsers.add_parser(
+        "sync-recent-works",
+        help="incrementally acquire and normalize fully completed publication months",
+    )
+    _add_pipeline_arguments(recent_works)
+    recent_works.add_argument("--plan", default="data/reference/download_plan.json", type=Path)
+    recent_works.add_argument("--registry", default="config/topic_registry.yml", type=Path)
+    recent_works.add_argument(
+        "--recent-plan", default="data/reference/recent_download_plan.json", type=Path
+    )
+    recent_works.add_argument(
+        "--ledger", default="data/reference/recent_retrieval_ledger.json", type=Path
+    )
+    recent_works.add_argument(
+        "--status-directory",
+        default=".agent/checkpoints/openalex_recent/status",
+        type=Path,
+    )
+    recent_works.add_argument(
+        "--raw-checkpoints",
+        default=".agent/checkpoints/openalex_recent/queries",
+        type=Path,
+    )
+    recent_works.add_argument(
+        "--staging", default="data/interim/normalize_recent_works.duckdb", type=Path
+    )
+    recent_works.add_argument(
+        "--normalization-checkpoint",
+        default=".agent/checkpoints/openalex_recent/normalize.json",
+        type=Path,
+    )
+    recent_works.add_argument("--output-directory", default="data/recent/processed", type=Path)
+    recent_works.add_argument(
+        "--summary",
+        default="data/reference/recent_works_normalization_summary.json",
+        type=Path,
+    )
+    recent_works.add_argument("--as-of", type=date.fromisoformat)
+    recent_works.add_argument("--per-page", default=100, type=int)
+    recent_works.add_argument("--max-queries", type=int)
+    recent_works.add_argument("--workers", type=int, default=4)
+    recent_works.add_argument("--batch-size", default=5000, type=int)
+    recent_works.add_argument("--duckdb-memory-limit", default="6GB")
+    recent_works.add_argument("--duckdb-threads", default=1, type=int)
+    recent_works.set_defaults(handler=_sync_recent_works)
 
     normalize_works = subparsers.add_parser(
         "normalize-works", help="deduplicate raw Work pages into validated Parquet tables"
@@ -1930,6 +1987,140 @@ def _download_works(args: argparse.Namespace) -> int:
         f"blocked={counts['blocked']}, failed={counts['failed']}; "
         f"pages={payload['actual_page_count']}, "
         f"records including duplicates={payload['actual_result_count_including_duplicates']}."
+    )
+    return 0 if payload["status"] == "complete" else 4
+
+
+def _sync_recent_works(args: argparse.Namespace) -> int:
+    if args.as_of is not None and not args.dry_run:
+        print("--as-of is restricted to dry-run validation.", file=sys.stderr)
+        return 2
+    try:
+        project = load_project_config(args.config)
+        historical_plan = load_download_plan(args.plan)
+        topic_registry = load_yaml(args.registry)
+        if not isinstance(topic_registry, dict):
+            raise ValueError("Topic registry must be a mapping")
+        ledger = load_recent_ledger(args.ledger, historical_plan=historical_plan)
+        plan = build_recent_query_plan(
+            historical_plan,
+            ledger,
+            as_of=args.as_of,
+            per_page=args.per_page,
+        )
+    except (OSError, ValidationError, ValueError, json.JSONDecodeError) as exc:
+        print(f"Recent-work sync inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        months = [item["month"] for item in plan["date_ranges"]]
+        coverage = f"{months[0]} through {months[-1]}" if months else "none"
+        print(
+            f"Validated {plan['query_count']} missing query shards for completed months "
+            f"{coverage}; no request or write performed."
+        )
+        return 0
+    if not plan["query_count"]:
+        print(
+            "Recent-work acquisition is current through the latest completed calendar month; "
+            "no request or write performed."
+        )
+        return 0
+    if not get_openalex_api_key():
+        print("Bulk recent-work sync requires an OpenAlex API key.", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    status_path = args.status_directory / f"{plan['logical_plan_hash']}.json"
+    command = (
+        f"python -m gisnet.cli sync-recent-works --plan {args.plan} --ledger {args.ledger} --resume"
+    )
+    newly_completed: list[str] = []
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-124"):
+            write_recent_plan(
+                plan,
+                path=args.recent_plan,
+                historical_plan_path=args.plan,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest("recent_download_plan", ".agent/manifests/recent_download_plan.json")
+            cache = RawResponseCache(project.openalex.cache_directory)
+            with OpenAlexClient(project.openalex) as client:
+                payload = execute_download_plan(
+                    plan,
+                    client,
+                    cache,
+                    checkpoint_directory=args.raw_checkpoints,
+                    status_path=status_path,
+                    resume=args.resume or not args.force,
+                    force=args.force,
+                    max_queries=args.max_queries,
+                    workers=args.workers,
+                )
+            write_recent_status(
+                payload,
+                path=status_path,
+                plan=plan,
+                run_id=run_id,
+                command=command,
+            )
+            _register_manifest(
+                "recent_raw_works_download_status",
+                ".agent/manifests/recent_raw_works_download_status.json",
+            )
+            updated_ledger, newly_completed = update_recent_ledger(
+                historical_plan,
+                ledger,
+                plan,
+                payload,
+            )
+            if newly_completed:
+                completed_plan = completed_recent_plan(updated_ledger)
+                start_year = int(str(updated_ledger["coverage_start"])[:4])
+                end_year = int(str(updated_ledger["coverage_end"])[:4])
+                summary = normalize_raw_works(
+                    completed_plan,
+                    cache,
+                    topic_registry,
+                    checkpoint_directory=args.raw_checkpoints,
+                    staging_path=args.staging,
+                    normalization_checkpoint_path=args.normalization_checkpoint,
+                    output_directory=args.output_directory,
+                    start_year=start_year,
+                    end_year=end_year,
+                    resume=False,
+                    force=True,
+                    batch_size=args.batch_size,
+                    duckdb_memory_limit=args.duckdb_memory_limit,
+                    duckdb_threads=args.duckdb_threads,
+                )
+                summary = label_recent_normalization(summary, updated_ledger)
+                write_recent_outputs(
+                    summary,
+                    updated_ledger,
+                    ledger_path=args.ledger,
+                    summary_path=args.summary,
+                    project_config_path=args.config,
+                    run_id=run_id,
+                    command=command,
+                )
+                for name in (
+                    "recent_retrieval_ledger",
+                    "recent_works_normalization_summary",
+                    "recent_works",
+                    "recent_work_topics",
+                    "recent_work_malformed",
+                ):
+                    _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OpenAlexError, OSError, ValueError) as exc:
+        print(f"Recent-work sync failed safely: {exc}", file=sys.stderr)
+        return 3
+    counts = payload["status_counts"]
+    completed_label = ",".join(newly_completed) if newly_completed else "none"
+    print(
+        f"Recent-work sync status={payload['status']}; newly completed months={completed_label}; "
+        f"complete queries={counts['complete']}, blocked={counts['blocked']}, "
+        f"failed={counts['failed']}; pages={payload['actual_page_count']}."
     )
     return 0 if payload["status"] == "complete" else 4
 

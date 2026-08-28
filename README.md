@@ -39,8 +39,9 @@ semantics and snapshot rebuild instructions.
 | Annual collaboration, citation-flow, Topic-proximity, and multiplex layers | Available |
 | Publication-date QA and month/quarter facts | Available |
 | Rolling 12/24/36-month facts | Available |
-| Current-year acquisition | Planned: GISNET-124 |
-| School Finder, profiles, comparison, and ego maps | Planned: GISNET-126–138 |
+| Completed-month current-year acquisition overlay | Available; released annual snapshot remains through 2025 |
+| School Finder, partner index, and school profiles | Available |
+| School comparison and ego maps | Planned: GISNET-129–138 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
@@ -48,6 +49,26 @@ The school-decision extension remains in progress. It will preserve the released
 analysis and will not convert independent research dimensions into an unexplained university
 ranking. The contract is documented in
 [`docs/school_decision_analytical_contract.md`](docs/school_decision_analytical_contract.md).
+
+## Recent completed-month acquisition
+
+Preview missing publication-month ranges without a request or write:
+
+```bash
+uv run python -m gisnet.cli sync-recent-works --dry-run
+```
+
+With `OPENALEX_API_KEY` supplied through the environment, run the resumable sync:
+
+```bash
+uv run python -m gisnet.cli sync-recent-works --resume
+```
+
+The command stops at the latest fully completed UTC calendar month, reuses validated raw pages
+and checkpoints, normalizes into a separate `data/recent/processed` overlay, and never modifies
+the historical 2010–2025 outputs. See
+[`docs/recent_completed_month_sync.md`](docs/recent_completed_month_sync.md) for its date and
+comparison contract.
 
 ## Reproduce and verify
 

@@ -3111,3 +3111,97 @@ Task: GISNET-124 — Support recent partial-calendar data safely. Run
 `uv run python -m gisnet.cli next-task`, verify current official OpenAlex date-filter semantics,
 and add incremental retrieval through the latest completed month without altering the reproducible
 2010-2025 historical snapshot.
+
+## Run 20260828T134029Z_b31fe9c89236
+
+Started UTC: 2026-08-28T13:40:29Z
+Ended UTC: 2026-08-28T13:55:39Z
+Task: GISNET-124 — Support recent partial-calendar data safely
+Initial git status: Clean `main` at `b31fe9c`, one local commit ahead of `origin/main`.
+Final git status: Pre-commit GISNET-124 implementation, tests, documentation, and audit-state changes only.
+
+### Objective
+
+Add a safe, runtime-derived completed-month OpenAlex acquisition overlay for current-decision inputs
+without changing or raw-comparing the reproducible 2010–2025 complete-year scientific layer.
+
+### Work completed
+
+- Verified official OpenAlex Works `publication_date`, bounded date-filter, cursor, authentication,
+  page-size, public-snapshot, and premium-sync boundaries before implementation.
+- Added `sync-recent-works`, which derives the latest fully completed UTC calendar month at runtime,
+  plans only missing monthly publication-date shards, and requires an environment-only API key for
+  bulk execution while retaining a no-request/no-write dry run.
+- Derived every Topic and country shard from the accepted historical plan, used the documented
+  supported 100-record page size, and persisted no key or invented source identifier.
+- Added a hash-validated contiguous retrieval ledger. A month advances coverage only after all query
+  checkpoints and raw-page checksums validate; later cached months cannot conceal an earlier gap.
+- Reused the raw cache and cursor checkpoints, recovered retrieval labels from complete checkpoints
+  after status loss, and normalized completed ranges through the existing Work-ID deduplication path.
+- Kept recent normalized Parquet outputs and manifests under distinct recent names and paths. Added
+  exact retrieval, coverage, window-end, partial-current-year, and no-raw-annual-comparison labels.
+- Documented the late-index/backfill limitation and the strict separation between recent rolling
+  decision inputs and complete historical annual totals.
+
+### Files changed
+
+- Implementation: `src/gisnet/openalex/recent.py`, `src/gisnet/openalex/downloader.py`, and
+  `src/gisnet/cli.py`.
+- Tests: `tests/unit/test_recent_acquisition.py` and `tests/unit/test_downloader.py`.
+- Documentation and runtime hygiene: `README.md`, `docs/recent_completed_month_sync.md`, and
+  `.gitignore`.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state inspection and task transition under the
+  project run lock.
+- Official OpenAlex documentation checks for Works attributes, filtering, paging, authentication,
+  and synchronization boundaries.
+- `sync-recent-works --dry-run --as-of 2026-08-28` and a no-key live-path safety check.
+- Targeted planner/downloader/paginator/normalizer/recent-acquisition tests; Ruff lint/format;
+  strict mypy; `git diff --check`; full offline pytest suite; and read-only reproducibility audit.
+
+### Validation results
+
+- Runtime dry run planned 147 missing shards for 2026-01 through 2026-07 and performed no request or
+  write. The live path stopped safely before any write because no API key is present.
+- Incremental tests prove completed reruns exclude ledgered months, incomplete ranges reuse cached
+  pages/checkpoints, and coverage never advances beyond a missing month.
+- Exact-date validation rejects normalized Works outside admitted completed-month ranges; distinct
+  recent manifests leave historical manifests untouched.
+- Recovery testing proves complete raw checkpoints reconstruct retrieval/source-update labels after
+  status loss without another API call.
+- Reproducibility v4 passed all 27 core historical dataset checksums with zero mismatches and zero
+  temporary outputs. No tracked historical data/reference/public/manifest file changed.
+- Full quality gate passed Ruff lint/format, strict mypy, and all 191 offline tests. Six known Plotly
+  country-name deprecation warnings remain unrelated.
+
+### Checkpoints and data writes
+
+No OpenAlex request, recent source dataset, API key, source identifier, or measured source result was
+written because the key is absent. Synthetic tests exercised atomic recent plan/status/ledger and
+Parquet manifest paths. Backlog state, project state, and this run record were atomically written
+under `.agent/locks/run.lock`.
+
+### Decisions made
+
+- Use bounded `publication_date` months, not premium `from_updated_date` synchronization semantics.
+- Admit only a contiguous prefix of fully validated months; retain later completed raw pages in cache
+  until any earlier gap is recovered.
+- Keep partial-year data in a separate overlay and prohibit raw partial-year versus complete-year
+  comparisons. The annual 2010–2025 layer remains the historical reference.
+- Restrict `--as-of` overrides to dry runs so real acquisition always uses the runtime UTC boundary.
+
+### Failures or blockers
+
+- No API key was available, so no real recent Works were acquired; this is an expected execution
+  boundary, not an implementation blocker. Bulk sync will resume from the new command when a key is
+  supplied through the environment.
+- No blocker remains for GISNET-124.
+
+### Exact next action
+
+Task: GISNET-129 — Build school research-fit comparison. Preserve independent activity,
+specialization, collaboration, centrality, citation, and momentum components; expose exact values
+and user weights; never persist or label a combined university-quality score.

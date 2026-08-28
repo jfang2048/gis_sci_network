@@ -21,7 +21,9 @@ data/cache/
 outputs/private/
 
 .agent/checkpoints/openalex/
+.agent/checkpoints/openalex_recent/
 
 data/processed/*.parquet
 data/processed/*.parquet.tmp
+data/recent/
 .agent/checkpoints/normalize_works.json

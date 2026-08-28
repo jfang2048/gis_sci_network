@@ -209,7 +209,8 @@ def execute_download_plan(
                 page_callback=update_source_dates,
             )
             for page in checkpoint["pages"]:
-                cache.validate(page["cache_key"], page["checksum_sha256"])
+                entry = cache.validate(page["cache_key"], page["checksum_sha256"])
+                update_source_dates(entry.data, page)
             record.update(
                 {
                     "status": "complete",

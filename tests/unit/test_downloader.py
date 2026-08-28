@@ -105,3 +105,33 @@ def test_downloader_records_unattempted_queries_as_blocked(tmp_path: Path) -> No
         "non_terminal": 0,
     }
     assert result["queries"][1]["status_reason"] == "not_started_after_max_queries"
+
+
+def test_downloader_recovers_retrieval_labels_from_complete_checkpoints(tmp_path: Path) -> None:
+    client = WorkClient()
+    cache = RawResponseCache(tmp_path / "cache")
+    status_path = tmp_path / "status.json"
+    checkpoint_directory = tmp_path / "checkpoints"
+    execute_download_plan(
+        plan(),
+        client,  # type: ignore[arg-type]
+        cache,
+        checkpoint_directory=checkpoint_directory,
+        status_path=status_path,
+    )
+    call_count = len(client.calls)
+    status_path.unlink()
+
+    recovered = execute_download_plan(
+        plan(),
+        client,  # type: ignore[arg-type]
+        cache,
+        checkpoint_directory=checkpoint_directory,
+        status_path=status_path,
+    )
+
+    assert len(client.calls) == call_count
+    assert all(record["first_retrieved_at_utc"] for record in recovered["queries"])
+    assert all(record["last_retrieved_at_utc"] for record in recovered["queries"])
+    assert all(record["source_updated_date_min"] for record in recovered["queries"])
+    assert all(record["source_updated_date_max"] for record in recovered["queries"])

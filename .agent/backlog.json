@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-28T11:11:44Z",
+  "last_updated_utc": "2026-08-28T13:55:39Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1728,12 +1728,27 @@
         "GISNET-022",
         "GISNET-042"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-28T13:40:29Z",
+          "from": "TODO",
+          "reason": "Implementing completed-month OpenAlex publication-date acquisition after verifying official date-filter, cursor, authentication, and premium-sync boundaries.",
+          "run_id": "20260828T134029Z_b31fe9c89236",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-28T13:55:39Z",
+          "from": "IN_PROGRESS",
+          "reason": "Official publication-date semantics are verified and the completed-month sync passed incremental range, contiguous coverage, checkpoint recovery, deduplication, secret-safety, historical-reproducibility, static-analysis, and full test acceptance checks.",
+          "run_id": "20260828T134029Z_b31fe9c89236",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-124",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Official publication-date semantics are verified and the completed-month sync passed incremental range, contiguous coverage, checkpoint recovery, deduplication, secret-safety, historical-reproducibility, static-analysis, and full test acceptance checks.",
+      "status_updated_at_utc": "2026-08-28T13:55:39Z",
       "title": "Support recent partial-calendar data safely",
       "work": [
         "Verify official OpenAlex date-filter semantics.",
