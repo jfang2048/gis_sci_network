@@ -3413,3 +3413,110 @@ source result was written.
 Task: GISNET-131 — Build readable flow arcs. Add Top N, minimum weight, and minimum partner-share
 controls; implement documented, comparable calibrated width semantics and selected-source color
 emphasis while retaining the exact companion table and map/matrix equality.
+
+
+
+## Run 20260828T203206Z_15506e5b288a
+
+Started UTC: 2026-08-28T20:32:06Z
+Ended UTC: 2026-08-28T20:44:16Z
+Task: GISNET-131 — Build readable flow arcs
+Initial git status: Clean `main` at `15506e5`, synchronized with `origin/main`.
+Final git status: Pre-commit GISNET-131 code, tests, public artifacts, documentation, release checksums, and audit-state changes only.
+
+### Objective
+
+Replace all-flow, constant-width blue segments with meaningful, comparable, exact, and immediately
+readable geographic-flow arcs without changing the underlying annual scientific values.
+
+### Work completed
+
+- Added deterministic Top N cross-flow selection plus minimum selected-weight and minimum
+  partner-share thresholds. Qualifying internal flow remains exact but does not consume an arc slot.
+- Added fixed 0.8–8.0 pixel width transformations for volume, partner share, and normalized
+  intensity. Width depends only on the exact row value and metric, never on the filtered subset.
+- Replaced two-point segments with 32-point spherical great-circle interpolation between sourced
+  anchors. Added exact hover values, target macro-region arc/marker colors, an outlined source
+  marker, and visible macro-region target/value labels.
+- Wired dashboard controls, display counts, exact filtered map/matrix/table reconciliation, empty
+  threshold guidance, and explicit mathematical captions.
+- Added macro-region context to all 162 geographic anchors, bumped the dashboard bundle and data
+  dictionary policies, rebuilt public metadata/dictionaries, and refreshed release checksums.
+- Documented filter order, width equations, saturation, geometry, color semantics, and the distinction
+  from constant-width institutional network edges.
+
+### Files changed
+
+- Flow implementation/UI: `src/gisnet/visualization/geographic_flows.py`,
+  `src/gisnet/visualization/dashboard_data.py`, `dashboard/app.py`, and `src/gisnet/pipeline.py`.
+- Regression tests: `tests/unit/test_geographic_flow_explorer.py`,
+  `tests/unit/test_dashboard_data.py`, and `tests/integration/test_dashboard.py`.
+- Public data/docs: `dashboard/data/geography_anchors.parquet`, dashboard metadata and summaries,
+  generated data dictionaries, `README.md`, `dashboard/README.md`, and release manifest/checksum.
+- Audit state: dashboard/data-dictionary manifests, `.agent/state.json`, `.agent/backlog.json`,
+  `.agent/decisions.md`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection.
+- Targeted Ruff formatting/lint, strict mypy, geographic-flow/dashboard-data unit tests, and
+  Streamlit integration tests during implementation.
+- Lock-aware forced dashboard bundle and public data-dictionary rebuilds.
+- Production audit across all 2025 Broad organization geography sources, all three levels, and all
+  three metrics; macro-label and exact companion inspection.
+- Full `scripts/quality-gate.sh`, `git diff --check`, temporary-output scan, release build/verify,
+  privacy scan, and CLI status.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 156 files, strict mypy for 79 source files,
+  all 203 offline tests, dashboard integration smoke tests, and CLI status.
+- Production audit passed 447 level/source/metric view combinations. Every shared row retained the
+  identical calibrated width after Top N and threshold changes; displayed cross-flow counts never
+  exceeded their requested Top N.
+- Every audited filtered map and matrix matched its exact displayed-flow frame. All rendered arcs
+  contained 32 spherical interpolation points. Observed widths were 0.8159527434279293–8.0 pixels
+  and maximum observed normalized intensity was 0.23636415903409794.
+- All 162 anchors have non-null macro-region context. The current processed scope produced three
+  data-supported target arc colors (Europe, Asia, and Americas); no unsupported region was invented.
+- The 2025 Broad organization Asia macro view exposes Europe 5.5%, Asia 90.2%, and Americas 4.3%
+  labels directly, with separately colored Europe and Americas arcs and exact companion values.
+- Release verification covered 221 public files / 12,026,467 bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- Geographic anchors: `510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b`
+- Geography outputs: `1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e`
+- Geographic matrix: `9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77`
+- Dashboard metadata: `f12a4a8ebb547a5fd893395ae01c38dfce573d2ef446aa8d291081d6d4ab4df9`
+- Public data dictionary: `91976a8c36dbd3244f92348a4ec7ef8d9be0339b7afb060ed9892c9fddafe8ab`
+- Release manifest: `e6af49db7c25d685fcb9f962795d4a495d74739964cbf9d79825df3eacf88a69`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Dashboard anchors/metadata, dashboard and data-dictionary summaries/manifests, generated dictionary
+artifacts, release checksums, backlog state, project state, decisions, and this run record were
+atomically written under the project run lock. No API request, API key, raw source page, invented
+coordinate, source identifier, or measured source result was persisted as scientific input.
+
+### Failures or blockers
+
+- The first full quality-gate attempt found two formatter-only line wraps; Ruff formatting corrected
+  them before the successful complete gate.
+- The first color audit expected five palette colors, but the current processed flows support only
+  Europe, Asia, and Americas. The corrected audit asserts the three observed source-backed regions
+  rather than inventing absent flows. No blocker remains for GISNET-131.
+
+### Decisions made
+
+- Width calibration is global by formula and metric, not normalized within a filtered view.
+- Top N ranks cross-geography arcs only; an internal source row remains exact and thresholded.
+- Arc and partner color encode target macro-region; great-circle points are display geometry between
+  sourced anchors, not new geographic measurements.
+
+### Exact next action
+
+Task: GISNET-132 — Build School Ego Map. Center on one stable-ID school, source its partners from the
+per-school index independent of global thresholds, and reconcile institution/country/region map
+values with the adjacent exact table across supported windows and metrics.

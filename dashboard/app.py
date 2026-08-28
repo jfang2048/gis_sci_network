@@ -18,14 +18,17 @@ from gisnet.visualization.dashboard_filters import (
     partner_share_view,
 )
 from gisnet.visualization.geographic_flows import (
+    FLOW_LINE_WIDTH_DEFINITIONS,
     METRIC_DEFINITIONS,
     CountingMethod,
+    FlowDisplayPolicy,
     FlowMetric,
     GeographicFlowSelection,
     GeographicLevel,
     build_flow_map_figure,
     build_flow_matrix_figure,
     build_flow_view,
+    filter_readable_flows,
     flow_source_options,
 )
 from gisnet.visualization.network_view import visible_accessibility_sentence
@@ -614,6 +617,7 @@ elif page == "Geographic flows":
             "geographic_level",
             "geography",
             "display_name",
+            "macro_region",
             "latitude",
             "longitude",
             "anchor_method",
@@ -684,6 +688,41 @@ elif page == "Geographic flows":
             index=[value for value, _ in source_options].index(default_source),
             format_func=lambda value: source_labels[str(value)],
         )
+        arc_controls = st.columns([1.0, 1.25, 1.25])
+        with arc_controls[0]:
+            top_n = int(
+                st.number_input(
+                    "Top cross-geography flows",
+                    min_value=1,
+                    max_value=50,
+                    value=12,
+                    step=1,
+                )
+            )
+        with arc_controls[1]:
+            minimum_weight = float(
+                st.number_input(
+                    "Minimum collaboration weight",
+                    min_value=0.0,
+                    value=0.0,
+                    step=1.0,
+                    format="%.2f",
+                )
+            )
+        with arc_controls[2]:
+            minimum_partner_share = (
+                float(
+                    st.slider(
+                        "Minimum partner share",
+                        min_value=0,
+                        max_value=100,
+                        value=0,
+                        step=1,
+                        format="%d%%",
+                    )
+                )
+                / 100.0
+            )
         selection = GeographicFlowSelection(
             geographic_level=geographic_level,
             source_geography=str(source_geography),
@@ -694,16 +733,41 @@ elif page == "Geographic flows":
             counting_method=cast(CountingMethod, counting.lower()),
             metric=flow_metric,
         )
-        flow_view = build_flow_view(matrix, geography_outputs, geography_anchors, selection)
+        complete_flow_view = build_flow_view(
+            matrix, geography_outputs, geography_anchors, selection
+        )
+        display_policy = FlowDisplayPolicy(
+            top_n=top_n,
+            minimum_weight=minimum_weight,
+            minimum_partner_share=minimum_partner_share,
+        )
+        flow_view = filter_readable_flows(complete_flow_view, display_policy)
         st.caption(METRIC_DEFINITIONS[flow_metric])
+        st.caption(
+            f"Stable width calibration (never rescaled to the filtered subset): "
+            f"{FLOW_LINE_WIDTH_DEFINITIONS[flow_metric]}."
+        )
         if flow_metric == "normalized_intensity":
             st.info(
                 "Normalized intensity always uses fractional flow by definition; the counting "
                 "control remains visible for the exact companion volumes and partner share."
             )
-        if flow_view.empty:
+        if complete_flow_view.empty:
             show_empty("The selected source has no observed collaboration flow in this window.")
+        elif flow_view.empty:
+            show_empty(
+                "No flow passes the display thresholds. Reduce the minimum weight or partner "
+                "share; the underlying processed flow data are unchanged."
+            )
         else:
+            displayed_arc_count = int((~flow_view["is_internal"].astype(bool)).sum())
+            available_arc_count = int((~complete_flow_view["is_internal"].astype(bool)).sum())
+            st.caption(
+                f"Displaying {displayed_arc_count:,} of {available_arc_count:,} observed "
+                "cross-geography flows after thresholds and deterministic Top N ranking. "
+                "Internal flow, when qualifying, is shown at the selected-source marker and "
+                "does not consume an arc slot."
+            )
             map_tab, matrix_tab = st.tabs(["Flow map", "Origin-destination matrix"])
             with map_tab:
                 show_chart(
@@ -712,9 +776,9 @@ elif page == "Geographic flows":
                     cartesian=False,
                 )
                 st.caption(
-                    "Straight lines identify all observed selected-source flows. Width is constant "
-                    "in GISNET-130; calibrated arc filtering and width semantics belong to "
-                    "GISNET-131."
+                    "Great-circle arcs use sourced display anchors. Arc width follows the fixed "
+                    "formula above, target macro-region controls arc and partner color, and "
+                    "macro-region labels expose values without requiring hover."
                 )
             with matrix_tab:
                 matrix_height = min(900, max(360, 34 * len(flow_view) + 180))
@@ -723,23 +787,27 @@ elif page == "Geographic flows":
                     height=matrix_height,
                 )
                 st.caption(
-                    "This selected-origin matrix row contains exactly the same destinations and "
-                    "values as the map; an absent sparse row means no observed flow, not an "
-                    "imputed zero."
+                    "This filtered selected-origin row contains exactly the same destinations and "
+                    "values as the map. A hidden thresholded flow is not zero, and an absent "
+                    "sparse row is not an imputed zero."
                 )
-            st.subheader("Exact selected flows")
+            st.subheader("Exact displayed flows")
             show_data(
                 flow_view,
                 columns=[
+                    "display_rank",
                     "source_geography",
                     "source_display_name",
                     "target_geography",
                     "target_display_name",
+                    "target_macro_region",
                     "selected_value",
+                    "selected_weight",
                     "full_count",
                     "fractional_count",
                     "partner_share",
                     "normalized_intensity",
+                    "calibrated_width_px",
                     "source_full_work_count",
                     "target_full_work_count",
                 ],

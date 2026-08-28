@@ -186,3 +186,18 @@ and its incomplete human review must be disclosed on all school-oriented results
   partial-calendar overlay into complete-year geographic windows. GISNET-131 owns Top N/minimum
   thresholds, calibrated arc geometry, and comparable width semantics; GISNET-130 uses constant
   line width and exact companion values.
+
+## 2026-08-28 — Readable geographic-flow arc semantics
+
+- Apply minimum selected collaboration weight and minimum partner share before deterministic Top N
+  ranking by selected metric, target display label, and stable geography ID. Internal flow uses the
+  same thresholds but does not consume a cross-geography arc slot. These filters change display only.
+- Calibrate width from the exact row value rather than the visible-set maximum. Volume uses
+  `min(8.0, 0.8 + 2.25 * log10(1 + selected_weight))`; partner share and normalized intensity use
+  `0.8 + 7.2 * sqrt(min(value, 1.0))`. The 0.8–8.0 pixel range is display semantics, not a new
+  scientific normalization, and exact values remain available when a width saturates.
+- Draw 32-point spherical great-circle paths between the existing sourced display anchors. Encode
+  the target macro-region with the stable regional palette and distinguish the selected source with
+  an outlined diamond. Macro-region labels include values directly on the map.
+- Keep the filtered flow map, filtered selected-origin matrix row, and exact displayed-flow table on
+  one shared frame so thresholds cannot create cross-view numerical disagreement.

@@ -51,6 +51,29 @@ endpoints because both institutions are in `r`; a cross-geography link contribut
 Every exact table retains full volume, fractional volume, partner share, normalized intensity, and
 both Work-count denominators. Missing sparse rows mean no observed flow and are not imputed as zero.
 
+Display controls do not alter those source values. The explorer first applies the selected minimum
+collaboration weight and minimum partner share, then ranks cross-geography flows by the selected
+metric and keeps Top N with target display label and stable geography ID as deterministic
+tie-breakers. A qualifying internal flow remains in the source marker and companion table but does
+not consume a Top N arc slot. The filtered map, matrix row, and exact displayed-flow table always
+use the same result frame.
+
+Arc widths are calibrated from each row's exact value, never from the maximum of the currently
+visible subset. Consequently, an unchanged flow retains the same width when Top N or either
+threshold changes. Width in display pixels is:
+
+```text
+volume:              min(8.0, 0.8 + 2.25 * log10(1 + selected_weight))
+partner_share:       0.8 + 7.2 * sqrt(min(partner_share, 1.0))
+normalized_intensity: 0.8 + 7.2 * sqrt(min(normalized_intensity, 1.0))
+```
+
+The 0.8–8.0 pixel bounds are display calibration, not a scientific normalization. Values above 1
+for a bounded-width metric saturate visually at 8.0 pixels while their exact values remain in hover
+and the companion table. Arcs use 32-point great-circle interpolation between sourced anchors.
+Arc and partner-marker color encodes the target macro-region; the selected source has a distinct
+diamond outline. Macro-region partner labels include the selected value directly on the map.
+
 Geographic display anchors are unweighted spherical means of distinct source-provided OpenAlex
 institution coordinates. They are versioned, checksum-linked, and recorded as CC0 in dashboard
 metadata. They are research-institution display anchors, not geometric or political centroids; no
@@ -68,8 +91,9 @@ geographic census when coordinates are missing.
   quantitative; missing matrix cells remain separately labelled and are never imputed as zero.
 - Time-series charts add line dash to color so series remain distinguishable without color alone.
   The vertical dotted line marks the selected complete year.
-- Network node size uses the metric named beside the chart. Edge width is constant; the selected
-  full or fractional weight controls inclusion rather than width.
+- Fixed-layout network node size uses the metric named beside the chart. Its institutional edge
+  width is constant; selected full or fractional weight controls inclusion. Geographic-flow arc
+  widths instead use the fixed formulas documented above.
 - Primary geographic flows use complete annual flow aggregates. The optional institution-link map
   and fixed-layout network remain thresholded display subsets; their absence does not prove that no
   collaboration exists in the full processed data.

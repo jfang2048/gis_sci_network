@@ -1,8 +1,8 @@
 {
-  "column_entry_count": 343,
+  "column_entry_count": 344,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "dictionary_version": "public-data-dictionary-2026-08-28-v3",
-  "methods_version": "public-dashboard-bundle-2026-08-28-v6",
+  "dictionary_version": "public-data-dictionary-2026-08-28-v4",
+  "methods_version": "public-dashboard-bundle-2026-08-28-v7",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
   "table_count": 18,
@@ -339,7 +339,7 @@
       "transformation_command": "python -m gisnet.cli match-communities --resume"
     },
     {
-      "code_commit": "2daa9eaf4df4",
+      "code_commit": "15506e5b288a",
       "column_count": 5,
       "columns": [
         {
@@ -417,14 +417,14 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
       },
       "table": "filter_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "2daa9eaf4df4",
-      "column_count": 16,
+      "code_commit": "15506e5b288a",
+      "column_count": 17,
       "columns": [
         {
           "description": "Matrix level: macro_region, subregion, or country.",
@@ -445,6 +445,14 @@
         {
           "description": "Source-provided or canonically selected institution display name.",
           "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
           "nullable_in_release": false,
@@ -566,7 +574,7 @@
         "geography"
       ],
       "row_count": 162,
-      "sha256": "509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67",
+      "sha256": "510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b",
       "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
       "source_manifests": [
         ".agent/manifests/trend_series_year.json",
@@ -586,13 +594,13 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
       },
       "table": "geography_anchors",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "2daa9eaf4df4",
+      "code_commit": "15506e5b288a",
       "column_count": 4,
       "columns": [
         {
@@ -658,13 +666,13 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
       },
       "table": "geography_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "2daa9eaf4df4",
+      "code_commit": "15506e5b288a",
       "column_count": 8,
       "columns": [
         {
@@ -766,7 +774,7 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
       },
       "table": "geography_outputs",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"

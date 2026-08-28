@@ -14,8 +14,8 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-28-v6"
-_GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v1"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-28-v7"
+_GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v2"
 _OPENALEX_LICENSE = "CC0 1.0 Universal"
 _OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
 _OPENALEX_SOURCE_URL = "https://openalex.org/"
@@ -312,6 +312,7 @@ def build_dashboard_bundle(
                 "geographic_level",
                 "geography",
                 "display_name",
+                "macro_region",
                 "latitude",
                 "longitude",
                 "anchor_method",
@@ -379,6 +380,29 @@ def build_dashboard_bundle(
             "normalized_intensity_definition": (
                 "fractional collaboration weight divided by the geometric mean of source and "
                 "target full institutional Work-count denominators under the same scope"
+            ),
+            "display_filter_order": (
+                "apply minimum selected collaboration weight and minimum partner share, then "
+                "rank cross-geography flows by selected metric with target label and stable "
+                "geography ID tie-breaks; internal flow does not consume a Top N arc slot"
+            ),
+            "line_width_range_px": [0.8, 8.0],
+            "line_width_definitions": {
+                "volume": (
+                    "width_px = min(8.0, 0.8 + 2.25 * log10(1 + selected collaboration weight))"
+                ),
+                "partner_share": ("width_px = 0.8 + 7.2 * sqrt(min(partner share, 1.0))"),
+                "normalized_intensity": (
+                    "width_px = 0.8 + 7.2 * sqrt(min(normalized intensity, 1.0)); values "
+                    "above 1 saturate at 8.0 px"
+                ),
+            },
+            "arc_geometry": (
+                "32-point spherical great-circle interpolation between sourced display anchors"
+            ),
+            "color_semantics": (
+                "arc and partner-marker color encode target macro-region; selected source uses "
+                "its stable macro-region color and a distinct diamond outline"
             ),
             "anchor_method": (
                 "unweighted spherical mean of distinct organization coordinates supplied by "
@@ -585,13 +609,16 @@ def _write_geography_anchors(
                     unnest([
                         {{'geographic_level': 'macro_region',
                           'geography': macro_region,
-                          'display_name': macro_region}},
+                          'display_name': macro_region,
+                          'macro_region': macro_region}},
                         {{'geographic_level': 'subregion',
                           'geography': subregion,
-                          'display_name': subregion}},
+                          'display_name': subregion,
+                          'macro_region': macro_region}},
                         {{'geographic_level': 'country',
                           'geography': country_code,
-                          'display_name': country_name}}
+                          'display_name': country_name,
+                          'macro_region': macro_region}}
                     ]) AS anchor
                 FROM sourced
             ), components AS (
@@ -599,6 +626,7 @@ def _write_geography_anchors(
                     anchor.geographic_level AS geographic_level,
                     anchor.geography AS geography,
                     min(anchor.display_name) AS display_name,
+                    min(anchor.macro_region) AS macro_region,
                     avg(cos(radians(latitude)) * cos(radians(longitude))) AS mean_x,
                     avg(cos(radians(latitude)) * sin(radians(longitude))) AS mean_y,
                     avg(sin(radians(latitude))) AS mean_z,
@@ -616,6 +644,7 @@ def _write_geography_anchors(
                 geographic_level,
                 geography,
                 display_name,
+                macro_region,
                 degrees(atan2(mean_z, sqrt(mean_x * mean_x + mean_y * mean_y))) AS latitude,
                 degrees(atan2(mean_y, mean_x)) AS longitude,
                 supporting_institution_count,

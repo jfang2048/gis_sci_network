@@ -14,7 +14,7 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-28-v3"
+_STAGE_VERSION = "public-data-dictionary-2026-08-28-v4"
 
 TABLES: dict[str, dict[str, Any]] = {
     "community_continuity": {

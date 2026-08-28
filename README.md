@@ -42,7 +42,7 @@ semantics and snapshot rebuild instructions.
 | Completed-month current-year acquisition overlay | Available; released annual snapshot remains through 2025 |
 | School Finder, partner index, and school profiles | Available |
 | Stable-ID school comparison service | Available; dashboard presentation is planned |
-| Geographic Flow Explorer | Available for macro-region, subregion, and country annual windows |
+| Geographic Flow Explorer | Available with thresholded, filter-comparable arcs at macro-region, subregion, and country levels |
 | School Profile UI and ego maps | Planned: GISNET-132–138 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)

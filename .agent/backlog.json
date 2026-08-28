@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-28T18:47:08Z",
+  "last_updated_utc": "2026-08-28T20:44:16Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1996,12 +1996,27 @@
       "dependencies": [
         "GISNET-130"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-28T20:32:06Z",
+          "from": "TODO",
+          "reason": "Implementing deterministic Top N, minimum-weight, and minimum-partner-share flow selection with filter-invariant calibrated widths, great-circle arc geometry, target macro-region color emphasis, exact tooltips, and an exact companion table.",
+          "run_id": "20260828T203206Z_15506e5b288a",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-28T20:44:16Z",
+          "from": "IN_PROGRESS",
+          "reason": "GISNET-131 acceptance passed: Top N, minimum selected-weight, and minimum partner-share controls deterministically select meaningful flows; exact-value width calibration is filter-invariant; sourced-anchor great-circle arcs use target macro-region emphasis and visible macro labels; the map, matrix, and exact companion table share one result frame.",
+          "run_id": "20260828T203206Z_15506e5b288a",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-131",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "GISNET-131 acceptance passed: Top N, minimum selected-weight, and minimum partner-share controls deterministically select meaningful flows; exact-value width calibration is filter-invariant; sourced-anchor great-circle arcs use target macro-region emphasis and visible macro labels; the map, matrix, and exact companion table share one result frame.",
+      "status_updated_at_utc": "2026-08-28T20:44:16Z",
       "title": "Build readable flow arcs",
       "work": [
         "Filter meaningful flows by Top N, minimum weight, and minimum partner share.",

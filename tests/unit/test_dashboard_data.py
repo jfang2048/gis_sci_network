@@ -183,6 +183,7 @@ def test_geography_anchors_use_sourced_coordinates_and_record_license(tmp_path: 
         row for row in rows if row["geographic_level"] == "country" and row["geography"] == "JP"
     )
     assert country["display_name"] == "Japan"
+    assert country["macro_region"] == "Asia"
     assert country["latitude"] == pytest.approx(35.1027, abs=1e-3)
     assert country["longitude"] == pytest.approx(135.0, abs=1e-8)
     assert country["supporting_institution_count"] == 2

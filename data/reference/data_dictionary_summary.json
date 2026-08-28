@@ -1,18 +1,18 @@
 {
-  "column_entry_count": 343,
-  "dictionary_sha256": "11fedbda70ff4eca051e4e560796f94443de031ea0e0b5ada2089eb47976d5fc",
+  "column_entry_count": 344,
+  "dictionary_sha256": "91976a8c36dbd3244f92348a4ec7ef8d9be0339b7afb060ed9892c9fddafe8ab",
   "documented_table_count": 18,
-  "generated_at_utc": "2026-08-28T18:44:56.772462Z",
-  "logical_input_hash": "d43cfa74e7506b626b481faa8b1cabdc1524b6a3f125320f4844bb76559aa905",
+  "generated_at_utc": "2026-08-28T20:42:05.487256Z",
+  "logical_input_hash": "a7a9a04a48b30614f62a1111900fc17514aa8b206343f674efb07e7c2d72f792",
   "outputs": {
     "machine_readable_dictionary": "data/reference/data_dictionary.json",
     "provenance_report": "outputs/reports/data_dictionary.md"
   },
   "private_path_or_key_count": 0,
   "released_table_count": 18,
-  "report_sha256": "9cb7be7001385637896d77608d62a7d5699edeab5c7623a687af31b3f08de275",
+  "report_sha256": "5500a620356975b79637245729fd933db3494e2d860cdb249f1ca6ff1cb423ec",
   "schema_version": 1,
-  "stage_version": "public-data-dictionary-2026-08-28-v3",
+  "stage_version": "public-data-dictionary-2026-08-28-v4",
   "tables_with_known_issue_notes": 18,
   "tables_with_primary_keys": 18,
   "tables_with_source_manifests": 18

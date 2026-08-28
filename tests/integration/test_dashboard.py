@@ -117,13 +117,28 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     app = app.run(timeout=30)
     assert not app.exception
     assert any(metric.label == "Coordinate coverage" for metric in app.metric)
-    assert any(subheader.value == "Exact selected flows" for subheader in app.subheader)
+    assert any(subheader.value == "Exact displayed flows" for subheader in app.subheader)
     assert any("same exact selected values" in caption.value for caption in app.caption)
     assert any(widget.label == "Geographic level" for widget in app.selectbox)
     assert any(widget.label == "Flow metric" for widget in app.selectbox)
     assert any(widget.label == "Source geography" for widget in app.selectbox)
     assert any(widget.label == "Complete-year window" for widget in app.select_slider)
+    assert any(widget.label == "Top cross-geography flows" for widget in app.number_input)
+    assert any(widget.label == "Minimum collaboration weight" for widget in app.number_input)
+    assert any(widget.label == "Minimum partner share" for widget in app.slider)
+    assert any("never rescaled" in caption.value for caption in app.caption)
     assert len(_plot_specs(app)) >= 2
+    top_n_widget = next(
+        widget for widget in app.number_input if widget.label == "Top cross-geography flows"
+    )
+    top_n_widget.set_value(1)
+    minimum_share_widget = next(
+        widget for widget in app.slider if widget.label == "Minimum partner share"
+    )
+    minimum_share_widget.set_value(5)
+    app = app.run(timeout=30)
+    assert not app.exception
+    assert any("Displaying 1 of" in caption.value for caption in app.caption)
     country_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Country")
     country_widget.set_value("China")
     app = app.run(timeout=30)

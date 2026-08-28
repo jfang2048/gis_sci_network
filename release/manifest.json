@@ -10,11 +10,11 @@
     },
     "dashboard/data": {
       "file_count": 19,
-      "size_bytes": 10300468
+      "size_bytes": 10301686
     },
     "data/reference": {
       "file_count": 49,
-      "size_bytes": 1116277
+      "size_bytes": 1116572
     },
     "figures": {
       "file_count": 6,
@@ -22,7 +22,7 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 139082
+      "size_bytes": 139207
     }
   },
   "dashboard_table_count": 18,
@@ -148,17 +148,17 @@
     },
     {
       "path": ".agent/manifests/dashboard_bundle_summary.json",
-      "sha256": "6b63640650fc0b02ea6050f4454485a6232ed60272c22b4395e39376cc3d9a1c",
+      "sha256": "8eac0d647528683a85f047fef06056bbcb8316e8bfd8bdd3342d88453c3140c7",
       "size_bytes": 1804
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "ed493f7f06b97aca55feca79919734c6095be6b82b276170ef01b44ca58ce6f5",
+      "sha256": "a72babbb63612c8916cf6944738f77410d392f7d31aad0e56e7be318773674db",
       "size_bytes": 1884
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "495578af284f15bfcd43ae542e3d391398c20ebd6cec750d2cbf8e8e699e58c3",
+      "sha256": "14239e92ab27a24196ebdd2c94edf168567234fb751a7c3c1fc8a08c7e71348d",
       "size_bytes": 1487
     },
     {
@@ -408,7 +408,7 @@
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "9e58fcf2fb485c14645695421fe030e0b58a972b656ef76e4aee74c65efda769",
+      "sha256": "b66bdf1cc21b831f91c80ea50e78316d97b19f92ef3b19cdc77ae32ae07681e1",
       "size_bytes": 1487
     },
     {
@@ -773,8 +773,8 @@
     },
     {
       "path": "dashboard/data/geography_anchors.parquet",
-      "sha256": "509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67",
-      "size_bytes": 9577
+      "sha256": "510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b",
+      "size_bytes": 9878
     },
     {
       "path": "dashboard/data/geography_dimensions.parquet",
@@ -818,8 +818,8 @@
     },
     {
       "path": "dashboard/data/metadata.json",
-      "sha256": "e72f6b6de567b7120efebb11843cd8a919f7e4d6af3c7535874ea8f7491bb862",
-      "size_bytes": 6142
+      "sha256": "f12a4a8ebb547a5fd893395ae01c38dfce573d2ef446aa8d291081d6d4ab4df9",
+      "size_bytes": 7059
     },
     {
       "path": "dashboard/data/network_accessibility.parquet",
@@ -903,17 +903,17 @@
     },
     {
       "path": "data/reference/dashboard_bundle_summary.json",
-      "sha256": "8cf5227ec93aa61f5c1a704f426d73db6bc3ee8e0da363af03dbf02b4f9bb28a",
+      "sha256": "1b2a1695bfbd28350cdbb732c9df08ecce7829f3cec7fce3fcde71e2ccf0aa97",
       "size_bytes": 2221
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "11fedbda70ff4eca051e4e560796f94443de031ea0e0b5ada2089eb47976d5fc",
-      "size_bytes": 129803
+      "sha256": "91976a8c36dbd3244f92348a4ec7ef8d9be0339b7afb060ed9892c9fddafe8ab",
+      "size_bytes": 130098
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "320962beda766a6bd2337e90548340bb1f83bd4085d65083b2f4ba2b9835cddc",
+      "sha256": "fa9e342e4d3621ac29020059880d420a7a19849ac1c97783f3897253a4e82084",
       "size_bytes": 800
     },
     {
@@ -1133,8 +1133,8 @@
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "9cb7be7001385637896d77608d62a7d5699edeab5c7623a687af31b3f08de275",
-      "size_bytes": 67476
+      "sha256": "5500a620356975b79637245729fd933db3494e2d860cdb249f1ca6ff1cb423ec",
+      "size_bytes": 67601
     },
     {
       "path": "outputs/reports/methodology.md",
@@ -1147,11 +1147,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-28T18:44:57Z",
+  "generated_at_utc": "2026-08-28T20:42:54Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
   "public_file_count": 221,
-  "public_size_bytes": 12024829,
+  "public_size_bytes": 12026467,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1
