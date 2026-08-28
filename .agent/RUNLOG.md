@@ -3205,3 +3205,96 @@ under `.agent/locks/run.lock`.
 Task: GISNET-129 — Build school research-fit comparison. Preserve independent activity,
 specialization, collaboration, centrality, citation, and momentum components; expose exact values
 and user weights; never persist or label a combined university-quality score.
+
+## Run 20260828T140300Z_835537953b83
+
+Started UTC: 2026-08-28T14:03:00Z
+Ended UTC: 2026-08-28T14:18:33Z
+Task: GISNET-129 — Build school research-fit comparison
+Initial git status: Clean `main` at `8355379`, synchronized with `origin/main`.
+Final git status: Pre-commit GISNET-129 implementation, tests, and audit-state changes only.
+
+### Objective
+
+Build a complete-index, stable-ID school comparison service that filters and independently sorts
+research evidence and, only when explicitly enabled, computes the contract-authorized
+`user_defined_fit_score` from session-owned weights without persisting or presenting a university
+quality ranking.
+
+### Work completed
+
+- Added read-only DuckDB alias search across the complete school/name indexes. Exact stable IDs
+  resolve directly; exact, prefix, and substring alias matches return canonical IDs, explicit
+  ambiguity counts, and deterministic tie-breaking rather than name-based identity joins.
+- Added exact filters for macro-region, country, subregion, Topic family, Strict/Broad corpus,
+  12/24/36-month window, minimum selected-window activity, minimum date coverage, and optional
+  stable-ID subsets. Zero thresholds preserve explicit no-activity/unknown-coverage rows.
+- Added independent descending/ascending sorting by selected-window Work count, global Topic
+  specialization lift, international collaboration share, effective partner count, PageRank,
+  closed-corpus incoming fractional citation flow, and rolling 12-month activity change.
+- Implemented Topic-fit cosine similarity and the contract's identity/average-percentile component
+  transforms. Positive-weight missing values and all-zero weights yield a null score; single and
+  all-tied reference sets yield 0.5.
+- Returned exact raw/transformed component values, all user weights and Topic preferences,
+  per-component reference counts, stable candidate-set hash, filter/window/corpus context, support
+  boundaries, the provisional Topic warning, and the explicit non-quality interpretation.
+- Kept `user_defined_fit_score` entirely in the in-memory result. No comparison dataset, source
+  table, manifest, API key, source identifier, or measured source result was written.
+
+### Files changed
+
+- Implementation: `src/gisnet/schools/comparison.py`.
+- Regression tests: `tests/unit/test_school_comparison.py`.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state inspection and GISNET-129 transition
+  under `.agent/locks/run.lock`.
+- Targeted comparison tests, Ruff lint/format, and strict module mypy during implementation.
+- Full-data stable-ID/alias searches; every independent sort; weighted-fit evaluation; and all six
+  Strict/Broad by 12/24/36-month complete-index queries.
+- Source-schema/checksum acceptance audit, `git diff --check`, full offline pytest, repository Ruff
+  lint/format, and strict repository mypy.
+
+### Validation results
+
+- Every zero-threshold corpus/window query returned all 28,042 eligible stable school IDs. Measured
+  full-set calls ranged from 596.23 ms to 712.88 ms on this run; later GISNET-137 work owns formal
+  dashboard performance optimization and budgets.
+- Broad 24-month positive-activity/50%-coverage filtering returned 18,324 candidates; the weighted
+  fit query over that set completed in 445.61 ms and disclosed session-only storage with no
+  persistence.
+- `core_gis` specialization filtering returned 3,568 schools. All seven independent sort paths and
+  optional weighted-fit ordering completed against production Parquet inputs.
+- Complete alias search resolved Brigham Young University to stable ID `I100005738` in 136.00 ms;
+  direct stable-ID lookup completed in 10.14 ms and retained explicit IDs.
+- School index/profile/Topic-profile hashes still match their validated summaries. Their row counts
+  remain 28,042, 168,252, and 242,892; neither scientific profile schema contains a fit or quality
+  score column.
+- Full quality gates passed: 195 offline tests, Ruff lint, Ruff formatting, and strict mypy. Six
+  known Plotly country-name deprecation warnings remain unrelated.
+
+### Failures or blockers
+
+- The first all-endpoint acceptance assertion exposed that null coverage on explicit no-activity
+  profiles was excluded by a zero minimum. The filter now treats null as zero for thresholding, so
+  zero includes the complete index while any positive minimum excludes unsupported coverage.
+- No blocker remains for GISNET-129.
+
+### Decisions made
+
+- Use stable canonical IDs for selection and names only for explicit search candidates.
+- Interpret recent-activity filtering/sorting as `full_work_count` in the selected 12/24/36-month
+  window; retain the contract-specific `recent_24m_work_count` only as the fit component.
+- Use explicit available source metrics for each independent dimension: global Topic lift,
+  international share, effective partner count, PageRank, closed-corpus citation-flow in-strength,
+  and rolling activity change. Their boundaries/support fields remain visible.
+- Calculate percentile transforms over the entire filtered candidate set before result limiting and
+  expose a stable candidate-ID hash plus reference counts for session reproducibility.
+
+### Exact next action
+
+Task: GISNET-130 — Redesign macro geographic collaboration visualization. Build the geographic flow
+explorer with reconciled map/matrix controls and sourced coordinates while preserving the new
+complete-index school decision path.

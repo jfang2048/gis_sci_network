@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-28T13:55:39Z",
+  "last_updated_utc": "2026-08-28T14:18:33Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1923,12 +1923,27 @@
         "GISNET-127",
         "GISNET-128"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-28T14:03:00Z",
+          "from": "TODO",
+          "reason": "Implementing complete-index school research-fit filtering, independent metric sorting, and session-only transparent user-weighted fit scoring without persisted quality rankings.",
+          "run_id": "20260828T140300Z_835537953b83",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-28T14:18:33Z",
+          "from": "IN_PROGRESS",
+          "reason": "Implemented complete-index stable-ID school search and research-fit comparison with all required geographic, corpus, window, activity, coverage, and Topic filters; independent metric sorting; and contract-bound session-only user_defined_fit_score disclosure. Full-data acceptance and all 195 offline tests, Ruff, formatting, and strict mypy passed.",
+          "run_id": "20260828T140300Z_835537953b83",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-129",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Implemented complete-index stable-ID school search and research-fit comparison with all required geographic, corpus, window, activity, coverage, and Topic filters; independent metric sorting; and contract-bound session-only user_defined_fit_score disclosure. Full-data acceptance and all 195 offline tests, Ruff, formatting, and strict mypy passed.",
+      "status_updated_at_utc": "2026-08-28T14:18:33Z",
       "title": "Build school research-fit comparison",
       "work": [
         "Filter and sort the complete index by independent research dimensions.",
