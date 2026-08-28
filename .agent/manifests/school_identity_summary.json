@@ -1,0 +1,46 @@
+{
+  "checksum_sha256": "423612e87e20f4928242728f033f2f0a18bdf360776d40f4142552e45ffcb2a7",
+  "column_count": 15,
+  "command": "python -m gisnet.cli build-school-identities --institutions data/processed/institutions_ror.parquet --output data/processed/school_identities.parquet --resume",
+  "config_hashes": {
+    "institution_overrides": "a2bfe8f3c1bee1e5a8095f930784b1f04d60c5e740c3c498d87725c306370e76",
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-27T22:36:49.038652Z",
+  "dataset_name": "school_identity_summary",
+  "git_commit": "77ec76e590be",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "automatic_collapse_count": 0,
+    "canonical_school_count": 0,
+    "checksums_sha256": 0,
+    "explicit_collapse_count": 0,
+    "generated_at_utc": 0,
+    "institution_count": 0,
+    "logical_input_hash": 0,
+    "organization_source_sha256_after": 0,
+    "organization_source_sha256_before": 0,
+    "outputs": 0,
+    "row_counts": 0,
+    "schema_version": 0,
+    "stage_version": 0,
+    "umbrella_equivalent_to_organization": 0,
+    "unresolved_relationship_count": 0
+  },
+  "primary_key": [
+    "logical_input_hash"
+  ],
+  "row_count": 1,
+  "run_id": "20260827T223632Z_77ec76e590be",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/institutions_ror.json",
+    ".agent/manifests/institution_hierarchy_candidates.json"
+  ],
+  "source_versions": {
+    "school_identity_policy": "school-identity-2026-08-28-v1"
+  },
+  "status": "valid"
+}

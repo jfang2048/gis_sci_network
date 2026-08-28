@@ -106,6 +106,13 @@ from gisnet.schools.contract import (
     load_school_decision_contract,
     write_school_decision_contract_manifest,
 )
+from gisnet.schools.identity import (
+    build_school_identities,
+    write_school_identity_artifacts,
+)
+from gisnet.schools.index import build_school_index, write_school_index_artifacts
+from gisnet.schools.partners import build_school_partner_index, write_school_partner_artifacts
+from gisnet.schools.profiles import build_school_profiles, write_school_profile_artifacts
 from gisnet.secrets import get_openalex_api_key
 from gisnet.state import (
     BacklogStore,
@@ -413,6 +420,181 @@ def build_parser() -> argparse.ArgumentParser:
         "--summary", default="data/reference/institution_hierarchy_summary.json", type=Path
     )
     build_hierarchy.set_defaults(handler=_build_hierarchy)
+
+    school_identities = subparsers.add_parser(
+        "build-school-identities",
+        help="build evidence-bounded canonical school identities without inferred collapses",
+    )
+    _add_pipeline_arguments(school_identities)
+    school_identities.add_argument(
+        "--institutions", default="data/processed/institutions_ror.parquet", type=Path
+    )
+    school_identities.add_argument(
+        "--hierarchy-candidates",
+        default="data/processed/institution_hierarchy_candidates.parquet",
+        type=Path,
+    )
+    school_identities.add_argument(
+        "--institution-overrides", default="config/institution_overrides.csv", type=Path
+    )
+    school_identities.add_argument(
+        "--school-decision", default="config/school_decision.yml", type=Path
+    )
+    school_identities.add_argument(
+        "--output", default="data/processed/school_identities.parquet", type=Path
+    )
+    school_identities.add_argument(
+        "--audit", default="data/processed/school_identity_audit.parquet", type=Path
+    )
+    school_identities.add_argument(
+        "--summary", default="data/reference/school_identity_summary.json", type=Path
+    )
+    school_identities.set_defaults(handler=_build_school_identities)
+
+    school_index = subparsers.add_parser(
+        "build-school-index",
+        help="build the complete visualization-independent school and alias index",
+    )
+    _add_pipeline_arguments(school_index)
+    school_index.add_argument(
+        "--institutions", default="data/processed/institutions_ror.parquet", type=Path
+    )
+    school_index.add_argument(
+        "--school-identities", default="data/processed/school_identities.parquet", type=Path
+    )
+    school_index.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    school_index.add_argument(
+        "--work-dates", default="data/processed/work_publication_dates.parquet", type=Path
+    )
+    school_index.add_argument(
+        "--prior-layout", default="data/processed/network_layout.parquet", type=Path
+    )
+    school_index.add_argument("--school-decision", default="config/school_decision.yml", type=Path)
+    school_index.add_argument("--output", default="data/processed/school_index.parquet", type=Path)
+    school_index.add_argument(
+        "--name-index", default="data/processed/school_name_index.parquet", type=Path
+    )
+    school_index.add_argument(
+        "--summary", default="data/reference/school_index_summary.json", type=Path
+    )
+    school_index.add_argument("--duckdb-memory-limit", default="4GB")
+    school_index.set_defaults(handler=_build_school_index)
+
+    school_partners = subparsers.add_parser(
+        "build-school-partners",
+        help="build each school's compact latest-window exact partner index",
+    )
+    _add_pipeline_arguments(school_partners)
+    school_partners.add_argument(
+        "--edge-intervals",
+        default="data/processed/collaboration_edge_window_intervals.parquet",
+        type=Path,
+    )
+    school_partners.add_argument(
+        "--coverage", default="data/processed/rolling_window_coverage.parquet", type=Path
+    )
+    school_partners.add_argument(
+        "--institution-rolling",
+        default="data/processed/institution_outputs_rolling.parquet",
+        type=Path,
+    )
+    school_partners.add_argument(
+        "--school-identities", default="data/processed/school_identities.parquet", type=Path
+    )
+    school_partners.add_argument(
+        "--school-index", default="data/processed/school_index.parquet", type=Path
+    )
+    school_partners.add_argument(
+        "--school-decision", default="config/school_decision.yml", type=Path
+    )
+    school_partners.add_argument(
+        "--output", default="data/processed/school_partner_index.parquet", type=Path
+    )
+    school_partners.add_argument(
+        "--summary", default="data/reference/school_partner_index_summary.json", type=Path
+    )
+    school_partners.add_argument("--top-k", type=int, default=50)
+    school_partners.add_argument("--duckdb-memory-limit", default="4GB")
+    school_partners.set_defaults(handler=_build_school_partners)
+
+    school_profiles = subparsers.add_parser(
+        "build-school-profiles",
+        help="build complete selectable-window school and Topic-family profiles",
+    )
+    _add_pipeline_arguments(school_profiles)
+    school_profiles.add_argument(
+        "--school-index", default="data/processed/school_index.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--school-identities", default="data/processed/school_identities.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--institution-rolling",
+        default="data/processed/institution_outputs_rolling.parquet",
+        type=Path,
+    )
+    school_profiles.add_argument(
+        "--school-partners",
+        default="data/processed/school_partner_index.parquet",
+        type=Path,
+    )
+    school_profiles.add_argument("--nodes", default="data/processed/nodes_year.parquet", type=Path)
+    school_profiles.add_argument(
+        "--communities", default="data/processed/communities_year.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--community-continuity",
+        default="data/processed/community_continuity_year.parquet",
+        type=Path,
+    )
+    school_profiles.add_argument(
+        "--citation-edges", default="data/processed/citation_edges_year.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--topic-vectors",
+        default="data/processed/institution_topic_vectors_year.parquet",
+        type=Path,
+    )
+    school_profiles.add_argument(
+        "--topic-similarities",
+        default="data/processed/topic_similarity_edges_year.parquet",
+        type=Path,
+    )
+    school_profiles.add_argument(
+        "--work-institutions", default="data/processed/work_institutions.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--work-dates", default="data/processed/work_publication_dates.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--work-topics", default="data/processed/work_topics.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--school-decision", default="config/school_decision.yml", type=Path
+    )
+    school_profiles.add_argument("--topic-registry", default="config/topic_registry.yml", type=Path)
+    school_profiles.add_argument(
+        "--profiles-output", default="data/processed/school_profiles.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--topics-output", default="data/processed/school_topic_profiles.parquet", type=Path
+    )
+    school_profiles.add_argument(
+        "--summary", default="data/reference/school_profile_summary.json", type=Path
+    )
+    school_profiles.add_argument(
+        "--window-months",
+        action="append",
+        choices=(12, 24, 36),
+        type=int,
+        help="rolling width to retain; repeat for multiple values (default: 12, 24, and 36)",
+    )
+    school_profiles.add_argument("--top-partners", type=int, default=10)
+    school_profiles.add_argument("--top-similarities", type=int, default=10)
+    school_profiles.add_argument("--duckdb-memory-limit", default="4GB")
+    school_profiles.set_defaults(handler=_build_school_profiles)
 
     diagnose_versions = subparsers.add_parser(
         "diagnose-versions", help="build exact-DOI and conservative possible-version diagnostics"
@@ -2071,6 +2253,232 @@ def _build_hierarchy(args: argparse.Namespace) -> int:
         f"Built {summary['hierarchy_row_count']} hierarchy rows; explicit collapses="
         f"{summary['explicit_collapse_count']}, relationship candidates="
         f"{summary['relationship_candidate_count']}."
+    )
+    return 0
+
+
+def _build_school_identities(args: argparse.Namespace) -> int:
+    try:
+        overrides = InstitutionOverrideRegistry.load(args.institution_overrides)
+    except (OSError, ValueError) as exc:
+        print(f"School-identity inputs failed: {exc}", file=sys.stderr)
+        return 2
+    if args.dry_run:
+        relationship_rule_count = sum(
+            rule.action in {"collapse", "replace"} for rule in overrides.rules
+        )
+        print(
+            f"Would build school identities from {args.institutions} using "
+            f"{relationship_rule_count} explicit relationship rules; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-125"):
+            summary = build_school_identities(
+                args.institutions,
+                args.hierarchy_candidates,
+                overrides,
+                identities_path=args.output,
+                audit_path=args.audit,
+            )
+            command = (
+                "python -m gisnet.cli build-school-identities "
+                f"--institutions {args.institutions} --output {args.output} --resume"
+            )
+            write_school_identity_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                overrides_path=args.institution_overrides,
+                command=command,
+            )
+            for name in (
+                "school_identities",
+                "school_identity_audit",
+                "school_identity_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (OSError, ValueError) as exc:
+        print(f"School identity build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['institution_count']} source identities and "
+        f"{summary['canonical_school_count']} canonical schools; explicit collapses="
+        f"{summary['explicit_collapse_count']}, unresolved relationship candidates="
+        f"{summary['unresolved_relationship_count']}."
+    )
+    return 0
+
+
+def _build_school_index(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print(
+            "Would build the complete eligible school and alias index from stable Work "
+            "memberships, independent of visualization thresholds; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-126"):
+            summary = build_school_index(
+                args.institutions,
+                args.school_identities,
+                args.work_institutions,
+                args.work_dates,
+                index_path=args.output,
+                name_index_path=args.name_index,
+                prior_layout_path=args.prior_layout,
+                memory_limit=args.duckdb_memory_limit,
+            )
+            command = (
+                "python -m gisnet.cli build-school-index "
+                f"--output {args.output} --name-index {args.name_index} --resume"
+            )
+            write_school_index_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            for name in ("school_index", "school_name_index", "school_index_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"School index build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['eligible_school_count']} eligible schools and "
+        f"{summary['row_counts']['school_name_index']} searchable aliases; outside prior core="
+        f"{summary['outside_prior_core_count']}."
+    )
+    return 0
+
+
+def _build_school_partners(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"School partner configuration failed: {exc}", file=sys.stderr)
+        return 2
+    corpora = tuple(project.corpus_views) if args.corpus == "all" else (args.corpus,)
+    if args.dry_run:
+        print(
+            f"Would build each school's top {args.top_k} partners for rolling 12/24/36-month "
+            f"{','.join(corpora)} views at the latest supported endpoint; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-128"):
+            summary = build_school_partner_index(
+                args.edge_intervals,
+                args.coverage,
+                args.institution_rolling,
+                args.school_identities,
+                args.school_index,
+                output_path=args.output,
+                corpus_views=corpora,
+                top_k=args.top_k,
+                memory_limit=args.duckdb_memory_limit,
+            )
+            command = (
+                "python -m gisnet.cli build-school-partners "
+                f"--corpus {args.corpus} --top-k {args.top_k} --resume"
+            )
+            write_school_partner_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            for name in ("school_partner_index", "school_partner_index_summary"):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"School partner index failed safely: {exc}", file=sys.stderr)
+        return 3
+    benchmark = summary["query_benchmark"]
+    print(
+        f"Built {summary['directed_partner_row_count']} retained partner rows for "
+        f"{summary['school_count']} schools; median lookup="
+        f"{benchmark['median_query_milliseconds']:.2f} ms."
+    )
+    return 0
+
+
+def _build_school_profiles(args: argparse.Namespace) -> int:
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"School profile configuration failed: {exc}", file=sys.stderr)
+        return 2
+    corpora = tuple(project.corpus_views) if args.corpus == "all" else (args.corpus,)
+    windows = tuple(sorted(set(args.window_months or (12, 24, 36))))
+    if args.dry_run:
+        print(
+            "Would build complete latest-window school profiles for "
+            f"{','.join(corpora)} corpora and {','.join(str(value) for value in windows)}-month "
+            "windows while keeping annual graph, citation-flow, and Topic-similarity context "
+            "separate; no output is changed."
+        )
+        return 0
+    run_id = _resolve_run_id(args.run_id)
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-127"):
+            summary = build_school_profiles(
+                args.school_index,
+                args.school_identities,
+                args.institution_rolling,
+                args.school_partners,
+                args.nodes,
+                args.citation_edges,
+                args.topic_vectors,
+                args.topic_similarities,
+                args.work_institutions,
+                args.work_dates,
+                args.work_topics,
+                profiles_path=args.profiles_output,
+                topic_profiles_path=args.topics_output,
+                communities_path=args.communities,
+                community_continuity_path=args.community_continuity,
+                corpus_views=corpora,
+                window_months=windows,
+                top_partner_count=args.top_partners,
+                top_similarity_count=args.top_similarities,
+                memory_limit=args.duckdb_memory_limit,
+            )
+            command = (
+                "python -m gisnet.cli build-school-profiles "
+                f"--corpus {args.corpus} --top-partners {args.top_partners} "
+                f"--top-similarities {args.top_similarities} --resume"
+            )
+            write_school_profile_artifacts(
+                summary,
+                summary_path=args.summary,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                topic_registry_path=args.topic_registry,
+                command=command,
+            )
+            for name in (
+                "school_profiles",
+                "school_topic_profiles",
+                "school_profile_summary",
+            ):
+                _register_manifest(name, f".agent/manifests/{name}.json")
+    except (duckdb.Error, OSError, ValueError) as exc:
+        print(f"School profile build failed safely: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"Built {summary['profile_row_count']} complete school profiles and "
+        f"{summary['topic_profile_row_count']} separate Topic-family rows; "
+        f"no-recent-activity rows={summary['no_recent_activity_row_count']}."
     )
     return 0
 

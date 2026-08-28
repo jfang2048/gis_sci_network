@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-26T23:55:17Z",
+  "last_updated_utc": "2026-08-28T11:11:44Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1751,12 +1751,27 @@
         "GISNET-123",
         "GISNET-054"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-27T22:36:39Z",
+          "from": "TODO",
+          "reason": "Implementing evidence-bounded school identities after completed GISNET-123.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-27T22:41:53Z",
+          "from": "IN_PROGRESS",
+          "reason": "School identities validated: zero inferred collapses, 9,313 unresolved candidates exposed, source organization checksum unchanged, synthetic explicit-collapse audit passed.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-125",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "School identities validated: zero inferred collapses, 9,313 unresolved candidates exposed, source organization checksum unchanged, synthetic explicit-collapse audit passed.",
+      "status_updated_at_utc": "2026-08-27T22:41:53Z",
       "title": "Strengthen school identity resolution",
       "work": [
         "Preserve organization identity and add only evidence-backed canonical school mappings.",
@@ -1775,12 +1790,27 @@
         "GISNET-125",
         "GISNET-063"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-27T22:41:53Z",
+          "from": "TODO",
+          "reason": "Building the complete visualization-independent school index from validated identities and stable Work memberships.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-27T22:47:14Z",
+          "from": "IN_PROGRESS",
+          "reason": "Complete index validated for 28,042 eligible schools across all six geography values; 27,542 lie outside the old core, aliases preserve ambiguity, and repeated Parquet hashes match.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-126",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Complete index validated for 28,042 eligible schools across all six geography values; 27,542 lie outside the old core, aliases preserve ambiguity, and repeated Parquet hashes match.",
+      "status_updated_at_utc": "2026-08-27T22:47:14Z",
       "title": "Build complete school index",
       "work": [
         "Build a compact complete eligible institution index independent of all visualization thresholds.",
@@ -1801,12 +1831,27 @@
         "GISNET-110",
         "GISNET-111"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-27T22:48:31Z",
+          "from": "TODO",
+          "reason": "Building complete latest-window school profiles with separate coauthorship, annual graph, citation-flow, Topic-profile, and research-proximity coverage.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-28T11:11:44Z",
+          "from": "IN_PROGRESS",
+          "reason": "Complete selectable 12/24/36m profiles validated for all 28,042 eligible schools: 168,252 profile rows, 242,892 separate Topic-family rows, exact source reconciliation, byte-identical rebuilds, and the full quality gate passed.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-127",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Complete selectable 12/24/36m profiles validated for all 28,042 eligible schools: 168,252 profile rows, 242,892 separate Topic-family rows, exact source reconciliation, byte-identical rebuilds, and the full quality gate passed.",
+      "status_updated_at_utc": "2026-08-28T11:11:44Z",
       "title": "Build school profile datasets",
       "work": [
         "Build selectable-window profile metrics across independent activity, collaboration, network, citation, Topic, and data-quality dimensions.",
@@ -1825,12 +1870,27 @@
         "GISNET-126",
         "GISNET-064"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-27T22:47:14Z",
+          "from": "TODO",
+          "reason": "Building a compact exact latest-window top-partner index over validated school identities.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-27T22:48:31Z",
+          "from": "IN_PROGRESS",
+          "reason": "Latest 12/24/36m Strict/Broad partner index validated: 1,048,856 deterministic rows, exact rolling denominators/persistence, stable top-50 ranks, 4.35 ms median lookup, and 18,712 indexed schools outside the old global edge core.",
+          "run_id": "20260827T223632Z_77ec76e590be",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-128",
       "priority": "P0",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Latest 12/24/36m Strict/Broad partner index validated: 1,048,856 deterministic rows, exact rolling denominators/persistence, stable top-50 ranks, 4.35 ms median lookup, and 18,712 indexed schools outside the old global edge core.",
+      "status_updated_at_utc": "2026-08-27T22:48:31Z",
       "title": "Build per-school partner index",
       "work": [
         "Store each school's own top partners per supported window.",

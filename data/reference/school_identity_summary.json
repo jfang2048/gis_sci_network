@@ -1,0 +1,26 @@
+{
+  "automatic_collapse_count": 0,
+  "canonical_school_count": 46812,
+  "checksums_sha256": {
+    "school_identities": "59a6fe81d78a92e2bbd4b8ba447e7310a13961b12cb4bc7988b916fdaaaf93d4",
+    "school_identity_audit": "de35ad2eca26fc22f74214d3eecf9664997e670cdb8327c7c287eb5eda6f6188"
+  },
+  "explicit_collapse_count": 0,
+  "generated_at_utc": "2026-08-27T22:36:49.000786Z",
+  "institution_count": 46812,
+  "logical_input_hash": "f858f951cc07c2d74a3dce5960af94c71cc3e20a0dcbce2a21345c469b71e143",
+  "organization_source_sha256_after": "06c432551c77c1b660347c6a8d5ed87c4dbb889b87a3297301fbc4bdbd0175af",
+  "organization_source_sha256_before": "06c432551c77c1b660347c6a8d5ed87c4dbb889b87a3297301fbc4bdbd0175af",
+  "outputs": {
+    "school_identities": "data/processed/school_identities.parquet",
+    "school_identity_audit": "data/processed/school_identity_audit.parquet"
+  },
+  "row_counts": {
+    "school_identities": 46812,
+    "school_identity_audit": 0
+  },
+  "schema_version": 1,
+  "stage_version": "school-identity-2026-08-28-v1",
+  "umbrella_equivalent_to_organization": true,
+  "unresolved_relationship_count": 9313
+}

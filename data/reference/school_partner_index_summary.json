@@ -1,0 +1,40 @@
+{
+  "build_seconds": 5.344296928999938,
+  "checksum_sha256": "ac76c50408aec0d55464111180e81d43eed99faf8492206b40490ea00b89b9ac",
+  "corpus_views": [
+    "strict",
+    "broad"
+  ],
+  "directed_partner_row_count": 1048856,
+  "generated_at_utc": "2026-08-27T22:47:48.614021Z",
+  "historical_query_policy": "Historical endpoints remain recoverable from the exact interval/month source; they are not expanded into a global Cartesian snapshot.",
+  "identity_policy": "The current school mapping is byte-equivalent to organization identity. Any future collapse invalidates this index and requires a Work-membership rebuild.",
+  "logical_input_hash": "ad3ff922cf3d6df7dea1e34e06ef84d32d62ebca8877c7a927f2263015a4c0b9",
+  "output": "data/processed/school_partner_index.parquet",
+  "output_size_bytes": 17753001,
+  "outside_prior_global_edge_core_count": 18712,
+  "query_benchmark": {
+    "budget_passed": true,
+    "maximum_query_milliseconds": 4.517047000263119,
+    "median_query_milliseconds": 4.350127000179782,
+    "performance_budget_milliseconds": 1000,
+    "rows_per_query": [
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "sample_school_count": 5
+  },
+  "retention_policy": "Top 50 partners by exact fractional collaboration strength for every eligible school, corpus, and supported rolling width at its latest available endpoint.",
+  "schema_version": 1,
+  "school_count": 19212,
+  "stage_version": "school-partner-index-2026-08-28-v1",
+  "top_k": 50,
+  "window_months": [
+    12,
+    24,
+    36
+  ]
+}

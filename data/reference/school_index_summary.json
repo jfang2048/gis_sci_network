@@ -1,0 +1,37 @@
+{
+  "ambiguous_name_school_count": 7716,
+  "ambiguous_normalized_name_count": 2796,
+  "checksums_sha256": {
+    "school_index": "96c6943d09b17de1ba89a3f1f1525c8aca32994b04cb091d1ed4126c60e6913f",
+    "school_name_index": "9033f1076415cd0a03b012517cc7c1f9912f9c3008f16c01f177dcd528443067"
+  },
+  "eligibility_policy": "At least one Broad-primary Work in primary research scope after canonical-school deduplication; independent of visualization rank and coordinates.",
+  "eligible_school_count": 28042,
+  "generated_at_utc": "2026-08-27T22:42:59.789893Z",
+  "latest_supported_month": "2025-12",
+  "logical_input_hash": "28f7bc4752d4788187dff5af44609e5a78895a20740eaef2663109e067d02b7d",
+  "macro_region_counts": {
+    "Africa": 1294,
+    "Americas": 7163,
+    "Asia": 8584,
+    "Europe": 9305,
+    "Oceania": 427,
+    "Unknown": 1269
+  },
+  "missing_coordinate_school_count": 16,
+  "outputs": {
+    "school_index": "data/processed/school_index.parquet",
+    "school_name_index": "data/processed/school_name_index.parquet"
+  },
+  "outside_prior_core_count": 27542,
+  "recent_window_end": "2025-12",
+  "recent_window_months": 24,
+  "recent_window_start": "2024-01",
+  "row_counts": {
+    "school_index": 28042,
+    "school_name_index": 83695
+  },
+  "schema_version": 1,
+  "stage_version": "complete-school-index-2026-08-28-v1",
+  "strict_available_school_count": 17703
+}

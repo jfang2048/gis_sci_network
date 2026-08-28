@@ -2992,3 +2992,122 @@ Task: GISNET-125 — Strengthen school identity resolution. Run
 `uv run python -m gisnet.cli next-task`, then preserve the organization view while building only
 evidence-backed, reversible canonical-school identities from declared lineage, ROR relationships,
 and explicit overrides.
+
+## Run 20260827T223632Z_77ec76e590be
+
+Started UTC: 2026-08-27T22:36:32Z
+Ended UTC: 2026-08-28T11:11:44Z
+Task: GISNET-125, GISNET-126, GISNET-128, and GISNET-127 — school identity, index, partner, and profile foundations
+Initial git status: Clean `main` at `77ec76e`, synchronized with `origin/main`; this continuation resumed the same run with validated uncommitted GISNET-125/126/128 outputs and GISNET-127 active.
+Final git status: Pre-commit school data-layer code, tests, reference summaries, manifests, and audit-state changes only.
+
+### Objective
+
+Preserve source organization identity, construct a complete visualization-independent school
+universe, retain exact per-school rolling partners, and finish selectable-window school profiles
+without guessing identity collapses or merging co-authorship, citation flow, and Topic similarity.
+
+### Work completed
+
+- Built 46,812 evidence-bounded school identity rows. No inferred or explicit collapse was applied;
+  9,313 ambiguous relationship candidates remain exposed with quality flags, and the organization
+  source checksum remained byte-for-byte unchanged.
+- Built a searchable index for all 28,042 eligible schools and 83,695 aliases. The index spans all
+  six geography values, preserves 2,796 ambiguous normalized names, and includes 27,542 schools
+  outside the prior visualization core.
+- Built 1,048,856 exact retained partner rows across Strict/Broad and rolling 12/24/36-month views.
+  Stable top-50 ranking covers 19,212 schools, including 18,712 outside the old global edge core.
+- Built 168,252 complete profile rows (28,042 schools x two corpora x three windows) plus 242,892
+  separate provisional Topic-family rows. Every school has supported evidence or an explicit
+  no-activity/corpus/annual-layer coverage status.
+- Kept rolling co-authorship, complete-year graph/community, directed citation-flow, and annual
+  core-limited Topic-similarity values in labelled independent fields. Persisted no quality or
+  user-defined fit score.
+
+### Files changed
+
+- Implementation: `src/gisnet/cli.py`, `src/gisnet/schools/identity.py`,
+  `src/gisnet/schools/index.py`, `src/gisnet/schools/partners.py`, and
+  `src/gisnet/schools/profiles.py`.
+- Tests: `tests/unit/test_school_identity.py`, `tests/unit/test_school_index.py`,
+  `tests/unit/test_school_partners.py`, and `tests/unit/test_school_profiles.py`.
+- Processed local datasets: school identities/audit, school/name indexes, partner index, school
+  profiles, and school Topic profiles under `data/processed/`.
+- Public compact summaries: `data/reference/school_identity_summary.json`,
+  `school_index_summary.json`, `school_partner_index_summary.json`, and
+  `school_profile_summary.json`.
+- Provenance: 11 new school manifests under `.agent/manifests/` plus `.agent/state.json`,
+  `.agent/backlog.json`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory repository/status/tree/AGENTS/README/full-backlog/agent-state inspection and interrupted
+  run reconstruction.
+- Targeted school unit tests, focused Ruff lint/format checks, strict mypy, CLI dry-run, and two
+  full-data `build-school-profiles` executions under the project run lock.
+- DuckDB acceptance queries for profile completeness, rolling metrics, annual nodes, Topic shares,
+  top partners, layer boundaries, prohibited columns, and prior-core independence.
+- `git diff --check` and `scripts/quality-gate.sh`.
+
+### Validation results
+
+- Identity: 46,812 source identities, zero automatic/explicit collapses, 9,313 unresolved
+  relationship candidates, and identical organization checksums before/after.
+- Index: 28,042 eligible schools, 83,695 aliases, 27,542 outside the old core, 16 missing sourced
+  coordinates that remain searchable, and all six macro-region values represented.
+- Partners: 1,048,856 rows, deterministic exact top-50 ties, 4.35 ms median/4.52 ms maximum measured
+  lookup (1,000 ms budget), and 18,712 indexed schools outside the old global edge core.
+- Profiles: 168,252 rows partitioned into 81,175 supported, 56,060 no-recent-activity, and 31,017
+  not-observed-in-corpus rows; 61,854 annual-network, 74,649 citation-flow, and 3,000 annual
+  core-limited Topic-similarity profile rows are explicitly supported.
+- Reconciliation: zero Work-count, fractional-count, share, partner-count, strength, persistence,
+  effective-partner, annual centrality, bridge-score, or top-partner mismatches. All 81,167
+  non-empty school/corpus/window Topic distributions sum to one within 5.56e-16.
+- A deterministic school outside the former layout core has all six profile rows. Profile and Topic
+  Parquet hashes matched exactly on consecutive full builds.
+- The full profile build completed in 8.91 seconds with maximum RSS 1,140,652 KiB.
+- Final quality gate passed Ruff lint/format, strict mypy, all 182 offline tests, and CLI status.
+  Six known Plotly country-name deprecation warnings remain unrelated.
+
+### Data and configuration hashes
+
+- School identities: `59a6fe81d78a92e2bbd4b8ba447e7310a13961b12cb4bc7988b916fdaaaf93d4`
+- School index: `96c6943d09b17de1ba89a3f1f1525c8aca32994b04cb091d1ed4126c60e6913f`
+- School partner index: `ac76c50408aec0d55464111180e81d43eed99faf8492206b40490ea00b89b9ac`
+- School profiles: `b1dca67c9e495a8ad6ae9218fc7cb736c11f3f91b2837ee2caf4099a5f048a65`
+- School Topic profiles: `b4a1923480956243de30b92778cf22d6d78bf278ed7cbe7423cd2035a8bef1dc`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- School-decision contract: `1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03`
+- Topic registry: `930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377`
+
+### Checkpoints written
+
+All processed datasets were validated in temporary paths and atomically promoted. Compact summaries,
+manifests, backlog state, project state, and this run record were atomically written under the
+project run lock. No OpenAlex request, API key, invented identifier, coordinate, or measured value
+was used.
+
+### Failures or blockers
+
+- The prior execution ended after GISNET-125/126/128 and before GISNET-127 implementation and run-log
+  finalization. This continuation resumed the same run and preserved all validated artifacts.
+- The first synthetic profile pass exposed an optional test-fixture date-coverage column assumption;
+  the builder now retains exact production semantics while accepting explicit minimal fixtures.
+- No blocker remains for GISNET-125, GISNET-126, GISNET-127, or GISNET-128.
+
+### Decisions made
+
+- Refuse reuse of organization-level centrality or cosine similarity after any future canonical
+  school collapse; those non-composable metrics must be rebuilt from canonical Work memberships.
+- Use the latest exact rolling endpoint for 12/24/36-month activity and Topic profiles, while using
+  the latest complete annual graph year not later than that endpoint for graph, community,
+  citation-flow, and Topic-similarity context.
+- Preserve `full_work_count` and source-compatible `work_count`, retain full/fractional Topic
+  weighting with global/region/country lifts, and keep every evidence layer independently labelled.
+
+### Exact next action
+
+Task: GISNET-124 — Support recent partial-calendar data safely. Run
+`uv run python -m gisnet.cli next-task`, verify current official OpenAlex date-filter semantics,
+and add incremental retrieval through the latest completed month without altering the reproducible
+2010-2025 historical snapshot.

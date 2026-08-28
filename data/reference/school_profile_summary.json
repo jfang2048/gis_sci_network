@@ -1,0 +1,79 @@
+{
+  "annual_context_policy": "Annual graph, citation-flow, community, and Topic-similarity values use the latest complete annual graph year not later than the rolling endpoint.",
+  "annual_network_supported_row_count": 61854,
+  "checksums_sha256": {
+    "school_profiles": "b1dca67c9e495a8ad6ae9218fc7cb736c11f3f91b2837ee2caf4099a5f048a65",
+    "school_topic_profiles": "b4a1923480956243de30b92778cf22d6d78bf278ed7cbe7423cd2035a8bef1dc"
+  },
+  "citation_flow_supported_row_count": 74649,
+  "corpus_views": [
+    "strict",
+    "broad"
+  ],
+  "eligible_school_count": 28042,
+  "endpoints": [
+    {
+      "corpus_view": "broad",
+      "window_end": "2025-12",
+      "window_months": 12,
+      "window_start": "2025-01"
+    },
+    {
+      "corpus_view": "broad",
+      "window_end": "2025-12",
+      "window_months": 24,
+      "window_start": "2024-01"
+    },
+    {
+      "corpus_view": "broad",
+      "window_end": "2025-12",
+      "window_months": 36,
+      "window_start": "2023-01"
+    },
+    {
+      "corpus_view": "strict",
+      "window_end": "2025-12",
+      "window_months": 12,
+      "window_start": "2025-01"
+    },
+    {
+      "corpus_view": "strict",
+      "window_end": "2025-12",
+      "window_months": 24,
+      "window_start": "2024-01"
+    },
+    {
+      "corpus_view": "strict",
+      "window_end": "2025-12",
+      "window_months": 36,
+      "window_start": "2023-01"
+    }
+  ],
+  "generated_at_utc": "2026-08-28T11:10:01.800570Z",
+  "layer_policy": "Co-authorship, annual citation flow, and annual Topic similarity remain separate evidence layers and are never merged into a scientific score.",
+  "logical_input_hash": "c515d63e2ed0a03cb07534e9f9b324a32e9b035322e23125b2165ccca8a66a3d",
+  "no_recent_activity_row_count": 56060,
+  "not_observed_in_corpus_row_count": 31017,
+  "outputs": {
+    "school_profiles": "data/processed/school_profiles.parquet",
+    "school_topic_profiles": "data/processed/school_topic_profiles.parquet"
+  },
+  "profile_policy": "One latest exact rolling row per eligible school, corpus, and requested width; no-activity and unavailable annual evidence remain explicit rather than imputed.",
+  "profile_row_count": 168252,
+  "row_counts": {
+    "school_profiles": 168252,
+    "school_topic_profiles": 242892
+  },
+  "schema_version": 1,
+  "stage_version": "school-profiles-2026-08-28-v1",
+  "supported_profile_row_count": 81175,
+  "topic_profile_row_count": 242892,
+  "topic_profile_school_count": 20270,
+  "topic_similarity_supported_row_count": 3000,
+  "topic_weight_policy": "Topic score divided by the distinct primary-scope school count on each Work, then aggregated by provisional method family within the exact rolling window.",
+  "window_months": [
+    12,
+    24,
+    36
+  ]
+}
