@@ -27,7 +27,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     pages = (
         "Overview",
         "Region trends",
-        "Geographic map",
+        "Geographic flows",
         "Institutional network",
         "Institution explorer",
         "Topic-family comparison",
@@ -52,8 +52,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
             "Counting method",
             "Macro-region pair",
         },
-        "Geographic map": {
-            "Year",
+        "Geographic flows": {
             "Corpus view",
             "Hierarchy view",
             "Counting method",
@@ -114,19 +113,22 @@ def test_public_dashboard_pages_and_global_filters() -> None:
         )
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Geographic map")
+    page_widget.set_value("Geographic flows")
     app = app.run(timeout=30)
     assert not app.exception
     assert any(metric.label == "Coordinate coverage" for metric in app.metric)
-    assert any(
-        subheader.value == "Domestic collaboration share by country" for subheader in app.subheader
-    )
-    assert any("internal links count twice" in caption.value for caption in app.caption)
+    assert any(subheader.value == "Exact selected flows" for subheader in app.subheader)
+    assert any("same exact selected values" in caption.value for caption in app.caption)
+    assert any(widget.label == "Geographic level" for widget in app.selectbox)
+    assert any(widget.label == "Flow metric" for widget in app.selectbox)
+    assert any(widget.label == "Source geography" for widget in app.selectbox)
+    assert any(widget.label == "Complete-year window" for widget in app.select_slider)
+    assert len(_plot_specs(app)) >= 2
     country_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Country")
     country_widget.set_value("China")
     app = app.run(timeout=30)
     assert not app.exception
-    assert any(subheader.value == "Partner composition for China" for subheader in app.subheader)
+    assert any(metric.label == "Coordinate coverage" for metric in app.metric)
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
     page_widget.set_value("Region trends")

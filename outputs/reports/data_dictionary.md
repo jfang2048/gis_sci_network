@@ -1,9 +1,9 @@
 # Public Data Dictionary and Provenance
 
-Data version: `gisnet-0.1.0-2026-08-15`
-Methods version: `public-dashboard-bundle-2026-08-15-v5`
-Released tables: 16
-Documented table-column entries: 319
+Data version: `gisnet-0.1.0-2026-08-28`
+Methods version: `public-dashboard-bundle-2026-08-28-v6`
+Released tables: 18
+Documented table-column entries: 343
 
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
@@ -91,8 +91,8 @@ Complete annual country, subregion, and institution-type dashboard choices.
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
 - Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"}`
-- Code commit: `568bbdbf6b3f`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"}`
+- Code commit: `2daa9eaf4df4`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Topic-family choices come from the separate thresholded Topic table.
 
@@ -103,6 +103,41 @@ Complete annual country, subregion, and institution-type dashboard choices.
 | `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
 | `dimension` | `string` | Dashboard filter dimension: country, subregion, or institution type. | Not null in this public release. | 0 |
 | `value` | `string` | Observed display value belonging to the named dashboard filter dimension. | Not null in this public release. | 0 |
+
+## `geography_anchors`
+
+Versioned display anchors derived from source-provided institution coordinates.
+
+- Path: `dashboard/data/geography_anchors.parquet`
+- Rows: 162
+- Primary key: `geographic_level, geography`
+- SHA-256: `509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67`
+- Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"}`
+- Code commit: `2daa9eaf4df4`
+- Transformation: `python -m gisnet.cli build-dashboard-data --resume`
+- Known issue: Anchors are spherical means of observed research-institution locations, not geographic or political centroids.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `geographic_level` | `string` | Matrix level: macro_region, subregion, or country. | Not null in this public release. | 0 |
+| `geography` | `string` | Stable geography identifier at the declared geographic level. | Not null in this public release. | 0 |
+| `display_name` | `string` | Source-provided or canonically selected institution display name. | Not null in this public release. | 0 |
+| `latitude` | `double` | Source-provided institution latitude; never imputed. | Not null in this public release. | 0 |
+| `longitude` | `double` | Source-provided institution longitude; never imputed. | Not null in this public release. | 0 |
+| `supporting_institution_count` | `int64` | Distinct coordinate-bearing organizations contributing to the display anchor. | Not null in this public release. | 0 |
+| `source_coordinate_count` | `int64` | Source-provided coordinate pairs contributing to the anchor. | Not null in this public release. | 0 |
+| `coordinate_source` | `string` | Source label recorded with the contributing coordinate values. | Not null in this public release. | 0 |
+| `anchor_method` | `string` | Documented spherical display-anchor derivation method. | Not null in this public release. | 0 |
+| `anchor_policy_version` | `string` | Version of the geographic display-anchor policy. | Not null in this public release. | 0 |
+| `coordinate_source_dataset` | `string` | Named public dataset supplying institution coordinates. | Not null in this public release. | 0 |
+| `coordinate_source_url` | `string` | Public landing page for the coordinate source dataset. | Not null in this public release. | 0 |
+| `coordinate_license` | `string` | License recorded for the coordinate source dataset. | Not null in this public release. | 0 |
+| `coordinate_license_url` | `string` | Public URL for the recorded coordinate license. | Not null in this public release. | 0 |
+| `source_manifest` | `string` | Repository-relative manifest recording source dataset provenance. | Not null in this public release. | 0 |
+| `source_dataset_sha256` | `string` | Exact SHA-256 checksum of the anchor source dataset. | Not null in this public release. | 0 |
 
 ## `geography_dimensions`
 
@@ -115,8 +150,8 @@ Country-code labels used to join complete country flows to dashboard geography.
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
 - Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"}`
-- Code commit: `568bbdbf6b3f`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"}`
+- Code commit: `2daa9eaf4df4`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Only countries observed in complete annual network nodes are included.
 
@@ -126,6 +161,33 @@ Country-code labels used to join complete country flows to dashboard geography.
 | `country_name` | `string` | Frozen country or territory display name. | Not null in this public release. | 0 |
 | `macro_region` | `string` | Frozen UN M49-style macro-region analytical grouping. | Not null in this public release. | 0 |
 | `subregion` | `string` | Frozen UN M49-style subregion analytical grouping. | Not null in this public release. | 0 |
+
+## `geography_outputs`
+
+Annual geography-level institutional output denominators for flow normalization.
+
+- Path: `dashboard/data/geography_outputs.parquet`
+- Rows: 8,606
+- Primary key: `year, corpus_view, hierarchy_view, geographic_level, geography`
+- SHA-256: `1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e`
+- Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"}`
+- Code commit: `2daa9eaf4df4`
+- Transformation: `python -m gisnet.cli build-dashboard-data --resume`
+- Known issue: Full Work counts sum institution-level contributions and therefore are denominators, not deduplicated geographic Work totals.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `geographic_level` | `string` | Matrix level: macro_region, subregion, or country. | Not null in this public release. | 0 |
+| `geography` | `string` | Stable geography identifier at the declared geographic level. | Not null in this public release. | 0 |
+| `full_work_count` | `int64` | Sum of institution full Work-count denominators in the declared geography and scope. | Not null in this public release. | 0 |
+| `fractional_work_count` | `double` | Institutional Work output under the stored fractional allocation. | Not null in this public release. | 0 |
+| `denominator_definition` | `string` | Stored definition of the geography output denominator. | Not null in this public release. | 0 |
 
 ## `graph_metrics`
 

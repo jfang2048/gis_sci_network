@@ -41,7 +41,9 @@ semantics and snapshot rebuild instructions.
 | Rolling 12/24/36-month facts | Available |
 | Completed-month current-year acquisition overlay | Available; released annual snapshot remains through 2025 |
 | School Finder, partner index, and school profiles | Available |
-| School comparison and ego maps | Planned: GISNET-129–138 |
+| Stable-ID school comparison service | Available; dashboard presentation is planned |
+| Geographic Flow Explorer | Available for macro-region, subregion, and country annual windows |
+| School Profile UI and ego maps | Planned: GISNET-132–138 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 

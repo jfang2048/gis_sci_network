@@ -3298,3 +3298,118 @@ quality ranking.
 Task: GISNET-130 — Redesign macro geographic collaboration visualization. Build the geographic flow
 explorer with reconciled map/matrix controls and sourced coordinates while preserving the new
 complete-index school decision path.
+
+
+## Run 20260828T142607Z_2daa9eaf4df4
+
+Started UTC: 2026-08-28T14:26:07Z
+Ended UTC: 2026-08-28T18:47:08Z
+Task: GISNET-130 — Redesign macro geographic collaboration visualization
+Initial git status: Clean `main` at `2daa9ea`, one local GISNET-129 commit ahead of `origin/main`.
+Final git status: Pre-commit GISNET-130 implementation, public artifacts, documentation, tests, and audit-state changes only.
+
+### Objective
+
+Replace the domestic-share-first geographic page with a source-selected Geographic Flow Explorer
+whose macro-region, subregion, and country map/matrix modes use the same exact reconciled annual
+flow values and only versioned, licensed source-derived display anchors.
+
+### Work completed
+
+- Added a strict shared query contract for geographic level, source geography, inclusive complete-
+  year window, corpus, hierarchy, counting method, and metric. The map and selected-origin matrix
+  consume one exact result frame rather than recomputing values independently.
+- Supported collaboration volume under full/fractional counting, endpoint-normalized partner share,
+  and fractional normalized intensity using geography-level full institutional Work-count
+  denominators from the identical scope. Exact component values and denominators remain visible.
+- Replaced the primary domestic-share views with the Geographic Flow Explorer and retained the
+  coordinate-limited institution map only as an explicitly secondary drilldown.
+- Added 162 versioned display anchors from unweighted spherical means of distinct OpenAlex
+  institution coordinates. Stored source dataset checksum, manifest, source URL, CC0 license URL,
+  method, support count, and explicit non-centroid interpretation; no coordinate was invented.
+- Added 8,606 annual geography-output denominator rows across all three levels, both corpora, both
+  hierarchy views, and complete years 2010-2025. Added build-time failures for missing anchors or
+  nonpositive/missing denominators.
+- Rebuilt the 18-table dashboard bundle and 343-entry public data dictionary, refreshed the
+  checksum-complete release manifest, and documented exact geographic semantics and limitations.
+
+### Files changed
+
+- Explorer implementation/UI: `src/gisnet/visualization/geographic_flows.py`,
+  `src/gisnet/visualization/dashboard_data.py`, `src/gisnet/visualization/dashboard_filters.py`,
+  `dashboard/app.py`, `src/gisnet/pipeline.py`, and `src/gisnet/reporting/data_dictionary.py`.
+- Regression tests: `tests/unit/test_geographic_flow_explorer.py`,
+  `tests/unit/test_dashboard_data.py`, `tests/unit/test_dashboard_filters.py`, and
+  `tests/integration/test_dashboard.py`.
+- Public data/docs: `dashboard/data/geography_anchors.parquet`,
+  `dashboard/data/geography_outputs.parquet`, dashboard metadata, dashboard/data-dictionary
+  summaries and reports, `README.md`, and `dashboard/README.md`.
+- Release/audit: release manifest/checksum, dashboard/data-dictionary manifests,
+  `.agent/state.json`, `.agent/backlog.json`, `.agent/decisions.md`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state inspection and stale-lock audit.
+- Official OpenAlex license verification; targeted query, anchor, dashboard-data, dictionary, filter,
+  integration, Ruff, formatting, and strict mypy checks during implementation.
+- Lock-aware `build-dashboard-data` and `build-data-dictionary` dry runs and builds; release-manifest
+  build/verify; production DuckDB/Pandas reconciliation across every geographic level and metric.
+- `git diff --check`, temporary-output scan, CLI status, and the complete `scripts/quality-gate.sh`.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 156 files, strict mypy for 79 source files,
+  all 201 offline tests, dashboard integration smoke tests, and CLI status.
+- All 192 year/corpus/hierarchy/level matrix groups reconcile with institution edges: zero failures
+  at the declared floating tolerance and maximum fractional aggregation difference 1.526e-08.
+- All 162 observed flow endpoints have unique valid sourced anchors: zero missing anchors, invalid
+  coordinate pairs, or license/provenance failures. Anchor source dataset checksum is
+  `c97012585bc99a888e7a2860d782ea8bc56d07064fe7c0705ccef0b8fc6422da`.
+- All 8,606 geography-output rows reconcile exactly with annual node denominators; zero nonpositive
+  full Work-count denominators and complete 2010-2025 coverage.
+- Production checks across volume, partner share, and normalized intensity at macro-region,
+  subregion, and country levels proved exact map/matrix value equality. Partner-share rows sum to
+  one within floating tolerance.
+- Dashboard matrix, anchor, and output hashes are respectively
+  `9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77`,
+  `509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67`, and
+  `1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e`.
+- Release verification covered 221 public files / 12,024,829 bytes with zero privacy findings;
+  release-manifest hash is `7f980c4f371c4c7ea505b77943c1a45b544f7680751b7863e16501999ec1ac85`.
+
+### Data and configuration hashes
+
+- Institution coordinate source: `c97012585bc99a888e7a2860d782ea8bc56d07064fe7c0705ccef0b8fc6422da`
+- Geographic anchors: `509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67`
+- Geography outputs: `1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e`
+- Geographic matrix: `9d524bbb114964473694ec5c5c4d1342568d66b0b1a554ddc62e56ec36054e77`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Dashboard tables, metadata, data dictionaries, summaries, manifests, release checksum files, backlog
+state, project state, decisions, and this run record were atomically written under the project run
+lock. No API request, API key, raw source page, invented coordinate, source identifier, or measured
+source result was written.
+
+### Failures or blockers
+
+- The first production comparison used a stricter 1e-08 cross-file floating threshold and exposed a
+  maximum aggregation-order difference of 1.526e-08. The declared reconciliation tolerance is
+  1e-07; all 192 groups pass and full counts match exactly. No scientific value was modified.
+- No blocker remains for GISNET-130.
+
+### Decisions made
+
+- Geographic normalized intensity is fractional geography flow divided by the geometric mean of
+  source and target summed institution full Work counts under identical scope.
+- Geographic anchors are versioned research-institution display anchors derived from sourced
+  OpenAlex coordinates, never asserted geographic centroids.
+- GISNET-130 retains constant line width and all selected-source flows. GISNET-131 owns comparable
+  calibrated width and meaningful-flow filtering.
+
+### Exact next action
+
+Task: GISNET-131 — Build readable flow arcs. Add Top N, minimum weight, and minimum partner-share
+controls; implement documented, comparable calibrated width semantics and selected-source color
+emphasis while retaining the exact companion table and map/matrix equality.

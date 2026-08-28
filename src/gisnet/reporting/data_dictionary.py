@@ -14,7 +14,7 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-15-v2"
+_STAGE_VERSION = "public-data-dictionary-2026-08-28-v3"
 
 TABLES: dict[str, dict[str, Any]] = {
     "community_continuity": {
@@ -58,6 +58,34 @@ TABLES: dict[str, dict[str, Any]] = {
             "Country-code labels used to join complete country flows to dashboard geography."
         ),
         "known_issue": "Only countries observed in complete annual network nodes are included.",
+    },
+    "geography_anchors": {
+        "primary_key": ["geographic_level", "geography"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Versioned display anchors derived from source-provided institution coordinates."
+        ),
+        "known_issue": (
+            "Anchors are spherical means of observed research-institution locations, not "
+            "geographic or political centroids."
+        ),
+    },
+    "geography_outputs": {
+        "primary_key": [
+            "year",
+            "corpus_view",
+            "hierarchy_view",
+            "geographic_level",
+            "geography",
+        ],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Annual geography-level institutional output denominators for flow normalization."
+        ),
+        "known_issue": (
+            "Full Work counts sum institution-level contributions and therefore are denominators, "
+            "not deduplicated geographic Work totals."
+        ),
     },
     "institution_identities": {
         "primary_key": ["organization_id"],
@@ -230,6 +258,24 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "community_id": "Stable annual primary-resolution community label; isolates are explicit.",
     "community_size": "Number of nodes assigned to the labelled annual community.",
     "geographic_level": "Matrix level: macro_region, subregion, or country.",
+    "geography": "Stable geography identifier at the declared geographic level.",
+    "supporting_institution_count": (
+        "Distinct coordinate-bearing organizations contributing to the display anchor."
+    ),
+    "source_coordinate_count": "Source-provided coordinate pairs contributing to the anchor.",
+    "coordinate_source": "Source label recorded with the contributing coordinate values.",
+    "anchor_method": "Documented spherical display-anchor derivation method.",
+    "anchor_policy_version": "Version of the geographic display-anchor policy.",
+    "coordinate_source_dataset": "Named public dataset supplying institution coordinates.",
+    "coordinate_source_url": "Public landing page for the coordinate source dataset.",
+    "coordinate_license": "License recorded for the coordinate source dataset.",
+    "coordinate_license_url": "Public URL for the recorded coordinate license.",
+    "source_manifest": "Repository-relative manifest recording source dataset provenance.",
+    "source_dataset_sha256": "Exact SHA-256 checksum of the anchor source dataset.",
+    "full_work_count": (
+        "Sum of institution full Work-count denominators in the declared geography and scope."
+    ),
+    "denominator_definition": "Stored definition of the geography output denominator.",
     "source_geography": "Stable first endpoint label of the undirected geographic cell.",
     "target_geography": "Stable second endpoint label of the undirected geographic cell.",
     "distinct_institution_pair_count": "Distinct source institution pairs contributing to the row.",

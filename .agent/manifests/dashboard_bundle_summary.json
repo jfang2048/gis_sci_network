@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "015198bcb072a89d98156c92d33c13ab321e33ecb93f0137001a3fde677f9113",
+  "checksum_sha256": "8cf5227ec93aa61f5c1a704f426d73db6bc3ee8e0da363af03dbf02b4f9bb28a",
   "column_count": 12,
   "command": "python -m gisnet.cli build-dashboard-data --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-15T15:28:28.191735Z",
+  "created_at_utc": "2026-08-28T18:44:55.605476Z",
   "dataset_name": "dashboard_bundle_summary",
-  "git_commit": "568bbdbf6b3f",
+  "git_commit": "2daa9eaf4df4",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -28,7 +28,7 @@
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260806T002306Z_568bbdbf6b3f",
+  "run_id": "20260828T142607Z_2daa9eaf4df4",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/trend_series_year.json",
@@ -48,7 +48,7 @@
     ".agent/manifests/nodes_year.json"
   ],
   "source_versions": {
-    "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"
+    "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
   },
   "status": "valid"
 }

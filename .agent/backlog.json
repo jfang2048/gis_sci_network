@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-28T14:18:33Z",
+  "last_updated_utc": "2026-08-28T18:47:08Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -1960,12 +1960,27 @@
         "GISNET-129",
         "GISNET-065"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-28T14:26:07Z",
+          "from": "TODO",
+          "reason": "Implementing a reconciled macro-region/subregion/country Geographic Flow Explorer with source geography, corpus, time, counting, and metric controls plus sourced anchor provenance.",
+          "run_id": "20260828T142607Z_2daa9eaf4df4",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-28T18:47:08Z",
+          "from": "IN_PROGRESS",
+          "reason": "Geographic Flow Explorer acceptance passed: source-selected macro-region, subregion, and country map/matrix modes reconcile to institution flows; fractional volume, partner share, and defined normalized intensity share exact values; all flow endpoints have versioned sourced CC0 anchors.",
+          "run_id": "20260828T142607Z_2daa9eaf4df4",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-130",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Geographic Flow Explorer acceptance passed: source-selected macro-region, subregion, and country map/matrix modes reconcile to institution flows; fractional volume, partner share, and defined normalized intensity share exact values; all flow endpoints have versioned sourced CC0 anchors.",
+      "status_updated_at_utc": "2026-08-28T18:47:08Z",
       "title": "Redesign macro geographic collaboration visualization",
       "work": [
         "Build macro-region, subregion, and country flow map and origin-destination matrix views.",

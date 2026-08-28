@@ -1,20 +1,20 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 120,
-      "size_bytes": 188067
+      "file_count": 131,
+      "size_bytes": 210263
     },
     "config": {
       "file_count": 12,
       "size_bytes": 178735
     },
     "dashboard/data": {
-      "file_count": 17,
-      "size_bytes": 10244692
+      "file_count": 19,
+      "size_bytes": 10300468
     },
     "data/reference": {
-      "file_count": 45,
-      "size_bytes": 1098273
+      "file_count": 49,
+      "size_bytes": 1116277
     },
     "figures": {
       "file_count": 6,
@@ -22,10 +22,10 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 132742
+      "size_bytes": 139082
     }
   },
-  "dashboard_table_count": 16,
+  "dashboard_table_count": 18,
   "external_large_data": [
     {
       "name": "OpenAlex data",
@@ -148,17 +148,17 @@
     },
     {
       "path": ".agent/manifests/dashboard_bundle_summary.json",
-      "sha256": "455c169f3ee9ea840e43a986db8c16b5da5e86e9481474180e0a593ddb063cb7",
+      "sha256": "6b63640650fc0b02ea6050f4454485a6232ed60272c22b4395e39376cc3d9a1c",
       "size_bytes": 1804
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "124a0ad6dc81fce3957e046971e33696aab65deb59a1663dd23ab01ac69a0de6",
+      "sha256": "ed493f7f06b97aca55feca79919734c6095be6b82b276170ef01b44ca58ce6f5",
       "size_bytes": 1884
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "03ae8e6fa076efe5dc4db47e1b8a12aaf5d87edd379148dc7d88c6342dbf895d",
+      "sha256": "495578af284f15bfcd43ae542e3d391398c20ebd6cec750d2cbf8e8e699e58c3",
       "size_bytes": 1487
     },
     {
@@ -408,7 +408,7 @@
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "fe842493eb677eb019f2de99bd230cd5389690164a14aff8321013560c52188f",
+      "sha256": "9e58fcf2fb485c14645695421fe030e0b58a972b656ef76e4aee74c65efda769",
       "size_bytes": 1487
     },
     {
@@ -480,6 +480,61 @@
       "path": ".agent/manifests/school_decision_contract.json",
       "sha256": "a57b3f61e6c5ddf7fb988f4d0e36d4999fe6e93100269480edd6e6a388243845",
       "size_bytes": 1815
+    },
+    {
+      "path": ".agent/manifests/school_identities.json",
+      "sha256": "833695ea8bf8e6d74dda8245a4ed9f773e994a7238d01a6fc08ce99e56923fe5",
+      "size_bytes": 1605
+    },
+    {
+      "path": ".agent/manifests/school_identity_audit.json",
+      "sha256": "004f0d11dbdf27cc13071a70c12a5bfd09436a7c24cd96b5f58ddd8a8df5377a",
+      "size_bytes": 1360
+    },
+    {
+      "path": ".agent/manifests/school_identity_summary.json",
+      "sha256": "71050e606cf226f7e7768be3c47abcb656cfa7cec9c4f5b429eaa67aa9792140",
+      "size_bytes": 1632
+    },
+    {
+      "path": ".agent/manifests/school_index.json",
+      "sha256": "fca07e3d872d8fe3a8f480882f4fc31a00d4aefff34a60c90366638949de212b",
+      "size_bytes": 2306
+    },
+    {
+      "path": ".agent/manifests/school_index_summary.json",
+      "sha256": "3a9f7925778fa9107bd5afad2f4ca15a8f4fc8b7415868bace49579afba6f0ad",
+      "size_bytes": 1669
+    },
+    {
+      "path": ".agent/manifests/school_name_index.json",
+      "sha256": "bc214b20467367a26872fe7aeca6bcd56710f151c1a55f70c06d0e08b33b971a",
+      "size_bytes": 1309
+    },
+    {
+      "path": ".agent/manifests/school_partner_index.json",
+      "sha256": "6fd1bdef54032aa1ca87e13f0b414025347fd2f076445b89de8cf1db327f4713",
+      "size_bytes": 1939
+    },
+    {
+      "path": ".agent/manifests/school_partner_index_summary.json",
+      "sha256": "754230e787c561ffa707eb45edecefb157e8fae29257d3daa7698406eaa2fc98",
+      "size_bytes": 1573
+    },
+    {
+      "path": ".agent/manifests/school_profile_summary.json",
+      "sha256": "434ea18c82b52435fd00d7bc3a0617825d9bb5ce03c0298d5b3ebc7c4bfc7a33",
+      "size_bytes": 2365
+    },
+    {
+      "path": ".agent/manifests/school_profiles.json",
+      "sha256": "a1749bd25c999b133b45f403f302ba176a1eb03bc1ed0ebef9a55d733dae36ca",
+      "size_bytes": 4102
+    },
+    {
+      "path": ".agent/manifests/school_topic_profiles.json",
+      "sha256": "3ea85ba57a31c81af5c02a9d38a37273d2c6d1fafcbccedf446f99bc625d2679",
+      "size_bytes": 2336
     },
     {
       "path": ".agent/manifests/sensitivity_matrix.json",
@@ -717,9 +772,19 @@
       "size_bytes": 4498
     },
     {
+      "path": "dashboard/data/geography_anchors.parquet",
+      "sha256": "509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67",
+      "size_bytes": 9577
+    },
+    {
       "path": "dashboard/data/geography_dimensions.parquet",
       "sha256": "05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08",
       "size_bytes": 2492
+    },
+    {
+      "path": "dashboard/data/geography_outputs.parquet",
+      "sha256": "1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e",
+      "size_bytes": 44560
     },
     {
       "path": "dashboard/data/graph_metrics.parquet",
@@ -753,8 +818,8 @@
     },
     {
       "path": "dashboard/data/metadata.json",
-      "sha256": "44ebccbfcec488c3c9b091b77f89e276872ae4c5e3e31e91a50419e83d1b79d1",
-      "size_bytes": 4503
+      "sha256": "e72f6b6de567b7120efebb11843cd8a919f7e4d6af3c7535874ea8f7491bb862",
+      "size_bytes": 6142
     },
     {
       "path": "dashboard/data/network_accessibility.parquet",
@@ -838,17 +903,17 @@
     },
     {
       "path": "data/reference/dashboard_bundle_summary.json",
-      "sha256": "015198bcb072a89d98156c92d33c13ab321e33ecb93f0137001a3fde677f9113",
-      "size_bytes": 2035
+      "sha256": "8cf5227ec93aa61f5c1a704f426d73db6bc3ee8e0da363af03dbf02b4f9bb28a",
+      "size_bytes": 2221
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "777e9a11a19dfebb7dff11f487829b29c07a2549758ea1866a0f2663c8e98f66",
-      "size_bytes": 118719
+      "sha256": "11fedbda70ff4eca051e4e560796f94443de031ea0e0b5ada2089eb47976d5fc",
+      "size_bytes": 129803
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "2485dbb7b889e9f9fca03272d30c93d5583a1fa2a63eea116bd24b3afb17988b",
+      "sha256": "320962beda766a6bd2337e90548340bb1f83bd4085d65083b2f4ba2b9835cddc",
       "size_bytes": 800
     },
     {
@@ -962,6 +1027,26 @@
       "size_bytes": 2867
     },
     {
+      "path": "data/reference/school_identity_summary.json",
+      "sha256": "423612e87e20f4928242728f033f2f0a18bdf360776d40f4142552e45ffcb2a7",
+      "size_bytes": 1123
+    },
+    {
+      "path": "data/reference/school_index_summary.json",
+      "sha256": "dd5131d6519165fe456e4c66ea771b9c67a7bca5b6b14f665ca274dd9cb5e15e",
+      "size_bytes": 1367
+    },
+    {
+      "path": "data/reference/school_partner_index_summary.json",
+      "sha256": "2d961c4917b46536d20233ad675bca5b522eaee76b1eedebebe5ae0b7bfc2dcf",
+      "size_bytes": 1517
+    },
+    {
+      "path": "data/reference/school_profile_summary.json",
+      "sha256": "303ccfc6dc3c0722282c3457ae51eb2d6ed3e7ec3b331e2f3846700260fd6b0b",
+      "size_bytes": 2727
+    },
+    {
       "path": "data/reference/sensitivity_summary.json",
       "sha256": "fe453ff29fa0ce66606015d0243271567ff7b4b90e02a750ac079759c56590d2",
       "size_bytes": 796
@@ -1048,8 +1133,8 @@
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "a396ef4380f06ffbb18e82389f2f2b71f719111434be9d0d7d39a8815c3b4b4c",
-      "size_bytes": 61136
+      "sha256": "9cb7be7001385637896d77608d62a7d5699edeab5c7623a687af31b3f08de275",
+      "size_bytes": 67476
     },
     {
       "path": "outputs/reports/methodology.md",
@@ -1062,11 +1147,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-26T23:53:52Z",
+  "generated_at_utc": "2026-08-28T18:44:57Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 204,
-  "public_size_bytes": 11922513,
+  "public_file_count": 221,
+  "public_size_bytes": 12024829,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

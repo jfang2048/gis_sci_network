@@ -1,11 +1,11 @@
 {
-  "column_entry_count": 319,
-  "data_version": "gisnet-0.1.0-2026-08-15",
-  "dictionary_version": "public-data-dictionary-2026-08-15-v2",
-  "methods_version": "public-dashboard-bundle-2026-08-15-v5",
+  "column_entry_count": 343,
+  "data_version": "gisnet-0.1.0-2026-08-28",
+  "dictionary_version": "public-data-dictionary-2026-08-28-v3",
+  "methods_version": "public-dashboard-bundle-2026-08-28-v6",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 16,
+  "table_count": 18,
   "tables": [
     {
       "code_commit": "568bbdbf6b3f",
@@ -339,7 +339,7 @@
       "transformation_command": "python -m gisnet.cli match-communities --resume"
     },
     {
-      "code_commit": "568bbdbf6b3f",
+      "code_commit": "2daa9eaf4df4",
       "column_count": 5,
       "columns": [
         {
@@ -417,13 +417,182 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
       },
       "table": "filter_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "568bbdbf6b3f",
+      "code_commit": "2daa9eaf4df4",
+      "column_count": 16,
+      "columns": [
+        {
+          "description": "Matrix level: macro_region, subregion, or country.",
+          "name": "geographic_level",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable geography identifier at the declared geographic level.",
+          "name": "geography",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided institution latitude; never imputed.",
+          "name": "latitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided institution longitude; never imputed.",
+          "name": "longitude",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Distinct coordinate-bearing organizations contributing to the display anchor.",
+          "name": "supporting_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Source-provided coordinate pairs contributing to the anchor.",
+          "name": "source_coordinate_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Source label recorded with the contributing coordinate values.",
+          "name": "coordinate_source",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Documented spherical display-anchor derivation method.",
+          "name": "anchor_method",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Version of the geographic display-anchor policy.",
+          "name": "anchor_policy_version",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Named public dataset supplying institution coordinates.",
+          "name": "coordinate_source_dataset",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Public landing page for the coordinate source dataset.",
+          "name": "coordinate_source_url",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "License recorded for the coordinate source dataset.",
+          "name": "coordinate_license",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Public URL for the recorded coordinate license.",
+          "name": "coordinate_license_url",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Repository-relative manifest recording source dataset provenance.",
+          "name": "source_manifest",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Exact SHA-256 checksum of the anchor source dataset.",
+          "name": "source_dataset_sha256",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Versioned display anchors derived from source-provided institution coordinates.",
+      "known_data_quality_issue": "Anchors are spherical means of observed research-institution locations, not geographic or political centroids.",
+      "path": "dashboard/data/geography_anchors.parquet",
+      "primary_key": [
+        "geographic_level",
+        "geography"
+      ],
+      "row_count": 162,
+      "sha256": "509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+      },
+      "table": "geography_anchors",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "2daa9eaf4df4",
       "column_count": 4,
       "columns": [
         {
@@ -489,9 +658,117 @@
         ".agent/manifests/nodes_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-15-v5"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
       },
       "table": "geography_dimensions",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "2daa9eaf4df4",
+      "column_count": 8,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Matrix level: macro_region, subregion, or country.",
+          "name": "geographic_level",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable geography identifier at the declared geographic level.",
+          "name": "geography",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Sum of institution full Work-count denominators in the declared geography and scope.",
+          "name": "full_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institutional Work output under the stored fractional allocation.",
+          "name": "fractional_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored definition of the geography output denominator.",
+          "name": "denominator_definition",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Annual geography-level institutional output denominators for flow normalization.",
+      "known_data_quality_issue": "Full Work counts sum institution-level contributions and therefore are denominators, not deduplicated geographic Work totals.",
+      "path": "dashboard/data/geography_outputs.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "geographic_level",
+        "geography"
+      ],
+      "row_count": 8606,
+      "sha256": "1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v6"
+      },
+      "table": "geography_outputs",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {

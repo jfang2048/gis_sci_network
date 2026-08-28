@@ -2,13 +2,36 @@
   "active_umbrella_collapse_count": 0,
   "corpus_human_review_complete": false,
   "corpus_scientific_status": "blocked_pending_human_corpus_review",
-  "data_version": "gisnet-0.1.0-2026-08-15",
+  "data_version": "gisnet-0.1.0-2026-08-28",
   "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
-  "generated_at_utc": "2026-08-15T15:28:28.162905Z",
-  "geographic_comparison_metric": "local collaboration endpoint share; internal links contribute two endpoints",
+  "generated_at_utc": "2026-08-28T18:44:55.575972Z",
+  "geographic_flow_explorer": {
+    "anchor_method": "unweighted spherical mean of distinct organization coordinates supplied by OpenAlex; display anchor only, not a geographic centroid",
+    "coordinate_license": "CC0 1.0 Universal",
+    "coordinate_license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "coordinate_source": "OpenAlex institution metadata",
+    "coordinate_source_url": "https://openalex.org/",
+    "license_verified_at_utc": "2026-08-28T00:00:00Z",
+    "normalized_intensity_definition": "fractional collaboration weight divided by the geometric mean of source and target full institutional Work-count denominators under the same scope",
+    "partner_share_definition": "selected endpoint weight divided by all selected endpoint weight attached to the source geography; an internal flow contributes two source endpoints",
+    "policy_version": "geographic-flow-explorer-2026-08-28-v1",
+    "source_dataset_sha256": "c97012585bc99a888e7a2860d782ea8bc56d07064fe7c0705ccef0b8fc6422da",
+    "source_manifest": ".agent/manifests/institutions.json",
+    "supported_levels": [
+      "macro_region",
+      "subregion",
+      "country"
+    ],
+    "supported_metrics": [
+      "volume",
+      "partner_share",
+      "normalized_intensity"
+    ],
+    "time_window": "inclusive complete calendar years from 2010 through 2025"
+  },
   "known_limitations": [
     "Institution coordinate coverage is reported per view; coordinates are never invented.",
-    "Country and region maps use proportional endpoint shares by default; absolute weights remain available in details.",
+    "Geographic anchors are research-institution coordinate means for display, not geometric or political centroids.",
     "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
     "The Topic registry is provisional and has not received human review.",
     "The corpus-boundary annotation sample is unlabelled and awaits human review.",
@@ -16,7 +39,7 @@
     "Visualization score is non-primary and used only to rank visible edges.",
     "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-15-v5",
+  "methods_version": "public-dashboard-bundle-2026-08-28-v6",
   "public_snapshot": true,
   "schema_version": 1,
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
@@ -36,10 +59,20 @@
       "row_count": 8670,
       "sha256": "42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1"
     },
+    "geography_anchors": {
+      "path": "dashboard/data/geography_anchors.parquet",
+      "row_count": 162,
+      "sha256": "509429e59c57770a4cc80ab528a361b315a11681ee127077bef80591125d0d67"
+    },
     "geography_dimensions": {
       "path": "dashboard/data/geography_dimensions.parquet",
       "row_count": 146,
       "sha256": "05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08"
+    },
+    "geography_outputs": {
+      "path": "dashboard/data/geography_outputs.parquet",
+      "row_count": 8606,
+      "sha256": "1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e"
     },
     "graph_metrics": {
       "path": "dashboard/data/graph_metrics.parquet",

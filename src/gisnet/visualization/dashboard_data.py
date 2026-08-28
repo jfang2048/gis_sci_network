@@ -14,7 +14,11 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-15-v5"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-28-v6"
+_GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v1"
+_OPENALEX_LICENSE = "CC0 1.0 Universal"
+_OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
+_OPENALEX_SOURCE_URL = "https://openalex.org/"
 
 
 def build_dashboard_bundle(
@@ -55,6 +59,8 @@ def build_dashboard_bundle(
     destinations["institution_identities"] = output / "institution_identities.parquet"
     destinations["filter_dimensions"] = output / "filter_dimensions.parquet"
     destinations["geography_dimensions"] = output / "geography_dimensions.parquet"
+    destinations["geography_anchors"] = output / "geography_anchors.parquet"
+    destinations["geography_outputs"] = output / "geography_outputs.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -79,6 +85,18 @@ def build_dashboard_bundle(
         )
         _write_geography_dimensions(
             connection, paths["complete_nodes"], temporary["geography_dimensions"]
+        )
+        _write_geography_anchors(
+            connection,
+            complete_nodes_path=paths["complete_nodes"],
+            institutions_path=paths["institutions"],
+            destination=temporary["geography_anchors"],
+            source_dataset_sha256=file_sha256(paths["institutions"]),
+        )
+        _write_geography_outputs(
+            connection,
+            complete_nodes_path=paths["complete_nodes"],
+            destination=temporary["geography_outputs"],
         )
         connection.execute(
             f"""
@@ -140,6 +158,52 @@ def build_dashboard_bundle(
         if collapse_count is None:
             raise ValueError("institution hierarchy collapse count was unavailable")
         active_collapse_count = int(collapse_count[0])
+        missing_anchors = connection.execute(
+            """
+            WITH flow_geographies AS (
+                SELECT DISTINCT geographic_level, source_geography AS geography
+                FROM read_parquet(?)
+                UNION
+                SELECT DISTINCT geographic_level, target_geography AS geography
+                FROM read_parquet(?)
+            )
+            SELECT count(*)
+            FROM flow_geographies
+            LEFT JOIN read_parquet(?) anchors USING (geographic_level, geography)
+            WHERE anchors.geography IS NULL
+            """,
+            [
+                str(paths["matrix"]),
+                str(paths["matrix"]),
+                str(temporary["geography_anchors"]),
+            ],
+        ).fetchone()
+        if missing_anchors is None or int(missing_anchors[0]):
+            raise ValueError("one or more geographic flow endpoints lack a sourced anchor")
+        missing_denominators = connection.execute(
+            """
+            WITH flow_geographies AS (
+                SELECT DISTINCT
+                    year, corpus_view, hierarchy_view, geographic_level,
+                    source_geography AS geography
+                FROM read_parquet(?)
+                UNION
+                SELECT DISTINCT
+                    year, corpus_view, hierarchy_view, geographic_level,
+                    target_geography AS geography
+                FROM read_parquet(?)
+            )
+            SELECT count(*)
+            FROM flow_geographies
+            LEFT JOIN read_parquet(?) outputs USING (
+                year, corpus_view, hierarchy_view, geographic_level, geography
+            )
+            WHERE outputs.geography IS NULL OR outputs.full_work_count <= 0
+            """,
+            [str(paths["matrix"]), str(paths["matrix"]), str(temporary["geography_outputs"])],
+        ).fetchone()
+        if missing_denominators is None or int(missing_denominators[0]):
+            raise ValueError("one or more geographic flow endpoints lack a positive denominator")
     except BaseException:
         for path in temporary.values():
             path.unlink(missing_ok=True)
@@ -242,6 +306,40 @@ def build_dashboard_bundle(
             {"country_code", "country_name", "macro_region", "subregion"},
             None,
         ),
+        "geography_anchors": (
+            ["geographic_level", "geography"],
+            {
+                "geographic_level",
+                "geography",
+                "display_name",
+                "latitude",
+                "longitude",
+                "anchor_method",
+                "coordinate_source",
+                "coordinate_license",
+                "source_dataset_sha256",
+            },
+            None,
+        ),
+        "geography_outputs": (
+            [
+                "year",
+                "corpus_view",
+                "hierarchy_view",
+                "geographic_level",
+                "geography",
+            ],
+            {
+                "year",
+                "corpus_view",
+                "hierarchy_view",
+                "geographic_level",
+                "geography",
+                "full_work_count",
+                "fractional_work_count",
+            },
+            "year",
+        ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],
             {"year", "topic_family", "full_count", "fractional_count"},
@@ -260,7 +358,7 @@ def build_dashboard_bundle(
     hashes = {name: metrics[name]["checksum_sha256"] for name in sorted(metrics)}
     payload = {
         "schema_version": 1,
-        "data_version": "gisnet-0.1.0-2026-08-15",
+        "data_version": "gisnet-0.1.0-2026-08-28",
         "methods_version": _STAGE_VERSION,
         "generated_at_utc": _timestamp(),
         "source_policy": "processed aggregate datasets only; no API requests during viewing",
@@ -269,9 +367,31 @@ def build_dashboard_bundle(
         "corpus_human_review_complete": False,
         "corpus_scientific_status": "blocked_pending_human_corpus_review",
         "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
-        "geographic_comparison_metric": (
-            "local collaboration endpoint share; internal links contribute two endpoints"
-        ),
+        "geographic_flow_explorer": {
+            "policy_version": _GEOGRAPHIC_FLOW_VERSION,
+            "supported_levels": ["macro_region", "subregion", "country"],
+            "supported_metrics": ["volume", "partner_share", "normalized_intensity"],
+            "time_window": "inclusive complete calendar years from 2010 through 2025",
+            "partner_share_definition": (
+                "selected endpoint weight divided by all selected endpoint weight attached to "
+                "the source geography; an internal flow contributes two source endpoints"
+            ),
+            "normalized_intensity_definition": (
+                "fractional collaboration weight divided by the geometric mean of source and "
+                "target full institutional Work-count denominators under the same scope"
+            ),
+            "anchor_method": (
+                "unweighted spherical mean of distinct organization coordinates supplied by "
+                "OpenAlex; display anchor only, not a geographic centroid"
+            ),
+            "coordinate_source": "OpenAlex institution metadata",
+            "coordinate_source_url": _OPENALEX_SOURCE_URL,
+            "coordinate_license": _OPENALEX_LICENSE,
+            "coordinate_license_url": _OPENALEX_LICENSE_URL,
+            "license_verified_at_utc": "2026-08-28T00:00:00Z",
+            "source_manifest": ".agent/manifests/institutions.json",
+            "source_dataset_sha256": file_sha256(paths["institutions"]),
+        },
         "tables": {
             name: {
                 "path": f"dashboard/data/{destinations[name].name}",
@@ -282,8 +402,8 @@ def build_dashboard_bundle(
         },
         "known_limitations": [
             "Institution coordinate coverage is reported per view; coordinates are never invented.",
-            "Country and region maps use proportional endpoint shares by default; "
-            "absolute weights remain available in details.",
+            "Geographic anchors are research-institution coordinate means for display, not "
+            "geometric or political centroids.",
             "Network and Topic pages use a thresholded 500-node core and top 1,000 edges per view.",
             "The Topic registry is provisional and has not received human review.",
             "The corpus-boundary annotation sample is unlabelled and awaits human review.",
@@ -419,6 +539,145 @@ def _write_geography_dimensions(
               AND macro_region IS NOT NULL
               AND subregion IS NOT NULL
             ORDER BY country_code
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(complete_nodes_path)],
+    )
+
+
+def _write_geography_anchors(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    complete_nodes_path: Path,
+    institutions_path: Path,
+    destination: Path,
+    source_dataset_sha256: str,
+) -> None:
+    """Write versioned display anchors from distinct source-provided institution coordinates."""
+    connection.execute(
+        f"""
+        COPY (
+            WITH node_geography AS (
+                SELECT DISTINCT
+                    institution_id,
+                    country_code,
+                    country_name,
+                    macro_region,
+                    subregion,
+                    latitude,
+                    longitude
+                FROM read_parquet(?)
+                WHERE hierarchy_view = 'organization'
+                  AND latitude IS NOT NULL
+                  AND longitude IS NOT NULL
+            ), sourced AS (
+                SELECT node_geography.*, institutions.coordinate_source
+                FROM node_geography
+                INNER JOIN read_parquet(?) institutions USING (institution_id)
+                WHERE institutions.coordinate_source IS NOT NULL
+            ), expanded AS (
+                SELECT
+                    institution_id,
+                    latitude,
+                    longitude,
+                    coordinate_source,
+                    unnest([
+                        {{'geographic_level': 'macro_region',
+                          'geography': macro_region,
+                          'display_name': macro_region}},
+                        {{'geographic_level': 'subregion',
+                          'geography': subregion,
+                          'display_name': subregion}},
+                        {{'geographic_level': 'country',
+                          'geography': country_code,
+                          'display_name': country_name}}
+                    ]) AS anchor
+                FROM sourced
+            ), components AS (
+                SELECT
+                    anchor.geographic_level AS geographic_level,
+                    anchor.geography AS geography,
+                    min(anchor.display_name) AS display_name,
+                    avg(cos(radians(latitude)) * cos(radians(longitude))) AS mean_x,
+                    avg(cos(radians(latitude)) * sin(radians(longitude))) AS mean_y,
+                    avg(sin(radians(latitude))) AS mean_z,
+                    count(DISTINCT institution_id)::BIGINT AS supporting_institution_count,
+                    count(*)::BIGINT AS source_coordinate_count,
+                    string_agg(
+                        DISTINCT coordinate_source,
+                        '|' ORDER BY coordinate_source
+                    ) AS coordinate_source
+                FROM expanded
+                WHERE anchor.geography IS NOT NULL
+                GROUP BY anchor.geographic_level, anchor.geography
+            )
+            SELECT
+                geographic_level,
+                geography,
+                display_name,
+                degrees(atan2(mean_z, sqrt(mean_x * mean_x + mean_y * mean_y))) AS latitude,
+                degrees(atan2(mean_y, mean_x)) AS longitude,
+                supporting_institution_count,
+                source_coordinate_count,
+                coordinate_source,
+                'unweighted spherical mean of distinct sourced organization coordinates'
+                    AS anchor_method,
+                '{_GEOGRAPHIC_FLOW_VERSION}' AS anchor_policy_version,
+                'OpenAlex institution metadata' AS coordinate_source_dataset,
+                '{_OPENALEX_SOURCE_URL}' AS coordinate_source_url,
+                '{_OPENALEX_LICENSE}' AS coordinate_license,
+                '{_OPENALEX_LICENSE_URL}' AS coordinate_license_url,
+                '.agent/manifests/institutions.json' AS source_manifest,
+                '{source_dataset_sha256}' AS source_dataset_sha256
+            FROM components
+            ORDER BY geographic_level, geography
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(complete_nodes_path), str(institutions_path)],
+    )
+
+
+def _write_geography_outputs(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    complete_nodes_path: Path,
+    destination: Path,
+) -> None:
+    """Write exact geography-level output denominators for normalized flow intensity."""
+    connection.execute(
+        f"""
+        COPY (
+            WITH expanded AS (
+                SELECT
+                    year,
+                    corpus_view,
+                    hierarchy_view,
+                    work_count,
+                    fractional_work_count,
+                    unnest([
+                        {{'geographic_level': 'macro_region', 'geography': macro_region}},
+                        {{'geographic_level': 'subregion', 'geography': subregion}},
+                        {{'geographic_level': 'country', 'geography': country_code}}
+                    ]) AS output
+                FROM read_parquet(?)
+            )
+            SELECT
+                year,
+                corpus_view,
+                hierarchy_view,
+                output.geographic_level AS geographic_level,
+                output.geography AS geography,
+                sum(work_count)::BIGINT AS full_work_count,
+                sum(fractional_work_count) AS fractional_work_count,
+                'sum of institution Work counts under the identical annual graph scope'
+                    AS denominator_definition
+            FROM expanded
+            WHERE output.geography IS NOT NULL
+            GROUP BY year, corpus_view, hierarchy_view,
+                     output.geographic_level, output.geography
+            ORDER BY year, corpus_view, hierarchy_view, geographic_level, geography
         ) TO '{_literal(destination)}'
         (FORMAT PARQUET, COMPRESSION ZSTD)
         """,

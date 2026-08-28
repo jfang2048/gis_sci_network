@@ -169,3 +169,20 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Preserve complete-year annual outputs as the long-term historical reference. Organization and
   umbrella rolling views remain identity views; GISNET-125 must rebuild any evidence-backed school
   view from Work memberships rather than summing organization rows.
+
+
+## 2026-08-28 — Geographic Flow Explorer normalization and anchors
+
+- Treat the selected source geography as the primary analytical question and derive map and
+  selected-origin matrix modes from one directed result frame. Volume and partner share use the
+  chosen full/fractional counting method; normalized intensity remains the defined fractional flow
+  divided by the geometric mean of source/target full institutional Work-count denominators under
+  the identical corpus, hierarchy, and inclusive complete-year window.
+- Build display anchors as unweighted spherical means of distinct organization coordinates supplied
+  by OpenAlex. Version them by policy and exact institution-dataset checksum, record OpenAlex/CC0
+  provenance, and label them as research-institution display anchors rather than geographic or
+  political centroids. No coordinate is invented.
+- Keep GISNET-130 on the complete 2010-2025 annual flow layer. Do not mix the optional recent
+  partial-calendar overlay into complete-year geographic windows. GISNET-131 owns Top N/minimum
+  thresholds, calibrated arc geometry, and comparable width semantics; GISNET-130 uses constant
+  line width and exact companion values.

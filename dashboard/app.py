@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import cast
 
 import pandas as pd
 import plotly.express as px
@@ -14,8 +15,18 @@ from gisnet.visualization.dashboard_filters import (
     control_is_enabled,
     dimension_options,
     filter_geographic_view,
-    local_collaboration_profile,
     partner_share_view,
+)
+from gisnet.visualization.geographic_flows import (
+    METRIC_DEFINITIONS,
+    CountingMethod,
+    FlowMetric,
+    GeographicFlowSelection,
+    GeographicLevel,
+    build_flow_map_figure,
+    build_flow_matrix_figure,
+    build_flow_view,
+    flow_source_options,
 )
 from gisnet.visualization.network_view import visible_accessibility_sentence
 from gisnet.visualization.pair_explorer import (
@@ -29,7 +40,7 @@ DATA = ROOT / "dashboard" / "data"
 PAGES = (
     "Overview",
     "Region trends",
-    "Geographic map",
+    "Geographic flows",
     "Institutional network",
     "Institution explorer",
     "Topic-family comparison",
@@ -45,9 +56,9 @@ PAGE_DETAILS = {
         "Regional collaboration over time",
         "Partner composition and exact region flows across complete calendar years.",
     ),
-    "Geographic map": (
-        "Where collaboration stays local",
-        "Complete region and country flows first; sourced institution coordinates second.",
+    "Geographic flows": (
+        "Geographic Flow Explorer",
+        "Select one geography and trace its exact collaboration volume, share, or intensity.",
     ),
     "Institutional network": (
         "The institutional collaboration core",
@@ -397,7 +408,7 @@ region_pair = st.sidebar.selectbox(
 )
 with st.sidebar.expander(
     "Geographic and content filters",
-    expanded=page in {"Geographic map", "Institutional network"},
+    expanded=page in {"Geographic flows", "Institutional network"},
 ):
     country = st.selectbox(
         "Country",
@@ -588,7 +599,7 @@ elif page == "Region trends":
                 ],
             )
 
-elif page == "Geographic map":
+elif page == "Geographic flows":
     map_nodes = require_table("map_nodes")
     map_edges = require_table("map_edges")
     map_coverage = require_table("map_coverage")
@@ -597,163 +608,148 @@ elif page == "Geographic map":
         columns={"country_code", "country_name", "macro_region", "subregion"},
     )
     matrix = require_table("matrix")
-    current_matrix = filtered_view(matrix, year, corpus, hierarchy)
+    geography_anchors = require_table(
+        "geography_anchors",
+        columns={
+            "geographic_level",
+            "geography",
+            "display_name",
+            "latitude",
+            "longitude",
+            "anchor_method",
+            "coordinate_source",
+            "coordinate_license",
+            "coordinate_license_url",
+            "source_dataset_sha256",
+        },
+    )
+    geography_outputs = require_table(
+        "geography_outputs",
+        columns={
+            "year",
+            "corpus_view",
+            "hierarchy_view",
+            "geographic_level",
+            "geography",
+            "full_work_count",
+        },
+    )
     st.caption(
-        "The primary views below use the complete country and region flow tables, not the sparse "
-        "institution-coordinate subset. Color and bar length represent proportions rather than "
-        "absolute collaboration volume."
+        "Primary question: which geography collaborates with which geography? Both modes query "
+        "the complete annual institution-flow aggregates and show the same exact selected values."
     )
-
-    macro_profile = local_collaboration_profile(
-        current_matrix,
-        weight_column=weight_column,
-        geographic_level="macro_region",
-    )
-    macro_profile = macro_profile.loc[
-        macro_profile["geography"].isin(("Europe", "Asia", "Americas"))
-    ].copy()
-    st.subheader("Within-region collaboration share")
-    if macro_profile.empty:
-        show_empty("No macro-region collaboration profile is available for this selection.")
-    else:
-        macro_figure = px.bar(
-            macro_profile,
-            x="geography",
-            y="local_collaboration_share",
-            color="geography",
-            color_discrete_map=REGION_COLORS,
-            text="local_collaboration_share",
-            title=f"{year} local partner share — {counting.lower()} counting",
-            labels={
-                "geography": "Macro-region",
-                "local_collaboration_share": "Within-region endpoint share",
-            },
+    level_labels = {
+        "Macro-region": "macro_region",
+        "Subregion": "subregion",
+        "Country": "country",
+    }
+    metric_labels = {
+        "Collaboration volume": "volume",
+        "Partner share": "partner_share",
+        "Normalized intensity": "normalized_intensity",
+    }
+    flow_controls = st.columns([1.0, 1.35, 1.35])
+    with flow_controls[0]:
+        level_label = st.selectbox("Geographic level", tuple(level_labels))
+    with flow_controls[1]:
+        year_window = st.select_slider(
+            "Complete-year window",
+            options=years,
+            value=(years[-1], years[-1]),
         )
-        macro_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
-        macro_figure.update_yaxes(tickformat=".0%", range=[0, 1])
-        macro_figure.update_layout(showlegend=False)
-        show_chart(macro_figure, height=400)
-        with st.expander("View exact macro-region data"):
+    with flow_controls[2]:
+        flow_metric_label = st.selectbox("Flow metric", tuple(metric_labels))
+    geographic_level = cast(GeographicLevel, level_labels[level_label])
+    flow_metric = cast(FlowMetric, metric_labels[flow_metric_label])
+    start_year, end_year = (int(year_window[0]), int(year_window[1]))
+    source_options = flow_source_options(
+        matrix,
+        geography_anchors,
+        geographic_level=geographic_level,
+        start_year=start_year,
+        end_year=end_year,
+        corpus_view=corpus,
+        hierarchy_view=hierarchy,
+    )
+    source_labels = {value: label for value, label in source_options}
+    if not source_options:
+        show_empty("Choose another geographic level, window, corpus, or hierarchy.")
+    else:
+        default_source = next(
+            (value for value, _ in source_options if value == "Asia"), source_options[0][0]
+        )
+        source_geography = st.selectbox(
+            "Source geography",
+            [value for value, _ in source_options],
+            index=[value for value, _ in source_options].index(default_source),
+            format_func=lambda value: source_labels[str(value)],
+        )
+        selection = GeographicFlowSelection(
+            geographic_level=geographic_level,
+            source_geography=str(source_geography),
+            start_year=start_year,
+            end_year=end_year,
+            corpus_view=corpus,
+            hierarchy_view=hierarchy,
+            counting_method=cast(CountingMethod, counting.lower()),
+            metric=flow_metric,
+        )
+        flow_view = build_flow_view(matrix, geography_outputs, geography_anchors, selection)
+        st.caption(METRIC_DEFINITIONS[flow_metric])
+        if flow_metric == "normalized_intensity":
+            st.info(
+                "Normalized intensity always uses fractional flow by definition; the counting "
+                "control remains visible for the exact companion volumes and partner share."
+            )
+        if flow_view.empty:
+            show_empty("The selected source has no observed collaboration flow in this window.")
+        else:
+            map_tab, matrix_tab = st.tabs(["Flow map", "Origin-destination matrix"])
+            with map_tab:
+                show_chart(
+                    build_flow_map_figure(flow_view, selection),
+                    height=580,
+                    cartesian=False,
+                )
+                st.caption(
+                    "Straight lines identify all observed selected-source flows. Width is constant "
+                    "in GISNET-130; calibrated arc filtering and width semantics belong to "
+                    "GISNET-131."
+                )
+            with matrix_tab:
+                matrix_height = min(900, max(360, 34 * len(flow_view) + 180))
+                show_chart(
+                    build_flow_matrix_figure(flow_view, selection),
+                    height=matrix_height,
+                )
+                st.caption(
+                    "This selected-origin matrix row contains exactly the same destinations and "
+                    "values as the map; an absent sparse row means no observed flow, not an "
+                    "imputed zero."
+                )
+            st.subheader("Exact selected flows")
             show_data(
-                macro_profile,
+                flow_view,
                 columns=[
-                    "geography",
-                    "local_collaboration_share",
-                    "local_collaboration_weight",
-                    "external_endpoint_weight",
-                    "total_endpoint_weight",
+                    "source_geography",
+                    "source_display_name",
+                    "target_geography",
+                    "target_display_name",
+                    "selected_value",
+                    "full_count",
+                    "fractional_count",
+                    "partner_share",
+                    "normalized_intensity",
+                    "source_full_work_count",
+                    "target_full_work_count",
                 ],
             )
-
-    country_profile = local_collaboration_profile(
-        current_matrix,
-        weight_column=weight_column,
-        geographic_level="country",
-    ).rename(columns={"geography": "country_code"})
-    if not country_profile.empty and not geography_dimensions.empty:
-        country_profile = country_profile.merge(
-            geography_dimensions,
-            on="country_code",
-            how="left",
-            validate="one_to_one",
-        )
-        country_profile["country_name"] = country_profile["country_name"].fillna(
-            country_profile["country_code"]
-        )
-    st.subheader("Domestic collaboration share by country")
-    st.caption(
-        "For each country, the numerator is the weighted domestic collaboration endpoints and "
-        "the denominator is all weighted endpoints attached to that country; internal links count "
-        "twice because both institutions are local. Hover shows the denominator, so high shares "
-        "based on little activity are identifiable."
-    )
-    if country_profile.empty or "country_name" not in country_profile.columns:
-        show_empty("No country-level collaboration profile is available for this selection.")
-    else:
-        country_figure = px.choropleth(
-            country_profile,
-            locations="country_name",
-            locationmode="country names",
-            color="local_collaboration_share",
-            range_color=(0, 1),
-            color_continuous_scale=SHARE_SCALE,
-            hover_name="country_name",
-            hover_data={
-                "country_name": False,
-                "country_code": True,
-                "macro_region": True,
-                "local_collaboration_share": ":.1%",
-                "local_collaboration_weight": ":.3g",
-                "total_endpoint_weight": ":.3g",
-            },
-            labels={
-                "local_collaboration_share": "Domestic endpoint share",
-                "local_collaboration_weight": "Domestic collaboration weight",
-                "total_endpoint_weight": "All endpoint weight",
-                "macro_region": "Macro-region",
-            },
-            title=f"{year} domestic partner orientation — {counting.lower()} counting",
-        )
-        country_figure.update_geos(
-            projection_type="natural earth",
-            showframe=False,
-            showcoastlines=True,
-            coastlinecolor="#94a3b8",
-            showland=True,
-            landcolor="#f8fafc",
-        )
-        country_figure.update_coloraxes(colorbar_tickformat=".0%")
-        show_chart(country_figure, height=540, cartesian=False)
-
-    if country != "All" and not geography_dimensions.empty:
-        country_matches = geography_dimensions.loc[
-            geography_dimensions["country_name"] == country, "country_code"
-        ]
-        country_flows = partner_share_view(
-            current_matrix,
-            weight_column=weight_column,
-            geographic_level="country",
-        )
-        if not country_matches.empty and not country_flows.empty:
-            country_code = str(country_matches.iloc[0])
-            partner_rows = country_flows.loc[
-                country_flows["source_geography"] == country_code
-            ].copy()
-            partner_labels = geography_dimensions[["country_code", "country_name"]].rename(
-                columns={
-                    "country_code": "target_geography",
-                    "country_name": "partner_country",
-                }
-            )
-            partner_rows = partner_rows.merge(
-                partner_labels,
-                on="target_geography",
-                how="left",
-                validate="many_to_one",
-            )
-            partner_rows["partner_country"] = partner_rows["partner_country"].fillna(
-                partner_rows["target_geography"]
-            )
-            top_partners = partner_rows.nlargest(15, "partner_share").sort_values("partner_share")
-            st.subheader(f"Partner composition for {country}")
-            partner_figure = px.bar(
-                top_partners,
-                x="partner_share",
-                y="partner_country",
-                orientation="h",
-                text="partner_share",
-                labels={
-                    "partner_share": "Share of country collaboration endpoints",
-                    "partner_country": "Partner country",
-                },
-            )
-            partner_figure.update_traces(texttemplate="%{text:.1%}", textposition="outside")
-            partner_figure.update_xaxes(tickformat=".0%", range=[0, 1])
-            partner_figure.update_traces(marker_color="#0072B2")
-            show_chart(partner_figure, height=440)
-            if len(partner_rows) > len(top_partners):
+            anchor_policy = metadata.get("geographic_flow_explorer", {})
+            if isinstance(anchor_policy, dict):
                 st.caption(
-                    "The chart shows the 15 largest shares; the full partner row sums to 100%."
+                    f"Anchors: {anchor_policy.get('anchor_method', 'sourced display anchors')}. "
+                    f"Source/license: {anchor_policy.get('coordinate_source', 'OpenAlex')} · "
+                    f"{anchor_policy.get('coordinate_license', 'CC0')}."
                 )
 
     with st.expander("Institution-level links (optional sourced-coordinate subset)"):
