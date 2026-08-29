@@ -201,3 +201,23 @@ and its incomplete human review must be disclosed on all school-oriented results
   an outlined diamond. Macro-region labels include values directly on the map.
 - Keep the filtered flow map, filtered selected-origin matrix row, and exact displayed-flow table on
   one shared frame so thresholds cannot create cross-view numerical disagreement.
+
+## 2026-08-29 — School Ego Map period, retention, and reconciliation semantics
+
+- Query one stable canonical school ID against a dashboard-local per-school index; names remain
+  search/display labels. The complete 28,042-school index is independent of the prior 500-node and
+  1,000-edge visualization cores.
+- Retain at most 50 institution partners per school, corpus, and period by fractional count, full
+  count, and stable partner ID. Rolling rows reuse GISNET-128 exactly; the latest complete quarter
+  and year extend the same query contract from validated subannual and annual facts.
+- Interpret quarterly persistence as active publication months divided by three and annual
+  persistence as active years in the trailing fixed five-year window divided by five. Publication
+  time remains bibliographic observation time, not collaboration-start time.
+- Country and macro-region values summarize only retained institution partners: fractional volume
+  is summed, while normalized intensity and persistence use fractional-volume-weighted means.
+- Keep exact unmapped rows visible when sourced endpoint coordinates are missing. Institution
+  points use source school coordinates; geography views reuse versioned licensed display anchors.
+  No coordinate or metric is imputed.
+- Round spherical display-anchor latitude and longitude to ten decimal degrees before Parquet
+  serialization. This is far below display precision and removes parallel floating-reduction
+  jitter so identical inputs produce byte-identical anchor files.

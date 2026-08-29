@@ -43,7 +43,8 @@ semantics and snapshot rebuild instructions.
 | School Finder, partner index, and school profiles | Available |
 | Stable-ID school comparison service | Available; dashboard presentation is planned |
 | Geographic Flow Explorer | Available with thresholded, filter-comparable arcs at macro-region, subregion, and country levels |
-| School Profile UI and ego maps | Planned: GISNET-132–138 |
+| School Ego Map | Available from the complete stable-ID index with institution/country/region partners and exact tables |
+| School Finder, Profile, and comparison UI | Planned: GISNET-133–138 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 

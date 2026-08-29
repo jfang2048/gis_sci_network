@@ -1,11 +1,11 @@
 {
-  "column_entry_count": 344,
+  "column_entry_count": 420,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "dictionary_version": "public-data-dictionary-2026-08-28-v4",
-  "methods_version": "public-dashboard-bundle-2026-08-28-v7",
+  "dictionary_version": "public-data-dictionary-2026-08-29-v5",
+  "methods_version": "public-dashboard-bundle-2026-08-29-v8",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 18,
+  "table_count": 20,
   "tables": [
     {
       "code_commit": "568bbdbf6b3f",
@@ -339,7 +339,7 @@
       "transformation_command": "python -m gisnet.cli match-communities --resume"
     },
     {
-      "code_commit": "15506e5b288a",
+      "code_commit": "5ed646022421",
       "column_count": 5,
       "columns": [
         {
@@ -414,16 +414,22 @@
         ".agent/manifests/community_transitions_year.json",
         ".agent/manifests/institution_hierarchy.json",
         ".agent/manifests/institutions.json",
-        ".agent/manifests/nodes_year.json"
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
       },
       "table": "filter_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "15506e5b288a",
+      "code_commit": "5ed646022421",
       "column_count": 17,
       "columns": [
         {
@@ -574,7 +580,7 @@
         "geography"
       ],
       "row_count": 162,
-      "sha256": "510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b",
+      "sha256": "9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354",
       "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
       "source_manifests": [
         ".agent/manifests/trend_series_year.json",
@@ -591,16 +597,22 @@
         ".agent/manifests/community_transitions_year.json",
         ".agent/manifests/institution_hierarchy.json",
         ".agent/manifests/institutions.json",
-        ".agent/manifests/nodes_year.json"
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
       },
       "table": "geography_anchors",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "15506e5b288a",
+      "code_commit": "5ed646022421",
       "column_count": 4,
       "columns": [
         {
@@ -663,16 +675,22 @@
         ".agent/manifests/community_transitions_year.json",
         ".agent/manifests/institution_hierarchy.json",
         ".agent/manifests/institutions.json",
-        ".agent/manifests/nodes_year.json"
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
       },
       "table": "geography_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "15506e5b288a",
+      "code_commit": "5ed646022421",
       "column_count": 8,
       "columns": [
         {
@@ -771,10 +789,16 @@
         ".agent/manifests/community_transitions_year.json",
         ".agent/manifests/institution_hierarchy.json",
         ".agent/manifests/institutions.json",
-        ".agent/manifests/nodes_year.json"
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-28-v7"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
       },
       "table": "geography_outputs",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
@@ -2973,6 +2997,709 @@
       },
       "table": "network_nodes",
       "transformation_command": "python -m gisnet.cli build-network-view --resume"
+    },
+    {
+      "code_commit": "5ed646022421",
+      "column_count": 43,
+      "columns": [
+        {
+          "description": "Temporal basis: rolling month window, complete quarter, or complete year.",
+          "name": "time_basis",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable key identifying the exact displayed temporal period.",
+          "name": "period_key",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Human-readable exact temporal period label.",
+          "name": "period_label",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive first publication month in the selected period.",
+          "name": "period_start",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive last publication month in the selected period.",
+          "name": "period_end",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of publication months represented by the selected period.",
+          "name": "window_months",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Observation unit counted by the persistence denominator.",
+          "name": "persistence_unit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Fixed month or year count used by the persistence calculation.",
+          "name": "persistence_denominator",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Exact stored definition of the period-specific persistence value.",
+          "name": "persistence_definition",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: organization or documented umbrella.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable canonical school identifier used for entity-first dashboard selection.",
+          "name": "school_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Display name of the selected stable-ID school.",
+          "name": "school_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen source-school country code.",
+          "name": "school_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen source-school country display name.",
+          "name": "school_country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen source-school macro-region.",
+          "name": "school_macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen source-school subregion.",
+          "name": "school_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided latitude for the selected school; never imputed.",
+          "name": "school_latitude",
+          "null_count": 787,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided longitude for the selected school; never imputed.",
+          "name": "school_longitude",
+          "null_count": 787,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source label recorded with the selected-school coordinates.",
+          "name": "school_coordinate_source",
+          "null_count": 787,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Stable canonical school identifier of the retained partner.",
+          "name": "partner_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Display name of the retained partner school.",
+          "name": "partner_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen retained-partner country code.",
+          "name": "partner_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen retained-partner country display name.",
+          "name": "partner_country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen retained-partner macro-region.",
+          "name": "partner_macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen retained-partner subregion.",
+          "name": "partner_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided retained-partner latitude; never imputed.",
+          "name": "partner_latitude",
+          "null_count": 433,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided retained-partner longitude; never imputed.",
+          "name": "partner_longitude",
+          "null_count": 433,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source label recorded with retained-partner coordinates.",
+          "name": "partner_coordinate_source",
+          "null_count": 433,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Number of distinct source Work identifiers contributing to the row.",
+          "name": "distinct_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "source_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "name": "target_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight divided by geometric-mean institutional output.",
+          "name": "normalized_intensity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Active publication months or years in the persistence numerator.",
+          "name": "active_period_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Active-period count divided by the disclosed fixed period denominator.",
+          "name": "persistence",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "One-based retained rank by fractional count, full count, then stable partner ID.",
+          "name": "partner_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Observed publication months divided by eligible months for the period.",
+          "name": "coverage_ratio",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Whether the selected temporal period has complete declared coverage.",
+          "name": "is_complete_period",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Whether the full fixed persistence denominator is available for this row.",
+          "name": "persistence_is_complete",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Named validated source or extension supplying the retained row.",
+          "name": "source_partner_index",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the row has sufficient validated source support for this view.",
+          "name": "support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Predicate-friendly retained partner rows for stable-ID school ego maps across the latest rolling 12/24/36-month, complete-quarter, and complete-year periods.",
+      "known_data_quality_issue": "Country and macro-region views aggregate only these retained institution partners; missing source coordinates remain in exact companion rows but cannot be mapped.",
+      "path": "dashboard/data/school_ego_partners.parquet",
+      "primary_key": [
+        "period_key",
+        "corpus_view",
+        "school_id",
+        "partner_id"
+      ],
+      "row_count": 1388052,
+      "sha256": "18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+      },
+      "table": "school_ego_partners",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "5ed646022421",
+      "column_count": 33,
+      "columns": [
+        {
+          "description": "Stable canonical school identifier used for entity-first dashboard selection.",
+          "name": "school_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable source institution identifier used as the node key.",
+          "name": "institution_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Sorted source-linked alternative names retained for explicit search.",
+          "name": "alternative_names",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Deterministic display and alternative-name candidates used for search.",
+          "name": "search_names",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Whether at least one normalized search name resolves to multiple eligible schools.",
+          "name": "has_ambiguous_name_match",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Source country code associated with the institution.",
+          "name": "country_code",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen country or territory display name.",
+          "name": "country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style subregion analytical grouping.",
+          "name": "subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Configured analytical category for the source institution type.",
+          "name": "institution_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the row is in focal or retained contextual geographic scope.",
+          "name": "analytical_scope",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stable source OpenAlex institution identifier.",
+          "name": "openalex_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-linked Research Organization Registry identifier, when available.",
+          "name": "ror_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided institution latitude; never imputed.",
+          "name": "latitude",
+          "null_count": 16,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source-provided institution longitude; never imputed.",
+          "name": "longitude",
+          "null_count": 16,
+          "null_semantics": "Null means no source-provided coordinate is available; no value is imputed.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Source label recorded with the contributing coordinate values.",
+          "name": "coordinate_source",
+          "null_count": 16,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Whether both source-provided latitude and longitude are available.",
+          "name": "has_coordinates",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Earliest valid publication date observed for the school.",
+          "name": "first_observed_date",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Latest valid publication date observed for the school.",
+          "name": "last_observed_date",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Latest complete publication month supported by the source facts.",
+          "name": "latest_supported_month",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Complete historical Broad-corpus Work count for the school.",
+          "name": "broad_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Complete historical Strict-corpus Work count for the school.",
+          "name": "strict_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Broad-corpus Work count in the declared latest 24-month window.",
+          "name": "recent_24m_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Sorted distinct configured Topic families observed on contributing Works.",
+          "name": "topic_families",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Exact-date-eligible Works divided by all eligible Works for the school.",
+          "name": "date_coverage_ratio",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Audited school-identity resolution status.",
+          "name": "identity_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Evidence-bounded identity-resolution confidence label.",
+          "name": "identity_resolution_confidence",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Sorted identity caveats retained for the school.",
+          "name": "identity_quality_flags",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Eligibility result under the school-decision analytical contract.",
+          "name": "eligibility_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the row has sufficient validated source support for this view.",
+          "name": "support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the school appears in any prior thresholded fixed-layout network node table.",
+          "name": "in_prior_visualization_core",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Whether the GISNET-128 rolling per-school index retains at least one partner.",
+          "name": "has_retained_ego_partners",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Complete eligible stable-ID school search index independent of global map and network visualization thresholds.",
+      "known_data_quality_issue": "School is concise interface language for an eligible university or research institution and does not imply degree-granting status or research quality.",
+      "path": "dashboard/data/school_index.parquet",
+      "primary_key": [
+        "school_id"
+      ],
+      "row_count": 28042,
+      "sha256": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+      },
+      "table": "school_index",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
       "code_commit": "568bbdbf6b3f",

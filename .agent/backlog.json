@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-28T20:44:16Z",
+  "last_updated_utc": "2026-08-29T10:18:15Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2033,12 +2033,27 @@
         "GISNET-128",
         "GISNET-131"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-28T21:56:34Z",
+          "from": "TODO",
+          "reason": "Building a complete-index School Ego Map backed by a dashboard-local per-school partner index for latest rolling 12/24/36-month, quarterly, and annual periods, with stable-ID search, sourced coordinates, institution/country/region views, exact metrics, and predicate-pushed lookup.",
+          "run_id": "20260828T215634Z_5ed646022421",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-29T10:18:15Z",
+          "from": "IN_PROGRESS",
+          "reason": "GISNET-132 acceptance passed: the School Ego Map searches the complete stable-ID school index, queries retained per-school partners independently of global visualization cores, supports rolling 12/24/36-month plus latest complete-quarter and complete-year periods, renders institution/country/macro-region views for fractional volume, normalized intensity, and persistence, and reconciles every mapped value with its adjacent exact table.",
+          "run_id": "20260828T215634Z_5ed646022421",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-132",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "GISNET-132 acceptance passed: the School Ego Map searches the complete stable-ID school index, queries retained per-school partners independently of global visualization cores, supports rolling 12/24/36-month plus latest complete-quarter and complete-year periods, renders institution/country/macro-region views for fractional volume, normalized intensity, and persistence, and reconciles every mapped value with its adjacent exact table.",
+      "status_updated_at_utc": "2026-08-29T10:18:15Z",
       "title": "Build School Ego Map",
       "work": [
         "Center on one school and show its partner institutions, countries, and regions.",

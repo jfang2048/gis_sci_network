@@ -37,11 +37,21 @@ from gisnet.visualization.pair_explorer import (
     identity_rows,
     institution_labels,
 )
+from gisnet.visualization.school_ego_map import (
+    EGO_METRIC_LABELS,
+    SchoolEgoLevel,
+    SchoolEgoMetric,
+    SchoolEgoSelection,
+    build_school_ego_map_figure,
+    build_school_ego_view,
+    query_school_ego_partners,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dashboard" / "data"
 PAGES = (
     "Overview",
+    "School Ego Map",
     "Region trends",
     "Geographic flows",
     "Institutional network",
@@ -54,6 +64,11 @@ PAGE_DETAILS = {
     "Overview": (
         "A global view of GIS collaboration",
         "Scale, structure, and regional orientation in the selected complete year.",
+    ),
+    "School Ego Map": (
+        "One school and its exact collaboration partners",
+        "Search the complete stable-ID index, then compare retained institution, country, or "
+        "macro-region partners without global visualization thresholds.",
     ),
     "Region trends": (
         "Regional collaboration over time",
@@ -130,6 +145,13 @@ HUMAN_LABELS = {
     "persistence_5y": "Persistence (5y)",
     "topic_families": "Topic families",
     "work_ids_sample": "Supporting Work IDs",
+    "display_rank": "Rank",
+    "target_id": "Stable partner ID",
+    "target_name": "Partner",
+    "target_country_name": "Partner country",
+    "target_macro_region": "Partner macro-region",
+    "selected_value": "Selected exact value",
+    "institution_partner_count": "Retained institution partners",
 }
 
 st.set_page_config(
@@ -522,6 +544,215 @@ if page == "Overview":
         "Read shares as collaboration composition, not productivity or causal impact. "
         "Exact values, checksums, and limitations are available on Data quality."
     )
+
+elif page == "School Ego Map":
+    school_index = require_table(
+        "school_index",
+        columns={
+            "school_id",
+            "display_name",
+            "country_name",
+            "macro_region",
+            "recent_24m_work_count",
+            "date_coverage_ratio",
+            "in_prior_visualization_core",
+            "has_retained_ego_partners",
+        },
+    )
+    school_policy = metadata.get("school_ego_map")
+    if not isinstance(school_policy, dict):
+        st.error("The dashboard metadata lacks the School Ego Map contract. Rebuild the bundle.")
+        st.stop()
+    period_rows = school_policy.get("periods")
+    if not isinstance(period_rows, list) or not period_rows:
+        st.error("The dashboard metadata has no supported School Ego Map periods.")
+        st.stop()
+    periods = {
+        str(row["period_key"]): str(row["period_label"])
+        for row in period_rows
+        if isinstance(row, dict) and "period_key" in row and "period_label" in row
+    }
+    if not periods:
+        st.error("The dashboard metadata has no valid School Ego Map period labels.")
+        st.stop()
+
+    school_rows = school_index.sort_values(
+        ["display_name", "school_id"], kind="stable"
+    ).reset_index(drop=True)
+    school_options = [str(value) for value in school_rows["school_id"]]
+    school_labels = {
+        str(row.school_id): (
+            f"{row.display_name} · {row.country_name or 'Unknown country'} · {row.school_id}"
+        )
+        for row in school_rows.itertuples(index=False)
+    }
+    defaults = school_rows.loc[school_rows["has_retained_ego_partners"].astype(bool)].sort_values(
+        ["recent_24m_work_count", "display_name", "school_id"],
+        ascending=[False, True, True],
+        kind="stable",
+    )
+    default_school = str(defaults.iloc[0]["school_id"]) if not defaults.empty else school_options[0]
+    selected_school_id = st.selectbox(
+        "School (type a name, country, or stable ID)",
+        school_options,
+        index=school_options.index(default_school),
+        format_func=school_labels.get,
+        help=(
+            "Search covers the complete eligible school index. Names are labels; the selected "
+            "stable ID is the query key."
+        ),
+    )
+    selected_school = school_rows.loc[
+        school_rows["school_id"].astype(str) == selected_school_id
+    ].iloc[0]
+    identity_columns = st.columns(4)
+    identity_columns[0].metric("Stable school ID", selected_school_id)
+    identity_columns[1].metric("Country", str(selected_school["country_name"]))
+    identity_columns[2].metric("Macro-region", str(selected_school["macro_region"]))
+    identity_columns[3].metric(
+        "Exact-date coverage", f"{float(selected_school['date_coverage_ratio']):.1%}"
+    )
+    if not bool(selected_school["in_prior_visualization_core"]):
+        st.success(
+            "This school is outside the prior thresholded visualization core. Its partners remain "
+            "available because this page queries the per-school index directly."
+        )
+
+    control_columns = st.columns(4)
+    selected_period = control_columns[0].selectbox(
+        "Collaboration period",
+        tuple(periods),
+        format_func=periods.get,
+    )
+    level_labels = {
+        "Partner institutions": "institution",
+        "Partner countries": "country",
+        "Partner macro-regions": "macro_region",
+    }
+    selected_level_label = control_columns[1].selectbox("Partner level", tuple(level_labels))
+    metric_by_label = {label: metric for metric, label in EGO_METRIC_LABELS.items()}
+    selected_metric_label = control_columns[2].selectbox("Ego-map metric", tuple(metric_by_label))
+    top_n = int(
+        control_columns[3].number_input(
+            "Top partners",
+            min_value=1,
+            max_value=int(school_policy.get("retained_partner_limit_per_school_period", 50)),
+            value=12,
+            step=1,
+        )
+    )
+    selection = SchoolEgoSelection(
+        school_id=selected_school_id,
+        corpus_view=corpus,
+        period_key=selected_period,
+        level=cast(SchoolEgoLevel, level_labels[selected_level_label]),
+        metric=cast(SchoolEgoMetric, metric_by_label[selected_metric_label]),
+        top_n=top_n,
+    )
+    partners = query_school_ego_partners(
+        DATA / "school_ego_partners.parquet",
+        school_id=selection.school_id,
+        corpus_view=selection.corpus_view,
+        period_key=selection.period_key,
+    )
+    if partners.empty:
+        show_empty(
+            "This exact school, corpus, and period has no retained collaboration partner. "
+            "Choose another corpus or period; no missing value is imputed."
+        )
+    else:
+        geography_anchors = require_table(
+            "geography_anchors",
+            columns={
+                "geographic_level",
+                "geography",
+                "latitude",
+                "longitude",
+                "coordinate_source",
+            },
+        )
+        ego_view = build_school_ego_view(partners, geography_anchors, selection)
+        mapped_view = ego_view.loc[ego_view["is_mappable"].astype(bool)].copy()
+        unmapped_view = ego_view.loc[~ego_view["is_mappable"].astype(bool)].copy()
+        display_metrics = st.columns(4)
+        display_metrics[0].metric("Retained partner rows", len(ego_view))
+        display_metrics[1].metric("Mapped partner rows", len(mapped_view))
+        display_metrics[2].metric("Unmapped exact rows", len(unmapped_view))
+        display_metrics[3].metric("Period", periods[selected_period])
+
+        map_column, table_column = st.columns((1.65, 1.0))
+        with map_column:
+            st.subheader("School-centered partner map")
+            if mapped_view.empty:
+                st.info(
+                    "No selected row has both source and target sourced coordinates. Exact "
+                    "unmapped partner values remain available below."
+                )
+            else:
+                show_chart(
+                    build_school_ego_map_figure(mapped_view, selection),
+                    height=610,
+                    cartesian=False,
+                )
+        exact_columns = [
+            "display_rank",
+            "target_name",
+            "target_id",
+            "target_country_name",
+            "target_macro_region",
+            "selected_value",
+            "fractional_count",
+            "normalized_intensity",
+            "persistence",
+            "institution_partner_count",
+        ]
+        with table_column:
+            st.subheader("Exact mapped partners")
+            if mapped_view.empty:
+                st.caption("No rows can be mapped with sourced endpoint coordinates.")
+            else:
+                show_data(mapped_view, columns=exact_columns)
+        st.caption(
+            "Every arc and marker uses the same exact selected value shown in the adjacent mapped "
+            "table. Stable source and partner IDs remain visible; Top partners reranks only the "
+            "retained per-school rows and never consults a global edge threshold."
+        )
+        if not unmapped_view.empty:
+            with st.expander("Exact partners without complete sourced coordinates"):
+                show_data(unmapped_view, columns=exact_columns)
+                st.caption(
+                    "These rows are retained in the exact result but cannot be drawn; "
+                    "no coordinate is guessed or imputed."
+                )
+        with st.expander("Metric, period, and source details"):
+            detail_columns = [
+                column
+                for column in (
+                    "period_label",
+                    "time_basis",
+                    "source_id",
+                    "source_name",
+                    "target_id",
+                    "target_name",
+                    "full_count",
+                    "fractional_count",
+                    "source_work_count",
+                    "target_work_count",
+                    "normalized_intensity",
+                    "persistence",
+                    "persistence_definition",
+                    "source_partner_index",
+                    "metric_definition",
+                    "line_width_definition",
+                )
+                if column in ego_view.columns
+            ]
+            show_data(ego_view, columns=detail_columns)
+            st.caption(
+                "Country and macro-region rows aggregate only retained institution partners. "
+                "Fractional volume is summed; normalized intensity and persistence are "
+                "fractional-volume-weighted means."
+            )
 
 elif page == "Region trends":
     matrix = require_table("matrix")

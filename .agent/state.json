@@ -69,7 +69,8 @@
     "GISNET-127",
     "GISNET-129",
     "GISNET-130",
-    "GISNET-131"
+    "GISNET-131",
+    "GISNET-132"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -176,7 +177,9 @@
     "rolling_reconciliation": ".agent/manifests/rolling_reconciliation.json",
     "rolling_temporal_summary": ".agent/manifests/rolling_temporal_summary.json",
     "rolling_window_coverage": ".agent/manifests/rolling_window_coverage.json",
+    "school_dashboard_index": ".agent/manifests/dashboard_bundle_summary.json",
     "school_decision_contract": ".agent/manifests/school_decision_contract.json",
+    "school_ego_partners": ".agent/manifests/dashboard_bundle_summary.json",
     "school_identities": ".agent/manifests/school_identities.json",
     "school_identity_audit": ".agent/manifests/school_identity_audit.json",
     "school_identity_summary": ".agent/manifests/school_identity_summary.json",
@@ -224,11 +227,13 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260828T203206Z_15506e5b288a",
-  "last_updated_utc": "2026-08-28T20:44:16Z",
+  "last_successful_run_id": "20260828T215634Z_5ed646022421",
+  "last_updated_utc": "2026-08-29T10:20:45Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
+    "dashboard_bundle": "public-dashboard-bundle-2026-08-29-v8",
+    "geographic_display_anchors": "geographic-display-anchors-2026-08-29-v3",
     "geographic_flow_arcs": "geographic-flow-arcs-2026-08-28-v1",
     "geographic_flow_explorer": "geographic-flow-explorer-2026-08-28-v2",
     "openalex_institution_coordinate_license": "CC0-official-verified-2026-08-28",
@@ -239,7 +244,9 @@
     "openalex_work_types": "retrieved-2026-08-05",
     "openalex_works": "retrieved-2026-08-05",
     "openalex_works_preview": "retrieved-2026-08-05",
+    "public_data_dictionary": "public-data-dictionary-2026-08-29-v5",
     "ror": "ror-schema-v2.1-bounded-retrieval-2026-08-05",
+    "school_ego_map": "school-ego-map-2026-08-29-v1",
     "un_m49": "un-m49-retrieved-2026-08-05"
   }
 }

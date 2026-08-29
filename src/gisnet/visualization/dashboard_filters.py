@@ -13,6 +13,7 @@ CONTROL_APPLICABILITY: dict[str, frozenset[str]] = {
     "Region trends": frozenset(
         {"Year", "Corpus view", "Hierarchy view", "Counting method", "Macro-region pair"}
     ),
+    "School Ego Map": frozenset({"Corpus view"}),
     "Geographic flows": frozenset(
         {
             "Corpus view",

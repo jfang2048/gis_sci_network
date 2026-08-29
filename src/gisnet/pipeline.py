@@ -417,7 +417,7 @@ DEFAULT_STAGES: tuple[PipelineStage, ...] = (
         "build-dashboard-data",
         (_output("dashboard_bundle_summary", "data/reference/dashboard_bundle_summary.json"),),
         bundle_metadata=Path("dashboard/data/metadata.json"),
-        policy_versions=(("dashboard_bundle_policy", "public-dashboard-bundle-2026-08-28-v7"),),
+        policy_versions=(("dashboard_bundle_policy", "public-dashboard-bundle-2026-08-29-v8"),),
     ),
 )
 

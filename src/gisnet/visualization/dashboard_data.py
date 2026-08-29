@@ -14,8 +14,11 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-28-v7"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-29-v8"
 _GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v2"
+_GEOGRAPHIC_ANCHOR_VERSION = "geographic-display-anchors-2026-08-29-v3"
+_SCHOOL_EGO_VERSION = "school-ego-map-2026-08-29-v1"
+_SCHOOL_EGO_TOP_K = 50
 _OPENALEX_LICENSE = "CC0 1.0 Universal"
 _OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
 _OPENALEX_SOURCE_URL = "https://openalex.org/"
@@ -44,7 +47,17 @@ def build_dashboard_bundle(
         "community_continuity",
         "community_transitions",
     }
-    required = copied_sources | {"institution_hierarchy", "institutions", "complete_nodes"}
+    required = copied_sources | {
+        "institution_hierarchy",
+        "institutions",
+        "complete_nodes",
+        "school_index",
+        "school_partners",
+        "annual_edges",
+        "quarter_edges",
+        "month_edges",
+        "quarter_outputs",
+    }
     missing = required.difference(sources)
     if missing:
         raise ValueError(f"dashboard bundle lacks sources: {sorted(missing)}")
@@ -61,6 +74,8 @@ def build_dashboard_bundle(
     destinations["geography_dimensions"] = output / "geography_dimensions.parquet"
     destinations["geography_anchors"] = output / "geography_anchors.parquet"
     destinations["geography_outputs"] = output / "geography_outputs.parquet"
+    destinations["school_index"] = output / "school_index.parquet"
+    destinations["school_ego_partners"] = output / "school_ego_partners.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -97,6 +112,24 @@ def build_dashboard_bundle(
             connection,
             complete_nodes_path=paths["complete_nodes"],
             destination=temporary["geography_outputs"],
+        )
+        _write_school_dashboard_index(
+            connection,
+            school_index_path=paths["school_index"],
+            rolling_partner_path=paths["school_partners"],
+            network_nodes_path=paths["network_nodes"],
+            destination=temporary["school_index"],
+        )
+        _write_school_ego_partners(
+            connection,
+            school_index_path=paths["school_index"],
+            rolling_partner_path=paths["school_partners"],
+            annual_edges_path=paths["annual_edges"],
+            quarter_edges_path=paths["quarter_edges"],
+            month_edges_path=paths["month_edges"],
+            quarter_outputs_path=paths["quarter_outputs"],
+            destination=temporary["school_ego_partners"],
+            top_k=_SCHOOL_EGO_TOP_K,
         )
         connection.execute(
             f"""
@@ -341,6 +374,45 @@ def build_dashboard_bundle(
             },
             "year",
         ),
+        "school_index": (
+            ["school_id"],
+            {
+                "school_id",
+                "display_name",
+                "country_code",
+                "macro_region",
+                "institution_category",
+                "latitude",
+                "longitude",
+                "has_coordinates",
+                "in_prior_visualization_core",
+                "has_retained_ego_partners",
+            },
+            None,
+        ),
+        "school_ego_partners": (
+            ["period_key", "corpus_view", "school_id", "partner_id"],
+            {
+                "time_basis",
+                "period_key",
+                "period_label",
+                "corpus_view",
+                "school_id",
+                "school_name",
+                "partner_id",
+                "partner_name",
+                "fractional_count",
+                "normalized_intensity",
+                "persistence",
+                "partner_rank",
+                "school_latitude",
+                "school_longitude",
+                "partner_latitude",
+                "partner_longitude",
+                "source_partner_index",
+            },
+            None,
+        ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],
             {"year", "topic_family", "full_count", "fractional_count"},
@@ -357,6 +429,63 @@ def build_dashboard_bundle(
             year_column=year_column,
         )
     hashes = {name: metrics[name]["checksum_sha256"] for name in sorted(metrics)}
+    metadata_connection = duckdb.connect()
+    try:
+        ego_period_rows = metadata_connection.execute(
+            """
+            SELECT DISTINCT
+                time_basis, period_key, period_label, period_start, period_end,
+                window_months, persistence_unit, persistence_denominator,
+                persistence_definition
+            FROM read_parquet(?)
+            ORDER BY
+                CASE period_key
+                    WHEN 'rolling_24m' THEN 1
+                    WHEN 'rolling_12m' THEN 2
+                    WHEN 'rolling_36m' THEN 3
+                    ELSE CASE time_basis WHEN 'quarterly' THEN 4 ELSE 5 END
+                END,
+                period_key
+            """,
+            [str(temporary["school_ego_partners"])],
+        ).fetchall()
+        outside_core_ego_schools = metadata_connection.execute(
+            """
+            SELECT count(*)
+            FROM read_parquet(?)
+            WHERE has_retained_ego_partners AND NOT in_prior_visualization_core
+            """,
+            [str(temporary["school_index"])],
+        ).fetchone()
+        ego_coordinate_coverage = metadata_connection.execute(
+            """
+            SELECT count(*) AS row_count,
+                   count(*) FILTER (
+                       WHERE school_latitude IS NOT NULL AND school_longitude IS NOT NULL
+                         AND partner_latitude IS NOT NULL AND partner_longitude IS NOT NULL
+                   ) AS mapped_row_count
+            FROM read_parquet(?)
+            """,
+            [str(temporary["school_ego_partners"])],
+        ).fetchone()
+    finally:
+        metadata_connection.close()
+    if outside_core_ego_schools is None or ego_coordinate_coverage is None:
+        raise ValueError("School Ego Map dashboard metadata could not be derived")
+    ego_periods = [
+        {
+            "time_basis": str(row[0]),
+            "period_key": str(row[1]),
+            "period_label": str(row[2]),
+            "period_start": str(row[3]),
+            "period_end": str(row[4]),
+            "window_months": int(row[5]),
+            "persistence_unit": str(row[6]),
+            "persistence_denominator": int(row[7]),
+            "persistence_definition": str(row[8]),
+        }
+        for row in ego_period_rows
+    ]
     payload = {
         "schema_version": 1,
         "data_version": "gisnet-0.1.0-2026-08-28",
@@ -415,6 +544,49 @@ def build_dashboard_bundle(
             "license_verified_at_utc": "2026-08-28T00:00:00Z",
             "source_manifest": ".agent/manifests/institutions.json",
             "source_dataset_sha256": file_sha256(paths["institutions"]),
+        },
+        "school_ego_map": {
+            "policy_version": _SCHOOL_EGO_VERSION,
+            "identity_view": "school",
+            "source_policy": (
+                "render only per-school retained partner rows; rolling rows come from the "
+                "GISNET-128 index and latest complete quarter/annual rows extend that index "
+                "from validated exact temporal facts; global map/network thresholds are unused"
+            ),
+            "retained_partner_limit_per_school_period": _SCHOOL_EGO_TOP_K,
+            "ranking_definition": (
+                "fractional_count descending, full_count descending, stable partner ID; the UI "
+                "reranks the retained rows by the selected metric with name and ID tie-breaks"
+            ),
+            "supported_levels": ["institution", "country", "macro_region"],
+            "supported_metrics": [
+                "fractional_volume",
+                "normalized_intensity",
+                "persistence",
+            ],
+            "geography_aggregation_boundary": (
+                "country and macro-region values summarize only the retained institution partners; "
+                "fractional volume is summed while intensity and persistence are fractional-"
+                "volume-weighted means"
+            ),
+            "coordinate_policy": (
+                "school and institution points use source-provided school-index coordinates; "
+                "country and macro-region points use the versioned sourced display anchors; "
+                "missing coordinates remain in explicit unmapped companion rows"
+            ),
+            "query_policy": "DuckDB Parquet predicate pushdown by school ID, corpus, and period",
+            "periods": ego_periods,
+            "outside_prior_visualization_core_school_count": int(outside_core_ego_schools[0]),
+            "partner_row_count": int(ego_coordinate_coverage[0]),
+            "mapped_partner_row_count": int(ego_coordinate_coverage[1]),
+            "source_manifests": [
+                ".agent/manifests/school_index.json",
+                ".agent/manifests/school_partner_index.json",
+                ".agent/manifests/edges_metrics_year.json",
+                ".agent/manifests/collaboration_edges_quarter.json",
+                ".agent/manifests/collaboration_edges_month.json",
+                ".agent/manifests/institution_outputs_quarter.json",
+            ],
         },
         "tables": {
             name: {
@@ -508,8 +680,353 @@ def write_dashboard_artifact(
             ".agent/manifests/institution_hierarchy.json",
             ".agent/manifests/institutions.json",
             ".agent/manifests/nodes_year.json",
+            ".agent/manifests/school_index.json",
+            ".agent/manifests/school_partner_index.json",
+            ".agent/manifests/edges_metrics_year.json",
+            ".agent/manifests/collaboration_edges_quarter.json",
+            ".agent/manifests/collaboration_edges_month.json",
+            ".agent/manifests/institution_outputs_quarter.json",
         ],
         command=command,
+    )
+
+
+def _write_school_dashboard_index(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    school_index_path: Path,
+    rolling_partner_path: Path,
+    network_nodes_path: Path,
+    destination: Path,
+) -> None:
+    """Write the complete searchable school index independently of visualization thresholds."""
+    connection.execute(
+        f"""
+        COPY (
+            SELECT
+                s.canonical_school_id AS school_id,
+                s.institution_id,
+                s.display_name,
+                s.alternative_names,
+                s.search_names,
+                s.has_ambiguous_name_match,
+                s.country_code,
+                s.country_name,
+                s.macro_region,
+                s.subregion,
+                s.institution_category,
+                s.analytical_scope,
+                s.openalex_id,
+                s.ror_id,
+                s.latitude,
+                s.longitude,
+                s.coordinate_source,
+                s.has_coordinates,
+                s.first_observed_date,
+                s.last_observed_date,
+                s.latest_supported_month,
+                s.broad_work_count,
+                s.strict_work_count,
+                s.recent_24m_work_count,
+                s.topic_families,
+                s.date_coverage_ratio,
+                s.identity_status,
+                s.identity_resolution_confidence,
+                s.identity_quality_flags,
+                s.eligibility_status,
+                s.support_status,
+                EXISTS (
+                    SELECT 1 FROM read_parquet('{_literal(network_nodes_path)}') n
+                    WHERE n.institution_id = s.canonical_school_id
+                ) AS in_prior_visualization_core,
+                EXISTS (
+                    SELECT 1 FROM read_parquet('{_literal(rolling_partner_path)}') p
+                    WHERE p.school_id = s.canonical_school_id
+                ) AS has_retained_ego_partners
+            FROM read_parquet('{_literal(school_index_path)}') s
+            ORDER BY lower(s.display_name), s.canonical_school_id
+        ) TO '{_literal(destination)}' (FORMAT PARQUET, COMPRESSION ZSTD)
+        """
+    )
+
+
+def _write_school_ego_partners(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    school_index_path: Path,
+    rolling_partner_path: Path,
+    annual_edges_path: Path,
+    quarter_edges_path: Path,
+    month_edges_path: Path,
+    quarter_outputs_path: Path,
+    destination: Path,
+    top_k: int,
+) -> None:
+    """Write one predicate-friendly top-partner index across supported latest periods."""
+    if top_k <= 0:
+        raise ValueError("School Ego Map top_k must be positive")
+    school_path = _literal(school_index_path)
+    rolling_path = _literal(rolling_partner_path)
+    annual_path = _literal(annual_edges_path)
+    quarter_path = _literal(quarter_edges_path)
+    month_path = _literal(month_edges_path)
+    quarter_output_path = _literal(quarter_outputs_path)
+    output_path = _literal(destination)
+    connection.execute(
+        f"""
+        COPY (
+            WITH schools AS (
+                SELECT canonical_school_id AS school_id, display_name, country_code, country_name,
+                       macro_region, subregion, latitude, longitude, coordinate_source
+                FROM read_parquet('{school_path}')
+                WHERE support_status = 'supported'
+            ), rolling AS (
+                SELECT
+                    'rolling' AS time_basis,
+                    'rolling_' || r.window_months || 'm' AS period_key,
+                    'Rolling ' || r.window_months || ' months · ' || r.window_start || ' to '
+                        || r.window_end AS period_label,
+                    r.window_start AS period_start,
+                    r.window_end AS period_end,
+                    r.window_months,
+                    'month' AS persistence_unit,
+                    r.window_months AS persistence_denominator,
+                    'active publication months divided by rolling window months'
+                        AS persistence_definition,
+                    r.corpus_view,
+                    'school' AS hierarchy_view,
+                    r.school_id,
+                    s.display_name AS school_name,
+                    s.country_code AS school_country,
+                    s.country_name AS school_country_name,
+                    s.macro_region AS school_macro_region,
+                    s.subregion AS school_subregion,
+                    s.latitude AS school_latitude,
+                    s.longitude AS school_longitude,
+                    s.coordinate_source AS school_coordinate_source,
+                    r.partner_id,
+                    p.display_name AS partner_name,
+                    p.country_code AS partner_country,
+                    p.country_name AS partner_country_name,
+                    p.macro_region AS partner_macro_region,
+                    p.subregion AS partner_subregion,
+                    p.latitude AS partner_latitude,
+                    p.longitude AS partner_longitude,
+                    p.coordinate_source AS partner_coordinate_source,
+                    r.full_count,
+                    r.fractional_count,
+                    r.distinct_work_count,
+                    r.source_work_count,
+                    r.target_work_count,
+                    r.normalized_intensity,
+                    r.active_month_count AS active_period_count,
+                    r.edge_persistence AS persistence,
+                    r.partner_rank,
+                    r.coverage_ratio,
+                    r.is_complete_window AS is_complete_period,
+                    r.is_complete_window AS persistence_is_complete,
+                    'GISNET-128 school_partner_index' AS source_partner_index,
+                    r.support_status
+                FROM read_parquet('{rolling_path}') r
+                JOIN schools s ON r.school_id = s.school_id
+                JOIN schools p ON r.partner_id = p.school_id
+            ), annual_latest AS (
+                SELECT corpus_view, max(year)::INTEGER AS period_year
+                FROM read_parquet('{annual_path}')
+                WHERE hierarchy_view = 'organization'
+                GROUP BY corpus_view
+            ), annual_base AS (
+                SELECT e.*
+                FROM read_parquet('{annual_path}') e
+                JOIN annual_latest l USING (corpus_view)
+                WHERE e.hierarchy_view = 'organization' AND e.year = l.period_year
+            ), annual_directed AS (
+                SELECT corpus_view, year, source_id AS school_id, target_id AS partner_id,
+                       full_count, fractional_count, distinct_work_count,
+                       source_work_count, target_work_count, normalized_intensity,
+                       active_years_5y AS active_period_count, persistence_5y AS persistence,
+                       NOT persistence_5y_incomplete_window AS persistence_is_complete
+                FROM annual_base
+                UNION ALL
+                SELECT corpus_view, year, target_id AS school_id, source_id AS partner_id,
+                       full_count, fractional_count, distinct_work_count,
+                       target_work_count AS source_work_count,
+                       source_work_count AS target_work_count, normalized_intensity,
+                       active_years_5y AS active_period_count, persistence_5y AS persistence,
+                       NOT persistence_5y_incomplete_window AS persistence_is_complete
+                FROM annual_base
+            ), annual_labelled AS (
+                SELECT d.*, s.display_name AS school_name,
+                       s.country_code AS school_country, s.country_name AS school_country_name,
+                       s.macro_region AS school_macro_region, s.subregion AS school_subregion,
+                       s.latitude AS school_latitude, s.longitude AS school_longitude,
+                       s.coordinate_source AS school_coordinate_source,
+                       p.display_name AS partner_name, p.country_code AS partner_country,
+                       p.country_name AS partner_country_name,
+                       p.macro_region AS partner_macro_region, p.subregion AS partner_subregion,
+                       p.latitude AS partner_latitude, p.longitude AS partner_longitude,
+                       p.coordinate_source AS partner_coordinate_source
+                FROM annual_directed d
+                JOIN schools s ON d.school_id = s.school_id
+                JOIN schools p ON d.partner_id = p.school_id
+            ), annual_ranked AS (
+                SELECT *, row_number() OVER (
+                    PARTITION BY corpus_view, school_id
+                    ORDER BY fractional_count DESC, full_count DESC, partner_id
+                )::INTEGER AS partner_rank
+                FROM annual_labelled
+            ), annual AS (
+                SELECT
+                    'annual' AS time_basis,
+                    'annual_' || year AS period_key,
+                    'Complete year ' || year AS period_label,
+                    year || '-01' AS period_start,
+                    year || '-12' AS period_end,
+                    12::INTEGER AS window_months,
+                    'year' AS persistence_unit,
+                    5::INTEGER AS persistence_denominator,
+                    'active publication years in the trailing five-year window divided by 5'
+                        AS persistence_definition,
+                    corpus_view,
+                    'school' AS hierarchy_view,
+                    school_id, school_name, school_country, school_country_name,
+                    school_macro_region, school_subregion, school_latitude, school_longitude,
+                    school_coordinate_source,
+                    partner_id, partner_name, partner_country, partner_country_name,
+                    partner_macro_region, partner_subregion, partner_latitude, partner_longitude,
+                    partner_coordinate_source,
+                    full_count, fractional_count, distinct_work_count,
+                    source_work_count, target_work_count, normalized_intensity,
+                    active_period_count, persistence, partner_rank,
+                    1.0::DOUBLE AS coverage_ratio,
+                    true AS is_complete_period,
+                    persistence_is_complete,
+                    'latest complete-year per-school extension from edges_metrics_year'
+                        AS source_partner_index,
+                    'supported' AS support_status
+                FROM annual_ranked
+                WHERE partner_rank <= {top_k}
+            ), quarter_latest AS (
+                SELECT corpus_view, max(publication_quarter) AS period_quarter
+                FROM read_parquet('{quarter_path}')
+                WHERE hierarchy_view = 'organization'
+                GROUP BY corpus_view
+            ), quarter_base AS (
+                SELECT e.*
+                FROM read_parquet('{quarter_path}') e
+                JOIN quarter_latest l USING (corpus_view)
+                WHERE e.hierarchy_view = 'organization'
+                  AND e.publication_quarter = l.period_quarter
+            ), quarter_activity AS (
+                SELECT e.corpus_view, e.source_id, e.target_id,
+                       count(*)::BIGINT AS active_period_count
+                FROM read_parquet('{month_path}') e
+                JOIN quarter_latest l ON e.corpus_view = l.corpus_view
+                WHERE e.hierarchy_view = 'organization'
+                  AND e.publication_year = cast(substr(l.period_quarter, 1, 4) AS INTEGER)
+                  AND ceil(cast(substr(e.publication_month, 6, 2) AS DOUBLE) / 3.0)::INTEGER
+                      = cast(right(l.period_quarter, 1) AS INTEGER)
+                GROUP BY e.corpus_view, e.source_id, e.target_id
+            ), quarter_outputs AS (
+                SELECT o.*
+                FROM read_parquet('{quarter_output_path}') o
+                JOIN quarter_latest l ON o.corpus_view = l.corpus_view
+                WHERE o.hierarchy_view = 'organization'
+                  AND o.publication_quarter = l.period_quarter
+            ), quarter_directed AS (
+                SELECT e.corpus_view, e.publication_quarter,
+                       e.source_id AS school_id, e.target_id AS partner_id,
+                       e.full_count, e.fractional_count, e.distinct_work_count,
+                       s.work_count AS source_work_count, t.work_count AS target_work_count,
+                       e.fractional_count / sqrt(s.work_count * t.work_count)
+                           AS normalized_intensity,
+                       coalesce(a.active_period_count, 1)::BIGINT AS active_period_count
+                FROM quarter_base e
+                JOIN quarter_outputs s ON e.corpus_view = s.corpus_view
+                    AND e.source_id = s.institution_id
+                JOIN quarter_outputs t ON e.corpus_view = t.corpus_view
+                    AND e.target_id = t.institution_id
+                LEFT JOIN quarter_activity a ON e.corpus_view = a.corpus_view
+                    AND e.source_id = a.source_id AND e.target_id = a.target_id
+                UNION ALL
+                SELECT e.corpus_view, e.publication_quarter,
+                       e.target_id AS school_id, e.source_id AS partner_id,
+                       e.full_count, e.fractional_count, e.distinct_work_count,
+                       t.work_count AS source_work_count, s.work_count AS target_work_count,
+                       e.fractional_count / sqrt(s.work_count * t.work_count)
+                           AS normalized_intensity,
+                       coalesce(a.active_period_count, 1)::BIGINT AS active_period_count
+                FROM quarter_base e
+                JOIN quarter_outputs s ON e.corpus_view = s.corpus_view
+                    AND e.source_id = s.institution_id
+                JOIN quarter_outputs t ON e.corpus_view = t.corpus_view
+                    AND e.target_id = t.institution_id
+                LEFT JOIN quarter_activity a ON e.corpus_view = a.corpus_view
+                    AND e.source_id = a.source_id AND e.target_id = a.target_id
+            ), quarter_labelled AS (
+                SELECT d.*, s.display_name AS school_name,
+                       s.country_code AS school_country, s.country_name AS school_country_name,
+                       s.macro_region AS school_macro_region, s.subregion AS school_subregion,
+                       s.latitude AS school_latitude, s.longitude AS school_longitude,
+                       s.coordinate_source AS school_coordinate_source,
+                       p.display_name AS partner_name, p.country_code AS partner_country,
+                       p.country_name AS partner_country_name,
+                       p.macro_region AS partner_macro_region, p.subregion AS partner_subregion,
+                       p.latitude AS partner_latitude, p.longitude AS partner_longitude,
+                       p.coordinate_source AS partner_coordinate_source
+                FROM quarter_directed d
+                JOIN schools s ON d.school_id = s.school_id
+                JOIN schools p ON d.partner_id = p.school_id
+            ), quarter_ranked AS (
+                SELECT *, row_number() OVER (
+                    PARTITION BY corpus_view, school_id
+                    ORDER BY fractional_count DESC, full_count DESC, partner_id
+                )::INTEGER AS partner_rank
+                FROM quarter_labelled
+            ), quarterly AS (
+                SELECT
+                    'quarterly' AS time_basis,
+                    'quarter_' || publication_quarter AS period_key,
+                    'Complete quarter ' || publication_quarter AS period_label,
+                    substr(publication_quarter, 1, 4) || '-' || lpad(cast(
+                        (cast(right(publication_quarter, 1) AS INTEGER) - 1) * 3 + 1
+                        AS VARCHAR), 2, '0') AS period_start,
+                    substr(publication_quarter, 1, 4) || '-' || lpad(cast(
+                        cast(right(publication_quarter, 1) AS INTEGER) * 3
+                        AS VARCHAR), 2, '0') AS period_end,
+                    3::INTEGER AS window_months,
+                    'month' AS persistence_unit,
+                    3::INTEGER AS persistence_denominator,
+                    'active publication months in the selected complete quarter divided by 3'
+                        AS persistence_definition,
+                    corpus_view,
+                    'school' AS hierarchy_view,
+                    school_id, school_name, school_country, school_country_name,
+                    school_macro_region, school_subregion, school_latitude, school_longitude,
+                    school_coordinate_source,
+                    partner_id, partner_name, partner_country, partner_country_name,
+                    partner_macro_region, partner_subregion, partner_latitude, partner_longitude,
+                    partner_coordinate_source,
+                    full_count, fractional_count, distinct_work_count,
+                    source_work_count, target_work_count, normalized_intensity,
+                    active_period_count,
+                    active_period_count::DOUBLE / 3.0 AS persistence,
+                    partner_rank,
+                    1.0::DOUBLE AS coverage_ratio,
+                    true AS is_complete_period,
+                    true AS persistence_is_complete,
+                    'latest complete-quarter per-school extension from exact subannual facts'
+                        AS source_partner_index,
+                    'supported' AS support_status
+                FROM quarter_ranked
+                WHERE partner_rank <= {top_k}
+            )
+            SELECT * FROM rolling
+            UNION ALL SELECT * FROM quarterly
+            UNION ALL SELECT * FROM annual
+            ORDER BY period_key, corpus_view, school_id, partner_rank, partner_id
+        ) TO '{output_path}' (FORMAT PARQUET, COMPRESSION ZSTD)
+        """
     )
 
 
@@ -645,14 +1162,18 @@ def _write_geography_anchors(
                 geography,
                 display_name,
                 macro_region,
-                degrees(atan2(mean_z, sqrt(mean_x * mean_x + mean_y * mean_y))) AS latitude,
-                degrees(atan2(mean_y, mean_x)) AS longitude,
+                round(
+                    degrees(atan2(mean_z, sqrt(mean_x * mean_x + mean_y * mean_y))),
+                    10
+                ) AS latitude,
+                round(degrees(atan2(mean_y, mean_x)), 10) AS longitude,
                 supporting_institution_count,
                 source_coordinate_count,
                 coordinate_source,
-                'unweighted spherical mean of distinct sourced organization coordinates'
+                'unweighted spherical mean of distinct sourced organization coordinates, '
+                    || 'rounded to 10 decimal degrees for deterministic serialization'
                     AS anchor_method,
-                '{_GEOGRAPHIC_FLOW_VERSION}' AS anchor_policy_version,
+                '{_GEOGRAPHIC_ANCHOR_VERSION}' AS anchor_policy_version,
                 'OpenAlex institution metadata' AS coordinate_source_dataset,
                 '{_OPENALEX_SOURCE_URL}' AS coordinate_source_url,
                 '{_OPENALEX_LICENSE}' AS coordinate_license,

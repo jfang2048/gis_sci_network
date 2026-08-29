@@ -2,19 +2,19 @@
   "categories": {
     ".agent/manifests": {
       "file_count": 131,
-      "size_bytes": 210263
+      "size_bytes": 210572
     },
     "config": {
       "file_count": 12,
       "size_bytes": 178735
     },
     "dashboard/data": {
-      "file_count": 19,
-      "size_bytes": 10301686
+      "file_count": 21,
+      "size_bytes": 44937216
     },
     "data/reference": {
       "file_count": 49,
-      "size_bytes": 1116572
+      "size_bytes": 1146393
     },
     "figures": {
       "file_count": 6,
@@ -22,10 +22,10 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 139207
+      "size_bytes": 154930
     }
   },
-  "dashboard_table_count": 18,
+  "dashboard_table_count": 20,
   "external_large_data": [
     {
       "name": "OpenAlex data",
@@ -148,17 +148,17 @@
     },
     {
       "path": ".agent/manifests/dashboard_bundle_summary.json",
-      "sha256": "8eac0d647528683a85f047fef06056bbcb8316e8bfd8bdd3342d88453c3140c7",
-      "size_bytes": 1804
+      "sha256": "0e66af0cd5e504c48d11ff4a953215caa34587ae140e7272934c2f6f2c500d90",
+      "size_bytes": 2113
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "a72babbb63612c8916cf6944738f77410d392f7d31aad0e56e7be318773674db",
+      "sha256": "539c95ae986e2975fd1b1d8d6226d5c44b1bcdb3335c7745fa95615afb5d3c6c",
       "size_bytes": 1884
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "14239e92ab27a24196ebdd2c94edf168567234fb751a7c3c1fc8a08c7e71348d",
+      "sha256": "3e4cfcb9f6d70575907bed944e67e88bc2cbca83b4aabe2f6c1f48c43ceb144d",
       "size_bytes": 1487
     },
     {
@@ -408,7 +408,7 @@
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "b66bdf1cc21b831f91c80ea50e78316d97b19f92ef3b19cdc77ae32ae07681e1",
+      "sha256": "940716bebf6ff29ee774bd0f08045498f462ab57bd283d323dbba93b226e4354",
       "size_bytes": 1487
     },
     {
@@ -773,8 +773,8 @@
     },
     {
       "path": "dashboard/data/geography_anchors.parquet",
-      "sha256": "510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b",
-      "size_bytes": 9878
+      "sha256": "9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354",
+      "size_bytes": 10190
     },
     {
       "path": "dashboard/data/geography_dimensions.parquet",
@@ -818,8 +818,8 @@
     },
     {
       "path": "dashboard/data/metadata.json",
-      "sha256": "f12a4a8ebb547a5fd893395ae01c38dfce573d2ef446aa8d291081d6d4ab4df9",
-      "size_bytes": 7059
+      "sha256": "d6e76e1e32c82a2a41e2c23f6ef4f094595a7ffbc82fd941ae46bf589e8c5f9f",
+      "size_bytes": 11432
     },
     {
       "path": "dashboard/data/network_accessibility.parquet",
@@ -835,6 +835,16 @@
       "path": "dashboard/data/network_nodes.parquet",
       "sha256": "9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7",
       "size_bytes": 998845
+    },
+    {
+      "path": "dashboard/data/school_ego_partners.parquet",
+      "sha256": "18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0",
+      "size_bytes": 31665904
+    },
+    {
+      "path": "dashboard/data/school_index.parquet",
+      "sha256": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21",
+      "size_bytes": 2964941
     },
     {
       "path": "dashboard/data/sensitivity.parquet",
@@ -903,17 +913,17 @@
     },
     {
       "path": "data/reference/dashboard_bundle_summary.json",
-      "sha256": "1b2a1695bfbd28350cdbb732c9df08ecce7829f3cec7fce3fcde71e2ccf0aa97",
-      "size_bytes": 2221
+      "sha256": "0ac303a6900455e5fe463e815dfb1783457defe212c70bdd36071463cf96244a",
+      "size_bytes": 2405
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "91976a8c36dbd3244f92348a4ec7ef8d9be0339b7afb060ed9892c9fddafe8ab",
-      "size_bytes": 130098
+      "sha256": "cd485e1b0044d653cabd3a484a1dd1a5a5c2f400e661767e9879fdda66e37459",
+      "size_bytes": 159735
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "fa9e342e4d3621ac29020059880d420a7a19849ac1c97783f3897253a4e82084",
+      "sha256": "bb051ee75ba63c6c6aa536a7d3355ec13b96e729274fe6dc9eaa110affa9fd6b",
       "size_bytes": 800
     },
     {
@@ -1133,8 +1143,8 @@
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "5500a620356975b79637245729fd933db3494e2d860cdb249f1ca6ff1cb423ec",
-      "size_bytes": 67601
+      "sha256": "b76f0a5f130b55c3ed156593b4be6ef411c41af92e863d15bd7d50fe99cda915",
+      "size_bytes": 83324
     },
     {
       "path": "outputs/reports/methodology.md",
@@ -1147,11 +1157,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-28T20:42:54Z",
+  "generated_at_utc": "2026-08-29T10:19:48Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 221,
-  "public_size_bytes": 12026467,
+  "public_file_count": 223,
+  "public_size_bytes": 46707850,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

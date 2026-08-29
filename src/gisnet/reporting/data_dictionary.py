@@ -14,7 +14,7 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-28-v4"
+_STAGE_VERSION = "public-data-dictionary-2026-08-29-v5"
 
 TABLES: dict[str, dict[str, Any]] = {
     "community_continuity": {
@@ -147,6 +147,30 @@ TABLES: dict[str, dict[str, Any]] = {
         "source_manifest": ".agent/manifests/network_view_nodes_year.json",
         "description": "Fixed-coordinate annual core-node metrics and primary communities.",
         "known_issue": "The public visualization core is thresholded to 500 aggregate nodes.",
+    },
+    "school_ego_partners": {
+        "primary_key": ["period_key", "corpus_view", "school_id", "partner_id"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Predicate-friendly retained partner rows for stable-ID school ego maps across the "
+            "latest rolling 12/24/36-month, complete-quarter, and complete-year periods."
+        ),
+        "known_issue": (
+            "Country and macro-region views aggregate only these retained institution partners; "
+            "missing source coordinates remain in exact companion rows but cannot be mapped."
+        ),
+    },
+    "school_index": {
+        "primary_key": ["school_id"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Complete eligible stable-ID school search index independent of global map and "
+            "network visualization thresholds."
+        ),
+        "known_issue": (
+            "School is concise interface language for an eligible university or research "
+            "institution and does not imply degree-granting status or research quality."
+        ),
     },
     "sensitivity": {
         "primary_key": ["comparison_id"],
@@ -368,6 +392,71 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "confident_match_threshold": "Jaccard threshold below which selected matches are uncertain.",
     "event_overlap_threshold": "Jaccard threshold used to classify split and merge links.",
     "value": "Observed display value belonging to the named dashboard filter dimension.",
+    "school_id": "Stable canonical school identifier used for entity-first dashboard selection.",
+    "alternative_names": "Sorted source-linked alternative names retained for explicit search.",
+    "search_names": "Deterministic display and alternative-name candidates used for search.",
+    "has_ambiguous_name_match": (
+        "Whether at least one normalized search name resolves to multiple eligible schools."
+    ),
+    "openalex_id": "Stable source OpenAlex institution identifier.",
+    "has_coordinates": "Whether both source-provided latitude and longitude are available.",
+    "first_observed_date": "Earliest valid publication date observed for the school.",
+    "last_observed_date": "Latest valid publication date observed for the school.",
+    "latest_supported_month": "Latest complete publication month supported by the source facts.",
+    "broad_work_count": "Complete historical Broad-corpus Work count for the school.",
+    "strict_work_count": "Complete historical Strict-corpus Work count for the school.",
+    "recent_24m_work_count": "Broad-corpus Work count in the declared latest 24-month window.",
+    "date_coverage_ratio": (
+        "Exact-date-eligible Works divided by all eligible Works for the school."
+    ),
+    "identity_status": "Audited school-identity resolution status.",
+    "identity_resolution_confidence": "Evidence-bounded identity-resolution confidence label.",
+    "identity_quality_flags": "Sorted identity caveats retained for the school.",
+    "eligibility_status": "Eligibility result under the school-decision analytical contract.",
+    "support_status": "Whether the row has sufficient validated source support for this view.",
+    "in_prior_visualization_core": (
+        "Whether the school appears in any prior thresholded fixed-layout network node table."
+    ),
+    "has_retained_ego_partners": (
+        "Whether the GISNET-128 rolling per-school index retains at least one partner."
+    ),
+    "time_basis": "Temporal basis: rolling month window, complete quarter, or complete year.",
+    "period_key": "Stable key identifying the exact displayed temporal period.",
+    "period_label": "Human-readable exact temporal period label.",
+    "period_start": "Inclusive first publication month in the selected period.",
+    "period_end": "Inclusive last publication month in the selected period.",
+    "window_months": "Number of publication months represented by the selected period.",
+    "persistence_unit": "Observation unit counted by the persistence denominator.",
+    "persistence_denominator": "Fixed month or year count used by the persistence calculation.",
+    "persistence_definition": "Exact stored definition of the period-specific persistence value.",
+    "school_name": "Display name of the selected stable-ID school.",
+    "school_country": "Frozen source-school country code.",
+    "school_country_name": "Frozen source-school country display name.",
+    "school_macro_region": "Frozen source-school macro-region.",
+    "school_subregion": "Frozen source-school subregion.",
+    "school_latitude": "Source-provided latitude for the selected school; never imputed.",
+    "school_longitude": "Source-provided longitude for the selected school; never imputed.",
+    "school_coordinate_source": "Source label recorded with the selected-school coordinates.",
+    "partner_id": "Stable canonical school identifier of the retained partner.",
+    "partner_name": "Display name of the retained partner school.",
+    "partner_country": "Frozen retained-partner country code.",
+    "partner_country_name": "Frozen retained-partner country display name.",
+    "partner_macro_region": "Frozen retained-partner macro-region.",
+    "partner_subregion": "Frozen retained-partner subregion.",
+    "partner_latitude": "Source-provided retained-partner latitude; never imputed.",
+    "partner_longitude": "Source-provided retained-partner longitude; never imputed.",
+    "partner_coordinate_source": "Source label recorded with retained-partner coordinates.",
+    "active_period_count": "Active publication months or years in the persistence numerator.",
+    "persistence": "Active-period count divided by the disclosed fixed period denominator.",
+    "partner_rank": (
+        "One-based retained rank by fractional count, full count, then stable partner ID."
+    ),
+    "coverage_ratio": "Observed publication months divided by eligible months for the period.",
+    "is_complete_period": "Whether the selected temporal period has complete declared coverage.",
+    "persistence_is_complete": (
+        "Whether the full fixed persistence denominator is available for this row."
+    ),
+    "source_partner_index": "Named validated source or extension supplying the retained row.",
 }
 
 

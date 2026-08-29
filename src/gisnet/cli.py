@@ -3940,6 +3940,12 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "institution_hierarchy": "data/processed/institution_hierarchy.parquet",
         "institutions": "data/processed/institutions.parquet",
         "complete_nodes": "data/processed/nodes_year.parquet",
+        "school_index": "data/processed/school_index.parquet",
+        "school_partners": "data/processed/school_partner_index.parquet",
+        "annual_edges": "data/processed/edges_metrics_year.parquet",
+        "quarter_edges": "data/processed/collaboration_edges_quarter.parquet",
+        "month_edges": "data/processed/collaboration_edges_month.parquet",
+        "quarter_outputs": "data/processed/institution_outputs_quarter.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

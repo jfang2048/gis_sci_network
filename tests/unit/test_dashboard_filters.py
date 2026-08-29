@@ -13,6 +13,8 @@ from gisnet.visualization.dashboard_filters import (
 def test_control_applicability_is_page_aware() -> None:
     assert control_is_enabled("Geographic flows", "Country")
     assert not control_is_enabled("Geographic flows", "Year")
+    assert control_is_enabled("School Ego Map", "Corpus view")
+    assert not control_is_enabled("School Ego Map", "Hierarchy view")
     assert control_is_enabled("Institution explorer", "Hierarchy view")
     assert not control_is_enabled("Institution explorer", "Year")
     assert not CONTROL_APPLICABILITY["Methods and limitations"]

@@ -1,10 +1,11 @@
 # Dashboard
 
-> **Current scope:** this is the released complete-year annual analysis dashboard. The
-> Geographic Flow Explorer now supports source-selected macro-region, subregion, and country
-> relationships over inclusive complete-year windows. Institution-first School Finder, School
-> Profile, Compare Schools, and rolling-window dashboard views remain planned under
-> GISNET-133–138 even though their source data and comparison service are available on `main`.
+> **Current scope:** the released complete-year annual analysis remains available. The Geographic
+> Flow Explorer supports source-selected macro-region, subregion, and country relationships over
+> inclusive complete-year windows. The School Ego Map adds stable-ID institution, country, and
+> macro-region partner views over the latest rolling 12/24/36-month, complete-quarter, and
+> complete-year periods. Institution-first School Finder, School Profile, and Compare Schools
+> remain planned under GISNET-133–138.
 
 Launch from the repository root:
 
@@ -24,6 +25,45 @@ uv run python -m gisnet.cli build-dashboard-data --resume
 Ordinary dashboard viewing makes no OpenAlex or ROR requests. The checked-in snapshot contains only
 public-source aggregate or thresholded scholarly-network data; it contains no API key or raw response
 cache.
+
+## School Ego Map semantics
+
+The School Ego Map is entity-first: its search options come from the complete eligible school index,
+not the 500-node fixed-layout core. Selection and queries use the stable canonical school ID; names,
+countries, and alternate names are search labels. A school outside the prior visualization core can
+therefore retain its own partners.
+
+Displayed edges come from a predicate-friendly per-school retained partner index. Rolling 12-, 24-,
+and 36-month rows are the validated GISNET-128 output. The latest complete-quarter and complete-year
+rows extend that same per-school query contract from validated exact temporal and annual facts. Up to
+50 partners are retained per school, corpus, and period by fractional count, full count, and stable
+partner ID. The Top partners control reranks only those retained rows by the selected metric; it never
+uses a global map, edge, or network threshold.
+
+The page supports:
+
+1. **Fractional collaboration volume:** exact institution-edge fractional weight. Country and
+   macro-region rows sum the retained institution-partner weights.
+2. **Normalized collaboration intensity:** exact institution-edge fractional weight divided by the
+   geometric mean of both endpoint Work counts. Geography rows show a fractional-volume-weighted
+   mean across retained institution partners.
+3. **Persistence:** active publication months divided by 12, 24, or 36 for rolling windows; active
+   publication months divided by three for the complete quarter; or active years in the trailing
+   five-year window divided by five for the annual view. Geography rows show the same
+   fractional-volume-weighted aggregation.
+
+Institution, country, and macro-region modes use one exact result frame for the map and adjacent
+table. The mapped companion contains exactly the values encoded by arcs and markers. Rows lacking a
+source-provided endpoint coordinate remain in a separate exact table and are never guessed or
+imputed. Institution points use source school coordinates; country and macro-region points use the
+same versioned, licensed display anchors documented for Geographic Flows.
+
+Arc widths depend only on each exact value, not the current Top partners subset. Fractional volume
+uses the geographic-flow logarithmic volume formula; normalized intensity and persistence use the
+bounded square-root formula. Stable source and partner IDs, exact values, component metrics, period
+definition, and source-index label remain visible in hover or companion tables. School means an
+eligible university or research institution, not a degree-granting claim, admissions ranking, or
+universal research-quality score.
 
 ## Geographic Flow Explorer semantics
 
@@ -75,9 +115,9 @@ Arc and partner-marker color encodes the target macro-region; the selected sourc
 diamond outline. Macro-region partner labels include the selected value directly on the map.
 
 Geographic display anchors are unweighted spherical means of distinct source-provided OpenAlex
-institution coordinates. They are versioned, checksum-linked, and recorded as CC0 in dashboard
-metadata. They are research-institution display anchors, not geometric or political centroids; no
-coordinate is invented.
+institution coordinates, rounded to ten decimal degrees for deterministic serialization. They are
+versioned, checksum-linked, and recorded as CC0 in dashboard metadata. They are research-institution
+display anchors, not geometric or political centroids; no coordinate is invented.
 
 Institution-level geographic links are available only as an optional, tightly limited drilldown.
 They use sourced coordinates, report coordinate coverage, and must not be interpreted as a complete

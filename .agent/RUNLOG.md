@@ -3520,3 +3520,120 @@ coordinate, source identifier, or measured source result was persisted as scient
 Task: GISNET-132 — Build School Ego Map. Center on one stable-ID school, source its partners from the
 per-school index independent of global thresholds, and reconcile institution/country/region map
 values with the adjacent exact table across supported windows and metrics.
+
+
+## Run 20260828T215634Z_5ed646022421
+
+Started UTC: 2026-08-28T21:56:34Z
+Ended UTC: 2026-08-29T10:20:45Z
+Task: GISNET-132 — Build School Ego Map
+Initial git status: Clean `main` at `5ed6460`, synchronized with `origin/main`.
+Final git status: Pre-commit GISNET-132 code, public data, documentation, release, tests, and audit-state changes only.
+
+### Objective
+
+Add an entity-first School Ego Map that searches the complete stable-ID school universe, retains
+partners independently of global visualization thresholds, supports the required temporal and
+metric controls, and uses one exact result frame for mapped values and the adjacent companion table.
+
+### Work completed
+
+- Added a 28,042-row complete dashboard school index with stable IDs, search names, identity and
+  geography context, source coordinates, coverage, prior-core membership, and retained-partner
+  availability.
+- Added a 1,388,052-row predicate-friendly per-school partner table. Its 1,048,856 rolling rows are
+  exact GISNET-128 rows; 112,660 latest-quarter and 226,536 latest-year rows extend the same query
+  contract from validated temporal facts. Each school/corpus/period retains at most 50 partners.
+- Added complete-index School Ego Map selection, rolling 12/24/36-month plus latest complete-quarter
+  and complete-year periods, institution/country/macro-region levels, fractional volume, normalized
+  intensity, persistence, deterministic Top partners, sourced great-circle arcs, and stable-ID hover.
+- Kept the exact mapped companion table adjacent to the map and separated exact unmapped rows rather
+  than inventing coordinates. Country and macro-region aggregation boundaries and weighting remain
+  explicit.
+- Added DuckDB Parquet predicate pushdown by school ID, corpus, and period; a school outside the
+  prior core remains selectable and retains its own partners.
+- Extended CLI/pipeline source contracts, dashboard metadata/provenance, the public data dictionary,
+  release checksums, README/dashboard documentation, and regression coverage. Rounded sourced spherical
+  display anchors to ten decimal degrees so repeated parallel builds serialize byte-identically.
+
+### Files changed
+
+- Implementation/UI: `src/gisnet/visualization/school_ego_map.py`,
+  `src/gisnet/visualization/dashboard_data.py`, `src/gisnet/visualization/dashboard_filters.py`,
+  `src/gisnet/cli.py`, `src/gisnet/pipeline.py`, and `dashboard/app.py`.
+- Tests: `tests/unit/test_school_ego_map.py`, `tests/unit/test_dashboard_data.py`,
+  `tests/unit/test_dashboard_filters.py`, and `tests/integration/test_dashboard.py`.
+- Public data/docs: `dashboard/data/school_index.parquet`,
+  `dashboard/data/school_ego_partners.parquet`, dashboard metadata/anchors, generated data
+  dictionaries, `README.md`, `dashboard/README.md`, and release manifest/checksum.
+- Audit state: dashboard/data-dictionary manifests and summaries, `.agent/state.json`,
+  `.agent/backlog.json`, `.agent/decisions.md`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection and interrupted
+  GISNET-132 worktree audit.
+- Targeted Ruff formatting/lint, strict mypy, School Ego Map/dashboard-data/filter unit tests, public
+  dictionary tests, and Streamlit AppTest integration tests during implementation.
+- Lock-aware forced dashboard-bundle and public data-dictionary rebuilds.
+- Production DuckDB reconciliation against rolling, annual, quarter, month, and output facts;
+  predicate-query benchmarks; nine level/metric map-table reconciliations.
+- Complete `scripts/quality-gate.sh`, release-manifest build/verify, privacy scan, CLI status,
+  `git diff --check`, and temporary-output inspection.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 158 files, strict mypy for 80 source files,
+  all 209 offline tests, dashboard integration smoke tests, and CLI status.
+- The released ego table has 1,388,052 unique period/corpus/school/partner keys, zero invalid metric
+  ranges, invalid ranks, or self-pairs; 1,386,832 rows have complete sourced endpoint coordinates.
+- All 1,048,856 rolling, 226,536 annual, and 112,660 quarterly rows reconciled to their exact source
+  facts with zero numeric or discrete differences.
+- Production map/table checks passed all nine institution/country/macro-region by
+  volume/intensity/persistence combinations for outside-core school `I31746571`.
+- The complete school index contains 18,712 schools with retained partners outside the prior
+  visualization core. Fifty outside-core predicate queries measured 20.424 ms median, 21.886 ms
+  p95, and 23.165 ms maximum in this run.
+- Two independent four-thread anchor builds produced the identical
+  `9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354` checksum.
+- Release verification covered 223 public files / 46,707,850 bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- School dashboard index: `41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21`
+- School ego partners: `18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0`
+- Geography anchors: `9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354`
+- Dashboard metadata: `d6e76e1e32c82a2a41e2c23f6ef4f094595a7ffbc82fd941ae46bf589e8c5f9f`
+- Public data dictionary: `cd485e1b0044d653cabd3a484a1dd1a5a5c2f400e661767e9879fdda66e37459`
+- Release manifest: `a1010ea744faa432c6d47e3f35846c5f42ebba6d4a0bdfa0a9e74a023467332c`
+- Project config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Dashboard school index/partner tables, metadata, dictionary artifacts, summaries, manifests, release
+checksums, backlog state, project state, decisions, and this run record were atomically written under
+the project run lock. No API request, API key, raw source page, invented coordinate, source
+identifier, or measured source result was persisted as scientific input.
+
+### Failures or blockers
+
+- The first production audit query used a reserved SQL alias, then an ambiguous join, and an
+  inefficient OR join that was terminated. Equivalent directed equijoins completed and proved zero
+  source differences; no dataset value changed.
+- The in-app Browser surface was unavailable for optional visual inspection. Streamlit AppTest ran
+  every page and exercised the outside-core School Ego Map path without exception. No blocker remains
+  for GISNET-132.
+
+### Decisions made
+
+- Use the latest complete quarter and latest complete year alongside the three latest rolling
+  windows; do not mix the optional current partial-year overlay into this released snapshot.
+- Retain 50 partners per school/corpus/period and let Top partners rerank only that retained frame.
+- Aggregate geography values only over retained institution partners and keep unmapped exact rows
+  separate from the map.
+
+### Exact next action
+
+Task: GISNET-133 — Redesign dashboard information architecture. Make School Finder the first
+institution-first decision page, add School Profile and two-to-four-school comparison navigation,
+and preserve the completed annual, geographic-flow, and School Ego Map paths.

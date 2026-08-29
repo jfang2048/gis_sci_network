@@ -4,7 +4,7 @@
   "corpus_scientific_status": "blocked_pending_human_corpus_review",
   "data_version": "gisnet-0.1.0-2026-08-28",
   "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
-  "generated_at_utc": "2026-08-28T20:42:04.133288Z",
+  "generated_at_utc": "2026-08-29T10:19:43.641611Z",
   "geographic_flow_explorer": {
     "anchor_method": "unweighted spherical mean of distinct organization coordinates supplied by OpenAlex; display anchor only, not a geographic centroid",
     "arc_geometry": "32-point spherical great-circle interpolation between sourced display anchors",
@@ -51,9 +51,97 @@
     "Visualization score is non-primary and used only to rank visible edges.",
     "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-28-v7",
+  "methods_version": "public-dashboard-bundle-2026-08-29-v8",
   "public_snapshot": true,
   "schema_version": 1,
+  "school_ego_map": {
+    "coordinate_policy": "school and institution points use source-provided school-index coordinates; country and macro-region points use the versioned sourced display anchors; missing coordinates remain in explicit unmapped companion rows",
+    "geography_aggregation_boundary": "country and macro-region values summarize only the retained institution partners; fractional volume is summed while intensity and persistence are fractional-volume-weighted means",
+    "identity_view": "school",
+    "mapped_partner_row_count": 1386832,
+    "outside_prior_visualization_core_school_count": 18712,
+    "partner_row_count": 1388052,
+    "periods": [
+      {
+        "period_end": "2025-12",
+        "period_key": "rolling_24m",
+        "period_label": "Rolling 24 months \u00b7 2024-01 to 2025-12",
+        "period_start": "2024-01",
+        "persistence_definition": "active publication months divided by rolling window months",
+        "persistence_denominator": 24,
+        "persistence_unit": "month",
+        "time_basis": "rolling",
+        "window_months": 24
+      },
+      {
+        "period_end": "2025-12",
+        "period_key": "rolling_12m",
+        "period_label": "Rolling 12 months \u00b7 2025-01 to 2025-12",
+        "period_start": "2025-01",
+        "persistence_definition": "active publication months divided by rolling window months",
+        "persistence_denominator": 12,
+        "persistence_unit": "month",
+        "time_basis": "rolling",
+        "window_months": 12
+      },
+      {
+        "period_end": "2025-12",
+        "period_key": "rolling_36m",
+        "period_label": "Rolling 36 months \u00b7 2023-01 to 2025-12",
+        "period_start": "2023-01",
+        "persistence_definition": "active publication months divided by rolling window months",
+        "persistence_denominator": 36,
+        "persistence_unit": "month",
+        "time_basis": "rolling",
+        "window_months": 36
+      },
+      {
+        "period_end": "2025-12",
+        "period_key": "quarter_2025-Q4",
+        "period_label": "Complete quarter 2025-Q4",
+        "period_start": "2025-10",
+        "persistence_definition": "active publication months in the selected complete quarter divided by 3",
+        "persistence_denominator": 3,
+        "persistence_unit": "month",
+        "time_basis": "quarterly",
+        "window_months": 3
+      },
+      {
+        "period_end": "2025-12",
+        "period_key": "annual_2025",
+        "period_label": "Complete year 2025",
+        "period_start": "2025-01",
+        "persistence_definition": "active publication years in the trailing five-year window divided by 5",
+        "persistence_denominator": 5,
+        "persistence_unit": "year",
+        "time_basis": "annual",
+        "window_months": 12
+      }
+    ],
+    "policy_version": "school-ego-map-2026-08-29-v1",
+    "query_policy": "DuckDB Parquet predicate pushdown by school ID, corpus, and period",
+    "ranking_definition": "fractional_count descending, full_count descending, stable partner ID; the UI reranks the retained rows by the selected metric with name and ID tie-breaks",
+    "retained_partner_limit_per_school_period": 50,
+    "source_manifests": [
+      ".agent/manifests/school_index.json",
+      ".agent/manifests/school_partner_index.json",
+      ".agent/manifests/edges_metrics_year.json",
+      ".agent/manifests/collaboration_edges_quarter.json",
+      ".agent/manifests/collaboration_edges_month.json",
+      ".agent/manifests/institution_outputs_quarter.json"
+    ],
+    "source_policy": "render only per-school retained partner rows; rolling rows come from the GISNET-128 index and latest complete quarter/annual rows extend that index from validated exact temporal facts; global map/network thresholds are unused",
+    "supported_levels": [
+      "institution",
+      "country",
+      "macro_region"
+    ],
+    "supported_metrics": [
+      "fractional_volume",
+      "normalized_intensity",
+      "persistence"
+    ]
+  },
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
   "tables": {
     "community_continuity": {
@@ -74,7 +162,7 @@
     "geography_anchors": {
       "path": "dashboard/data/geography_anchors.parquet",
       "row_count": 162,
-      "sha256": "510faa2e0d809e8c4b0f2ff72ceddff82ca7dabf5520e1f88f24b4ce1bf5847b"
+      "sha256": "9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354"
     },
     "geography_dimensions": {
       "path": "dashboard/data/geography_dimensions.parquet",
@@ -130,6 +218,16 @@
       "path": "dashboard/data/network_nodes.parquet",
       "row_count": 31486,
       "sha256": "9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7"
+    },
+    "school_ego_partners": {
+      "path": "dashboard/data/school_ego_partners.parquet",
+      "row_count": 1388052,
+      "sha256": "18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0"
+    },
+    "school_index": {
+      "path": "dashboard/data/school_index.parquet",
+      "row_count": 28042,
+      "sha256": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21"
     },
     "sensitivity": {
       "path": "dashboard/data/sensitivity.parquet",
