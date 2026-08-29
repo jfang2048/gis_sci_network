@@ -21,8 +21,9 @@ snapshot; no API request is needed to view them.
 
 [![Strict and Broad corpus comparison across organization and umbrella hierarchy views](figures/view_comparison.svg)](figures/view_comparison.svg)
 
-The interactive dashboard adds maps, filters, institution-pair exploration, network details,
-methods, and data-quality views.
+The interactive dashboard opens with the complete stable-ID School Finder and organizes the
+released views into School Profile, Compare Schools, Geographic Flows, Institutional Network,
+Global Trends, and Methods and Data Quality pages.
 
 ```bash
 uv sync
@@ -41,10 +42,11 @@ semantics and snapshot rebuild instructions.
 | Rolling 12/24/36-month facts | Available |
 | Completed-month current-year acquisition overlay | Available; released annual snapshot remains through 2025 |
 | School Finder, partner index, and school profiles | Available |
-| Stable-ID school comparison service | Available; dashboard presentation is planned |
+| Stable-ID school comparison service | Available |
 | Geographic Flow Explorer | Available with thresholded, filter-comparable arcs at macro-region, subregion, and country levels |
-| School Ego Map | Available from the complete stable-ID index with institution/country/region partners and exact tables |
-| School Finder, Profile, and comparison UI | Planned: GISNET-133–138 |
+| School Finder and seven-page decision-oriented navigation | Available |
+| School Profile collaboration map | Available from the complete stable-ID index with institution/country/region partners and exact tables |
+| Expanded School Profile and advanced comparison UI | Planned: GISNET-134–135 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 

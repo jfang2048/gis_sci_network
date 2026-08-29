@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-29T10:18:15Z",
+  "last_updated_utc": "2026-08-29T17:08:37Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2070,12 +2070,27 @@
         "GISNET-129",
         "GISNET-132"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-29T17:01:23Z",
+          "from": "TODO",
+          "reason": "Redesigning the dashboard into the seven required institution-first pages while preserving the released annual analysis paths.",
+          "run_id": "20260829T170103Z_8c34054a4f9b",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-29T17:08:37Z",
+          "from": "IN_PROGRESS",
+          "reason": "Seven-page institution-first navigation is live with School Finder first, entity-first School Profile, two-to-four-school shared-scale comparison, preserved annual subviews, visible context, and passing full quality/release checks.",
+          "run_id": "20260829T170103Z_8c34054a4f9b",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-133",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Seven-page institution-first navigation is live with School Finder first, entity-first School Profile, two-to-four-school shared-scale comparison, preserved annual subviews, visible context, and passing full quality/release checks.",
+      "status_updated_at_utc": "2026-08-29T17:08:37Z",
       "title": "Redesign dashboard information architecture",
       "work": [
         "Create School Finder, School Profile, Compare Schools, Geographic Flows, Institutional Network, Global Trends, and Methods and Data Quality pages.",

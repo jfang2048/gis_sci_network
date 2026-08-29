@@ -26,36 +26,22 @@ def _plot_specs(app: AppTest) -> list[dict[str, object]]:
 def test_public_dashboard_pages_and_global_filters() -> None:
     app_path = Path(__file__).resolve().parents[2] / "dashboard" / "app.py"
     pages = (
-        "Overview",
-        "School Ego Map",
-        "Region trends",
-        "Geographic flows",
-        "Institutional network",
-        "Institution explorer",
-        "Topic-family comparison",
-        "Methods and limitations",
-        "Data quality",
+        "School Finder",
+        "School Profile",
+        "Compare Schools",
+        "Geographic Flows",
+        "Institutional Network",
+        "Global Trends",
+        "Methods and Data Quality",
     )
     app = AppTest.from_file(app_path, default_timeout=30).run()
     assert not app.exception
 
     enabled_by_page = {
-        "Overview": {
-            "Year",
-            "Corpus view",
-            "Hierarchy view",
-            "Counting method",
-            "Macro-region pair",
-        },
-        "School Ego Map": {"Corpus view"},
-        "Region trends": {
-            "Year",
-            "Corpus view",
-            "Hierarchy view",
-            "Counting method",
-            "Macro-region pair",
-        },
-        "Geographic flows": {
+        "School Finder": set(),
+        "School Profile": {"Corpus view"},
+        "Compare Schools": set(),
+        "Geographic Flows": {
             "Corpus view",
             "Hierarchy view",
             "Counting method",
@@ -66,7 +52,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
             "Topic family",
             "Consortium policy",
         },
-        "Institutional network": {
+        "Institutional Network": {
             "Year",
             "Corpus view",
             "Hierarchy view",
@@ -78,16 +64,15 @@ def test_public_dashboard_pages_and_global_filters() -> None:
             "Topic family",
             "Consortium policy",
         },
-        "Institution explorer": {"Corpus view", "Hierarchy view"},
-        "Topic-family comparison": {
+        "Global Trends": {
             "Year",
             "Corpus view",
             "Hierarchy view",
             "Counting method",
+            "Macro-region pair",
             "Topic family",
         },
-        "Methods and limitations": set(),
-        "Data quality": {"Year", "Corpus view", "Hierarchy view"},
+        "Methods and Data Quality": {"Year", "Corpus view", "Hierarchy view"},
     }
     for page in pages:
         page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
@@ -116,7 +101,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
         )
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Geographic flows")
+    page_widget.set_value("Geographic Flows")
     app = app.run(timeout=30)
     assert not app.exception
     assert any(metric.label == "Coordinate coverage" for metric in app.metric)
@@ -149,7 +134,11 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     assert any(metric.label == "Coordinate coverage" for metric in app.metric)
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Region trends")
+    page_widget.set_value("Global Trends")
+    app = app.run(timeout=30)
+    assert not app.exception
+    trend_view = next(widget for widget in app.radio if widget.label == "Global Trends view")
+    trend_view.set_value("Regional trends")
     app = app.run(timeout=30)
     assert not app.exception
     assert any(
@@ -157,7 +146,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     )
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("School Ego Map")
+    page_widget.set_value("School Profile")
     app = app.run(timeout=30)
     assert not app.exception
     assert any(
@@ -172,7 +161,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     assert _plot_specs(app)
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Institutional network")
+    page_widget.set_value("Institutional Network")
     app = app.run(timeout=30)
     assert not app.exception
     assert any("edge width is constant" in caption.value for caption in app.caption)
@@ -184,18 +173,41 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     assert not app.exception
     assert any("zero active collapse rules" in warning.value for warning in app.warning)
 
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Global Trends")
+    app = app.run(timeout=30)
+    trend_view = next(widget for widget in app.radio if widget.label == "Global Trends view")
+    trend_view.set_value("Topic families")
+    app = app.run(timeout=30)
+    assert not app.exception
+    assert _plot_specs(app)
+    assert any("thresholded fixed-layout core" in caption.value for caption in app.caption)
+
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Methods and Data Quality")
+    app = app.run(timeout=30)
+    evidence_view = next(widget for widget in app.radio if widget.label == "Evidence view")
+    evidence_view.set_value("Data quality")
+    app = app.run(timeout=30)
+    assert not app.exception
+    assert any(subheader.value == "Required sensitivity matrix" for subheader in app.subheader)
+    assert any(subheader.value == "Version and integrity metadata" for subheader in app.subheader)
+
 
 @pytest.mark.integration
 def test_visual_pages_keep_scientific_encodings_and_consistent_interaction() -> None:
     app_path = Path(__file__).resolve().parents[2] / "dashboard" / "app.py"
     app = AppTest.from_file(app_path, default_timeout=30).run()
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Global Trends")
+    app = app.run(timeout=30)
     overview = _plot_specs(app)
     assert len(overview) == 1
     assert overview[0]["layout"]["yaxis"]["range"] == [0, 1]
     assert overview[0]["layout"]["hovermode"] == "x unified"
 
-    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Region trends")
+    trend_view = next(widget for widget in app.radio if widget.label == "Global Trends view")
+    trend_view.set_value("Regional trends")
     app = app.run(timeout=30)
     region_specs = _plot_specs(app)
     assert len(region_specs) == 2
@@ -203,7 +215,7 @@ def test_visual_pages_keep_scientific_encodings_and_consistent_interaction() -> 
     assert any(trace["type"] == "heatmap" for trace in region_specs[1]["data"])
 
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Institutional network")
+    page_widget.set_value("Institutional Network")
     app = app.run(timeout=30)
     network_spec = _plot_specs(app)[0]
     assert network_spec["layout"]["xaxis"]["visible"] is False
@@ -221,7 +233,10 @@ def test_institution_explorer_renders_an_observed_pair() -> None:
 
     app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("Institution explorer")
+    page_widget.set_value("Institutional Network")
+    app = app.run(timeout=30)
+    network_view = next(widget for widget in app.radio if widget.label == "Network view")
+    network_view.set_value("Institution pair history")
     app = app.run(timeout=30)
 
     institution_a = next(widget for widget in app.selectbox if widget.label == "Institution A")
@@ -272,7 +287,7 @@ def test_school_ego_map_keeps_partners_for_school_outside_prior_core() -> None:
 
     app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
-    page_widget.set_value("School Ego Map")
+    page_widget.set_value("School Profile")
     app = app.run(timeout=30)
     school_widget = next(
         widget
@@ -298,4 +313,59 @@ def test_school_ego_map_keeps_partners_for_school_outside_prior_core() -> None:
         for row in trace["customdata"]
     }
     assert partner_id in marker_ids
+    assert app.dataframe
+
+
+@pytest.mark.integration
+def test_school_finder_is_primary_and_compare_uses_two_to_four_stable_ids() -> None:
+    root = Path(__file__).resolve().parents[2]
+    index = pd.read_parquet(root / "dashboard/data/school_index.parquet")
+    selected_ids = [
+        str(value)
+        for value in index.sort_values(
+            ["recent_24m_work_count", "school_id"],
+            ascending=[False, True],
+            kind="stable",
+        )["school_id"].head(4)
+    ]
+
+    app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    assert page_widget.value == "School Finder"
+    assert any(
+        widget.label == "School (type a name, country, or stable ID)" for widget in app.selectbox
+    )
+    assert any(metric.label == "Stable school ID" for metric in app.metric)
+    outside_core_id = str(
+        index.loc[~index["in_prior_visualization_core"].astype(bool), "school_id"].iloc[0]
+    )
+    finder_widget = next(
+        widget
+        for widget in app.selectbox
+        if widget.label == "School (type a name, country, or stable ID)"
+    )
+    finder_widget.set_value(outside_core_id)
+    app = app.run(timeout=30)
+    assert any(
+        "outside the prior thresholded visualization core" in item.value for item in app.success
+    )
+
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Compare Schools")
+    app = app.run(timeout=30)
+    school_widget = next(
+        widget for widget in app.multiselect if widget.label == "Schools (select two to four)"
+    )
+    school_widget.set_value(selected_ids)
+    app = app.run(timeout=30)
+
+    assert not app.exception
+    assert len(school_widget.value) == 4
+    assert len(_plot_specs(app)) == 2
+    assert any(subheader.value == "Exact common-scale comparison" for subheader in app.subheader)
+    assert any(
+        "No per-school normalization" in caption.value
+        and "not a university ranking" in caption.value
+        for caption in app.caption
+    )
     assert app.dataframe

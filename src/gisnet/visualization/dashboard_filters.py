@@ -7,14 +7,10 @@ from collections.abc import Iterable
 import pandas as pd  # type: ignore[import-untyped]
 
 CONTROL_APPLICABILITY: dict[str, frozenset[str]] = {
-    "Overview": frozenset(
-        {"Year", "Corpus view", "Hierarchy view", "Counting method", "Macro-region pair"}
-    ),
-    "Region trends": frozenset(
-        {"Year", "Corpus view", "Hierarchy view", "Counting method", "Macro-region pair"}
-    ),
-    "School Ego Map": frozenset({"Corpus view"}),
-    "Geographic flows": frozenset(
+    "School Finder": frozenset(),
+    "School Profile": frozenset({"Corpus view"}),
+    "Compare Schools": frozenset(),
+    "Geographic Flows": frozenset(
         {
             "Corpus view",
             "Hierarchy view",
@@ -27,7 +23,7 @@ CONTROL_APPLICABILITY: dict[str, frozenset[str]] = {
             "Consortium policy",
         }
     ),
-    "Institutional network": frozenset(
+    "Institutional Network": frozenset(
         {
             "Year",
             "Corpus view",
@@ -41,12 +37,17 @@ CONTROL_APPLICABILITY: dict[str, frozenset[str]] = {
             "Consortium policy",
         }
     ),
-    "Institution explorer": frozenset({"Corpus view", "Hierarchy view"}),
-    "Topic-family comparison": frozenset(
-        {"Year", "Corpus view", "Hierarchy view", "Counting method", "Topic family"}
+    "Global Trends": frozenset(
+        {
+            "Year",
+            "Corpus view",
+            "Hierarchy view",
+            "Counting method",
+            "Macro-region pair",
+            "Topic family",
+        }
     ),
-    "Methods and limitations": frozenset(),
-    "Data quality": frozenset({"Year", "Corpus view", "Hierarchy view"}),
+    "Methods and Data Quality": frozenset({"Year", "Corpus view", "Hierarchy view"}),
 }
 
 

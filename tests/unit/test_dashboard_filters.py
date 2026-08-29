@@ -11,13 +11,14 @@ from gisnet.visualization.dashboard_filters import (
 
 
 def test_control_applicability_is_page_aware() -> None:
-    assert control_is_enabled("Geographic flows", "Country")
-    assert not control_is_enabled("Geographic flows", "Year")
-    assert control_is_enabled("School Ego Map", "Corpus view")
-    assert not control_is_enabled("School Ego Map", "Hierarchy view")
-    assert control_is_enabled("Institution explorer", "Hierarchy view")
-    assert not control_is_enabled("Institution explorer", "Year")
-    assert not CONTROL_APPLICABILITY["Methods and limitations"]
+    assert control_is_enabled("Geographic Flows", "Country")
+    assert not control_is_enabled("Geographic Flows", "Year")
+    assert control_is_enabled("Institutional Network", "Consortium policy")
+    assert control_is_enabled("School Profile", "Corpus view")
+    assert not control_is_enabled("School Profile", "Year")
+    assert control_is_enabled("Global Trends", "Topic family")
+    assert not control_is_enabled("Global Trends", "Country")
+    assert not CONTROL_APPLICABILITY["School Finder"]
 
 
 def test_dimension_options_use_selected_complete_network_view() -> None:

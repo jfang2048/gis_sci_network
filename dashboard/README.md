@@ -2,10 +2,11 @@
 
 > **Current scope:** the released complete-year annual analysis remains available. The Geographic
 > Flow Explorer supports source-selected macro-region, subregion, and country relationships over
-> inclusive complete-year windows. The School Ego Map adds stable-ID institution, country, and
-> macro-region partner views over the latest rolling 12/24/36-month, complete-quarter, and
-> complete-year periods. Institution-first School Finder, School Profile, and Compare Schools
-> remain planned under GISNET-133–138.
+> inclusive complete-year windows. The dashboard now opens with the complete stable-ID School
+> Finder and provides the seven required decision-oriented pages. School Profile retains the
+> school-centered institution, country, and macro-region partner map over rolling 12/24/36-month,
+> complete-quarter, and complete-year periods. GISNET-134 and GISNET-135 will expand the profile
+> and comparison evidence without changing this navigation contract.
 
 Launch from the repository root:
 
@@ -26,12 +27,36 @@ Ordinary dashboard viewing makes no OpenAlex or ROR requests. The checked-in sna
 public-source aggregate or thresholded scholarly-network data; it contains no API key or raw response
 cache.
 
-## School Ego Map semantics
+## Information architecture
 
-The School Ego Map is entity-first: its search options come from the complete eligible school index,
-not the 500-node fixed-layout core. Selection and queries use the stable canonical school ID; names,
-countries, and alternate names are search labels. A school outside the prior visualization core can
-therefore retain its own partners.
+The primary navigation is deliberately institution-first:
+
+1. **School Finder** searches the complete eligible index by searchable name/country/ID labels,
+   keeps the stable school ID visible, and exposes Strict/Broad historical counts, Broad recent
+   24-month activity, exact-date coverage, and identity quality.
+2. **School Profile** starts from one stable-ID institution and currently contains the validated
+   School Ego Map. Rich activity, Topic, citation, proximity, and quality sections are the next
+   GISNET-134 increment.
+3. **Compare Schools** accepts two to four stable IDs. Complete historical Strict/Broad Work counts
+   and exact-date coverage use shared per-metric axes, with exact identity, time, corpus, and quality
+   fields in the companion table. No per-school hidden normalization or universal ranking is used.
+4. **Geographic Flows** preserves the source-selected geographic map/matrix/table explorer.
+5. **Institutional Network** contains both the fixed-layout annual core and institution-pair history.
+6. **Global Trends** contains the annual overview, regional trends/matrix, and Topic-family history.
+7. **Methods and Data Quality** combines interpretation limits with sensitivity, coverage,
+   continuity, version, and checksum evidence.
+
+School Finder is first so finding a specific eligible institution never requires interpreting a
+dense global network. The annual 2010–2025 scientific views remain unchanged inside the revised
+navigation. Corpus boundaries are provisional and all school pages retain time, identity, and
+data-quality context.
+
+## School Profile collaboration-map semantics
+
+The School Profile collaboration map is entity-first: its search options come from the complete
+eligible school index, not the 500-node fixed-layout core. Selection and queries use the stable
+canonical school ID; names, countries, and alternate names are search labels. A school outside the
+prior visualization core can therefore retain its own partners.
 
 Displayed edges come from a predicate-friendly per-school retained partner index. Rolling 12-, 24-,
 and 36-month rows are the validated GISNET-128 output. The latest complete-quarter and complete-year
@@ -137,5 +162,6 @@ geographic census when coordinates are missing.
 - Primary geographic flows use complete annual flow aggregates. The optional institution-link map
   and fixed-layout network remain thresholded display subsets; their absence does not prove that no
   collaboration exists in the full processed data.
-- Every chart retains exact values in hover text, a companion table, or the Data quality page. The
-  fixed network also provides a text description of the currently rendered filters and encodings.
+- Every chart retains exact values in hover text, a companion table, or the Methods and Data Quality
+  page. The fixed network also provides a text description of the currently rendered filters and
+  encodings.

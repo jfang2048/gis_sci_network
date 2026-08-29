@@ -221,3 +221,17 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Round spherical display-anchor latitude and longitude to ten decimal degrees before Parquet
   serialization. This is far below display precision and removes parallel floating-reduction
   jitter so identical inputs produce byte-identical anchor files.
+
+## 2026-08-29 — Institution-first dashboard information architecture
+
+- Use exactly seven primary pages: School Finder, School Profile, Compare Schools, Geographic
+  Flows, Institutional Network, Global Trends, and Methods and Data Quality. School Finder is the
+  default so a stable-ID institution can be found without interpreting a dense network.
+- Preserve annual functionality as subviews: overview, regional trends/matrix, and Topic-family
+  history live under Global Trends; the fixed network and institution-pair history live under
+  Institutional Network; methods and integrity evidence share one page.
+- Keep the GISNET-133 comparison deliberately bounded to public complete-index evidence: two to
+  four stable IDs, shared axes for complete historical Strict/Broad Work counts and exact-date
+  coverage, exact companion values, identity context, and Broad recent-24-month context. Do not
+  add per-school hidden normalization or a universal-quality ranking. GISNET-134 and GISNET-135
+  own the richer profile and comparison evidence.

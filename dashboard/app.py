@@ -50,54 +50,44 @@ from gisnet.visualization.school_ego_map import (
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dashboard" / "data"
 PAGES = (
-    "Overview",
-    "School Ego Map",
-    "Region trends",
-    "Geographic flows",
-    "Institutional network",
-    "Institution explorer",
-    "Topic-family comparison",
-    "Methods and limitations",
-    "Data quality",
+    "School Finder",
+    "School Profile",
+    "Compare Schools",
+    "Geographic Flows",
+    "Institutional Network",
+    "Global Trends",
+    "Methods and Data Quality",
 )
 PAGE_DETAILS = {
-    "Overview": (
-        "A global view of GIS collaboration",
-        "Scale, structure, and regional orientation in the selected complete year.",
+    "School Finder": (
+        "Find an eligible research institution",
+        "Search the complete stable-ID school index before interpreting networks or rankings.",
     ),
-    "School Ego Map": (
-        "One school and its exact collaboration partners",
-        "Search the complete stable-ID index, then compare retained institution, country, or "
-        "macro-region partners without global visualization thresholds.",
+    "School Profile": (
+        "School Profile",
+        "Start from one stable-ID institution, then inspect its exact retained collaboration "
+        "partners across rolling, quarterly, and annual periods.",
     ),
-    "Region trends": (
-        "Regional collaboration over time",
-        "Partner composition and exact region flows across complete calendar years.",
+    "Compare Schools": (
+        "Compare Schools",
+        "Compare two to four institutions on shared axes with exact values and no hidden "
+        "per-school normalization.",
     ),
-    "Geographic flows": (
+    "Geographic Flows": (
         "Geographic Flow Explorer",
         "Select one geography and trace its exact collaboration volume, share, or intensity.",
     ),
-    "Institutional network": (
-        "The institutional collaboration core",
-        "A fixed layout for comparing structure without year-to-year position changes.",
+    "Institutional Network": (
+        "Institutional Network",
+        "Inspect the fixed-layout collaboration core or trace one stable-ID institution pair.",
     ),
-    "Institution explorer": (
-        "Trace one institutional partnership",
-        "Counts, intensity, persistence, Topic families, and stable identities over time.",
+    "Global Trends": (
+        "Global Trends",
+        "Preserved complete-year overview, regional trends, and Topic-family history.",
     ),
-    "Topic-family comparison": (
-        "How methodological families connect institutions",
-        "Annual collaboration weight within the thresholded fixed-layout core.",
-    ),
-    "Methods and limitations": (
-        "How to read these results",
-        "Definitions, interpretation boundaries, provisional decisions, and geographic "
-        "conventions.",
-    ),
-    "Data quality": (
-        "Evidence behind the snapshot",
-        "Sensitivity, coverage, continuity, versions, and integrity metadata.",
+    "Methods and Data Quality": (
+        "Methods and Data Quality",
+        "Definitions, limitations, sensitivity, coverage, versions, and integrity evidence.",
     ),
 }
 
@@ -299,6 +289,56 @@ def show_data(frame: pd.DataFrame, *, columns: list[str] | None = None) -> None:
     )
 
 
+SCHOOL_INDEX_COLUMNS = {
+    "school_id",
+    "display_name",
+    "country_code",
+    "country_name",
+    "macro_region",
+    "subregion",
+    "institution_category",
+    "latest_supported_month",
+    "broad_work_count",
+    "strict_work_count",
+    "recent_24m_work_count",
+    "date_coverage_ratio",
+    "identity_status",
+    "identity_resolution_confidence",
+    "identity_quality_flags",
+    "has_ambiguous_name_match",
+    "in_prior_visualization_core",
+    "has_retained_ego_partners",
+}
+
+
+def school_selector_records(
+    frame: pd.DataFrame,
+    *,
+    prefer_retained_partners: bool = False,
+) -> tuple[pd.DataFrame, list[str], dict[str, str], str]:
+    """Return stable-ID options, searchable labels, and one evidence-backed default."""
+    rows = frame.sort_values(["display_name", "school_id"], kind="stable").reset_index(drop=True)
+    options = [str(value) for value in rows["school_id"]]
+    labels = {
+        str(row.school_id): (
+            f"{row.display_name} · "
+            f"{row.country_name if pd.notna(row.country_name) else 'Unknown country'} · "
+            f"{row.school_id}"
+        )
+        for row in rows.itertuples(index=False)
+    }
+    defaults = rows
+    if prefer_retained_partners:
+        defaults = rows.loc[rows["has_retained_ego_partners"].astype(bool)]
+    defaults = defaults.sort_values(
+        ["recent_24m_work_count", "display_name", "school_id"],
+        ascending=[False, True, True],
+        kind="stable",
+    )
+    default = str(defaults.iloc[0]["school_id"]) if not defaults.empty else options[0]
+    return rows, options, labels, default
+
+
 def region_comparison_rows(
     frame: pd.DataFrame,
     *,
@@ -433,7 +473,7 @@ region_pair = st.sidebar.selectbox(
 )
 with st.sidebar.expander(
     "Geographic and content filters",
-    expanded=page in {"Geographic flows", "Institutional network"},
+    expanded=page in {"Geographic Flows", "Institutional Network"},
 ):
     country = st.selectbox(
         "Country",
@@ -470,13 +510,62 @@ st.sidebar.caption(f"Data: {metadata['data_version']}")
 st.sidebar.caption(f"Methods: {metadata['methods_version']}")
 st.sidebar.caption("Local processed snapshot; ordinary viewing makes no OpenAlex requests.")
 st.sidebar.warning(
-    "Provisional corpus boundary · human review pending. See Methods and limitations."
+    "Provisional corpus boundary · human review pending. See Methods and Data Quality."
 )
 
 page_title, page_description = PAGE_DETAILS[page]
 st.caption("GIS COLLABORATION NETWORK · PROCESSED SNAPSHOT · 2010-2025 COMPLETE YEARS")
 st.title(page_title)
 st.caption(page_description)
+if page in {"School Finder", "Compare Schools"}:
+    st.caption(
+        "Context · stable school identity · complete historical Strict and Broad corpus counts · "
+        "Broad recent 24-month activity · exact-date coverage and identity quality remain visible."
+    )
+elif page == "School Profile":
+    st.caption(
+        f"Context · {corpus.title()} corpus · stable school identity · choose an explicit rolling, "
+        "complete-quarter, or complete-year period below · missing values remain explicit."
+    )
+else:
+    st.caption(
+        f"Context · {corpus.title()} corpus · {hierarchy} identity · complete-year scientific "
+        "history through 2025 · provisional Topic boundary."
+    )
+
+view = page
+if page == "School Profile":
+    view = "School Ego Map"
+elif page == "Geographic Flows":
+    view = "Geographic flows"
+elif page == "Institutional Network":
+    network_view = st.radio(
+        "Network view",
+        ("Collaboration core", "Institution pair history"),
+        horizontal=True,
+    )
+    view = (
+        "Institutional network" if network_view == "Collaboration core" else "Institution explorer"
+    )
+elif page == "Global Trends":
+    global_trends_view = st.radio(
+        "Global Trends view",
+        ("Overview", "Regional trends", "Topic families"),
+        horizontal=True,
+    )
+    view = {
+        "Overview": "Overview",
+        "Regional trends": "Region trends",
+        "Topic families": "Topic-family comparison",
+    }[global_trends_view]
+elif page == "Methods and Data Quality":
+    evidence_view = st.radio(
+        "Evidence view",
+        ("Methods and limitations", "Data quality"),
+        horizontal=True,
+    )
+    view = evidence_view
+
 metadata_collapse_count = metadata.get("active_umbrella_collapse_count")
 if not isinstance(metadata_collapse_count, int | float):
     st.error("The dashboard metadata lacks a numeric umbrella-collapse count. Rebuild the bundle.")
@@ -494,7 +583,221 @@ if (
 
 weight_column = "fractional_count" if counting == "Fractional" else "full_count"
 
-if page == "Overview":
+if view == "School Finder":
+    school_index = require_table("school_index", columns=SCHOOL_INDEX_COLUMNS)
+    finder_columns = st.columns(3)
+    macro_regions = sorted(str(value) for value in school_index["macro_region"].dropna().unique())
+    selected_macro_region = finder_columns[0].selectbox(
+        "Finder macro-region",
+        ("All", *macro_regions),
+    )
+    region_candidates = school_index
+    if selected_macro_region != "All":
+        region_candidates = region_candidates.loc[
+            region_candidates["macro_region"] == selected_macro_region
+        ]
+    finder_countries = sorted(
+        str(value) for value in region_candidates["country_name"].dropna().unique()
+    )
+    selected_country = finder_columns[1].selectbox(
+        "Finder country",
+        ("All", *finder_countries),
+    )
+    finder_categories = sorted(
+        str(value) for value in region_candidates["institution_category"].dropna().unique()
+    )
+    selected_category = finder_columns[2].selectbox(
+        "Finder institution category",
+        ("All", *finder_categories),
+    )
+    finder_view = region_candidates
+    if selected_country != "All":
+        finder_view = finder_view.loc[finder_view["country_name"] == selected_country]
+    if selected_category != "All":
+        finder_view = finder_view.loc[finder_view["institution_category"] == selected_category]
+    if finder_view.empty:
+        show_empty("Broaden the School Finder geography or institution-category filters.")
+    else:
+        school_rows, school_options, school_labels, default_school = school_selector_records(
+            finder_view
+        )
+        st.metric("Eligible schools matching filters", f"{len(school_rows):,}")
+        selected_school_id = st.selectbox(
+            "School (type a name, country, or stable ID)",
+            school_options,
+            index=school_options.index(default_school),
+            format_func=school_labels.get,
+            key="school_finder_school",
+            help=(
+                "Search labels include the institution name, country, and stable ID. The stable "
+                "ID—not the display name—is the selected entity key."
+            ),
+        )
+        selected_school = school_rows.loc[
+            school_rows["school_id"].astype(str) == selected_school_id
+        ].iloc[0]
+        identity_columns = st.columns(4)
+        identity_columns[0].metric("Stable school ID", selected_school_id)
+        identity_columns[1].metric("Country", str(selected_school["country_name"]))
+        identity_columns[2].metric("Macro-region", str(selected_school["macro_region"]))
+        identity_columns[3].metric(
+            "Institution category", human_label(selected_school["institution_category"])
+        )
+        evidence_columns = st.columns(4)
+        evidence_columns[0].metric(
+            "Broad Works · complete history", f"{int(selected_school['broad_work_count']):,}"
+        )
+        evidence_columns[1].metric(
+            "Strict Works · complete history", f"{int(selected_school['strict_work_count']):,}"
+        )
+        evidence_columns[2].metric(
+            "Broad Works · recent 24m",
+            f"{int(selected_school['recent_24m_work_count']):,}",
+        )
+        evidence_columns[3].metric(
+            "Exact-date coverage", f"{float(selected_school['date_coverage_ratio']):.1%}"
+        )
+        if bool(selected_school["has_ambiguous_name_match"]):
+            st.warning(
+                "At least one indexed alias also matches another stable institution. This "
+                "selection remains explicit because the stable school ID is shown."
+            )
+        if not bool(selected_school["in_prior_visualization_core"]):
+            st.success(
+                "This institution is outside the prior thresholded visualization core and is "
+                "still findable through the complete school index."
+            )
+        st.subheader("Selected institution context")
+        show_data(
+            selected_school.to_frame().T,
+            columns=[
+                "school_id",
+                "display_name",
+                "country_code",
+                "country_name",
+                "subregion",
+                "macro_region",
+                "institution_category",
+                "identity_status",
+                "identity_resolution_confidence",
+                "identity_quality_flags",
+                "latest_supported_month",
+            ],
+        )
+        st.caption(
+            "School is interface shorthand for an eligible research institution, not a claim "
+            "about degree programs or institutional quality. Continue with the same stable ID on "
+            "School Profile or Compare Schools."
+        )
+
+elif view == "Compare Schools":
+    school_index = require_table("school_index", columns=SCHOOL_INDEX_COLUMNS)
+    school_rows, school_options, school_labels, _ = school_selector_records(school_index)
+    defaults = (
+        school_rows.sort_values(
+            ["recent_24m_work_count", "display_name", "school_id"],
+            ascending=[False, True, True],
+            kind="stable",
+        )["school_id"]
+        .astype(str)
+        .head(2)
+        .tolist()
+    )
+    selected_school_ids = st.multiselect(
+        "Schools (select two to four)",
+        school_options,
+        default=defaults,
+        max_selections=4,
+        format_func=school_labels.get,
+        help="Selections use stable school IDs; names and countries are search labels only.",
+    )
+    if len(selected_school_ids) < 2:
+        st.info("Select at least two institutions. A maximum of four can share the same axes.")
+    else:
+        comparison = school_rows.loc[
+            school_rows["school_id"].astype(str).isin(selected_school_ids)
+        ].copy()
+        selection_order = {school_id: index for index, school_id in enumerate(selected_school_ids)}
+        comparison["selection_order"] = comparison["school_id"].astype(str).map(selection_order)
+        comparison = comparison.sort_values("selection_order", kind="stable")
+        comparison["school_label"] = (
+            comparison["display_name"].astype(str)
+            + " · "
+            + comparison["country_name"].fillna("Unknown country").astype(str)
+        )
+        work_counts = comparison.melt(
+            id_vars=["school_id", "school_label", "selection_order"],
+            value_vars=["broad_work_count", "strict_work_count"],
+            var_name="corpus_measure",
+            value_name="work_count",
+        )
+        work_counts["corpus_measure"] = work_counts["corpus_measure"].map(
+            {
+                "broad_work_count": "Broad · complete history",
+                "strict_work_count": "Strict · complete history",
+            }
+        )
+        work_figure = px.bar(
+            work_counts,
+            x="work_count",
+            y="school_label",
+            color="corpus_measure",
+            barmode="group",
+            orientation="h",
+            title="Complete historical Work count by corpus",
+            labels={
+                "work_count": "Included Works",
+                "school_label": "Institution",
+                "corpus_measure": "Corpus and time basis",
+            },
+        )
+        work_figure.update_yaxes(categoryorder="array", categoryarray=comparison["school_label"])
+        show_chart(work_figure, height=390)
+
+        coverage_figure = px.bar(
+            comparison,
+            x="date_coverage_ratio",
+            y="school_label",
+            orientation="h",
+            title="Exact publication-date coverage",
+            labels={
+                "date_coverage_ratio": "Share of Works with eligible exact dates",
+                "school_label": "Institution",
+            },
+            text=comparison["date_coverage_ratio"].map(lambda value: f"{value:.1%}"),
+        )
+        coverage_figure.update_xaxes(range=[0, 1], tickformat=".0%")
+        coverage_figure.update_yaxes(
+            categoryorder="array", categoryarray=comparison["school_label"]
+        )
+        show_chart(coverage_figure, height=360)
+
+        st.subheader("Exact common-scale comparison")
+        show_data(
+            comparison,
+            columns=[
+                "school_id",
+                "display_name",
+                "country_name",
+                "macro_region",
+                "institution_category",
+                "broad_work_count",
+                "strict_work_count",
+                "recent_24m_work_count",
+                "latest_supported_month",
+                "date_coverage_ratio",
+                "identity_status",
+                "identity_resolution_confidence",
+                "identity_quality_flags",
+            ],
+        )
+        st.caption(
+            "No per-school normalization is applied: every institution uses the same axis within "
+            "each metric and every exact value remains in the table. Dimensions remain separate; "
+            "this is not a university ranking or a universal quality comparison."
+        )
+
+elif view == "Overview":
     current = filtered_view(graph_metrics, year, corpus, hierarchy)
     row = current.iloc[0] if not current.empty else None
     primary_metrics = st.columns(3)
@@ -545,7 +848,7 @@ if page == "Overview":
         "Exact values, checksums, and limitations are available on Data quality."
     )
 
-elif page == "School Ego Map":
+elif view == "School Ego Map":
     school_index = require_table(
         "school_index",
         columns={
@@ -754,7 +1057,7 @@ elif page == "School Ego Map":
                 "fractional-volume-weighted means."
             )
 
-elif page == "Region trends":
+elif view == "Region trends":
     matrix = require_table("matrix")
     view_trends = trends.loc[
         (trends["corpus_view"] == corpus) & (trends["hierarchy_view"] == hierarchy)
@@ -833,7 +1136,7 @@ elif page == "Region trends":
                 ],
             )
 
-elif page == "Geographic flows":
+elif view == "Geographic flows":
     map_nodes = require_table("map_nodes")
     map_edges = require_table("map_edges")
     map_coverage = require_table("map_coverage")
@@ -1200,7 +1503,7 @@ elif page == "Geographic flows":
                 "comparable across filters."
             )
 
-elif page == "Institutional network":
+elif view == "Institutional network":
     network_nodes = require_table("network_nodes")
     network_edges = require_table("network_edges")
     community_continuity = require_table("community_continuity")
@@ -1329,7 +1632,7 @@ elif page == "Institutional network":
             )
         )
 
-elif page == "Institution explorer":
+elif view == "Institution explorer":
     network_edges = require_table("network_edges")
     institution_identities = require_table("institution_identities")
     pair_data = network_edges.loc[
@@ -1421,7 +1724,7 @@ elif page == "Institution explorer":
             else:
                 show_data(identities)
 
-elif page == "Topic-family comparison":
+elif view == "Topic-family comparison":
     view = topics.loc[
         (topics["corpus_view"] == corpus) & (topics["hierarchy_view"] == hierarchy)
     ].copy()
@@ -1452,7 +1755,7 @@ elif page == "Topic-family comparison":
             "not all stored edges."
         )
 
-elif page == "Methods and limitations":
+elif view == "Methods and limitations":
     st.markdown(
         """
 ### Primary analysis
@@ -1489,7 +1792,7 @@ labels do not express a political position.
         for limitation in limitations:
             st.write(f"- {limitation}")
 
-elif page == "Data quality":
+elif view == "Data quality":
     sensitivity = require_table("sensitivity")
     map_coverage = require_table("map_coverage")
     community_continuity = require_table("community_continuity")

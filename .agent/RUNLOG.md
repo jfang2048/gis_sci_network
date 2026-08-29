@@ -3637,3 +3637,106 @@ identifier, or measured source result was persisted as scientific input.
 Task: GISNET-133 — Redesign dashboard information architecture. Make School Finder the first
 institution-first decision page, add School Profile and two-to-four-school comparison navigation,
 and preserve the completed annual, geographic-flow, and School Ego Map paths.
+
+## Run 20260829T170103Z_8c34054a4f9b
+
+Started UTC: 2026-08-29T17:01:17Z
+Ended UTC: 2026-08-29T17:08:37Z
+Task: GISNET-133 — Redesign dashboard information architecture
+Initial git status: Clean `main` at `8c34054`, synchronized with `origin/main`.
+Final git status: Pre-commit GISNET-133 application, documentation, tests, release checksums, and audit-state changes only.
+
+### Objective
+
+Make School Finder the first decision-oriented page, establish the required seven-page
+institution-first dashboard architecture, enable transparent two-to-four-school comparison on
+common scales, and preserve every released complete-year annual analysis path.
+
+### Work completed
+
+- Replaced the nine legacy primary navigation entries with School Finder, School Profile, Compare
+  Schools, Geographic Flows, Institutional Network, Global Trends, and Methods and Data Quality.
+- Added complete-index School Finder geography/category filtering and stable-ID search labels with
+  Strict/Broad historical counts, Broad recent-24-month activity, exact-date coverage, identity
+  evidence, ambiguity warnings, and outside-core visibility.
+- Promoted the existing exact School Ego Map into the entity-first School Profile path without
+  changing its rolling, complete-quarter, complete-year, map, or companion-table semantics.
+- Added two-to-four-school comparison using shared per-metric axes for complete historical
+  Strict/Broad Work counts and exact-date coverage, plus an exact identity/time/quality table. No
+  per-school normalization, fit score, or university-quality ranking was introduced.
+- Preserved annual overview, region trends/matrix, Topic-family history, fixed-layout network,
+  institution-pair explorer, methods, and data-quality evidence as explicit page subviews.
+- Updated public README, dashboard, and release guidance for the new information architecture and
+  refreshed release integrity checksums.
+
+### Files changed
+
+- Dashboard implementation and controls: `dashboard/app.py` and
+  `src/gisnet/visualization/dashboard_filters.py`.
+- Regression tests: `tests/integration/test_dashboard.py` and
+  `tests/unit/test_dashboard_filters.py`.
+- Public documentation and integrity: `README.md`, `dashboard/README.md`, `RELEASE.md`,
+  `release/manifest.json`, and `release/manifest.json.sha256`.
+- Audit state: `.agent/state.json`, `.agent/backlog.json`, `.agent/decisions.md`, and
+  `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection.
+- Lock-aware GISNET-133 state transition, test-first Streamlit navigation regression, targeted Ruff,
+  source mypy, dashboard-filter unit tests, and Streamlit AppTest integration tests.
+- Complete `scripts/quality-gate.sh`, release-manifest build/verify with privacy scan,
+  `git diff --check`, checksum capture, and temporary-output inspection.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 158 files, strict mypy for 80 source
+  files, all 210 offline tests, dashboard integration smoke tests, and CLI status.
+- Focused dashboard suite passed 10 tests across all seven primary pages and preserved subviews.
+- School Finder defaults to the complete 28,042-school index and regression-selects a school outside
+  the prior visualization core without relying on network interpretation.
+- Compare Schools regression-selects four stable IDs, renders two shared-scale charts, retains exact
+  values, and exposes no per-school hidden normalization or universal-ranking claim.
+- Annual overview, regional trend/matrix, Topic-family, fixed network, institution-pair, methods,
+  and data-quality paths all rendered without exception through their revised navigation.
+- Release verification covered 223 public files / 46,707,850 bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- Dashboard application: `eca5468373fe96bffdeb3a198173a2fcc63d16c252f498042525410070eda797`
+- School dashboard index (unchanged): `41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21`
+- School ego partners (unchanged): `18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0`
+- Release manifest: `f8d92d1e176714ed916d229c87bfb039f32b5c319ed67a60ee25ec0eca063867`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Backlog state, project state, dashboard information-architecture source version, decisions, release
+checksums, and this run record were atomically written under project run locks. Scientific datasets
+were not changed. No API request, API key, raw source page, invented identifier, or invented measured
+result was persisted.
+
+### Failures or blockers
+
+- The initial regression run failed as intended against the legacy navigation before implementation.
+- An extra direct mypy invocation against `dashboard/app.py` reported third-party-stub and legacy
+  Streamlit inference diagnostics; the project-configured strict mypy scope subsequently passed all
+  80 source files in the full quality gate. This is not a GISNET-133 blocker.
+- The first interactive lock-holder attempt received stdin EOF; a live holder was then used. It was
+  intentionally terminated before the release builder acquired its own lock, and the stale lock was
+  quarantined automatically. No concurrent writer or unresolved blocker remains.
+
+### Decisions made
+
+- Keep exactly seven primary pages and nest legacy annual functions under semantically named
+  subviews rather than delete or duplicate them.
+- Use the already released complete school index for the GISNET-133 finder and baseline comparison;
+  defer richer profile/comparison evidence to GISNET-134 and GISNET-135.
+- Keep each comparison dimension independent and exact; do not use hidden normalization or create a
+  universal school score.
+
+### Exact next action
+
+Task: GISNET-134 — Build School Profile UI. Expand the entity-first profile in the required order
+with rolling recent context, separate annual history, Topic profile, partners/geography, network
+position, citation influence, research proximity, and explicit coverage/missingness semantics.
