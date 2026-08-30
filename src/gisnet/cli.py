@@ -139,6 +139,10 @@ from gisnet.validation.reproducibility import (
     verify_reproducibility,
     write_reproducibility_artifact,
 )
+from gisnet.validation.school_decision import (
+    validate_school_decision_system,
+    write_school_decision_validation_artifact,
+)
 from gisnet.validation.sensitivity import build_sensitivity_matrix, write_sensitivity_artifacts
 from gisnet.visualization.dashboard_data import build_dashboard_bundle, write_dashboard_artifact
 from gisnet.visualization.layout import build_fixed_layout, write_layout_artifacts
@@ -1060,6 +1064,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="data/reference/reproducibility_validation.json", type=Path
     )
     reproducibility.set_defaults(handler=_verify_reproducibility)
+
+    school_validation = subparsers.add_parser(
+        "validate-school-decision",
+        help="run the complete cross-layer school-decision acceptance matrix",
+    )
+    _add_pipeline_arguments(school_validation)
+    school_validation.add_argument(
+        "--school-decision", default="config/school_decision.yml", type=Path
+    )
+    school_validation.add_argument(
+        "--output", default="data/reference/school_decision_validation.json", type=Path
+    )
+    school_validation.set_defaults(handler=_validate_school_decision)
 
     intensity = subparsers.add_parser(
         "compute-edge-intensity", help="compute normalized edge intensity and trailing persistence"
@@ -3400,6 +3417,48 @@ def _verify_reproducibility(args: argparse.Namespace) -> int:
     print(
         f"Reproducibility passed for {payload['dataset_check_count']} core datasets; "
         "no incomplete temp output remains."
+    )
+    return 0
+
+
+def _validate_school_decision(args: argparse.Namespace) -> int:
+    if args.dry_run:
+        print("Would run all thirteen school-decision acceptance checks; no output is changed.")
+        return 0
+    try:
+        project = load_project_config(args.config)
+    except (OSError, ValidationError, ValueError) as exc:
+        print(f"School-decision validation configuration failed: {exc}", file=sys.stderr)
+        return 2
+    run_id = _resolve_run_id(args.run_id)
+    command = "python -m gisnet.cli validate-school-decision --resume"
+    output_relative = args.output.as_posix()
+    manifest_relative = ".agent/manifests/school_decision_validation.json"
+    try:
+        with RunLock(run_id=run_id, task_id="GISNET-138"):
+            payload = validate_school_decision_system(
+                expected_start_year=project.analysis.start_year,
+                expected_end_year=project.analysis.end_year,
+                excluded_public_paths=(output_relative, manifest_relative),
+            )
+            write_school_decision_validation_artifact(
+                payload,
+                path=args.output,
+                run_id=run_id,
+                project_config_path=args.config,
+                school_decision_path=args.school_decision,
+                command=command,
+            )
+            _register_manifest(
+                "school_decision_validation",
+                ".agent/manifests/school_decision_validation.json",
+            )
+    except (AssertionError, duckdb.Error, OSError, ValueError) as exc:
+        print(f"School-decision validation failed: {exc}", file=sys.stderr)
+        return 3
+    print(
+        f"School-decision validation passed {payload['passed_check_count']}/"
+        f"{payload['acceptance_check_count']} acceptance checks."
     )
     return 0
 

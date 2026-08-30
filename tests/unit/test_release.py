@@ -7,7 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from gisnet.release import build_release_manifest, verify_release_manifest
+from gisnet.release import (
+    build_release_manifest,
+    scan_public_release_files,
+    verify_release_manifest,
+)
 
 
 def _release_root(tmp_path: Path) -> Path:
@@ -40,3 +44,25 @@ def test_build_rejects_private_material(tmp_path: Path) -> None:
     (root / "public/secret.txt").write_text("/home/alice/private/data", encoding="utf-8")
     with pytest.raises(ValueError, match="privacy scan failed"):
         build_release_manifest(root, public_roots=("public", "dashboard/data"))
+
+
+def test_public_scan_includes_unlisted_files_and_honors_explicit_exclusions(
+    tmp_path: Path,
+) -> None:
+    root = _release_root(tmp_path)
+    public = root / "public"
+    build_release_manifest(root, public_roots=("public", "dashboard/data"))
+    (public / "unlisted.txt").write_text("new public evidence", encoding="utf-8")
+
+    result = scan_public_release_files(root, public_roots=("public", "dashboard/data"))
+
+    assert result["scanned_file_count"] == 3
+    (public / "draft.txt").write_text("sk-abcdefghijklmnopqrstuvwxyz", encoding="utf-8")
+    with pytest.raises(ValueError, match="privacy scan failed"):
+        scan_public_release_files(root, public_roots=("public", "dashboard/data"))
+    excluded = scan_public_release_files(
+        root,
+        public_roots=("public", "dashboard/data"),
+        excluded_paths=("public/draft.txt",),
+    )
+    assert excluded["scanned_file_count"] == 3

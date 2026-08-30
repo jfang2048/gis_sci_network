@@ -1,0 +1,41 @@
+{
+  "checksum_sha256": "03233c2a4f12727661537ef23fd5a555ebaf9e1172e54959dda7ea3e00a2a974",
+  "column_count": 4,
+  "command": "python -m gisnet.cli validate-school-decision --resume",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+    "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03"
+  },
+  "created_at_utc": "2026-08-30T23:20:47.456125Z",
+  "dataset_name": "school_decision_validation",
+  "git_commit": "a1dde0674e50",
+  "max_year": null,
+  "min_year": null,
+  "null_counts": {
+    "check_id": 0,
+    "evidence": 0,
+    "passed": 0,
+    "requirement": 0
+  },
+  "primary_key": [
+    "check_id"
+  ],
+  "row_count": 13,
+  "run_id": "20260830T231052Z_a1dde0674e50",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/school_index.json",
+    ".agent/manifests/school_partner_index.json",
+    ".agent/manifests/subannual_reconciliation.json",
+    ".agent/manifests/rolling_reconciliation.json",
+    ".agent/manifests/region_flow_reconciliation.json",
+    ".agent/manifests/work_corpus.json",
+    ".agent/manifests/dashboard_bundle_summary.json",
+    ".agent/manifests/reproducibility_validation.json",
+    "release/manifest.json"
+  ],
+  "source_versions": {
+    "school_decision_validation_policy": "school-decision-system-validation-2026-08-31-v1"
+  },
+  "status": "valid"
+}

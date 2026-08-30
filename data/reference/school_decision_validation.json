@@ -1,0 +1,192 @@
+{
+  "acceptance_check_count": 13,
+  "checks": [
+    {
+      "check_id": "outside_prior_core_school_searchable",
+      "evidence": {
+        "outside_prior_core_count": 27542,
+        "school_count": 28042,
+        "searchable_outside_prior_core_count": 27542
+      },
+      "passed": true,
+      "requirement": "A school outside the previous top-500 core is searchable."
+    },
+    {
+      "check_id": "outside_global_edge_core_school_has_ego_partners",
+      "evidence": {
+        "example_school_id": "I100005738",
+        "outside_prior_edge_core_count": 18712,
+        "outside_prior_edge_core_with_public_ego_count": 18712,
+        "partner_index_school_count": 19212
+      },
+      "passed": true,
+      "requirement": "A school outside the previous top-1,000-edge core still shows ego partners."
+    },
+    {
+      "check_id": "subannual_reconciliation",
+      "evidence": {
+        "failed_row_count": 0,
+        "maximum_fractional_count_error": 1.0390067473053932e-08,
+        "maximum_full_count_error": 0.0,
+        "reconciliation_row_count": 256,
+        "temporal_grain_count": 2
+      },
+      "passed": true,
+      "requirement": "Monthly and quarterly eligible records reconcile with annual eligible records."
+    },
+    {
+      "check_id": "rolling_12m_calendar_boundaries",
+      "evidence": {
+        "boundary_mismatch_count": 0,
+        "complete_12m_window_count": 724,
+        "cross_year_12m_window_count": 704,
+        "failed_reconciliation_row_count": 0,
+        "incomplete_12m_window_count": 44,
+        "rolling_reconciliation_row_count": 4608
+      },
+      "passed": true,
+      "requirement": "Rolling 12-month boundaries are correct across year boundaries."
+    },
+    {
+      "check_id": "no_imputed_publication_months",
+      "evidence": {
+        "eligible_calendar_mismatch_count": 0,
+        "ineligible_row_with_subannual_label_count": 0,
+        "publication_date_row_count": 1176947
+      },
+      "passed": true,
+      "requirement": "Missing exact dates are never assigned fake months."
+    },
+    {
+      "check_id": "region_flow_reconciliation",
+      "evidence": {
+        "geographic_level_count": 3,
+        "maximum_fractional_count_error": 3.5433913581073284e-08,
+        "maximum_full_count_error": 0.0,
+        "maximum_normalized_share_error": 1.7985612998927536e-14,
+        "reconciliation_row_count": 192
+      },
+      "passed": true,
+      "requirement": "Region-flow totals reconcile with institution-flow totals."
+    },
+    {
+      "check_id": "country_map_matrix_reconciliation",
+      "evidence": {
+        "displayed_row_count": 39,
+        "map_matrix_mismatch_count": 0,
+        "metric_count": 3,
+        "source_geography": "AF"
+      },
+      "passed": true,
+      "requirement": "Country-flow map values reconcile with origin-destination matrix values."
+    },
+    {
+      "check_id": "calibrated_edge_width_semantics",
+      "evidence": {
+        "displayed_row_count": 39,
+        "metadata_definition_mismatch_count": 0,
+        "metric_count": 3,
+        "width_mismatch_count": 0
+      },
+      "passed": true,
+      "requirement": "Edge width uses documented comparable semantics."
+    },
+    {
+      "check_id": "profile_compare_source_equality",
+      "evidence": {
+        "profile_mismatch_count": 0,
+        "profile_row_count": 4,
+        "selected_school_count": 4,
+        "selected_school_ids": [
+          "I19820366",
+          "I37461747",
+          "I4210165038",
+          "I1294671590"
+        ],
+        "topic_mismatch_count": 0,
+        "topic_row_count": 51
+      },
+      "passed": true,
+      "requirement": "School Profile and Compare Schools use the same source metrics."
+    },
+    {
+      "check_id": "strict_subset_broad",
+      "evidence": {
+        "broad_primary_work_count": 1005606,
+        "strict_not_broad_count": 0,
+        "strict_primary_work_count": 190205
+      },
+      "passed": true,
+      "requirement": "Strict remains a subset of Broad."
+    },
+    {
+      "check_id": "public_output_secret_scan",
+      "evidence": {
+        "privacy_scan_finding_count": 0,
+        "release_verified_file_count": 230,
+        "release_verified_size_bytes": 67384410,
+        "scanned_file_count": 230,
+        "scanned_size_bytes": 67384410
+      },
+      "passed": true,
+      "requirement": "No API key is present in any public output."
+    },
+    {
+      "check_id": "deterministic_rebuild_evidence",
+      "evidence": {
+        "dashboard_checksum_mismatch_count": 0,
+        "dashboard_table_check_count": 27,
+        "processed_checksum_mismatch_count": 0,
+        "processed_dataset_check_count": 27,
+        "temporary_output_count": 0
+      },
+      "passed": true,
+      "requirement": "Repeated builds are deterministic."
+    },
+    {
+      "check_id": "annual_pipeline_regression_evidence",
+      "evidence": {
+        "dataset_count": 4,
+        "datasets": {
+          "annual_edges": {
+            "max_year": 2025,
+            "min_year": 2010,
+            "row_count": 2999736
+          },
+          "annual_flows": {
+            "max_year": 2025,
+            "min_year": 2010,
+            "row_count": 97762
+          },
+          "annual_outputs": {
+            "max_year": 2025,
+            "min_year": 2010,
+            "row_count": 501890
+          },
+          "dashboard_trends": {
+            "max_year": 2025,
+            "min_year": 2010,
+            "row_count": 384
+          }
+        },
+        "expected_end_year": 2025,
+        "expected_start_year": 2010,
+        "range_mismatch_count": 0
+      },
+      "passed": true,
+      "requirement": "Existing annual pipeline regression evidence remains valid."
+    }
+  ],
+  "generated_at_utc": "2026-08-30T23:20:47.428212Z",
+  "logical_input_hash": "b5aca92cff902f6d35bb753b01f6addfd18a26403dcd04433ecf4f374d1e705d",
+  "passed_check_count": 13,
+  "required_regression_commands": [
+    "uv run pytest tests/unit/test_school_decision_validation.py",
+    "uv run pytest tests/integration/test_school_decision_acceptance.py tests/integration/test_dashboard.py",
+    "scripts/quality-gate.sh",
+    "uv run python -m gisnet.release verify --root ."
+  ],
+  "schema_version": 1,
+  "status": "passed",
+  "validation_version": "school-decision-system-validation-2026-08-31-v1"
+}

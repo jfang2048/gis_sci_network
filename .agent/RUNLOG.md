@@ -4188,3 +4188,71 @@ Task: GISNET-138 — Validate school-decision system. Run the complete cross-lay
 including outside-core search/ego coverage, subannual and rolling reconciliation, geographic
 map/matrix equality, Profile/Compare source equality, Strict subset, determinism, privacy, and annual
 regressions before advancing to final release documentation.
+
+## Run 20260830T231052Z_a1dde0674e50
+
+Started UTC: 2026-08-30T23:10:52Z
+Ended UTC: 2026-08-30T23:22:23Z
+Task: GISNET-138 — Validate school-decision system
+Initial git status: Clean `main` at `a1dde06`, synchronized with `origin/main`; no active run or writer lock existed and GISNET-138 was the highest-priority dependency-ready task.
+Final git status: Pre-commit GISNET-138 validator, CLI/privacy support, 13-check artifact and manifest, regression tests, decisions, backlog/state, and this run record only; scientific Parquet sources and the existing release manifest are unchanged.
+
+### Objective
+
+Run and preserve the complete cross-layer school-decision acceptance matrix: outside-core school and ego coverage, subannual/rolling/geographic reconciliation, publication-date safety, map/matrix and display-width agreement, Profile/Compare source identity, Strict-within-Broad, privacy, determinism, and annual regressions.
+
+### Work completed
+
+- Added `validate-school-decision`, a fail-closed stored-data validator with exactly thirteen ordered acceptance checks and an atomic JSON artifact/manifest.
+- Validated 28,042 complete-index schools, including 27,542 outside the prior 500-node core, and retained public ego partners for all 18,712 indexed schools outside the prior 1,000-edge core.
+- Reconciled 256 subannual and 4,608 rolling rows; verified exact 12-month calendar boundaries, explicit incomplete windows, no fake publication months, all three geographic levels, and zero map/matrix or calibrated-width mismatches.
+- Verified Profile/Compare equality on four stable source IDs, Strict as a subset of Broad, 27 processed dataset manifests, 27 public dashboard table checksums, four complete-year annual datasets, and deterministic repeated validation hashes.
+- Added a current-public-file privacy scanner so new files not yet listed in the release manifest are checked; retained existing release verification separately.
+
+### Files changed
+
+- Implementation: `src/gisnet/validation/school_decision.py`, `src/gisnet/cli.py`, and `src/gisnet/release.py`.
+- Tests: `tests/unit/test_school_decision_validation.py`, `tests/integration/test_school_decision_acceptance.py`, and `tests/unit/test_release.py`.
+- Validation evidence: `data/reference/school_decision_validation.json` and `.agent/manifests/school_decision_validation.json`.
+- Audit state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`, and `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full 2,497-line backlog/agent-state/run-log/lock inspection and task selection; lock-aware transition to `IN_PROGRESS`.
+- Focused Ruff, strict mypy, CLI dry-run, unit tests, and real-snapshot acceptance tests; repeated validator execution with logical-hash comparison.
+- `scripts/quality-gate.sh`, `uv run python -m gisnet.release verify --root .`, full current-public-file privacy scan, JSON validation, temporary-output/lock inspection, and `git diff --check`.
+
+### Validation results
+
+- School-decision artifact passed 13/13 checks with logical input hash `b5aca92cff902f6d35bb753b01f6addfd18a26403dcd04433ecf4f374d1e705d`; two consecutive executions produced the same hash.
+- Full quality gate passed Ruff lint, Ruff formatting for 176 files, strict mypy for 84 source files, all 229 offline tests, dashboard integration, the real-snapshot GISNET-138 test, and CLI status.
+- Subannual/rolling maximum fractional reconciliation errors were `1.0390067473053932e-08` and `1.3137469068169594e-07`; region-flow maximum fractional/share errors were `3.5433913581073284e-08` and `1.7985612998927536e-14`, all below the declared `1e-6` tolerance.
+- Current public scan covered 232 files / 67,392,047 bytes with zero findings. Existing release verification covered 230 files / 67,384,410 bytes with zero findings; GISNET-139 owns adding the new validation files to the release manifest.
+- No `.tmp` output or live run lock remains.
+
+### Data and configuration hashes
+
+- Validation artifact: `03233c2a4f12727661537ef23fd5a555ebaf9e1172e54959dda7ea3e00a2a974`
+- Validation manifest: `c88df06b1d98c783d693a835bac107620a389b6a87781ee97219b6f684ef6c09`
+- Validation implementation: `ecc8a11768076ccf6204e1391288ba5e3757e4ae8176b3c835e6196c1844cdf8`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- School-decision contract config: `1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03`
+
+### Checkpoints written
+
+The validation artifact and manifest, backlog transition, project state, decisions, and this run record were atomically written under repository run locks. Scientific Parquet data, source identifiers, measured source values, API responses, and credentials were not created or changed.
+
+### Failures or blockers
+
+- The first flow-policy check found that metadata appends a truthful saturation note after the exact normalized-intensity formula. The validator now requires the exact formula prefix while permitting that explanatory suffix; values and widths matched exactly.
+- A first combined focused pytest command exposed duplicate unit/integration module basenames. The integration file was renamed uniquely and all focused/full tests passed. No blocker remains.
+
+### Decisions made
+
+- Preserve GISNET-138 as validation evidence, not a scientific recomputation. Every measured value comes from checked-in public tables or locally validated processed sources.
+- Scan every current public file for secrets, including unlisted files, while keeping release-manifest integrity verification as a separate check.
+- Defer data-dictionary, methodology, README, release-manifest, and checksum-bundle updates to dependency-gated GISNET-139 so release documentation changes atomically.
+
+### Exact next action
+
+Task: GISNET-139 — Update release and documentation. Add the GISNET-138 validation artifact to the public dictionary/provenance and checksum-complete release bundle; align README, methodology, dashboard/release guidance, known limitations, state, decisions, and run log; then rerun the 13-check matrix, privacy scan, release verification, and full quality gate.

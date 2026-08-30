@@ -147,6 +147,28 @@ def verify_release_manifest(
     }
 
 
+def scan_public_release_files(
+    root: str | Path,
+    *,
+    public_roots: Sequence[str] = PUBLIC_ROOTS,
+    excluded_paths: Sequence[str] = (),
+) -> dict[str, int]:
+    """Scan every current public file, including files not yet listed in a release manifest."""
+    project = Path(root).resolve()
+    excluded = {Path(value).as_posix() for value in excluded_paths}
+    files = [
+        path for path in _public_files(project, public_roots) if path.as_posix() not in excluded
+    ]
+    findings = _privacy_findings(project, files)
+    if findings:
+        raise ValueError(f"release privacy scan failed: {findings}")
+    return {
+        "scanned_file_count": len(files),
+        "scanned_size_bytes": sum((project / path).stat().st_size for path in files),
+        "privacy_scan_finding_count": 0,
+    }
+
+
 def _public_files(project: Path, public_roots: Sequence[str]) -> list[Path]:
     files: set[Path] = set()
     for relative_root in public_roots:

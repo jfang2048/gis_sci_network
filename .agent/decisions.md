@@ -297,3 +297,14 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Remove the unreachable legacy School Ego Map route because School Profile is the only public owner
   under the frozen seven-page architecture. Preserve its live map/table behavior through Profile
   regressions rather than a dead compatibility path.
+
+## 2026-08-31 — School-decision acceptance matrix
+
+- Treat GISNET-138 as a versioned thirteen-check stored-evidence contract rather than a new
+  scientific transformation. The validator reads validated Parquet facts, public dashboard tables,
+  manifests, and release integrity evidence without changing scientific datasets.
+- Require exact outside-core search/ego coverage, temporal and geographic reconciliation,
+  map/matrix and width agreement, Profile/Compare source equality, Strict-within-Broad, current
+  public-file privacy scanning, checksum-backed determinism, and complete-year annual ranges.
+- Keep the validation artifact outside the existing 0.1.0 release manifest until GISNET-139 updates
+  documentation, dictionary/provenance coverage, and the checksum-complete release bundle together.
