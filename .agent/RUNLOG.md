@@ -3954,3 +3954,117 @@ coordinate, metric, or measured result was persisted.
 Task: GISNET-136 — Surface existing citation and Topic-similarity layers. Reuse the validated
 co-authorship, directed citation-flow, and Topic-proximity evidence as separately labelled layers,
 retain directionality/coverage/core thresholds, and create no composite scientific network.
+
+## Run 20260830T150516Z_75f7bd7e6219
+
+Started UTC: 2026-08-30T15:05:16Z
+Ended UTC: 2026-08-30T17:48:55Z
+Task: GISNET-136 — Surface existing citation and Topic-similarity layers
+Initial git status: Resumed a coherent interrupted GISNET-136 worktree on `main` at `75f7bd7`; `main` matched `origin/main`, the state ledger named this task and run, no active writer lock existed, and all preserved modifications aligned with the separate-layer task.
+Final git status: Pre-commit GISNET-136 application, layer filter helper, compact public layer tables, metadata/documentation, generated data dictionary, release checksums, tests, and audit-state changes only.
+
+### Objective
+
+Expose the existing validated co-authorship, directed citation-flow, and Topic-similarity evidence as
+separately interpreted annual views while retaining directionality, coverage, source-core and public
+display thresholds, exact values, and limitations, with no composite scientific network.
+
+### Work completed
+
+- Added dedicated Institutional Network subviews for undirected publication collaboration, directed
+  citing-institution-to-cited-institution flow, and undirected Topic-profile research proximity.
+- Reused the validated annual citation and Topic-similarity Parquets. Published deterministic compact
+  top-1,000 exact edge subsets per year/corpus/hierarchy without recomputing source weights or merging
+  layers; citation self-flows and negative-lag evidence remain explicit.
+- Exposed complete citation reference coverage, Topic-vector/core coverage, source 500-institution and
+  union-Top-20 proximity boundaries, source thresholds, public edge ranks, and exact companion tables.
+- Added pure endpoint filtering/ranking logic, explicit warnings that citation flow is a knowledge-flow
+  proxy and Topic similarity is research proximity rather than collaboration, and a hard metadata
+  validation that rejects any defined composite scientific layer weight.
+- Extended the public dashboard contract, generated dictionary/provenance, README/dashboard/release
+  guidance, and checksum-complete release integrity for all five newly published layer tables.
+
+### Files changed
+
+- Audit/state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`, `.agent/RUNLOG.md`,
+  `.agent/manifests/dashboard_bundle_summary.json`, `.agent/manifests/data_dictionary_summary.json`,
+  `.agent/manifests/data_provenance_report.json`, and `.agent/manifests/public_data_dictionary.json`.
+- Implementation: `dashboard/app.py`, `src/gisnet/cli.py`,
+  `src/gisnet/reporting/data_dictionary.py`, `src/gisnet/visualization/dashboard_data.py`, and new
+  `src/gisnet/visualization/scientific_layers.py`.
+- Public data/artifacts: new `dashboard/data/citation_edges.parquet`,
+  `dashboard/data/citation_coverage.parquet`, `dashboard/data/topic_similarity_edges.parquet`,
+  `dashboard/data/topic_similarity_coverage.parquet`, and `dashboard/data/layer_summary.parquet`;
+  plus `dashboard/data/metadata.json`, dashboard/data-dictionary summaries and manifests,
+  `data/reference/data_dictionary.json`, and `outputs/reports/data_dictionary.md`.
+- Documentation/integrity: `README.md`, `dashboard/README.md`, `RELEASE.md`,
+  `release/manifest.json`, and `release/manifest.json.sha256`.
+- Tests: `tests/integration/test_dashboard.py`, `tests/unit/test_dashboard_data.py`, and new
+  `tests/unit/test_scientific_layers_view.py`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection and interrupted
+  GISNET-136 worktree audit; the authoritative 2,497-line backlog was read in full.
+- Focused scientific-layer, dashboard-data, and Streamlit integration tests; targeted Ruff lint and
+  formatting checks; production source/public schema, row-count, rank, coverage, and composite-weight
+  reconciliation queries; JSON validation; and `git diff --check`.
+- Lock-aware forced `build-dashboard-data` and `build-data-dictionary` commands using the resumed run
+  ID, followed by the complete `scripts/quality-gate.sh` and release-manifest build/verify.
+
+### Validation results
+
+- Focused scientific-layer/dashboard suite passed 18 tests, including preserved citation direction,
+  deterministic public ranking, exact Topic thresholds, endpoint filters, explicit coverage/core
+  boundaries, separate interpretations, and rendered dashboard access to both new views.
+- Full quality gate passed Ruff lint, Ruff formatting for 164 files, strict mypy for 83 source files,
+  all 222 offline tests, dashboard integration smoke tests, and CLI status.
+- Deterministic bundle rebuild published 27 tables / 2,385,431 rows. Citation and Topic public tables
+  each contain 64,000 exact rows across all 64 annual corpus/hierarchy views, with ranks 1-1,000 and
+  zero source/public rank mismatches; their complete source layers contain 32,724,174 and 432,848
+  edges respectively.
+- All 192 layer-summary rows set `composite_weight_defined=false`. Release verification covered 230
+  public files / 67,384,410 bytes with zero privacy findings, and no temporary output or live lock
+  remained.
+
+### Data and configuration hashes
+
+- Dashboard application: `a79cdae4e0e7ac7f7345f818222aedd26ccb1797f1458aca4ef32cbe2b2f8079`
+- Scientific-layer filter helper: `a2a1907b155700f8b049a5a19156d6186db981e0cb481f25e50fcdf8740f37cc`
+- Public citation edges: `f8a40d23074c72845205dc91c6d46e924054f474ddbe9d78e8c62a9ecba17625`
+- Public Topic-proximity edges: `39c6b145f898e2d47bc04e1f30a4a40e743aebbc64c1b1fff77aa63ede71bc48`
+- Dashboard metadata: `4731f9698de4a6108f8237bfcb5c0d33a473c861e907d614badf39506a647c15`
+- Public data dictionary: `cfd302e066033e830128df0f52a6ab12d52a4f48c0d4b6c74b2671dfb083d921`
+- Release manifest: `7433052ceb56117e10097cc9c0f8b777ad11d87dfefc1d5b9b76d1bbc13671fb`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+The dashboard bundle, metadata, compact public layer tables, generated dictionary/provenance,
+release checksums, backlog state, project state, decisions, and this run record were atomically
+written under repository run locks. Validated processed scientific source tables were not changed.
+No API request, API key, raw source page, invented identifier, coordinate, metric, or measured result
+was persisted.
+
+### Failures or blockers
+
+- An initial ad hoc DuckDB audit used `rows` as an alias, which is reserved in the installed parser;
+  the query was rerun with `row_count` and all source/public reconciliation checks passed.
+- No implementation, validation, release, privacy, or push blocker remains.
+
+### Decisions made
+
+- Citation direction, self-flows, negative-lag anomalies, and reference coverage remain source facts;
+  public selection changes display volume only and never symmetrizes or normalizes the layer.
+- Topic proximity reuses the existing deterministic 500-institution, union-Top-20 annual source core.
+  Its public Top-1,000 subset and optional display threshold do not imply co-authorship or recompute
+  Topic vectors; the provisional Topic-registry warning remains visible.
+- Co-authorship, citation flow, and Topic proximity retain independent units, coverage, thresholds,
+  and interpretations. No composite scientific edge weight or universal quality score is defined.
+
+### Exact next action
+
+Task: GISNET-137 — Refactor dashboard implementation. First lock the current seven-page and
+separate-layer behavior with regression/performance baselines, then split the oversized application
+along existing data-access, filter, component, chart/map, profile, and comparison boundaries without
+adding a dependency or eagerly loading complete edge sources.

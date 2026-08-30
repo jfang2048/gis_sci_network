@@ -11,6 +11,8 @@ from gisnet.visualization.dashboard_data import (
     _write_geography_anchors,
     _write_geography_dimensions,
     _write_geography_outputs,
+    _write_public_citation_edges,
+    _write_public_topic_similarity_edges,
     _write_school_dashboard_index,
     _write_school_ego_partners,
     _write_school_profile_table,
@@ -23,6 +25,138 @@ def test_dashboard_metadata_rejects_secrets_and_private_paths() -> None:
         _validate_public_metadata({"path": "/home/person/private"})
     with pytest.raises(ValueError, match="forbidden"):
         _validate_public_metadata({"value": "OPENALEX_API_KEY=secret"})
+
+
+def test_public_citation_edges_keep_direction_and_deterministic_top_k(tmp_path: Path) -> None:
+    source = tmp_path / "citation.parquet"
+    destination = tmp_path / "public-citation.parquet"
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                {
+                    "year": 2025,
+                    "corpus_view": "broad",
+                    "hierarchy_view": "organization",
+                    "source_id": source_id,
+                    "target_id": target_id,
+                    "source_name": source_name,
+                    "target_name": target_name,
+                    "source_region": "Europe",
+                    "target_region": "Asia",
+                    "source_subregion": "Western Europe",
+                    "target_subregion": "Eastern Asia",
+                    "source_country": "FR",
+                    "target_country": "JP",
+                    "source_category": "education",
+                    "target_category": "education",
+                    "is_institution_self_flow": source_id == target_id,
+                    "full_count": full_count,
+                    "fractional_count": fractional_count,
+                    "negative_lag_full_count": 0,
+                    "minimum_citation_lag_years": 0,
+                    "maximum_citation_lag_years": 4,
+                    "citation_direction": "citing institution to cited institution",
+                    "layer_semantics": "citation flow; not collaboration",
+                }
+                for (
+                    source_id,
+                    target_id,
+                    source_name,
+                    target_name,
+                    full_count,
+                    fractional_count,
+                ) in (
+                    ("I3", "I4", "Gamma", "Delta", 3, 0.5),
+                    ("I1", "I2", "Alpha", "Beta", 2, 0.5),
+                    ("I2", "I1", "Beta", "Alpha", 10, 0.4),
+                )
+            ]
+        ),
+        source,
+    )
+    connection = duckdb.connect()
+    try:
+        _write_public_citation_edges(
+            connection,
+            source=source,
+            destination=destination,
+            edge_limit_per_view=2,
+        )
+    finally:
+        connection.close()
+
+    rows = pq.read_table(destination).to_pylist()
+    assert [(row["source_id"], row["target_id"]) for row in rows] == [
+        ("I3", "I4"),
+        ("I1", "I2"),
+    ]
+    assert [row["public_edge_rank"] for row in rows] == [1, 2]
+    assert all(row["public_edge_limit"] == 2 for row in rows)
+    assert all("directed" in row["public_selection_policy"] for row in rows)
+
+
+def test_public_topic_similarity_edges_keep_thresholds_and_top_k(tmp_path: Path) -> None:
+    source = tmp_path / "similarity.parquet"
+    destination = tmp_path / "public-similarity.parquet"
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                {
+                    "year": 2025,
+                    "corpus_view": "broad",
+                    "hierarchy_view": "organization",
+                    "source_id": source_id,
+                    "target_id": target_id,
+                    "source_name": source_name,
+                    "target_name": target_name,
+                    "source_region": "Europe",
+                    "target_region": "Asia",
+                    "source_country": "FR",
+                    "target_country": "JP",
+                    "source_category": "education",
+                    "target_category": "education",
+                    "source_work_count": 20,
+                    "target_work_count": 15,
+                    "shared_topic_count": shared_topics,
+                    "cosine_similarity": similarity,
+                    "source_neighbor_rank": 1,
+                    "target_neighbor_rank": 2,
+                    "threshold_eligible_pair_count": 3,
+                    "maximum_institutions_per_view": 500,
+                    "top_k": 20,
+                    "minimum_similarity": 0.0,
+                    "edge_selection_policy": "union of top-k neighbors per institution",
+                    "layer_semantics": "research proximity; not collaboration",
+                }
+                for source_id, target_id, source_name, target_name, shared_topics, similarity in (
+                    ("I3", "I4", "Gamma", "Delta", 4, 0.9),
+                    ("I1", "I2", "Alpha", "Beta", 5, 0.9),
+                    ("I2", "I3", "Beta", "Gamma", 7, 0.8),
+                )
+            ]
+        ),
+        source,
+    )
+    connection = duckdb.connect()
+    try:
+        _write_public_topic_similarity_edges(
+            connection,
+            source=source,
+            destination=destination,
+            edge_limit_per_view=2,
+        )
+    finally:
+        connection.close()
+
+    rows = pq.read_table(destination).to_pylist()
+    assert [(row["source_id"], row["target_id"]) for row in rows] == [
+        ("I1", "I2"),
+        ("I3", "I4"),
+    ]
+    assert [row["public_edge_rank"] for row in rows] == [1, 2]
+    assert all(row["maximum_institutions_per_view"] == 500 for row in rows)
+    assert all(row["top_k"] == 20 for row in rows)
+    assert all("not collaboration" in row["layer_semantics"] for row in rows)
 
 
 def test_school_profile_publication_uses_stable_school_id_without_changing_evidence(

@@ -1,19 +1,21 @@
 {
   "api_requests_during_viewing": false,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "generated_at_utc": "2026-08-30T02:08:12.794976Z",
-  "logical_input_hash": "d171112376cfa14be0165878e379871d90f79897823508d5b36c8da1517dd6e9",
-  "methods_version": "public-dashboard-bundle-2026-08-30-v10",
+  "generated_at_utc": "2026-08-30T17:46:51.610300Z",
+  "logical_input_hash": "6d88bb43c2e6995d197d5cbd8e40c0e80ef7989de9cddafe4351e19267315885",
+  "methods_version": "public-dashboard-bundle-2026-08-30-v11",
   "outputs": {
     "dashboard_data_directory": "dashboard/data",
     "dashboard_metadata": "dashboard/data/metadata.json"
   },
   "public_snapshot": true,
-  "row_count": 2257111,
+  "row_count": 2385431,
   "schema_version": 1,
-  "stage_version": "public-dashboard-bundle-2026-08-30-v10",
-  "table_count": 22,
+  "stage_version": "public-dashboard-bundle-2026-08-30-v11",
+  "table_count": 27,
   "table_hashes": {
+    "citation_coverage": "c2a6989ca13d34733b85d45826268c451d42f91628dbfeca5cf6f40921db77f8",
+    "citation_edges": "f8a40d23074c72845205dc91c6d46e924054f474ddbe9d78e8c62a9ecba17625",
     "community_continuity": "bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f",
     "community_transitions": "101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec",
     "filter_dimensions": "42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1",
@@ -22,6 +24,7 @@
     "geography_outputs": "1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e",
     "graph_metrics": "a049b76de01f0960aedd986951dafbd0318751cd95133ddd515a14b2f56e9a84",
     "institution_identities": "cb26fa08d9bc6632c9ff8bf7ae486bf57a54683bbb5468c8e848285977e27f08",
+    "layer_summary": "b15bc21ef1cc04526250180425445fc2ebcc3a6ebc5b46b8ec2c351ae3adc623",
     "map_coverage": "917e1e7a8a565fd31f9c14e9ee93b6d9352f8ba53155d733e53023354fd0e6f4",
     "map_edges": "d7c0ddf20858284b40b935962b7c1030930fc93f47b5691815b880e836df6c2e",
     "map_nodes": "353675a124140a3b77d4353adb213417cf453c9d27fd0e4144524188b308e8d5",
@@ -34,6 +37,8 @@
     "school_profiles": "5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed",
     "school_topic_profiles": "d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199",
     "sensitivity": "b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168",
+    "topic_similarity_coverage": "ef5c973f14875c1df1bb722e4040c4cc1aeee8cd56c82ad3257c14eeabe5a852",
+    "topic_similarity_edges": "39c6b145f898e2d47bc04e1f30a4a40e743aebbc64c1b1fff77aa63ede71bc48",
     "topics": "d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9",
     "trends": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820"
   }

@@ -60,6 +60,7 @@ from gisnet.visualization.school_profile import (
     query_school_topics_for_schools,
     research_neighbor_view,
 )
+from gisnet.visualization.scientific_layers import scientific_layer_edge_view
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dashboard" / "data"
@@ -93,7 +94,8 @@ PAGE_DETAILS = {
     ),
     "Institutional Network": (
         "Institutional Network",
-        "Inspect the fixed-layout collaboration core or trace one stable-ID institution pair.",
+        "Inspect co-authorship, directed citation flow, Topic research proximity, or one "
+        "stable-ID collaboration pair without merging their scientific units.",
     ),
     "Global Trends": (
         "Global Trends",
@@ -184,6 +186,35 @@ HUMAN_LABELS = {
     "citation_flow_in_fractional": "Incoming citation flow · fractional",
     "citation_flow_out_full": "Outgoing citation flow · full",
     "citation_flow_out_fractional": "Outgoing citation flow · fractional",
+    "institution_resolved_share": "Institution-resolved reference share",
+    "reference_count": "References in coverage denominator",
+    "institution_resolved_reference_count": "Institution-resolved references",
+    "negative_lag_reference_count": "Negative-lag references",
+    "public_edge_rank": "Public edge rank",
+    "public_edge_limit": "Public edge limit per view",
+    "public_selection_policy": "Public edge-selection policy",
+    "is_institution_self_flow": "Institution self-flow",
+    "negative_lag_full_count": "Negative-lag full count",
+    "minimum_citation_lag_years": "Minimum citation lag (years)",
+    "maximum_citation_lag_years": "Maximum citation lag (years)",
+    "cosine_similarity": "Topic-profile cosine similarity",
+    "shared_topic_count": "Shared provisional Topics",
+    "source_neighbor_rank": "Source-neighbour rank",
+    "target_neighbor_rank": "Target-neighbour rank",
+    "vector_coverage_share": "Topic-vector coverage",
+    "core_coverage_share": "Similarity-core coverage",
+    "selected_core_institution_count": "Selected similarity-core institutions",
+    "selected_similarity_edge_count": "Selected similarity edges",
+    "maximum_institutions_per_view": "Maximum institutions per view",
+    "top_k": "Top neighbours per institution",
+    "minimum_similarity": "Source minimum similarity",
+    "edge_selection_policy": "Source edge-selection policy",
+    "layer_semantics": "Layer semantics",
+    "directionality": "Directionality",
+    "coverage_scope": "Coverage scope",
+    "weight_semantics": "Weight semantics",
+    "composite_weight_defined": "Composite weight defined",
+    "comparison_boundary": "Comparison boundary",
 }
 
 st.set_page_config(
@@ -588,12 +619,20 @@ if page == "Geographic Flows":
 elif page == "Institutional Network":
     network_view = st.radio(
         "Network view",
-        ("Collaboration core", "Institution pair history"),
+        (
+            "Collaboration core",
+            "Citation flow",
+            "Research proximity",
+            "Institution pair history",
+        ),
         horizontal=True,
     )
-    view = (
-        "Institutional network" if network_view == "Collaboration core" else "Institution explorer"
-    )
+    view = {
+        "Collaboration core": "Institutional network",
+        "Citation flow": "Citation flow",
+        "Research proximity": "Research proximity",
+        "Institution pair history": "Institution explorer",
+    }[network_view]
 elif page == "Global Trends":
     global_trends_view = st.radio(
         "Global Trends view",
@@ -2457,12 +2496,336 @@ elif view == "Geographic flows":
                 "comparable across filters."
             )
 
+elif view == "Citation flow":
+    layer_policy = metadata.get("scientific_layers")
+    if not isinstance(layer_policy, dict):
+        st.error("The dashboard metadata lacks the separate scientific-layer contract.")
+        st.stop()
+    citation_policy = layer_policy.get("citation_flow")
+    if not isinstance(citation_policy, dict):
+        st.error("The dashboard metadata lacks the citation-flow contract.")
+        st.stop()
+    citation_edges = require_table(
+        "citation_edges",
+        columns={
+            "year",
+            "corpus_view",
+            "hierarchy_view",
+            "source_id",
+            "target_id",
+            "source_name",
+            "target_name",
+            "full_count",
+            "fractional_count",
+            "citation_direction",
+            "layer_semantics",
+            "public_edge_rank",
+            "public_edge_limit",
+            "public_selection_policy",
+        },
+    )
+    citation_coverage = require_table("citation_coverage")
+    layer_summary = require_table("layer_summary")
+    geography_dimensions = require_table("geography_dimensions")
+    country_code: str | None = None
+    if country != "All":
+        country_matches = geography_dimensions.loc[
+            geography_dimensions["country_name"] == country, "country_code"
+        ]
+        country_code = (
+            str(country_matches.iloc[0]) if not country_matches.empty else "__unmapped_country__"
+        )
+    citation_limit = int(
+        st.number_input("Top directed citation links", min_value=5, max_value=50, value=20, step=5)
+    )
+    citation_view = scientific_layer_edge_view(
+        citation_edges,
+        year=year,
+        corpus_view=corpus,
+        hierarchy_view=hierarchy,
+        value_column=weight_column,
+        directed=True,
+        limit=citation_limit,
+        region_pair=region_pair,
+        country_code=country_code,
+        subregion=None if subregion == "All" else subregion,
+        institution_category=None if institution_type == "All" else institution_type,
+    )
+    coverage_view = filtered_view(citation_coverage, year, corpus, hierarchy)
+    summary_view = filtered_view(layer_summary, year, corpus, hierarchy).loc[
+        lambda frame: frame["layer"] == "citation_flow"
+    ]
+    coverage_row = coverage_view.iloc[0] if len(coverage_view) == 1 else None
+    summary_row = summary_view.iloc[0] if len(summary_view) == 1 else None
+
+    st.warning(
+        "Direction: citing institution → cited institution. Citation flow is a directed, "
+        "closed-corpus knowledge-flow proxy, not co-authorship, publication collaboration, "
+        "causal influence, or institutional quality."
+    )
+    st.caption(
+        "Macro-region pair, country, subregion, and institution-category controls focus edges "
+        "with matching endpoints. Topic-family and consortium controls apply only to the "
+        "co-authorship view because the validated citation source is not recomputed by those "
+        "display filters."
+    )
+    citation_metrics = st.columns(4)
+    citation_metrics[0].metric(
+        "Complete-layer directed edges",
+        "N/A" if summary_row is None else f"{int(summary_row['edge_count']):,}",
+    )
+    citation_metrics[1].metric(
+        "Institution-resolved references",
+        "N/A"
+        if coverage_row is None
+        else f"{int(coverage_row['institution_resolved_reference_count']):,}",
+    )
+    citation_metrics[2].metric(
+        "Resolved reference share",
+        "N/A"
+        if coverage_row is None
+        else f"{float(coverage_row['institution_resolved_share']):.1%}",
+    )
+    citation_metrics[3].metric("Displayed exact links", f"{len(citation_view):,}")
+
+    if citation_view.empty:
+        show_empty("Broaden the endpoint geography or category filters.")
+    else:
+        citation_figure = px.bar(
+            citation_view.iloc[::-1],
+            x=weight_column,
+            y="edge_label",
+            orientation="h",
+            title=f"Top directed citation-flow links · {counting.lower()} weight",
+            labels={
+                weight_column: f"{counting} citation-flow weight",
+                "edge_label": "Citing → cited institution",
+            },
+            text=weight_column,
+        )
+        citation_figure.update_xaxes(rangemode="tozero")
+        show_chart(citation_figure, height=max(420, 32 * len(citation_view)))
+        show_data(
+            citation_view,
+            columns=[
+                "public_edge_rank",
+                "source_id",
+                "source_name",
+                "source_country",
+                "source_region",
+                "target_id",
+                "target_name",
+                "target_country",
+                "target_region",
+                "full_count",
+                "fractional_count",
+                "is_institution_self_flow",
+                "negative_lag_full_count",
+                "minimum_citation_lag_years",
+                "maximum_citation_lag_years",
+                "citation_direction",
+                "layer_semantics",
+            ],
+        )
+    if coverage_row is not None:
+        st.caption(
+            "Coverage denominator: "
+            + str(coverage_row["coverage_denominator"])
+            + ". The public edge table retains the exact Top 1,000 directed links per year, "
+            "corpus, and hierarchy by fractional weight, full weight, then stable endpoint IDs. "
+            "It is a display subset, while the cards and coverage table describe the complete "
+            "validated layer."
+        )
+    with st.expander("Exact citation coverage and layer boundary"):
+        if not coverage_view.empty:
+            show_data(coverage_view)
+        if not summary_view.empty:
+            show_data(summary_view)
+    st.caption(
+        "Self-flows and negative-lag source anomalies remain explicit. Co-authorship, citation "
+        "flow, and Topic proximity keep independent units and coverage; no composite scientific "
+        "edge weight is defined."
+    )
+
+elif view == "Research proximity":
+    layer_policy = metadata.get("scientific_layers")
+    if not isinstance(layer_policy, dict):
+        st.error("The dashboard metadata lacks the separate scientific-layer contract.")
+        st.stop()
+    proximity_policy = layer_policy.get("topic_proximity")
+    if not isinstance(proximity_policy, dict):
+        st.error("The dashboard metadata lacks the Topic-proximity contract.")
+        st.stop()
+    similarity_edges = require_table(
+        "topic_similarity_edges",
+        columns={
+            "year",
+            "corpus_view",
+            "hierarchy_view",
+            "source_id",
+            "target_id",
+            "source_name",
+            "target_name",
+            "cosine_similarity",
+            "maximum_institutions_per_view",
+            "top_k",
+            "minimum_similarity",
+            "edge_selection_policy",
+            "layer_semantics",
+            "public_edge_rank",
+            "public_edge_limit",
+            "public_selection_policy",
+        },
+    )
+    similarity_coverage = require_table("topic_similarity_coverage")
+    layer_summary = require_table("layer_summary")
+    geography_dimensions = require_table("geography_dimensions")
+    country_code = None
+    if country != "All":
+        country_matches = geography_dimensions.loc[
+            geography_dimensions["country_name"] == country, "country_code"
+        ]
+        country_code = (
+            str(country_matches.iloc[0]) if not country_matches.empty else "__unmapped_country__"
+        )
+    proximity_controls = st.columns(2)
+    proximity_limit = int(
+        proximity_controls[0].number_input(
+            "Top research-proximity pairs", min_value=5, max_value=50, value=20, step=5
+        )
+    )
+    source_similarity_minimum = float(proximity_policy.get("minimum_similarity", 0.0))
+    display_minimum = float(
+        proximity_controls[1].number_input(
+            "Minimum displayed cosine similarity",
+            min_value=0.0,
+            max_value=1.0,
+            value=source_similarity_minimum,
+            step=0.05,
+            format="%.2f",
+        )
+    )
+    similarity_view = scientific_layer_edge_view(
+        similarity_edges,
+        year=year,
+        corpus_view=corpus,
+        hierarchy_view=hierarchy,
+        value_column="cosine_similarity",
+        directed=False,
+        limit=proximity_limit,
+        region_pair=region_pair,
+        country_code=country_code,
+        institution_category=None if institution_type == "All" else institution_type,
+        minimum_value=display_minimum,
+    )
+    coverage_view = filtered_view(similarity_coverage, year, corpus, hierarchy)
+    summary_view = filtered_view(layer_summary, year, corpus, hierarchy).loc[
+        lambda frame: frame["layer"] == "topic_proximity"
+    ]
+    coverage_row = coverage_view.iloc[0] if len(coverage_view) == 1 else None
+    summary_row = summary_view.iloc[0] if len(summary_view) == 1 else None
+
+    st.warning(
+        "Research proximity is cosine similarity between provisional institutional Topic "
+        "profiles. It is not collaboration, co-authorship, citation flow, institutional quality, "
+        "or evidence that two institutions have worked together. The Topic registry remains "
+        "provisional pending human review."
+    )
+    st.caption(
+        "Macro-region pair, country, and institution-category controls focus stored endpoints. "
+        "The global counting method, subregion, Topic-family, and consortium controls do not "
+        "alter cosine similarity; doing so would require recomputing a different Topic-vector "
+        "layer rather than filtering this validated one."
+    )
+    proximity_metrics = st.columns(4)
+    proximity_metrics[0].metric(
+        "Topic-vector coverage",
+        "N/A" if coverage_row is None else f"{float(coverage_row['vector_coverage_share']):.1%}",
+    )
+    proximity_metrics[1].metric(
+        "Annual-core coverage",
+        "N/A" if coverage_row is None else f"{float(coverage_row['core_coverage_share']):.1%}",
+    )
+    proximity_metrics[2].metric(
+        "Complete selected proximity edges",
+        "N/A" if summary_row is None else f"{int(summary_row['edge_count']):,}",
+    )
+    proximity_metrics[3].metric("Displayed exact pairs", f"{len(similarity_view):,}")
+
+    if similarity_view.empty:
+        show_empty("Lower the display threshold or broaden endpoint filters.")
+    else:
+        proximity_figure = px.bar(
+            similarity_view.iloc[::-1],
+            x="cosine_similarity",
+            y="edge_label",
+            orientation="h",
+            title="Top Topic-profile research-proximity pairs",
+            labels={
+                "cosine_similarity": "Cosine similarity",
+                "edge_label": "Institution pair",
+            },
+            text=similarity_view.iloc[::-1]["cosine_similarity"].map(
+                lambda value: f"{float(value):.3f}"
+            ),
+        )
+        proximity_figure.update_xaxes(range=[0, 1])
+        show_chart(proximity_figure, height=max(420, 32 * len(similarity_view)))
+        show_data(
+            similarity_view,
+            columns=[
+                "public_edge_rank",
+                "source_id",
+                "source_name",
+                "source_country",
+                "source_region",
+                "target_id",
+                "target_name",
+                "target_country",
+                "target_region",
+                "source_work_count",
+                "target_work_count",
+                "shared_topic_count",
+                "cosine_similarity",
+                "source_neighbor_rank",
+                "target_neighbor_rank",
+                "maximum_institutions_per_view",
+                "top_k",
+                "minimum_similarity",
+                "edge_selection_policy",
+                "layer_semantics",
+            ],
+        )
+    if coverage_row is not None:
+        st.caption(
+            f"The source is a {int(coverage_row['maximum_institutions_per_view'])}-institution "
+            f"annual core with the union of each institution's Top "
+            f"{int(coverage_row['top_k'])} neighbours after the disclosed source minimum "
+            f"similarity {float(coverage_row['minimum_similarity']):.3f}. The public table then "
+            "retains the exact Top 1,000 proximity edges per year, corpus, and hierarchy. Core "
+            "coverage and complete selected-edge counts remain visible above and below."
+        )
+    with st.expander("Exact Topic-proximity coverage and layer boundary"):
+        if not coverage_view.empty:
+            show_data(coverage_view)
+        if not summary_view.empty:
+            show_data(summary_view)
+    st.caption(
+        "The displayed threshold filters only the already validated public subset. Topic "
+        "proximity, directed citation flow, and co-authorship remain separate; no composite "
+        "scientific edge weight is defined."
+    )
+
 elif view == "Institutional network":
     network_nodes = require_table("network_nodes")
     network_edges = require_table("network_edges")
     community_continuity = require_table("community_continuity")
     nodes = filtered_view(network_nodes, year, corpus, hierarchy)
     edges = filtered_view(network_edges, year, corpus, hierarchy)
+    st.info(
+        "This view is undirected publication collaboration: two institutions co-occur on an "
+        "included scholarly Work. It is not citation flow or Topic-profile research proximity."
+    )
     continuity = filtered_view(community_continuity, year, corpus, hierarchy).rename(
         columns={"annual_community_id": "community_id"}
     )
@@ -2730,6 +3093,12 @@ elif view == "Methods and limitations":
 - Topic classifications are provisional and have not received human review; no automated
   judgment is presented as human review.
 - Collaboration is co-authorship, not citation flow, knowledge flow, or research similarity.
+- Directed citation flow is a closed-corpus knowledge-flow proxy from citing institution to cited
+  institution. Topic-profile cosine similarity is undirected research proximity and not evidence
+  of collaboration. Their coverage, thresholds, and units remain separate from co-authorship.
+- No composite scientific network or cross-layer edge weight is defined. The compact citation and
+  Topic-proximity pages retain the top 1,000 exact edges per annual corpus/hierarchy view while
+  showing complete-layer counts and coverage separately.
 - Missing matrix cells mean no observed flow in the sparse table; they are not silently
   replaced by zero.
 - Public dashboard tables are aggregate/thresholded extracts; full local processed Parquets

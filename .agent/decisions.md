@@ -265,3 +265,17 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Prefer ranked/grouped bars, aligned lines, and exact companion tables. Do not add a radar chart,
   hidden per-school normalization, composite score, admissions recommendation, or universal-best-
   school claim.
+
+## 2026-08-30 — Separate annual scientific-layer presentation
+
+- Keep publication collaboration undirected, citation flow directed from citing institution to cited
+  institution, and Topic-profile cosine similarity undirected. They retain independent scientific
+  units, coverage populations, thresholds, and limitations; no composite scientific edge weight is
+  defined.
+- Publish deterministic top-1,000 exact citation and Topic-proximity rows per annual corpus/hierarchy
+  view only as compact display subsets. Complete-layer counts and coverage stay separately visible.
+  Citation self-flows and negative-lag anomalies remain explicit rather than being discarded.
+- Reuse the existing Topic-proximity source core of at most 500 output-ranked institutions and the
+  union of each institution's top 20 neighbours after the stored similarity threshold. Endpoint and
+  display-threshold controls filter stored evidence; they do not recompute Topic vectors or imply
+  co-authorship.

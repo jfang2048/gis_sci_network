@@ -3948,6 +3948,11 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "quarter_outputs": "data/processed/institution_outputs_quarter.parquet",
         "school_profiles": "data/processed/school_profiles.parquet",
         "school_topic_profiles": "data/processed/school_topic_profiles.parquet",
+        "citation_edges": "data/processed/citation_edges_year.parquet",
+        "citation_coverage": "data/processed/citation_flow_coverage_year.parquet",
+        "topic_similarity_edges": "data/processed/topic_similarity_edges_year.parquet",
+        "topic_similarity_coverage": "data/processed/topic_similarity_coverage_year.parquet",
+        "layer_summary": "data/processed/multiplex_layer_summary_year.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

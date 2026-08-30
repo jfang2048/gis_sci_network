@@ -73,7 +73,8 @@
     "GISNET-132",
     "GISNET-133",
     "GISNET-134",
-    "GISNET-135"
+    "GISNET-135",
+    "GISNET-136"
   ],
   "config_hashes": {
     "discovery_terms": "07d3df5dec8f60d42d612d39b6a6fc26e03cab2617f4a4db8698d5826f88f17f",
@@ -230,12 +231,12 @@
   "download_checkpoints": {
     "openalex_works": ".agent/checkpoints/openalex"
   },
-  "last_successful_run_id": "20260830T020105Z_2a8f6f8d4d9e",
-  "last_updated_utc": "2026-08-30T11:54:07Z",
+  "last_successful_run_id": "20260830T150516Z_75f7bd7e6219",
+  "last_updated_utc": "2026-08-30T17:48:55Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {
-    "dashboard_bundle": "public-dashboard-bundle-2026-08-30-v10",
+    "dashboard_bundle": "public-dashboard-bundle-2026-08-30-v11",
     "dashboard_information_architecture": "dashboard-information-architecture-2026-08-29-v1",
     "geographic_display_anchors": "geographic-display-anchors-2026-08-29-v3",
     "geographic_flow_arcs": "geographic-flow-arcs-2026-08-28-v1",
@@ -248,11 +249,12 @@
     "openalex_work_types": "retrieved-2026-08-05",
     "openalex_works": "retrieved-2026-08-05",
     "openalex_works_preview": "retrieved-2026-08-05",
-    "public_data_dictionary": "public-data-dictionary-2026-08-29-v6",
+    "public_data_dictionary": "public-data-dictionary-2026-08-30-v7",
     "ror": "ror-schema-v2.1-bounded-retrieval-2026-08-05",
     "school_comparison_ui": "school-comparison-ui-2026-08-30-v1",
     "school_ego_map": "school-ego-map-2026-08-29-v1",
     "school_profile_ui": "school-profile-ui-2026-08-29-v1",
+    "scientific_layer_ui": "separate-scientific-layers-ui-2026-08-30-v1",
     "un_m49": "un-m49-retrieved-2026-08-05"
   }
 }

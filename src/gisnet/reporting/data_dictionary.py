@@ -14,9 +14,32 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-29-v6"
+_STAGE_VERSION = "public-data-dictionary-2026-08-30-v7"
 
 TABLES: dict[str, dict[str, Any]] = {
+    "citation_coverage": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Complete annual coverage accounting for the directed institution citation-flow "
+            "knowledge-flow proxy."
+        ),
+        "known_issue": (
+            "Coverage is corpus-internal; external and institution-unresolved references remain "
+            "in the denominator and are disclosed rather than imputed."
+        ),
+    },
+    "citation_edges": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view", "source_id", "target_id"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Top exact directed citation-flow edges from citing institution to cited institution."
+        ),
+        "known_issue": (
+            "This is the top 1,000-edge public display subset per annual view, not the complete "
+            "citation layer; citation flow is not co-authorship or causal influence."
+        ),
+    },
     "community_continuity": {
         "primary_key": ["year", "corpus_view", "hierarchy_view", "annual_community_id"],
         "source_manifest": ".agent/manifests/community_continuity_year.json",
@@ -94,6 +117,17 @@ TABLES: dict[str, dict[str, Any]] = {
             "Stable organization identifiers mapped to their documented umbrella identity."
         ),
         "known_issue": "Umbrella collapse occurs only under explicit frozen hierarchy rules.",
+    },
+    "layer_summary": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view", "layer"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Separate annual boundaries, directionality, counts, and units for co-authorship, "
+            "citation flow, and Topic proximity."
+        ),
+        "known_issue": (
+            "Layer totals have incomparable units; composite_weight_defined is always false."
+        ),
     },
     "map_coverage": {
         "primary_key": ["year", "corpus_view", "hierarchy_view"],
@@ -222,6 +256,28 @@ TABLES: dict[str, dict[str, Any]] = {
         "description": "Topic-family aggregates derived from the visible fixed-layout edge core.",
         "known_issue": "Topic decisions are provisional and the table covers visible edges only.",
     },
+    "topic_similarity_coverage": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Complete annual Topic-vector and deterministic similarity-core coverage evidence."
+        ),
+        "known_issue": (
+            "The Topic registry is provisional and the selected similarity layer is limited to "
+            "a deterministic 500-institution union-top-k core."
+        ),
+    },
+    "topic_similarity_edges": {
+        "primary_key": ["year", "corpus_view", "hierarchy_view", "source_id", "target_id"],
+        "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+        "description": (
+            "Top exact cosine-similarity pairs from the annual institutional Topic-profile core."
+        ),
+        "known_issue": (
+            "This top 1,000-edge public display subset represents research proximity, not "
+            "collaboration, co-authorship, or institutional quality."
+        ),
+    },
     "trends": {
         "primary_key": [
             "year",
@@ -239,10 +295,10 @@ TABLES: dict[str, dict[str, Any]] = {
 }
 
 EXACT_DESCRIPTIONS: dict[str, str] = {
-    "id": "Stable institution identifier for an undirected edge endpoint.",
-    "name": "Institution display name for an undirected edge endpoint.",
-    "region": "Frozen macro-region label for an undirected edge endpoint.",
-    "country": "Frozen country name for an undirected edge endpoint.",
+    "id": "Stable institution identifier for an edge endpoint.",
+    "name": "Institution display name for an edge endpoint.",
+    "region": "Frozen macro-region label for an edge endpoint.",
+    "country": "Frozen country label or source code for an edge endpoint.",
     "category": "Configured analytical institution category for an edge endpoint.",
     "institution_type": "Configured analytical institution type for an edge endpoint.",
     "year": "Complete publication calendar year.",
@@ -286,8 +342,13 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "bridge_score": "Documented cross-community/cross-region bridging indicator.",
     "partner_country_count": "Number of distinct partner countries.",
     "partner_region_count": "Number of distinct partner macro-regions.",
-    "full_count": "Full-count collaboration weight: one per institution pair per Work.",
-    "fractional_count": "Fractional weight: one divided by the number of pairs on each Work.",
+    "full_count": (
+        "Full weight in the table's declared layer: Work co-occurrence or institutional "
+        "citation-pair contribution as documented."
+    ),
+    "fractional_count": (
+        "Fractional weight in the table's declared collaboration or citation-flow layer."
+    ),
     "distinct_work_count": "Number of distinct source Work identifiers contributing to the row.",
     "large_consortium_work_count": "Contributing Works at or above the consortium warning size.",
     "excluded_threshold_work_count": "Contributing Works excluded by the configured size policy.",
@@ -369,8 +430,96 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "edge_work_count_sum": "Sum of edge-level distinct Work counts; not globally deduplicated.",
     "coverage_note": "Statement delimiting the public Topic aggregate coverage.",
     "node_count": "Number of nodes in the annual graph or public view.",
-    "edge_count": "Number of undirected edges in the annual graph or public view.",
-    "density": "Observed edges divided by possible undirected edges.",
+    "edge_count": "Number of edges under the row's declared layer directionality.",
+    "density": "Observed edges divided by possible edges under the declared directionality.",
+    "is_institution_self_flow": (
+        "Whether citing and cited institution endpoints are the same stable institution."
+    ),
+    "negative_lag_full_count": (
+        "Full citation-flow contributions whose cited Work year follows the citing Work year."
+    ),
+    "minimum_citation_lag_years": "Minimum observed citing-year minus cited-year lag.",
+    "maximum_citation_lag_years": "Maximum observed citing-year minus cited-year lag.",
+    "citation_direction": "Stored citing-institution to cited-institution direction definition.",
+    "layer_semantics": "Stored interpretation boundary for the scientific edge layer.",
+    "public_edge_rank": "One-based rank in the compact public edge subset for the annual view.",
+    "public_edge_limit": "Maximum exact edges retained per annual corpus/hierarchy public view.",
+    "public_selection_policy": "Deterministic ranking policy used for the public edge subset.",
+    "citing_work_count": "Selected-corpus Works with an in-scope citing institution.",
+    "citing_work_with_references_count": (
+        "Selected citing Works containing at least one referenced Work identifier."
+    ),
+    "reference_count": "Referenced-Work assertions in the citation coverage denominator.",
+    "internal_corpus_reference_count": (
+        "References whose cited Work is present in the selected corpus."
+    ),
+    "institution_resolved_reference_count": (
+        "Internal references with both citing and cited institutions resolved in scope."
+    ),
+    "external_or_out_of_corpus_reference_count": (
+        "References whose cited Work is external to or unavailable in the selected corpus."
+    ),
+    "internal_without_scoped_institution_count": (
+        "Internal references whose cited Work lacks an institution in the selected scope."
+    ),
+    "negative_lag_reference_count": (
+        "References with a source anomaly where the cited Work year is later."
+    ),
+    "self_work_reference_count": "References where citing and cited stable Work IDs are equal.",
+    "institution_pair_contribution_count": (
+        "Full citing-institution by cited-institution contributions across resolved references."
+    ),
+    "institution_resolved_share": (
+        "Institution-resolved internal references divided by all coverage-denominator references."
+    ),
+    "coverage_denominator": "Stored population used to calculate the layer coverage shares.",
+    "source_work_count": "Included Work count for the source endpoint under the annual scope.",
+    "target_work_count": "Included Work count for the target endpoint under the annual scope.",
+    "shared_topic_count": "Provisional eligible Topics with positive weight at both endpoints.",
+    "cosine_similarity": "Cosine similarity of normalized institutional Topic-weight vectors.",
+    "source_neighbor_rank": "Target rank among the source institution's Topic neighbours.",
+    "target_neighbor_rank": "Source rank among the target institution's Topic neighbours.",
+    "threshold_eligible_pair_count": (
+        "Annual core pairs meeting the configured source similarity threshold."
+    ),
+    "maximum_institutions_per_view": (
+        "Maximum output-ranked institutions eligible for the annual similarity core."
+    ),
+    "top_k": "Neighbours retained per institution before forming the union-top-k edge set.",
+    "minimum_similarity": "Configured cosine-similarity eligibility threshold.",
+    "edge_selection_policy": "Stored deterministic Topic-proximity edge-selection policy.",
+    "in_scope_institution_count": "Institutions present under the annual analytical scope.",
+    "vector_eligible_institution_count": (
+        "In-scope institutions with a nonzero eligible Topic-weight vector."
+    ),
+    "zero_vector_institution_count": "In-scope institutions with no eligible Topic-vector weight.",
+    "selected_core_institution_count": "Institutions retained in the annual similarity core.",
+    "excluded_from_core_institution_count": (
+        "Vector-eligible institutions outside the deterministic annual core."
+    ),
+    "vector_coverage_share": "Vector-eligible institutions divided by in-scope institutions.",
+    "core_coverage_share": "Selected-core institutions divided by in-scope institutions.",
+    "vector_component_count": "Positive institution-Topic vector components in the annual view.",
+    "topic_dimension_count": "Eligible provisional Topic dimensions in the selected corpus.",
+    "candidate_core_pair_count": "All unordered pairs in the selected annual similarity core.",
+    "selected_similarity_edge_count": "Edges retained by the source union-top-k policy.",
+    "minimum_selected_similarity": "Minimum cosine similarity among selected source edges.",
+    "maximum_selected_similarity": "Maximum cosine similarity among selected source edges.",
+    "source_topic_score_sum": "Eligible source Topic score before institution allocation.",
+    "vector_topic_weight_sum": "Institution-allocated Topic weight in the annual vectors.",
+    "weight_reconciliation_error": (
+        "Absolute source Topic score minus allocated vector-weight reconciliation error."
+    ),
+    "layer": "Scientific layer identifier retained without cross-layer weight merging.",
+    "directionality": "Whether the scientific layer is directed or undirected.",
+    "self_edge_count": "Edges whose two stable institution endpoints are identical.",
+    "undirected_dyad_count": "Distinct unordered institution dyads represented by the layer.",
+    "possible_edge_count": "Possible edges under the row's node count and directionality.",
+    "total_layer_weight": "Sum of weights in the layer's own incomparable scientific units.",
+    "weight_semantics": "Stored definition of the layer-specific edge weight.",
+    "coverage_scope": "Stored population and threshold boundary represented by the layer.",
+    "composite_weight_defined": "Always false; no scientific cross-layer edge weight exists.",
+    "comparison_boundary": "Stored warning that layer units and totals are not interchangeable.",
     "dimension": "Dashboard filter dimension: country, subregion, or institution type.",
     "mean_degree": "Arithmetic mean annual node degree.",
     "mean_full_strength": "Arithmetic mean annual full-count node strength.",

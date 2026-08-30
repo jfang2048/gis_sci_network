@@ -224,6 +224,57 @@ def test_visual_pages_keep_scientific_encodings_and_consistent_interaction() -> 
 
 
 @pytest.mark.integration
+def test_scientific_layer_views_keep_direction_coverage_thresholds_and_separation() -> None:
+    app_path = Path(__file__).resolve().parents[2] / "dashboard" / "app.py"
+    app = AppTest.from_file(app_path, default_timeout=30).run()
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("Institutional Network")
+    app = app.run(timeout=30)
+    layer_widget = next(widget for widget in app.radio if widget.label == "Network view")
+    assert set(layer_widget.options) == {
+        "Collaboration core",
+        "Citation flow",
+        "Research proximity",
+        "Institution pair history",
+    }
+
+    layer_widget.set_value("Citation flow")
+    app = app.run(timeout=30)
+    assert not app.exception
+    assert _plot_specs(app)
+    assert any(
+        "citing institution → cited institution" in warning.value.lower()
+        and "not co-authorship" in warning.value.lower()
+        for warning in app.warning
+    )
+    assert any(
+        "coverage denominator" in caption.value.lower() and "top 1,000" in caption.value.lower()
+        for caption in app.caption
+    )
+    assert any(
+        "no composite scientific edge weight" in caption.value.lower() for caption in app.caption
+    )
+    assert app.dataframe
+
+    layer_widget = next(widget for widget in app.radio if widget.label == "Network view")
+    layer_widget.set_value("Research proximity")
+    app = app.run(timeout=30)
+    assert not app.exception
+    assert _plot_specs(app)
+    assert any(
+        "research proximity" in warning.value.lower()
+        and "not collaboration" in warning.value.lower()
+        for warning in app.warning
+    )
+    assert any(
+        "500-institution" in caption.value.lower() and "top 20" in caption.value.lower()
+        for caption in app.caption
+    )
+    assert any("provisional" in warning.value.lower() for warning in app.warning)
+    assert app.dataframe
+
+
+@pytest.mark.integration
 def test_institution_explorer_renders_an_observed_pair() -> None:
     root = Path(__file__).resolve().parents[2]
     edges = pd.read_parquet(root / "dashboard/data/network_edges.parquet")

@@ -49,7 +49,9 @@ The primary navigation is deliberately institution-first:
    remain in aligned companion tables. No per-school hidden normalization, radar chart, composite
    score, or universal ranking is used.
 4. **Geographic Flows** preserves the source-selected geographic map/matrix/table explorer.
-5. **Institutional Network** contains both the fixed-layout annual core and institution-pair history.
+5. **Institutional Network** contains the fixed-layout annual co-authorship core, directed
+   citation-flow evidence, Topic-profile research proximity, and institution-pair collaboration
+   history as separate subviews with no merged scientific weight.
 6. **Global Trends** contains the annual overview, regional trends/matrix, and Topic-family history.
 7. **Methods and Data Quality** combines interpretation limits with sensitivity, coverage,
    continuity, version, and checksum evidence.
@@ -104,6 +106,29 @@ bounded square-root formula. Stable source and partner IDs, exact values, compon
 definition, and source-index label remain visible in hover or companion tables. School means an
 eligible university or research institution, not a degree-granting claim, admissions ranking, or
 universal research-quality score.
+
+## Separate scientific network layers
+
+The Institutional Network page retains three independent annual scientific layers:
+
+1. **Publication collaboration** is undirected co-authorship: two institutions co-occur on an
+   included scholarly Work. The fixed-layout public view uses the documented 500-node core and top
+   1,000 display-ranked co-authorship edges per year, corpus, and hierarchy.
+2. **Citation flow** is directed from citing institution to cited institution. It is a
+   corpus-internal knowledge-flow proxy, not co-authorship, causal influence, or institutional
+   quality. The page exposes the exact reference-coverage denominator, institution-resolved share,
+   self-flows, negative-lag anomalies, full/fractional weights, and the top 1,000 exact directed
+   edges per annual view. Complete-layer edge and coverage counts remain separate from that display
+   subset.
+3. **Topic-profile research proximity** is undirected cosine similarity, not collaboration. The
+   provisional source layer uses a deterministic annual core of at most 500 institutions and the
+   union of each institution's top 20 neighbours after the stored similarity threshold. The public
+   page retains the top 1,000 exact proximity edges per annual view while exposing vector coverage,
+   core coverage, source thresholds, and complete selected-edge counts.
+
+Layer totals have incomparable units. The dashboard never combines co-authorship, citation flow,
+and Topic proximity into a composite scientific network or cross-layer edge weight. Endpoint
+geography/category controls only focus stored rows; they do not recompute a new scientific layer.
 
 ## Geographic Flow Explorer semantics
 

@@ -93,7 +93,8 @@ The API key is not written to configuration, manifests, datasets, or logs.
   12/24/36-month facts are available on `main`. Safe partial-current-year acquisition, complete
   school search, expanded profile/ego-map, and aligned two-to-four-school rolling, Topic,
   collaboration, network-position, and citation-flow comparison views are available. Dedicated
-  cross-layer citation/Topic-proximity interfaces remain planned work.
+  separate-layer co-authorship, directed citation-flow, and Topic research-proximity interfaces
+  are also available with explicit coverage and display thresholds; no composite network exists.
 - The optional citation layer is corpus-internal. Its coverage table reports references whose
   cited Work or in-scope cited institution is unavailable, and preserves negative citation lags
   as source-data anomalies rather than silently excluding them.

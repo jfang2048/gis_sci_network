@@ -1,12 +1,468 @@
 {
-  "column_entry_count": 517,
+  "column_entry_count": 629,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "dictionary_version": "public-data-dictionary-2026-08-29-v6",
-  "methods_version": "public-dashboard-bundle-2026-08-29-v9",
+  "dictionary_version": "public-data-dictionary-2026-08-30-v7",
+  "methods_version": "public-dashboard-bundle-2026-08-30-v11",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 22,
+  "table_count": 27,
   "tables": [
+    {
+      "code_commit": "75f7bd7e6219",
+      "column_count": 17,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Selected-corpus Works with an in-scope citing institution.",
+          "name": "citing_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Selected citing Works containing at least one referenced Work identifier.",
+          "name": "citing_work_with_references_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Referenced-Work assertions in the citation coverage denominator.",
+          "name": "reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "References whose cited Work is present in the selected corpus.",
+          "name": "internal_corpus_reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Internal references with both citing and cited institutions resolved in scope.",
+          "name": "institution_resolved_reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "References whose cited Work is external to or unavailable in the selected corpus.",
+          "name": "external_or_out_of_corpus_reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Internal references whose cited Work lacks an institution in the selected scope.",
+          "name": "internal_without_scoped_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "References with a source anomaly where the cited Work year is later.",
+          "name": "negative_lag_reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "References where citing and cited stable Work IDs are equal.",
+          "name": "self_work_reference_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Full citing-institution by cited-institution contributions across resolved references.",
+          "name": "institution_pair_contribution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institution-resolved internal references divided by all coverage-denominator references.",
+          "name": "institution_resolved_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored population used to calculate the layer coverage shares.",
+          "name": "coverage_denominator",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored citing-institution to cited-institution direction definition.",
+          "name": "citation_direction",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored interpretation boundary for the scientific edge layer.",
+          "name": "layer_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Complete annual coverage accounting for the directed institution citation-flow knowledge-flow proxy.",
+      "known_data_quality_issue": "Coverage is corpus-internal; external and institution-unresolved references remain in the denominator and are disclosed rather than imputed.",
+      "path": "dashboard/data/citation_coverage.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view"
+      ],
+      "row_count": 64,
+      "sha256": "c2a6989ca13d34733b85d45826268c451d42f91628dbfeca5cf6f40921db77f8",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
+      },
+      "table": "citation_coverage",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "75f7bd7e6219",
+      "column_count": 26,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: stable institution identifier for an edge endpoint.",
+          "name": "source_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: stable institution identifier for an edge endpoint.",
+          "name": "target_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: institution display name for an edge endpoint.",
+          "name": "source_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: institution display name for an edge endpoint.",
+          "name": "target_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen macro-region label for an edge endpoint.",
+          "name": "source_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen macro-region label for an edge endpoint.",
+          "name": "target_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "source_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen UN M49-style subregion analytical grouping.",
+          "name": "target_subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen country label or source code for an edge endpoint.",
+          "name": "source_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen country label or source code for an edge endpoint.",
+          "name": "target_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "source_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "target_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether citing and cited institution endpoints are the same stable institution.",
+          "name": "is_institution_self_flow",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
+          "name": "full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
+          "name": "fractional_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Full citation-flow contributions whose cited Work year follows the citing Work year.",
+          "name": "negative_lag_full_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Minimum observed citing-year minus cited-year lag.",
+          "name": "minimum_citation_lag_years",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Maximum observed citing-year minus cited-year lag.",
+          "name": "maximum_citation_lag_years",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored citing-institution to cited-institution direction definition.",
+          "name": "citation_direction",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored interpretation boundary for the scientific edge layer.",
+          "name": "layer_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "One-based rank in the compact public edge subset for the annual view.",
+          "name": "public_edge_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Maximum exact edges retained per annual corpus/hierarchy public view.",
+          "name": "public_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Deterministic ranking policy used for the public edge subset.",
+          "name": "public_selection_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Top exact directed citation-flow edges from citing institution to cited institution.",
+      "known_data_quality_issue": "This is the top 1,000-edge public display subset per annual view, not the complete citation layer; citation flow is not co-authorship or causal influence.",
+      "path": "dashboard/data/citation_edges.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_id",
+        "target_id"
+      ],
+      "row_count": 64000,
+      "sha256": "f8a40d23074c72845205dc91c6d46e924054f474ddbe9d78e8c62a9ecba17625",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
+      },
+      "table": "citation_edges",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
     {
       "code_commit": "568bbdbf6b3f",
       "column_count": 13,
@@ -339,7 +795,7 @@
       "transformation_command": "python -m gisnet.cli match-communities --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 5,
       "columns": [
         {
@@ -422,16 +878,21 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "filter_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 17,
       "columns": [
         {
@@ -607,16 +1068,21 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "geography_anchors",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 4,
       "columns": [
         {
@@ -687,16 +1153,21 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "geography_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 8,
       "columns": [
         {
@@ -803,10 +1274,15 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "geography_outputs",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
@@ -848,7 +1324,7 @@
           "type": "int64"
         },
         {
-          "description": "Number of undirected edges in the annual graph or public view.",
+          "description": "Number of edges under the row's declared layer directionality.",
           "name": "edge_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -856,7 +1332,7 @@
           "type": "int64"
         },
         {
-          "description": "Observed edges divided by possible undirected edges.",
+          "description": "Observed edges divided by possible edges under the declared directionality.",
           "name": "density",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1102,6 +1578,190 @@
       "transformation_command": "python -m gisnet.cli build-hierarchy --institutions data/processed/institutions_ror.parquet --output data/processed/institution_hierarchy.parquet --resume"
     },
     {
+      "code_commit": "75f7bd7e6219",
+      "column_count": 16,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Scientific layer identifier retained without cross-layer weight merging.",
+          "name": "layer",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Whether the scientific layer is directed or undirected.",
+          "name": "directionality",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of nodes in the annual graph or public view.",
+          "name": "node_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of edges under the row's declared layer directionality.",
+          "name": "edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Edges whose two stable institution endpoints are identical.",
+          "name": "self_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct unordered institution dyads represented by the layer.",
+          "name": "undirected_dyad_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Possible edges under the row's node count and directionality.",
+          "name": "possible_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Observed edges divided by possible edges under the declared directionality.",
+          "name": "density",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Sum of weights in the layer's own incomparable scientific units.",
+          "name": "total_layer_weight",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored definition of the layer-specific edge weight.",
+          "name": "weight_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored population and threshold boundary represented by the layer.",
+          "name": "coverage_scope",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Always false; no scientific cross-layer edge weight exists.",
+          "name": "composite_weight_defined",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Stored warning that layer units and totals are not interchangeable.",
+          "name": "comparison_boundary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Separate annual boundaries, directionality, counts, and units for co-authorship, citation flow, and Topic proximity.",
+      "known_data_quality_issue": "Layer totals have incomparable units; composite_weight_defined is always false.",
+      "path": "dashboard/data/layer_summary.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "layer"
+      ],
+      "row_count": 192,
+      "sha256": "b15bc21ef1cc04526250180425445fc2ebcc3a6ebc5b46b8ec2c351ae3adc623",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
+      },
+      "table": "layer_summary",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
       "code_commit": "568bbdbf6b3f",
       "column_count": 13,
       "columns": [
@@ -1263,7 +1923,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "description": "Source endpoint value: stable institution identifier for an edge endpoint.",
           "name": "source_id",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1271,7 +1931,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "description": "Target endpoint value: stable institution identifier for an edge endpoint.",
           "name": "target_id",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1279,7 +1939,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: institution display name for an undirected edge endpoint.",
+          "description": "Source endpoint value: institution display name for an edge endpoint.",
           "name": "source_name",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1287,7 +1947,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: institution display name for an undirected edge endpoint.",
+          "description": "Target endpoint value: institution display name for an edge endpoint.",
           "name": "target_name",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1295,7 +1955,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Source endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "source_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1303,7 +1963,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Target endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "target_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1327,7 +1987,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: frozen country name for an undirected edge endpoint.",
+          "description": "Source endpoint value: frozen country label or source code for an edge endpoint.",
           "name": "source_country",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1335,7 +1995,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: frozen country name for an undirected edge endpoint.",
+          "description": "Target endpoint value: frozen country label or source code for an edge endpoint.",
           "name": "target_country",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1359,7 +2019,7 @@
           "type": "string"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1367,7 +2027,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1447,7 +2107,7 @@
           "type": "int8"
         },
         {
-          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the source endpoint under the annual scope.",
           "name": "source_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1455,7 +2115,7 @@
           "type": "int64"
         },
         {
-          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the target endpoint under the annual scope.",
           "name": "target_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2012,7 +2672,7 @@
           "type": "string"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2020,7 +2680,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2179,7 +2839,7 @@
           "type": "int64"
         },
         {
-          "description": "Number of undirected edges in the annual graph or public view.",
+          "description": "Number of edges under the row's declared layer directionality.",
           "name": "edge_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2282,7 +2942,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "description": "Source endpoint value: stable institution identifier for an edge endpoint.",
           "name": "source_id",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2290,7 +2950,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: stable institution identifier for an undirected edge endpoint.",
+          "description": "Target endpoint value: stable institution identifier for an edge endpoint.",
           "name": "target_id",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2298,7 +2958,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: institution display name for an undirected edge endpoint.",
+          "description": "Source endpoint value: institution display name for an edge endpoint.",
           "name": "source_name",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2306,7 +2966,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: institution display name for an undirected edge endpoint.",
+          "description": "Target endpoint value: institution display name for an edge endpoint.",
           "name": "target_name",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2314,7 +2974,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Source endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "source_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2322,7 +2982,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Target endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "target_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2346,7 +3006,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: frozen country name for an undirected edge endpoint.",
+          "description": "Source endpoint value: frozen country label or source code for an edge endpoint.",
           "name": "source_country",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2354,7 +3014,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: frozen country name for an undirected edge endpoint.",
+          "description": "Target endpoint value: frozen country label or source code for an edge endpoint.",
           "name": "target_country",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2378,7 +3038,7 @@
           "type": "string"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2386,7 +3046,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2466,7 +3126,7 @@
           "type": "int8"
         },
         {
-          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the source endpoint under the annual scope.",
           "name": "source_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2474,7 +3134,7 @@
           "type": "int64"
         },
         {
-          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the target endpoint under the annual scope.",
           "name": "target_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3007,7 +3667,7 @@
       "transformation_command": "python -m gisnet.cli build-network-view --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 43,
       "columns": [
         {
@@ -3243,7 +3903,7 @@
           "type": "string"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3251,7 +3911,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3267,7 +3927,7 @@
           "type": "int64"
         },
         {
-          "description": "Source endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the source endpoint under the annual scope.",
           "name": "source_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3275,7 +3935,7 @@
           "type": "int64"
         },
         {
-          "description": "Target endpoint value: distinct primary-corpus Works affiliated with the institution.",
+          "description": "Included Work count for the target endpoint under the annual scope.",
           "name": "target_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3393,16 +4053,21 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "school_ego_partners",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "483b18a1191e",
+      "code_commit": "75f7bd7e6219",
       "column_count": 33,
       "columns": [
         {
@@ -3705,10 +4370,15 @@
         ".agent/manifests/collaboration_edges_month.json",
         ".agent/manifests/institution_outputs_quarter.json",
         ".agent/manifests/school_profiles.json",
-        ".agent/manifests/school_topic_profiles.json"
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
       },
       "table": "school_index",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
@@ -4716,6 +5386,542 @@
       "transformation_command": "python -m gisnet.cli run-sensitivity --resume"
     },
     {
+      "code_commit": "75f7bd7e6219",
+      "column_count": 25,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institutions present under the annual analytical scope.",
+          "name": "in_scope_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "In-scope institutions with a nonzero eligible Topic-weight vector.",
+          "name": "vector_eligible_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "In-scope institutions with no eligible Topic-vector weight.",
+          "name": "zero_vector_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institutions retained in the annual similarity core.",
+          "name": "selected_core_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Vector-eligible institutions outside the deterministic annual core.",
+          "name": "excluded_from_core_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Vector-eligible institutions divided by in-scope institutions.",
+          "name": "vector_coverage_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Selected-core institutions divided by in-scope institutions.",
+          "name": "core_coverage_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Positive institution-Topic vector components in the annual view.",
+          "name": "vector_component_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Eligible provisional Topic dimensions in the selected corpus.",
+          "name": "topic_dimension_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "All unordered pairs in the selected annual similarity core.",
+          "name": "candidate_core_pair_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Annual core pairs meeting the configured source similarity threshold.",
+          "name": "threshold_eligible_pair_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Edges retained by the source union-top-k policy.",
+          "name": "selected_similarity_edge_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Minimum cosine similarity among selected source edges.",
+          "name": "minimum_selected_similarity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Maximum cosine similarity among selected source edges.",
+          "name": "maximum_selected_similarity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Eligible source Topic score before institution allocation.",
+          "name": "source_topic_score_sum",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Institution-allocated Topic weight in the annual vectors.",
+          "name": "vector_topic_weight_sum",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Absolute source Topic score minus allocated vector-weight reconciliation error.",
+          "name": "weight_reconciliation_error",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Maximum output-ranked institutions eligible for the annual similarity core.",
+          "name": "maximum_institutions_per_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Neighbours retained per institution before forming the union-top-k edge set.",
+          "name": "top_k",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Configured cosine-similarity eligibility threshold.",
+          "name": "minimum_similarity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored deterministic Topic-proximity edge-selection policy.",
+          "name": "edge_selection_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored interpretation boundary for the scientific edge layer.",
+          "name": "layer_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Complete annual Topic-vector and deterministic similarity-core coverage evidence.",
+      "known_data_quality_issue": "The Topic registry is provisional and the selected similarity layer is limited to a deterministic 500-institution union-top-k core.",
+      "path": "dashboard/data/topic_similarity_coverage.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view"
+      ],
+      "row_count": 64,
+      "sha256": "ef5c973f14875c1df1bb722e4040c4cc1aeee8cd56c82ad3257c14eeabe5a852",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
+      },
+      "table": "topic_similarity_coverage",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "75f7bd7e6219",
+      "column_count": 28,
+      "columns": [
+        {
+          "description": "Complete publication calendar year.",
+          "name": "year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: stable institution identifier for an edge endpoint.",
+          "name": "source_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: stable institution identifier for an edge endpoint.",
+          "name": "target_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: institution display name for an edge endpoint.",
+          "name": "source_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: institution display name for an edge endpoint.",
+          "name": "target_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen macro-region label for an edge endpoint.",
+          "name": "source_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen macro-region label for an edge endpoint.",
+          "name": "target_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: frozen country label or source code for an edge endpoint.",
+          "name": "source_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: frozen country label or source code for an edge endpoint.",
+          "name": "target_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "source_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Target endpoint value: configured analytical institution category for an edge endpoint.",
+          "name": "target_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Included Work count for the source endpoint under the annual scope.",
+          "name": "source_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Included Work count for the target endpoint under the annual scope.",
+          "name": "target_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Provisional eligible Topics with positive weight at both endpoints.",
+          "name": "shared_topic_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Cosine similarity of normalized institutional Topic-weight vectors.",
+          "name": "cosine_similarity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Target rank among the source institution's Topic neighbours.",
+          "name": "source_neighbor_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Source rank among the target institution's Topic neighbours.",
+          "name": "target_neighbor_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Annual core pairs meeting the configured source similarity threshold.",
+          "name": "threshold_eligible_pair_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Maximum output-ranked institutions eligible for the annual similarity core.",
+          "name": "maximum_institutions_per_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Neighbours retained per institution before forming the union-top-k edge set.",
+          "name": "top_k",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Configured cosine-similarity eligibility threshold.",
+          "name": "minimum_similarity",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Stored deterministic Topic-proximity edge-selection policy.",
+          "name": "edge_selection_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored interpretation boundary for the scientific edge layer.",
+          "name": "layer_semantics",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "One-based rank in the compact public edge subset for the annual view.",
+          "name": "public_edge_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Maximum exact edges retained per annual corpus/hierarchy public view.",
+          "name": "public_edge_limit",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Deterministic ranking policy used for the public edge subset.",
+          "name": "public_selection_policy",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+      },
+      "description": "Top exact cosine-similarity pairs from the annual institutional Topic-profile core.",
+      "known_data_quality_issue": "This top 1,000-edge public display subset represents research proximity, not collaboration, co-authorship, or institutional quality.",
+      "path": "dashboard/data/topic_similarity_edges.parquet",
+      "primary_key": [
+        "year",
+        "corpus_view",
+        "hierarchy_view",
+        "source_id",
+        "target_id"
+      ],
+      "row_count": 64000,
+      "sha256": "39c6b145f898e2d47bc04e1f30a4a40e743aebbc64c1b1fff77aa63ede71bc48",
+      "source_manifest": ".agent/manifests/dashboard_bundle_summary.json",
+      "source_manifests": [
+        ".agent/manifests/trend_series_year.json",
+        ".agent/manifests/collaboration_matrix_year.json",
+        ".agent/manifests/map_nodes_year.json",
+        ".agent/manifests/map_edges_year.json",
+        ".agent/manifests/map_coverage_year.json",
+        ".agent/manifests/network_view_nodes_year.json",
+        ".agent/manifests/network_view_edges_year.json",
+        ".agent/manifests/network_accessibility_year.json",
+        ".agent/manifests/graph_metrics_year.json",
+        ".agent/manifests/sensitivity_matrix.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/community_transitions_year.json",
+        ".agent/manifests/institution_hierarchy.json",
+        ".agent/manifests/institutions.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/edges_metrics_year.json",
+        ".agent/manifests/collaboration_edges_quarter.json",
+        ".agent/manifests/collaboration_edges_month.json",
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json",
+        ".agent/manifests/multiplex_layer_summary_year.json"
+      ],
+      "source_versions": {
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-30-v11"
+      },
+      "table": "topic_similarity_edges",
+      "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
       "code_commit": "568bbdbf6b3f",
       "column_count": 9,
       "columns": [
@@ -4760,7 +5966,7 @@
           "type": "int64"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -4768,7 +5974,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -4848,7 +6054,7 @@
           "type": "string"
         },
         {
-          "description": "Source endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Source endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "source_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -4856,7 +6062,7 @@
           "type": "string"
         },
         {
-          "description": "Target endpoint value: frozen macro-region label for an undirected edge endpoint.",
+          "description": "Target endpoint value: frozen macro-region label for an edge endpoint.",
           "name": "target_region",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -4880,7 +6086,7 @@
           "type": "bool"
         },
         {
-          "description": "Full-count collaboration weight: one per institution pair per Work.",
+          "description": "Full weight in the table's declared layer: Work co-occurrence or institutional citation-pair contribution as documented.",
           "name": "full_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -4888,7 +6094,7 @@
           "type": "int64"
         },
         {
-          "description": "Fractional weight: one divided by the number of pairs on each Work.",
+          "description": "Fractional weight in the table's declared collaboration or citation-flow layer.",
           "name": "fractional_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",

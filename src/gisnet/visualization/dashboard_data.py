@@ -14,13 +14,15 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-30-v10"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-30-v11"
 _GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v2"
 _GEOGRAPHIC_ANCHOR_VERSION = "geographic-display-anchors-2026-08-29-v3"
 _SCHOOL_EGO_VERSION = "school-ego-map-2026-08-29-v1"
 _SCHOOL_PROFILE_VERSION = "school-profile-ui-2026-08-29-v1"
 _SCHOOL_COMPARISON_VERSION = "school-comparison-ui-2026-08-30-v1"
+_SCIENTIFIC_LAYER_VERSION = "separate-scientific-layers-ui-2026-08-30-v1"
 _SCHOOL_EGO_TOP_K = 50
+_SCIENTIFIC_LAYER_EDGE_LIMIT = 1000
 _OPENALEX_LICENSE = "CC0 1.0 Universal"
 _OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
 _OPENALEX_SOURCE_URL = "https://openalex.org/"
@@ -48,6 +50,9 @@ def build_dashboard_bundle(
         "sensitivity",
         "community_continuity",
         "community_transitions",
+        "citation_coverage",
+        "topic_similarity_coverage",
+        "layer_summary",
     }
     required = copied_sources | {
         "institution_hierarchy",
@@ -61,6 +66,8 @@ def build_dashboard_bundle(
         "quarter_outputs",
         "school_profiles",
         "school_topic_profiles",
+        "citation_edges",
+        "topic_similarity_edges",
     }
     missing = required.difference(sources)
     if missing:
@@ -82,6 +89,8 @@ def build_dashboard_bundle(
     destinations["school_ego_partners"] = output / "school_ego_partners.parquet"
     destinations["school_profiles"] = output / "school_profiles.parquet"
     destinations["school_topic_profiles"] = output / "school_topic_profiles.parquet"
+    destinations["citation_edges"] = output / "citation_edges.parquet"
+    destinations["topic_similarity_edges"] = output / "topic_similarity_edges.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -101,6 +110,18 @@ def build_dashboard_bundle(
                 """,
                 [str(paths[name])],
             )
+        _write_public_citation_edges(
+            connection,
+            source=paths["citation_edges"],
+            destination=temporary["citation_edges"],
+            edge_limit_per_view=_SCIENTIFIC_LAYER_EDGE_LIMIT,
+        )
+        _write_public_topic_similarity_edges(
+            connection,
+            source=paths["topic_similarity_edges"],
+            destination=temporary["topic_similarity_edges"],
+            edge_limit_per_view=_SCIENTIFIC_LAYER_EDGE_LIMIT,
+        )
         _write_filter_dimensions(
             connection, paths["complete_nodes"], temporary["filter_dimensions"]
         )
@@ -334,6 +355,83 @@ def build_dashboard_bundle(
             {"transition_year", "event_type", "assignment_selected", "jaccard_overlap"},
             "transition_year",
         ),
+        "citation_edges": (
+            ["year", "corpus_view", "hierarchy_view", "source_id", "target_id"],
+            {
+                "year",
+                "source_id",
+                "target_id",
+                "full_count",
+                "fractional_count",
+                "citation_direction",
+                "layer_semantics",
+                "public_edge_rank",
+                "public_edge_limit",
+                "public_selection_policy",
+            },
+            "year",
+        ),
+        "citation_coverage": (
+            ["year", "corpus_view", "hierarchy_view"],
+            {
+                "year",
+                "reference_count",
+                "institution_resolved_reference_count",
+                "institution_resolved_share",
+                "coverage_denominator",
+                "citation_direction",
+                "layer_semantics",
+            },
+            "year",
+        ),
+        "topic_similarity_edges": (
+            ["year", "corpus_view", "hierarchy_view", "source_id", "target_id"],
+            {
+                "year",
+                "source_id",
+                "target_id",
+                "cosine_similarity",
+                "maximum_institutions_per_view",
+                "top_k",
+                "minimum_similarity",
+                "edge_selection_policy",
+                "layer_semantics",
+                "public_edge_rank",
+                "public_edge_limit",
+                "public_selection_policy",
+            },
+            "year",
+        ),
+        "topic_similarity_coverage": (
+            ["year", "corpus_view", "hierarchy_view"],
+            {
+                "year",
+                "vector_coverage_share",
+                "core_coverage_share",
+                "selected_core_institution_count",
+                "selected_similarity_edge_count",
+                "maximum_institutions_per_view",
+                "top_k",
+                "minimum_similarity",
+                "edge_selection_policy",
+                "layer_semantics",
+            },
+            "year",
+        ),
+        "layer_summary": (
+            ["year", "corpus_view", "hierarchy_view", "layer"],
+            {
+                "year",
+                "layer",
+                "directionality",
+                "edge_count",
+                "weight_semantics",
+                "coverage_scope",
+                "composite_weight_defined",
+                "comparison_boundary",
+            },
+            "year",
+        ),
         "institution_identities": (
             ["organization_id"],
             {
@@ -546,10 +644,39 @@ def build_dashboard_bundle(
             """,
             [str(temporary["school_profiles"])],
         ).fetchall()
+        citation_policy_rows = metadata_connection.execute(
+            """
+            SELECT DISTINCT citation_direction, coverage_denominator, layer_semantics
+            FROM read_parquet(?)
+            ORDER BY ALL
+            """,
+            [str(temporary["citation_coverage"])],
+        ).fetchall()
+        topic_policy_rows = metadata_connection.execute(
+            """
+            SELECT DISTINCT maximum_institutions_per_view, top_k, minimum_similarity,
+                            edge_selection_policy, layer_semantics
+            FROM read_parquet(?)
+            ORDER BY ALL
+            """,
+            [str(temporary["topic_similarity_coverage"])],
+        ).fetchall()
+        composite_layer_rows = metadata_connection.execute(
+            """
+            SELECT count(*) FROM read_parquet(?) WHERE composite_weight_defined
+            """,
+            [str(temporary["layer_summary"])],
+        ).fetchone()
     finally:
         metadata_connection.close()
     if outside_core_ego_schools is None or ego_coordinate_coverage is None:
         raise ValueError("School Ego Map dashboard metadata could not be derived")
+    if len(citation_policy_rows) != 1:
+        raise ValueError("citation-flow dashboard policy is inconsistent across annual views")
+    if len(topic_policy_rows) != 1:
+        raise ValueError("Topic-proximity dashboard policy is inconsistent across annual views")
+    if composite_layer_rows is None or int(composite_layer_rows[0]):
+        raise ValueError("a composite scientific layer weight is forbidden")
     ego_periods = [
         {
             "time_basis": str(row[0]),
@@ -768,6 +895,60 @@ def build_dashboard_bundle(
                 ".agent/manifests/school_topic_profiles.json",
             ],
         },
+        "scientific_layers": {
+            "policy_version": _SCIENTIFIC_LAYER_VERSION,
+            "layers_remain_separate": True,
+            "composite_scientific_edge_weight_defined": False,
+            "comparison_boundary": (
+                "co-authorship, directed citation flow, and Topic-profile proximity retain "
+                "incomparable units, independent coverage, and separate interpretations"
+            ),
+            "coauthorship": {
+                "label": "Publication collaboration",
+                "directionality": "undirected",
+                "semantics": "two institutions co-occur on an included scholarly Work",
+                "public_core_institution_limit": 500,
+                "public_edge_limit_per_view": 1000,
+                "source_manifest": ".agent/manifests/network_view_edges_year.json",
+            },
+            "citation_flow": {
+                "label": "Directed knowledge-flow proxy",
+                "directionality": str(citation_policy_rows[0][0]),
+                "coverage_denominator": str(citation_policy_rows[0][1]),
+                "semantics": str(citation_policy_rows[0][2]),
+                "public_edge_limit_per_view": _SCIENTIFIC_LAYER_EDGE_LIMIT,
+                "public_selection_policy": (
+                    "fractional count descending, full count descending, source stable ID, "
+                    "target stable ID"
+                ),
+                "self_flows_preserved": True,
+                "negative_lag_evidence_preserved": True,
+                "source_manifests": [
+                    ".agent/manifests/citation_edges_year.json",
+                    ".agent/manifests/citation_flow_coverage_year.json",
+                ],
+            },
+            "topic_proximity": {
+                "label": "Topic-profile research proximity",
+                "directionality": "undirected",
+                "maximum_institutions_per_view": int(topic_policy_rows[0][0]),
+                "top_k": int(topic_policy_rows[0][1]),
+                "minimum_similarity": float(topic_policy_rows[0][2]),
+                "edge_selection_policy": str(topic_policy_rows[0][3]),
+                "semantics": str(topic_policy_rows[0][4]),
+                "public_edge_limit_per_view": _SCIENTIFIC_LAYER_EDGE_LIMIT,
+                "public_selection_policy": (
+                    "cosine similarity descending, shared Topic count descending, source "
+                    "stable ID, target stable ID"
+                ),
+                "provisional_topic_registry": True,
+                "source_manifests": [
+                    ".agent/manifests/topic_similarity_edges_year.json",
+                    ".agent/manifests/topic_similarity_coverage_year.json",
+                ],
+            },
+            "layer_summary_source_manifest": (".agent/manifests/multiplex_layer_summary_year.json"),
+        },
         "tables": {
             name: {
                 "path": f"dashboard/data/{destinations[name].name}",
@@ -786,6 +967,8 @@ def build_dashboard_bundle(
             "2025 is the last complete calendar year; no partial 2026 data are included.",
             "Visualization score is non-primary and used only to rank visible edges.",
             "Community continuity matches below Jaccard 0.25 are explicitly uncertain.",
+            "Citation-flow and Topic-proximity edge pages retain only the top 1,000 exact edges "
+            "per annual corpus/hierarchy view; complete-layer counts and coverage remain visible.",
         ],
     }
     _validate_public_metadata(payload)
@@ -868,6 +1051,11 @@ def write_dashboard_artifact(
             ".agent/manifests/institution_outputs_quarter.json",
             ".agent/manifests/school_profiles.json",
             ".agent/manifests/school_topic_profiles.json",
+            ".agent/manifests/citation_edges_year.json",
+            ".agent/manifests/citation_flow_coverage_year.json",
+            ".agent/manifests/topic_similarity_edges_year.json",
+            ".agent/manifests/topic_similarity_coverage_year.json",
+            ".agent/manifests/multiplex_layer_summary_year.json",
         ],
         command=command,
     )
@@ -887,6 +1075,73 @@ def _write_school_profile_table(
             FROM read_parquet(?)
         ) TO '{_literal(destination)}'
         (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(source)],
+    )
+
+
+def _write_public_citation_edges(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    source: Path,
+    destination: Path,
+    edge_limit_per_view: int,
+) -> None:
+    """Publish a compact, direction-preserving citation subset with explicit rank policy."""
+    if edge_limit_per_view <= 0:
+        raise ValueError("citation-flow public edge limit must be positive")
+    connection.execute(
+        f"""
+        COPY (
+            WITH ranked AS (
+                SELECT *, row_number() OVER (
+                    PARTITION BY year, corpus_view, hierarchy_view
+                    ORDER BY fractional_count DESC, full_count DESC, source_id, target_id
+                )::INTEGER AS public_edge_rank
+                FROM read_parquet(?)
+            )
+            SELECT *,
+                   {edge_limit_per_view}::INTEGER AS public_edge_limit,
+                   'top directed edges by fractional count descending, full count descending, '
+                   || 'source stable ID, target stable ID' AS public_selection_policy
+            FROM ranked
+            WHERE public_edge_rank <= {edge_limit_per_view}
+            ORDER BY year, corpus_view, hierarchy_view, public_edge_rank, source_id, target_id
+        ) TO '{_literal(destination)}' (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(source)],
+    )
+
+
+def _write_public_topic_similarity_edges(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    source: Path,
+    destination: Path,
+    edge_limit_per_view: int,
+) -> None:
+    """Publish top exact Topic-proximity rows without changing source core thresholds."""
+    if edge_limit_per_view <= 0:
+        raise ValueError("Topic-proximity public edge limit must be positive")
+    connection.execute(
+        f"""
+        COPY (
+            WITH ranked AS (
+                SELECT *, row_number() OVER (
+                    PARTITION BY year, corpus_view, hierarchy_view
+                    ORDER BY cosine_similarity DESC, shared_topic_count DESC, source_id, target_id
+                )::INTEGER AS public_edge_rank
+                FROM read_parquet(?)
+            )
+            SELECT *,
+                   {edge_limit_per_view}::INTEGER AS public_edge_limit,
+                   'top research-proximity edges by cosine similarity descending, shared Topic '
+                   || 'count descending, source stable ID, target stable ID'
+                       AS public_selection_policy
+            FROM ranked
+            WHERE public_edge_rank <= {edge_limit_per_view}
+            ORDER BY year, corpus_view, hierarchy_view, public_edge_rank, source_id, target_id
+        ) TO '{_literal(destination)}' (FORMAT PARQUET, COMPRESSION ZSTD)
         """,
         [str(source)],
     )

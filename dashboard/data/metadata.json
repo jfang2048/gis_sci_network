@@ -4,7 +4,7 @@
   "corpus_scientific_status": "blocked_pending_human_corpus_review",
   "data_version": "gisnet-0.1.0-2026-08-28",
   "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
-  "generated_at_utc": "2026-08-30T02:08:12.656303Z",
+  "generated_at_utc": "2026-08-30T17:46:51.412685Z",
   "geographic_flow_explorer": {
     "anchor_method": "unweighted spherical mean of distinct organization coordinates supplied by OpenAlex; display anchor only, not a geographic centroid",
     "arc_geometry": "32-point spherical great-circle interpolation between sourced display anchors",
@@ -49,9 +49,10 @@
     "The corpus-boundary annotation sample is unlabelled and awaits human review.",
     "2025 is the last complete calendar year; no partial 2026 data are included.",
     "Visualization score is non-primary and used only to rank visible edges.",
-    "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
+    "Community continuity matches below Jaccard 0.25 are explicitly uncertain.",
+    "Citation-flow and Topic-proximity edge pages retain only the top 1,000 exact edges per annual corpus/hierarchy view; complete-layer counts and coverage remain visible."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-30-v10",
+  "methods_version": "public-dashboard-bundle-2026-08-30-v11",
   "public_snapshot": true,
   "schema_version": 1,
   "school_comparison": {
@@ -225,8 +226,63 @@
     "time_policy": "recent activity uses source-stored rolling 12-, 24-, and 36-month horizons; network, citation-flow, and research-proximity context use separately labelled latest complete annual evidence",
     "topic_profile_row_count": 242892
   },
+  "scientific_layers": {
+    "citation_flow": {
+      "coverage_denominator": "references from selected-corpus Works with an in-scope citing institution",
+      "directionality": "citing institution to cited institution",
+      "label": "Directed knowledge-flow proxy",
+      "negative_lag_evidence_preserved": true,
+      "public_edge_limit_per_view": 1000,
+      "public_selection_policy": "fractional count descending, full count descending, source stable ID, target stable ID",
+      "self_flows_preserved": true,
+      "semantics": "corpus-internal citation flow; not collaboration",
+      "source_manifests": [
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/citation_flow_coverage_year.json"
+      ]
+    },
+    "coauthorship": {
+      "directionality": "undirected",
+      "label": "Publication collaboration",
+      "public_core_institution_limit": 500,
+      "public_edge_limit_per_view": 1000,
+      "semantics": "two institutions co-occur on an included scholarly Work",
+      "source_manifest": ".agent/manifests/network_view_edges_year.json"
+    },
+    "comparison_boundary": "co-authorship, directed citation flow, and Topic-profile proximity retain incomparable units, independent coverage, and separate interpretations",
+    "composite_scientific_edge_weight_defined": false,
+    "layer_summary_source_manifest": ".agent/manifests/multiplex_layer_summary_year.json",
+    "layers_remain_separate": true,
+    "policy_version": "separate-scientific-layers-ui-2026-08-30-v1",
+    "topic_proximity": {
+      "directionality": "undirected",
+      "edge_selection_policy": "union of top-k neighbors per institution",
+      "label": "Topic-profile research proximity",
+      "maximum_institutions_per_view": 500,
+      "minimum_similarity": 0.0,
+      "provisional_topic_registry": true,
+      "public_edge_limit_per_view": 1000,
+      "public_selection_policy": "cosine similarity descending, shared Topic count descending, source stable ID, target stable ID",
+      "semantics": "Topic-profile research proximity; not collaboration",
+      "source_manifests": [
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/topic_similarity_coverage_year.json"
+      ],
+      "top_k": 20
+    }
+  },
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
   "tables": {
+    "citation_coverage": {
+      "path": "dashboard/data/citation_coverage.parquet",
+      "row_count": 64,
+      "sha256": "c2a6989ca13d34733b85d45826268c451d42f91628dbfeca5cf6f40921db77f8"
+    },
+    "citation_edges": {
+      "path": "dashboard/data/citation_edges.parquet",
+      "row_count": 64000,
+      "sha256": "f8a40d23074c72845205dc91c6d46e924054f474ddbe9d78e8c62a9ecba17625"
+    },
     "community_continuity": {
       "path": "dashboard/data/community_continuity.parquet",
       "row_count": 11930,
@@ -266,6 +322,11 @@
       "path": "dashboard/data/institution_identities.parquet",
       "row_count": 46812,
       "sha256": "cb26fa08d9bc6632c9ff8bf7ae486bf57a54683bbb5468c8e848285977e27f08"
+    },
+    "layer_summary": {
+      "path": "dashboard/data/layer_summary.parquet",
+      "row_count": 192,
+      "sha256": "b15bc21ef1cc04526250180425445fc2ebcc3a6ebc5b46b8ec2c351ae3adc623"
     },
     "map_coverage": {
       "path": "dashboard/data/map_coverage.parquet",
@@ -326,6 +387,16 @@
       "path": "dashboard/data/sensitivity.parquet",
       "row_count": 8,
       "sha256": "b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168"
+    },
+    "topic_similarity_coverage": {
+      "path": "dashboard/data/topic_similarity_coverage.parquet",
+      "row_count": 64,
+      "sha256": "ef5c973f14875c1df1bb722e4040c4cc1aeee8cd56c82ad3257c14eeabe5a852"
+    },
+    "topic_similarity_edges": {
+      "path": "dashboard/data/topic_similarity_edges.parquet",
+      "row_count": 64000,
+      "sha256": "39c6b145f898e2d47bc04e1f30a4a40e743aebbc64c1b1fff77aa63ede71bc48"
     },
     "topics": {
       "path": "dashboard/data/topics.parquet",
