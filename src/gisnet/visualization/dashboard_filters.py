@@ -89,6 +89,23 @@ def dimension_options(
     return sorted(str(value) for value in selected[column].dropna().unique())
 
 
+def filtered_view(
+    frame: pd.DataFrame,
+    year: int,
+    corpus: str,
+    hierarchy: str,
+) -> pd.DataFrame:
+    """Select one complete annual corpus/hierarchy view."""
+    if frame.empty:
+        return frame
+    mask = (
+        (frame["year"] == year)
+        & (frame["corpus_view"] == corpus)
+        & (frame["hierarchy_view"] == hierarchy)
+    )
+    return frame.loc[mask].copy()
+
+
 def filter_geographic_view(
     nodes: pd.DataFrame,
     edges: pd.DataFrame,
@@ -255,6 +272,39 @@ def local_collaboration_profile(
     )
     profile = profile.rename(columns={"source_geography": "geography"})
     return profile.sort_values([*group_columns, "geography"], kind="stable").reset_index(drop=True)
+
+
+def region_comparison_rows(
+    frame: pd.DataFrame,
+    *,
+    weight_column: str,
+    region_pair: str,
+) -> pd.DataFrame:
+    """Return comparable directional shares for one macro-region view."""
+    normalized = frame.rename(
+        columns={"source_region": "source_geography", "target_region": "target_geography"}
+    )
+    directed = partner_share_view(normalized, weight_column=weight_column)
+    if directed.empty:
+        return directed
+    if region_pair == "All":
+        selected = directed.loc[
+            directed["is_local"] & directed["source_geography"].isin(("Europe", "Asia", "Americas"))
+        ].copy()
+        selected["comparison"] = selected["source_geography"]
+        return selected
+    source, target = region_pair.split(" — ", maxsplit=1)
+    if source == target:
+        selected = directed.loc[
+            (directed["source_geography"] == source) & (directed["target_geography"] == target)
+        ].copy()
+    else:
+        selected = directed.loc[
+            ((directed["source_geography"] == source) & (directed["target_geography"] == target))
+            | ((directed["source_geography"] == target) & (directed["target_geography"] == source))
+        ].copy()
+    selected["comparison"] = selected["source_geography"] + " → " + selected["target_geography"]
+    return selected
 
 
 def _contains_value(values: object, expected: str) -> bool:

@@ -25,6 +25,20 @@ pipeline changes with:
 uv run python -m gisnet.cli build-dashboard-data --resume
 ```
 
+The Streamlit entry point is intentionally a router rather than the owner of every behavior. Cached
+snapshot access, shared presentation components, stable-ID Finder/Profile/Compare pages, scientific
+filters, and map/chart builders live in focused modules. Complete School Profile, Topic, and ego-
+partner retrieval uses DuckDB predicate pushdown rather than eagerly loading the 168,252-row profile,
+242,892-row Topic, or 1,388,052-row partner tables into pandas. Reproduce the local latency and
+returned-memory checks with:
+
+```bash
+uv run python scripts/benchmark_dashboard.py --samples 9
+```
+
+The measured baseline, declared budgets, final results, and regression plan are documented in
+[`docs/dashboard_refactor.md`](../docs/dashboard_refactor.md).
+
 Ordinary dashboard viewing makes no OpenAlex or ROR requests. The checked-in snapshot contains only
 public-source aggregate or thresholded scholarly-network data; it contains no API key or raw response
 cache.

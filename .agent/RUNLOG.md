@@ -4068,3 +4068,123 @@ Task: GISNET-137 — Refactor dashboard implementation. First lock the current s
 separate-layer behavior with regression/performance baselines, then split the oversized application
 along existing data-access, filter, component, chart/map, profile, and comparison boundaries without
 adding a dependency or eagerly loading complete edge sources.
+
+## Run 20260830T194604Z_fb2648b7c7c3
+
+Started UTC: 2026-08-30T19:46:04Z
+Ended UTC: 2026-08-30T19:57:02Z
+Task: GISNET-137 — Refactor dashboard implementation
+Initial git status: Clean `main` at `fb2648b`, synchronized with `origin/main`; no active run or writer lock existed, GISNET-136 was DONE, and GISNET-137 was the highest-priority unblocked task.
+Final git status: Pre-commit GISNET-137 modular dashboard code, regression/benchmark documentation, tests, and audit-state changes only; public dashboard datasets, processed scientific sources, dependencies, and release contents are unchanged.
+
+### Objective
+
+Regression-lock the seven-page dashboard, split data access, filters, reusable presentation, map/chart
+builders, School Finder/Profile, and School Comparison away from the oversized entry point, retain
+DuckDB predicate pushdown for complete-school queries, document performance/memory budgets, and add
+no dependency.
+
+### Work completed
+
+- Wrote the cleanup/refactor and performance contract before implementation, then captured the clean
+  `fb2648b` seven-page behavior, wall-time/RSS, and complete-school query baselines.
+- Extracted cached public-snapshot access, shared labels/colors/Plotly/Streamlit components, and
+  stable-ID school selection into focused dashboard runtime modules.
+- Moved School Finder, the ordered nine-section School Profile, and aligned seven-section School
+  Comparison renderers into dedicated page modules while retaining their exact source queries,
+  widget labels/keys, evidence order, missingness, and scientific boundaries.
+- Moved annual and macro-region view selection into the pure dashboard filter module and retained
+  existing geographic-flow, School Ego Map, network, profile, comparison, and scientific-layer
+  builders as the chart/map/scientific boundaries.
+- Deleted the unreachable legacy `School Ego Map` route after the seven-page router and baseline
+  regression proved School Profile is its only public owner. `dashboard/app.py` decreased from 3,177
+  lines / 128,940 bytes to 1,525 lines / 62,019 bytes.
+- Added a repeatable no-write dashboard benchmark with enforced latency, returned-frame memory, and
+  retained-partner budgets, plus structural regression tests that prevent data/query logic from
+  returning to the entry point.
+
+### Files changed
+
+- Audit/state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`, and
+  `.agent/RUNLOG.md`.
+- Dashboard: `dashboard/app.py`, `dashboard/dashboard_components.py`,
+  `dashboard/dashboard_data_access.py`, `dashboard/dashboard_school_common.py`,
+  `dashboard/school_finder_page.py`, `dashboard/school_profile_page.py`, and
+  `dashboard/school_compare_page.py`.
+- Pure filters and benchmark: `src/gisnet/visualization/dashboard_filters.py` and
+  `scripts/benchmark_dashboard.py`.
+- Tests: `tests/unit/test_dashboard_filters.py` and new
+  `tests/unit/test_dashboard_refactor_contract.py`; the existing integration suite remained the
+  behavior lock.
+- Documentation: `docs/dashboard_refactor.md`, `dashboard/README.md`, and `README.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full 2,497-line backlog/agent-state/run-log/lock inspection and
+  task selection; lock-aware transition of GISNET-137 to `IN_PROGRESS`.
+- Baseline and post-refactor `/usr/bin/time` runs of `tests/integration/test_dashboard.py`, repeated
+  predicate-query benchmarks, structural and filter unit tests, focused Ruff checks/formatting, and
+  isolated AppTest reruns to prevent process-level import masking.
+- Complete `scripts/quality-gate.sh`, `git diff --check`, dependency/public-data diff checks,
+  release-manifest verification/privacy scan, source hash capture, and temporary-output inspection.
+
+### Validation results
+
+- The baseline seven-page suite passed 7 tests in 14.47 seconds; wall time was 15.20 seconds and peak
+  RSS was 1,154,412 KiB. The isolated post-refactor suite passed in 12.48 seconds; wall time was 13.05
+  seconds and peak RSS was 1,074,200 KiB, within the declared 30-second / 1.5-GiB budgets.
+- Post-refactor medians on the exact checked-in stable-ID sample were 59.555 ms for the complete
+  28,042-school index, 42.448/48.711 ms for one/four profile rows, 25.663/27.013 ms for one/four
+  Topic queries, and 20.094 ms for 50 ego partners. Returned frames used 2,388-32,544 bytes; all six
+  enforced latency/memory/row checks passed.
+- Full quality gate passed Ruff lint, Ruff formatting for 173 files, strict mypy for 83 source files,
+  all 225 offline tests, dashboard integration smoke tests, and CLI status.
+- `pyproject.toml` and `uv.lock` are unchanged. Dashboard/data, reference data, reports, and public
+  manifests are byte-unchanged. Release verification still covers 230 public files / 67,384,410
+  bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- Dashboard entry point: `d4fa9be8bbb9cc30530f7fc38898b96f2b56474f36c0ca3cb158037ad2128deb`
+- Shared dashboard components: `c89deb9dd02c902f9e889ad86d3d967135b6aeb46b2a5a20101b6d3411c54974`
+- Cached dashboard data access: `d22557245d379dcd1142a320c1cc5b36257cfb99c80ed5144d360a75b1541226`
+- School Finder/Profile/Comparison modules: `d6fbe58458a7e38b7711372673217b4f3e065ba9a52b08f60cd4230ac632961e` / `126a360b2ac6d282b9348f18486a5047a99d4ebbf1e71acb1efea804ba29aa6e` / `78a957d93e69603e7dcb9d5f1196f593a02cdf9dee209689c1e46d009ebcf732`
+- Dashboard benchmark: `aa4c3382239ea59c4543cc093855649b55707a43d5e8c053c3d28a6f3fd00ff2`
+- Refactor/performance contract: `7940257a98d2b35a067a803c32b53518d5a671f20d06fba05375414f14344403`
+- Unchanged release manifest: `7433052ceb56117e10097cc9c0f8b777ad11d87dfefc1d5b9b76d1bbc13671fb`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Backlog state, project state, decisions, and this run record were atomically written under the
+repository run lock. The benchmark prints measured JSON to stdout and writes no dataset. No dashboard
+Parquet, scientific source, API response, API key, invented identifier, coordinate, metric, or result
+was created or changed.
+
+### Failures or blockers
+
+- The intentionally red structural contract first failed because the entry point still owned the old
+  implementation and the target modules did not exist; it passed after extraction.
+- The first moved-page integration run exposed missing `data_dir` arguments at four required-table
+  calls; the explicit data boundary was applied and all page regressions passed.
+- A combined pytest process temporarily masked a package import-path error through a unit-test
+  `sys.path` insertion. The isolated AppTest run exposed it; dashboard modules now use Streamlit's
+  script-local import surface, and isolated plus full-suite runs pass. No blocker remains.
+
+### Decisions made
+
+- Keep the complete 28,042-row school index as one compact cached table, but retain DuckDB predicate
+  pushdown for 168,252 profile rows, 242,892 Topic rows, and 1,388,052 partner rows. Do not build or
+  eagerly load an unfiltered complete-edge dashboard table.
+- Treat page renderers as composition boundaries and retain scientific calculations/filtering in
+  pure `gisnet.visualization` modules. Do not add wrapper layers or dependencies solely to reduce a
+  line count.
+- Delete only the unreachable legacy route; preserve all seven public pages, controls, exact tables,
+  stable-ID behavior, provisional warnings, and separate scientific-layer semantics.
+
+### Exact next action
+
+Task: GISNET-138 — Validate school-decision system. Run the complete cross-layer acceptance matrix,
+including outside-core search/ego coverage, subannual and rolling reconciliation, geographic
+map/matrix equality, Profile/Compare source equality, Strict subset, determinism, privacy, and annual
+regressions before advancing to final release documentation.

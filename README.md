@@ -49,6 +49,7 @@ semantics and snapshot rebuild instructions.
 | Expanded School Profile UI | Available with ordered rolling activity, Topic, partner, annual network, citation-flow, research-proximity, and quality evidence |
 | Advanced comparison UI | Available with aligned rolling, Topic, collaboration, network, and citation evidence |
 | Separate scientific-layer views | Available for undirected co-authorship, directed citation-flow coverage, and thresholded Topic research proximity |
+| Modular dashboard runtime | Available with cached snapshot access, page modules, predicate-pushed complete-school queries, and documented performance budgets |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 

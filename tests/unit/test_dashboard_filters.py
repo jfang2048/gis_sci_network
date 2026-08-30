@@ -5,8 +5,10 @@ from gisnet.visualization.dashboard_filters import (
     control_is_enabled,
     dimension_options,
     filter_geographic_view,
+    filtered_view,
     local_collaboration_profile,
     partner_share_view,
+    region_comparison_rows,
 )
 
 
@@ -79,6 +81,48 @@ def test_dimension_options_use_selected_complete_network_view() -> None:
         corpus="broad",
         hierarchy="organization",
     ) == ["education"]
+
+
+def test_annual_and_region_filters_remain_pure_after_dashboard_refactor() -> None:
+    flows = pd.DataFrame(
+        [
+            {
+                "year": 2025,
+                "corpus_view": "broad",
+                "hierarchy_view": "organization",
+                "source_region": "Asia",
+                "target_region": "Asia",
+                "fractional_count": 4.0,
+            },
+            {
+                "year": 2025,
+                "corpus_view": "broad",
+                "hierarchy_view": "organization",
+                "source_region": "Asia",
+                "target_region": "Europe",
+                "fractional_count": 2.0,
+            },
+            {
+                "year": 2024,
+                "corpus_view": "broad",
+                "hierarchy_view": "organization",
+                "source_region": "Europe",
+                "target_region": "Europe",
+                "fractional_count": 1.0,
+            },
+        ]
+    )
+
+    annual = filtered_view(flows, 2025, "broad", "organization")
+    comparison = region_comparison_rows(
+        annual,
+        weight_column="fractional_count",
+        region_pair="Asia — Europe",
+    )
+
+    assert len(annual) == 2
+    assert comparison["comparison"].tolist() == ["Asia → Europe", "Europe → Asia"]
+    assert comparison["partner_share"].tolist() == [0.2, 1.0]
 
 
 def test_geographic_filters_use_one_final_node_set_and_return_partners() -> None:

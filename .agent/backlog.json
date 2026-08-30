@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-30T17:48:55Z",
+  "last_updated_utc": "2026-08-30T19:57:02Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2221,12 +2221,27 @@
         "GISNET-135",
         "GISNET-136"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-30T19:46:05Z",
+          "from": "TODO",
+          "reason": "Refactoring the oversized dashboard after regression-locking current behavior; separating data access, filters, components, charts/maps, profile, and comparison boundaries while retaining predicate-pushed complete-school queries, documenting performance/memory budgets, and adding no dependency.",
+          "run_id": "20260830T194604Z_fb2648b7c7c3",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-30T19:57:02Z",
+          "from": "IN_PROGRESS",
+          "reason": "Completed the regression-locked dashboard refactor: cached snapshot access, shared presentation, stable-ID selection, pure filters, and Finder/Profile/Comparison renderers now have explicit module boundaries; the unreachable legacy route was deleted, app.py fell from 3,177 to 1,525 lines, complete-school DuckDB predicate queries and integration memory met documented budgets, no dependency or public dataset changed, and the full 225-test quality gate plus release/privacy verification passed.",
+          "run_id": "20260830T194604Z_fb2648b7c7c3",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-137",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Completed the regression-locked dashboard refactor: cached snapshot access, shared presentation, stable-ID selection, pure filters, and Finder/Profile/Comparison renderers now have explicit module boundaries; the unreachable legacy route was deleted, app.py fell from 3,177 to 1,525 lines, complete-school DuckDB predicate queries and integration memory met documented budgets, no dependency or public dataset changed, and the full 225-test quality gate plus release/privacy verification passed.",
+      "status_updated_at_utc": "2026-08-30T19:57:02Z",
       "title": "Refactor dashboard implementation",
       "work": [
         "Separate data access, filters, components, maps, profiles, and comparison after regression locking.",

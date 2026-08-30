@@ -279,3 +279,21 @@ and its incomplete human review must be disclosed on all school-oriented results
   union of each institution's top 20 neighbours after the stored similarity threshold. Endpoint and
   display-threshold controls filter stored evidence; they do not recompute Topic vectors or imply
   co-authorship.
+
+## 2026-08-30 — Modular dashboard runtime and query budgets
+
+- Keep `dashboard/app.py` as the seven-page router and owner of remaining compact annual/global
+  composition. Cached snapshot I/O, reusable presentation, stable-ID selection, and the three
+  institution-first page renderers have explicit modules; scientific filters and map/chart builders
+  remain in pure `gisnet.visualization` modules.
+- Cache the complete 28,042-row school index because its measured deep frame is below 32 MiB. Query
+  School Profile, School Topic Profile, and School Ego Partner Parquets by stable ID and exact
+  corpus/window/period predicates through DuckDB; never eagerly load the 1,388,052-row partner table
+  or complete scientific edge sources into pandas.
+- Enforce local descriptive budgets of 250 ms / 32 MiB for the complete index, 100 ms / 128 KiB for
+  predicate-return frames, 50 retained ego partners, and 30 seconds / 1.5 GiB for the isolated
+  seven-page integration suite. The benchmark writes no scientific output and makes no causal
+  performance claim.
+- Remove the unreachable legacy School Ego Map route because School Profile is the only public owner
+  under the frozen seven-page architecture. Preserve its live map/table behavior through Profile
+  regressions rather than a dead compatibility path.
