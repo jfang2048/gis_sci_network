@@ -16,6 +16,8 @@ def test_control_applicability_is_page_aware() -> None:
     assert control_is_enabled("Institutional Network", "Consortium policy")
     assert control_is_enabled("School Profile", "Corpus view")
     assert not control_is_enabled("School Profile", "Year")
+    assert control_is_enabled("Compare Schools", "Corpus view")
+    assert not control_is_enabled("Compare Schools", "Year")
     assert control_is_enabled("Global Trends", "Topic family")
     assert not control_is_enabled("Global Trends", "Country")
     assert not CONTROL_APPLICABILITY["School Finder"]

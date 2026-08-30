@@ -250,3 +250,18 @@ and its incomplete human review must be disclosed on all school-oriented results
 - Publish the validated profile and Topic-profile tables with `school_id` as the dashboard field
   name while retaining every source evidence column and explicit support status. No scientific
   value is recomputed in the UI and no cross-layer quality score is created.
+
+## 2026-08-30 — Aligned School Comparison evidence
+
+- Query the same public School Profile and School Topic-profile rows used by the entity page, keyed
+  by stable school ID, Strict/Broad corpus, school hierarchy, and rolling 12/24/36-month window.
+- Compare recent output and trend, provisional Topic shares, collaboration orientation, partner
+  diversity, complete-year network position, and directed citation flow as separate dimensions.
+  Rolling publication evidence is never relabelled as annual network evidence, and citation flow
+  remains a knowledge-flow proxy rather than co-authorship or institutional quality.
+- Use one common axis across selected schools within a metric. Different-unit centrality panels keep
+  separate disclosed axes; share metrics use a fixed zero-to-one scale. Missing profiles and absent
+  Topic rows remain explicit rather than being imputed as zero.
+- Prefer ranked/grouped bars, aligned lines, and exact companion tables. Do not add a radar chart,
+  hidden per-school normalization, composite score, admissions recommendation, or universal-best-
+  school claim.

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pandas as pd
 import pyarrow as pa  # type: ignore[import-untyped]
 import pyarrow.parquet as pq  # type: ignore[import-untyped]
 
@@ -7,7 +8,9 @@ from gisnet.visualization.school_profile import (
     activity_horizon_view,
     profile_quality_messages,
     query_school_profile,
+    query_school_profiles,
     query_school_topics,
+    query_school_topics_for_schools,
     research_neighbor_view,
 )
 
@@ -83,6 +86,70 @@ def test_profile_queries_use_stable_id_corpus_and_exact_rolling_window(tmp_path:
     assert profile.iloc[0]["full_work_count"] == 7
     assert topic_view["topic_family"].tolist() == ["core_gis", "remote_sensing"]
     assert topic_view["topic_family_share"].sum() == 1.0
+
+
+def test_multi_school_queries_match_single_school_profile_sources(tmp_path: Path) -> None:
+    profiles = tmp_path / "profiles.parquet"
+    topics = tmp_path / "topics.parquet"
+    _write(
+        profiles,
+        [
+            {
+                "school_id": school_id,
+                "corpus_view": "broad",
+                "hierarchy_view": "school",
+                "window_start": "2024-01",
+                "window_end": "2025-12",
+                "window_months": 24,
+                "full_work_count": count,
+                "international_collaboration_share": share,
+            }
+            for school_id, count, share in (("I1", 7, 0.25), ("I2", 11, None))
+        ],
+    )
+    _write(
+        topics,
+        [
+            {
+                "school_id": school_id,
+                "corpus_view": "broad",
+                "hierarchy_view": "school",
+                "window_start": "2024-01",
+                "window_end": "2025-12",
+                "window_months": 24,
+                "topic_family": family,
+                "topic_family_share": share,
+                "topic_rank": rank,
+            }
+            for school_id, rank, family, share in (
+                ("I1", 1, "core_gis", 1.0),
+                ("I2", 1, "remote_sensing", 1.0),
+            )
+        ],
+    )
+
+    one_profile = query_school_profile(
+        profiles, school_id="I1", corpus_view="broad", window_months=24
+    )
+    many_profiles = query_school_profiles(
+        profiles, school_ids=["I1", "I2"], corpus_view="broad", window_months=24
+    )
+    one_topics = query_school_topics(topics, school_id="I1", corpus_view="broad", window_months=24)
+    many_topics = query_school_topics_for_schools(
+        topics, school_ids=["I1", "I2"], corpus_view="broad", window_months=24
+    )
+
+    assert one_profile.reset_index(drop=True).equals(
+        many_profiles.loc[many_profiles["school_id"] == "I1"].reset_index(drop=True)
+    )
+    assert one_topics.reset_index(drop=True).equals(
+        many_topics.loc[many_topics["school_id"] == "I1"].reset_index(drop=True)
+    )
+    assert pd.isna(
+        many_profiles.loc[many_profiles["school_id"] == "I2"].iloc[0][
+            "international_collaboration_share"
+        ]
+    )
 
 
 def test_profile_views_retain_exact_horizons_neighbors_and_quality_messages() -> None:

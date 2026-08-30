@@ -1,9 +1,9 @@
 {
   "api_requests_during_viewing": false,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "generated_at_utc": "2026-08-30T01:04:34.517539Z",
-  "logical_input_hash": "15fdf7434d709ab61b81433754f3733ba0f343427ff38543147360113c73cad5",
-  "methods_version": "public-dashboard-bundle-2026-08-29-v9",
+  "generated_at_utc": "2026-08-30T02:08:12.794976Z",
+  "logical_input_hash": "d171112376cfa14be0165878e379871d90f79897823508d5b36c8da1517dd6e9",
+  "methods_version": "public-dashboard-bundle-2026-08-30-v10",
   "outputs": {
     "dashboard_data_directory": "dashboard/data",
     "dashboard_metadata": "dashboard/data/metadata.json"
@@ -11,7 +11,7 @@
   "public_snapshot": true,
   "row_count": 2257111,
   "schema_version": 1,
-  "stage_version": "public-dashboard-bundle-2026-08-29-v9",
+  "stage_version": "public-dashboard-bundle-2026-08-30-v10",
   "table_count": 22,
   "table_hashes": {
     "community_continuity": "bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f",

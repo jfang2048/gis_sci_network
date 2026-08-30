@@ -9,7 +9,7 @@ import pandas as pd  # type: ignore[import-untyped]
 CONTROL_APPLICABILITY: dict[str, frozenset[str]] = {
     "School Finder": frozenset(),
     "School Profile": frozenset({"Corpus view"}),
-    "Compare Schools": frozenset(),
+    "Compare Schools": frozenset({"Corpus view"}),
     "Geographic Flows": frozenset(
         {
             "Corpus view",

@@ -30,8 +30,24 @@ def query_school_profile(
     window_months: int,
 ) -> pd.DataFrame:
     """Read exactly one supported rolling profile using Parquet predicate pushdown."""
+    return query_school_profiles(
+        profile_path,
+        school_ids=[school_id],
+        corpus_view=corpus_view,
+        window_months=window_months,
+    )
+
+
+def query_school_profiles(
+    profile_path: str | Path,
+    *,
+    school_ids: Sequence[str],
+    corpus_view: str,
+    window_months: int,
+) -> pd.DataFrame:
+    """Read exact rolling profiles for stable IDs using one predicate-pushed query."""
     source = _validated_source(profile_path, "school profile")
-    _validate_selection(school_id, corpus_view, window_months)
+    selected_ids = _validate_selections(school_ids, corpus_view, window_months)
     _require_parquet_columns(source, _PROFILE_KEY_COLUMNS, "school profile")
     connection = duckdb.connect()
     try:
@@ -39,19 +55,24 @@ def query_school_profile(
             """
             SELECT *
             FROM read_parquet(?)
-            WHERE school_id = ?
+            WHERE school_id = ANY(?)
               AND corpus_view = ?
               AND hierarchy_view = 'school'
               AND window_months = ?
-            ORDER BY window_end DESC, window_start DESC
+            ORDER BY school_id, window_end DESC, window_start DESC
             """,
-            [str(source), school_id, corpus_view, window_months],
+            [str(source), selected_ids, corpus_view, window_months],
         ).fetchdf()
     finally:
         connection.close()
-    if len(result) > 1:
+    duplicate_ids = sorted(
+        str(value)
+        for value in result.loc[result.duplicated("school_id", keep=False), "school_id"].unique()
+    )
+    if duplicate_ids:
         raise ValueError(
-            "school profile query returned multiple rows for one stable ID, corpus, and window"
+            "school profile query returned multiple rows for stable ID, corpus, and window: "
+            f"{duplicate_ids}"
         )
     return result
 
@@ -64,8 +85,24 @@ def query_school_topics(
     window_months: int,
 ) -> pd.DataFrame:
     """Read one school's Topic-family profile using Parquet predicate pushdown."""
+    return query_school_topics_for_schools(
+        topic_profile_path,
+        school_ids=[school_id],
+        corpus_view=corpus_view,
+        window_months=window_months,
+    )
+
+
+def query_school_topics_for_schools(
+    topic_profile_path: str | Path,
+    *,
+    school_ids: Sequence[str],
+    corpus_view: str,
+    window_months: int,
+) -> pd.DataFrame:
+    """Read Topic-family profiles for stable IDs using one predicate-pushed query."""
     source = _validated_source(topic_profile_path, "school Topic profile")
-    _validate_selection(school_id, corpus_view, window_months)
+    selected_ids = _validate_selections(school_ids, corpus_view, window_months)
     _require_parquet_columns(source, _TOPIC_KEY_COLUMNS, "school Topic profile")
     connection = duckdb.connect()
     try:
@@ -73,13 +110,13 @@ def query_school_topics(
             """
             SELECT *
             FROM read_parquet(?)
-            WHERE school_id = ?
+            WHERE school_id = ANY(?)
               AND corpus_view = ?
               AND hierarchy_view = 'school'
               AND window_months = ?
-            ORDER BY topic_rank NULLS LAST, topic_family
+            ORDER BY school_id, topic_rank NULLS LAST, topic_family
             """,
-            [str(source), school_id, corpus_view, window_months],
+            [str(source), selected_ids, corpus_view, window_months],
         ).fetchdf()
     finally:
         connection.close()
@@ -194,12 +231,24 @@ def _validated_source(path: str | Path, label: str) -> Path:
 
 
 def _validate_selection(school_id: str, corpus_view: str, window_months: int) -> None:
-    if not school_id:
-        raise ValueError("school_id cannot be empty")
+    _validate_selections([school_id], corpus_view, window_months)
+
+
+def _validate_selections(
+    school_ids: Sequence[str], corpus_view: str, window_months: int
+) -> list[str]:
+    if isinstance(school_ids, str):
+        raise ValueError("school_ids must be a sequence of stable IDs, not one string")
+    selected_ids = [str(school_id) for school_id in school_ids]
+    if not selected_ids or any(not school_id for school_id in selected_ids):
+        raise ValueError("school_ids cannot be empty")
+    if len(set(selected_ids)) != len(selected_ids):
+        raise ValueError("school_ids cannot contain duplicates")
     if corpus_view not in _CORPUS_VIEWS:
         raise ValueError("corpus_view must be strict or broad")
     if window_months not in _ROLLING_WINDOWS:
         raise ValueError("window_months must be one of 12, 24, or 36")
+    return selected_ids
 
 
 def _require_parquet_columns(source: Path, required: set[str], label: str) -> None:

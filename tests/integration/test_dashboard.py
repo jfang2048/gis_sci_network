@@ -40,7 +40,7 @@ def test_public_dashboard_pages_and_global_filters() -> None:
     enabled_by_page = {
         "School Finder": set(),
         "School Profile": {"Corpus view"},
-        "Compare Schools": set(),
+        "Compare Schools": {"Corpus view"},
         "Geographic Flows": {
             "Corpus view",
             "Hierarchy view",
@@ -399,11 +399,83 @@ def test_school_finder_is_primary_and_compare_uses_two_to_four_stable_ids() -> N
 
     assert not app.exception
     assert len(school_widget.value) == 4
-    assert len(_plot_specs(app)) == 2
-    assert any(subheader.value == "Exact common-scale comparison" for subheader in app.subheader)
+    window_widget = next(
+        widget for widget in app.selectbox if widget.label == "Comparison rolling window"
+    )
+    assert window_widget.value == 24
+    expected_sections = [
+        "1. Recent output and rolling trend",
+        "2. Topic distribution",
+        "3. Collaboration orientation",
+        "4. Partner diversity",
+        "5. Annual network position",
+        "6. Citation influence",
+        "7. Exact Profile source metrics and boundaries",
+    ]
+    assert [header.value for header in app.header if header.value in expected_sections] == (
+        expected_sections
+    )
+    plot_specs = _plot_specs(app)
+    assert len(plot_specs) == 11
+    assert all(
+        trace.get("type") not in {"scatterpolar", "barpolar"}
+        for spec in plot_specs
+        for trace in spec["data"]
+    )
+    titled_specs = {
+        spec["layout"]["title"]["text"]: spec
+        for spec in plot_specs
+        if spec.get("layout", {}).get("title", {}).get("text")
+    }
+    assert titled_specs["Leading observed Topic-family shares across selected schools"]["layout"][
+        "xaxis"
+    ]["range"] == [0, 1]
+    assert titled_specs["Collaboration orientation shares"]["layout"]["yaxis"]["range"] == [
+        0,
+        1,
+    ]
+    exact_table = app.dataframe[-1].value
+    expected = duckdb.execute(
+        """
+        SELECT school_id, full_work_count, international_collaboration_share,
+               partner_institution_count, pagerank, citation_flow_in_fractional
+        FROM read_parquet(?)
+        WHERE school_id = ANY(?) AND corpus_view = 'broad'
+          AND hierarchy_view = 'school' AND window_months = 24
+        ORDER BY school_id
+        """,
+        [str(root / "dashboard/data/school_profiles.parquet"), selected_ids],
+    ).fetchdf()
+    observed = exact_table[
+        [
+            "School id",
+            "Works in selected window",
+            "International share",
+            "Distinct institution partners",
+            "PageRank",
+            "Incoming citation flow · fractional",
+        ]
+    ].rename(
+        columns={
+            "School id": "school_id",
+            "Works in selected window": "full_work_count",
+            "International share": "international_collaboration_share",
+            "Distinct institution partners": "partner_institution_count",
+            "PageRank": "pagerank",
+            "Incoming citation flow · fractional": "citation_flow_in_fractional",
+        }
+    )
+    pd.testing.assert_frame_equal(
+        observed.sort_values("school_id", kind="stable").reset_index(drop=True),
+        expected,
+        check_dtype=False,
+    )
     assert any(
-        "No per-school normalization" in caption.value
-        and "not a university ranking" in caption.value
+        "No per-school normalization" in caption.value and "universal-best-school" in caption.value
         for caption in app.caption
     )
-    assert app.dataframe
+    assert any(
+        "denominator" in caption.value and "shared across schools" in caption.value
+        for caption in app.caption
+    )
+    assert len(app.dataframe) == 2

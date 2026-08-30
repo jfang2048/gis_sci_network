@@ -3854,3 +3854,103 @@ invented source identifier, coordinate, metric, or measured result was persisted
 Task: GISNET-135 — Improve school comparison visualization. Reuse the same School Profile source
 metrics for two to four stable IDs, disclose aligned denominators and common scales, expose exact
 values, and preserve the prohibition on a universal-best-school claim.
+
+## Run 20260830T020105Z_2a8f6f8d4d9e
+
+Started UTC: 2026-08-30T02:01:05Z
+Ended UTC: 2026-08-30T11:54:07Z
+Task: GISNET-135 — Improve school comparison visualization
+Initial git status: Resumed a coherent interrupted GISNET-135 worktree on `main` at `2a8f6f8`; `main` matched `origin/main`, the ledger named this task and run, the recorded local lock was absent, and all preserved modifications aligned with the comparison task.
+Final git status: Pre-commit GISNET-135 application, comparison helpers, public metadata/documentation, release checksums, tests, and audit-state changes only.
+
+### Objective
+
+Compare two to four stable-ID institutions with exact School Profile source metrics, aligned scales
+and denominators, explicit missingness and time/layer boundaries, and no universal ranking claim.
+
+### Work completed
+
+- Replaced the baseline historical-count comparison with selectable Strict/Broad rolling 12/24/36-
+  month views for recent output, cumulative activity horizons, and preceding-period activity change.
+- Added aligned provisional Topic-family shares, international/cross-region orientation, distinct and
+  effective partner counts, complete-year degree/PageRank/betweenness/bridge evidence, and directed
+  fractional citation flow.
+- Reused predicate-pushed multi-school queries over the exact public School Profile and Topic-profile
+  tables; stable IDs, corpus, school hierarchy, and rolling window are the source keys.
+- Kept every comparison dimension separate, used one scale across schools within each metric, exposed
+  exact aligned tables, retained missing values, and added no radar chart, hidden normalization,
+  composite score, admissions recommendation, or universal-best-school claim.
+- Published the comparison contract in dashboard metadata and updated README, dashboard, and release
+  guidance from planned/baseline to available advanced comparison evidence.
+
+### Files changed
+
+- Audit/state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`,
+  `.agent/RUNLOG.md`, and `.agent/manifests/dashboard_bundle_summary.json`.
+- Implementation: `dashboard/app.py`, `src/gisnet/visualization/dashboard_data.py`,
+  `src/gisnet/visualization/dashboard_filters.py`, `src/gisnet/visualization/school_profile.py`, and
+  new `src/gisnet/visualization/school_compare.py`.
+- Public metadata/documentation: `dashboard/data/metadata.json`,
+  `data/reference/dashboard_bundle_summary.json`, `README.md`, `dashboard/README.md`, and `RELEASE.md`.
+- Tests: `tests/integration/test_dashboard.py`, `tests/unit/test_dashboard_filters.py`,
+  `tests/unit/test_school_profile_view.py`, and new `tests/unit/test_school_compare_view.py`.
+- Integrity: `release/manifest.json` and `release/manifest.json.sha256`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection and interrupted
+  worktree audit; the authoritative 2,497-line backlog was read in full.
+- Focused comparison/profile/filter/dashboard tests, targeted and source-wide Ruff checks, formatting
+  checks, strict mypy, production Parquet schema/key/share/reconciliation audits, and `git diff --check`.
+- Complete `scripts/quality-gate.sh`, followed by release-manifest build/verify, privacy scan,
+  checksum capture, and temporary-output inspection.
+
+### Validation results
+
+- Focused comparison/dashboard suite passed 16 tests, including exact multi-school/single-school
+  source equality, stable-ID ordering, missingness, common Topic ordering, seven comparison sections,
+  no polar/radar traces, fixed share scales, and exact rendered-table reconciliation.
+- Full quality gate passed Ruff lint, Ruff formatting for 162 files, strict mypy for 82 source files,
+  all 217 offline tests, dashboard integration smoke tests, and CLI status.
+- Production School Profile/Topic tables retain 168,252/242,892 rows, zero duplicate comparison keys,
+  zero invalid share values, Topic shares summing to one per supported profile, and all 28,042 schools
+  across both corpora and three rolling windows.
+- Release verification covered 225 public files / 65,996,599 bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- Dashboard application: `43114061fe415088f416c629773e4f09b58d7418fb1c1932a4aa2aba6b2ab61c`
+- School comparison helper: `b2db744b288a5b51996760a5509d8fcf86f702969e75eba6c32509ca28ffdf6e`
+- Dashboard metadata: `6d04ddb8cf9c112c4b57468d97b8a70cff0e88a8d18c20652a4eedfc23daa85e`
+- Dashboard bundle summary: `baadc53fdb0a98d1122105ec8923b4f93c406a06c36abc4bafee7b02d73aa6e9`
+- Release manifest: `d354d93bdee5b9d24b179387bbeb495f00500fc399744a8729056a7f8c89d90f`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Comparison metadata, dashboard bundle summary/manifest, release checksums, backlog state, project
+state, decisions, and this run record were atomically written under repository run locks. Scientific
+source tables were not changed. No API request, API key, raw source page, invented identifier,
+coordinate, metric, or measured result was persisted.
+
+### Failures or blockers
+
+- The first focused integration run found only a test-label mismatch: the UI correctly exposed
+  `PageRank` while the assertion requested `Pagerank`. The assertion was corrected and all tests passed.
+- The first formatting check requested the canonical Ruff layout for that integration assertion; it
+  was formatted and the source-wide check passed. No blocker remains.
+
+### Decisions made
+
+- Compare uses the same exact public Profile/Topic rows as School Profile instead of recomputing any
+  scientific metric or applying per-school normalization.
+- Rolling publication evidence remains separate from complete-year co-authorship centrality and
+  directed citation-flow evidence; different units retain separate disclosed axes.
+- Missing profile/Topic observations remain unavailable, not zero, and the UI makes no universal-
+  best-school claim.
+
+### Exact next action
+
+Task: GISNET-136 — Surface existing citation and Topic-similarity layers. Reuse the validated
+co-authorship, directed citation-flow, and Topic-proximity evidence as separately labelled layers,
+retain directionality/coverage/core thresholds, and create no composite scientific network.

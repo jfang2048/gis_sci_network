@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-30T01:10:36Z",
+  "last_updated_utc": "2026-08-30T11:54:07Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2144,12 +2144,27 @@
       "dependencies": [
         "GISNET-134"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-30T02:01:15Z",
+          "from": "TODO",
+          "reason": "Building two-to-four-school aligned comparison views from the exact School Profile and Topic-profile source metrics with common scales, disclosed denominators, and no universal ranking.",
+          "run_id": "20260830T020105Z_2a8f6f8d4d9e",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-30T11:54:07Z",
+          "from": "IN_PROGRESS",
+          "reason": "Completed aligned two-to-four-school comparison views from the exact School Profile and Topic-profile source rows; common scales, denominators, missingness, layer boundaries, and exact values are disclosed, with no radar chart, composite score, or universal ranking. Focused regressions, the full 217-test quality gate, release verification, and privacy scan passed.",
+          "run_id": "20260830T020105Z_2a8f6f8d4d9e",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-135",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Completed aligned two-to-four-school comparison views from the exact School Profile and Topic-profile source rows; common scales, denominators, missingness, layer boundaries, and exact values are disclosed, with no radar chart, composite score, or universal ranking. Focused regressions, the full 217-test quality gate, release verification, and privacy scan passed.",
+      "status_updated_at_utc": "2026-08-30T11:54:07Z",
       "title": "Improve school comparison visualization",
       "work": [
         "Compare activity, trend, Topics, international share, partner diversity, regional orientation, centrality, and citations.",

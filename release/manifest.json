@@ -2,7 +2,7 @@
   "categories": {
     ".agent/manifests": {
       "file_count": 131,
-      "size_bytes": 210956
+      "size_bytes": 210957
     },
     "config": {
       "file_count": 12,
@@ -10,11 +10,11 @@
     },
     "dashboard/data": {
       "file_count": 23,
-      "size_bytes": 64168225
+      "size_bytes": 64170112
     },
     "data/reference": {
       "file_count": 49,
-      "size_bytes": 1182866
+      "size_bytes": 1182868
     },
     "figures": {
       "file_count": 6,
@@ -148,8 +148,8 @@
     },
     {
       "path": ".agent/manifests/dashboard_bundle_summary.json",
-      "sha256": "12c92d9f5a836e33830a9c0309483a0bd575d28e4d53d76f5662b52cdf32a551",
-      "size_bytes": 2209
+      "sha256": "e6821373e3fe7be5a5661e79dda34d87e291e74fc185221fdf45562af94f49f3",
+      "size_bytes": 2210
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
@@ -818,8 +818,8 @@
     },
     {
       "path": "dashboard/data/metadata.json",
-      "sha256": "1d98ed19ae29c7e0fbe4c813cf28ff1ba461194349c1645721d2d69beacd30d8",
-      "size_bytes": 13859
+      "sha256": "6d04ddb8cf9c112c4b57468d97b8a70cff0e88a8d18c20652a4eedfc23daa85e",
+      "size_bytes": 15746
     },
     {
       "path": "dashboard/data/network_accessibility.parquet",
@@ -923,8 +923,8 @@
     },
     {
       "path": "data/reference/dashboard_bundle_summary.json",
-      "sha256": "94045a8ce0cf9e76057849dea2fd9b0901aa42d56bfcb9152f5dfdc9ef3ec0fc",
-      "size_bytes": 2593
+      "sha256": "baadc53fdb0a98d1122105ec8923b4f93c406a06c36abc4bafee7b02d73aa6e9",
+      "size_bytes": 2595
     },
     {
       "path": "data/reference/data_dictionary.json",
@@ -1167,11 +1167,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-30T01:09:34Z",
+  "generated_at_utc": "2026-08-30T11:53:06Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
   "public_file_count": 225,
-  "public_size_bytes": 65994709,
+  "public_size_bytes": 65996599,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

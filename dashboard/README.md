@@ -7,8 +7,8 @@
 > school-centered institution, country, and macro-region partner map over rolling 12/24/36-month,
 > complete-quarter, and complete-year periods, and now presents rolling activity, Topic,
 > complete-year network, citation-flow, research-proximity, and quality evidence in explicit
-> sections. GISNET-135 will expand the comparison evidence without changing this navigation
-> contract.
+> sections. Compare Schools now reuses those exact source metrics for aligned two-to-four-school
+> rolling, Topic, collaboration, network, and citation views.
 
 Launch from the repository root:
 
@@ -41,9 +41,13 @@ The primary navigation is deliberately institution-first:
    network position, citation influence, research-neighbour institutions, and date/data quality in
    that order. Each layer retains its own support status and time boundary; unsupported values are
    not imputed.
-3. **Compare Schools** accepts two to four stable IDs. Complete historical Strict/Broad Work counts
-   and exact-date coverage use shared per-metric axes, with exact identity, time, corpus, and quality
-   fields in the companion table. No per-school hidden normalization or universal ranking is used.
+3. **Compare Schools** accepts two to four stable IDs and a Strict/Broad rolling 12-, 24-, or
+   36-month selection. It reuses the exact School Profile source rows for recent output and trend,
+   collaboration orientation, partner diversity, complete-year network position, directed citation
+   flow, and quality context, plus the exact School Topic-profile rows. Each metric uses one common
+   scale across schools, share denominators and layer boundaries are disclosed, and exact values
+   remain in aligned companion tables. No per-school hidden normalization, radar chart, composite
+   score, or universal ranking is used.
 4. **Geographic Flows** preserves the source-selected geographic map/matrix/table explorer.
 5. **Institutional Network** contains both the fixed-layout annual core and institution-pair history.
 6. **Global Trends** contains the annual overview, regional trends/matrix, and Topic-family history.

@@ -14,11 +14,12 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-29-v9"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-30-v10"
 _GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v2"
 _GEOGRAPHIC_ANCHOR_VERSION = "geographic-display-anchors-2026-08-29-v3"
 _SCHOOL_EGO_VERSION = "school-ego-map-2026-08-29-v1"
 _SCHOOL_PROFILE_VERSION = "school-profile-ui-2026-08-29-v1"
+_SCHOOL_COMPARISON_VERSION = "school-comparison-ui-2026-08-30-v1"
 _SCHOOL_EGO_TOP_K = 50
 _OPENALEX_LICENSE = "CC0 1.0 Universal"
 _OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
@@ -709,6 +710,56 @@ def build_dashboard_bundle(
             "query_policy": (
                 "DuckDB Parquet predicate pushdown by stable school ID, corpus, school hierarchy, "
                 "and rolling-window length"
+            ),
+            "profile_row_count": int(metrics["school_profiles"]["row_count"]),
+            "topic_profile_row_count": int(metrics["school_topic_profiles"]["row_count"]),
+            "source_manifests": [
+                ".agent/manifests/school_profiles.json",
+                ".agent/manifests/school_topic_profiles.json",
+            ],
+        },
+        "school_comparison": {
+            "policy_version": _SCHOOL_COMPARISON_VERSION,
+            "identity_view": "school",
+            "minimum_school_count": 2,
+            "maximum_school_count": 4,
+            "default_rolling_window_months": 24,
+            "supported_rolling_window_months": [int(row[0]) for row in profile_window_rows],
+            "displayed_topic_family_limit": 6,
+            "dimensions": [
+                "recent_output",
+                "rolling_activity_trend",
+                "topic_distribution",
+                "international_collaboration_share",
+                "partner_diversity",
+                "regional_orientation",
+                "annual_network_centrality",
+                "directed_citation_flow",
+            ],
+            "source_policy": (
+                "reuse the exact School Profile and Topic-profile rows selected by stable school "
+                "ID, corpus, school hierarchy, and rolling-window length"
+            ),
+            "scale_policy": (
+                "all schools share one axis within a metric; different-unit centrality panels "
+                "use separately disclosed axes; share metrics use a fixed zero-to-one scale"
+            ),
+            "denominator_policy": (
+                "activity uses included institutional Works; collaboration-orientation shares "
+                "divide classified collaborative Works by included institutional Works; Topic "
+                "shares divide assigned Topic weight by all assigned Topic weight"
+            ),
+            "representation_policy": (
+                "ranked bars, common-scale line and grouped-bar views, and exact aligned tables; "
+                "no radar chart, composite score, or hidden per-school normalization"
+            ),
+            "missing_data_policy": (
+                "missing profile and school-Topic observations remain explicit and are never "
+                "imputed as zero"
+            ),
+            "interpretation_boundary": (
+                "separate descriptive dimensions only; no university ranking, admissions "
+                "recommendation, institutional-quality score, or universal-best-school claim"
             ),
             "profile_row_count": int(metrics["school_profiles"]["row_count"]),
             "topic_profile_row_count": int(metrics["school_topic_profiles"]["row_count"]),

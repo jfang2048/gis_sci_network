@@ -47,7 +47,7 @@ semantics and snapshot rebuild instructions.
 | School Finder and seven-page decision-oriented navigation | Available |
 | School Profile collaboration map | Available from the complete stable-ID index with institution/country/region partners and exact tables |
 | Expanded School Profile UI | Available with ordered rolling activity, Topic, partner, annual network, citation-flow, research-proximity, and quality evidence |
-| Advanced comparison UI | Planned: GISNET-135 |
+| Advanced comparison UI | Available with aligned rolling, Topic, collaboration, network, and citation evidence |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
