@@ -308,12 +308,50 @@ def test_school_ego_map_keeps_partners_for_school_outside_prior_core() -> None:
     assert plot_specs
     marker_ids = {
         str(row[0])
-        for trace in plot_specs[0]["data"]
+        for spec in plot_specs
+        for trace in spec["data"]
         if trace.get("meta") == "school-ego-partner-markers"
         for row in trace["customdata"]
     }
     assert partner_id in marker_ids
     assert app.dataframe
+
+
+@pytest.mark.integration
+def test_school_profile_orders_independent_evidence_and_discloses_boundaries() -> None:
+    root = Path(__file__).resolve().parents[2]
+    app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
+    page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
+    page_widget.set_value("School Profile")
+    app = app.run(timeout=30)
+
+    assert not app.exception
+    assert any(widget.label == "Profile rolling window" for widget in app.selectbox)
+    expected_sections = [
+        "1. Identity and geography",
+        "2. Recent activity and trend",
+        "3. Topic profile",
+        "4. Institutional partners",
+        "5. Partner geography",
+        "6. Annual network position",
+        "7. Citation influence",
+        "8. Research-neighbour institutions",
+        "9. Date and data quality",
+    ]
+    rendered_sections = [header.value for header in app.header if header.value in expected_sections]
+    assert rendered_sections == expected_sections
+    assert any(
+        "Rolling window" in caption.value and "coverage" in caption.value for caption in app.caption
+    )
+    assert any(
+        "research proximity" in warning.value.lower()
+        and "not collaboration" in warning.value.lower()
+        for warning in app.warning
+    )
+    assert any(
+        "citation flow" in caption.value.lower() and "not co-authorship" in caption.value.lower()
+        for caption in app.caption
+    )
 
 
 @pytest.mark.integration

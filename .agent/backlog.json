@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-29T17:08:37Z",
+  "last_updated_utc": "2026-08-30T01:10:36Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2108,12 +2108,27 @@
         "GISNET-128",
         "GISNET-133"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-29T20:39:13Z",
+          "from": "TODO",
+          "reason": "Building the ordered entity-first School Profile UI from validated rolling, Topic, partner, annual network, citation, proximity, and quality evidence.",
+          "run_id": "20260829T203902Z_483b18a1191e",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-30T01:10:36Z",
+          "from": "IN_PROGRESS",
+          "reason": "Ordered entity-first School Profile UI now discloses stable identity, rolling activity, Topic profile, exact per-school partners/geography, separately bounded annual network and citation evidence, research proximity, and explicit coverage/missingness; full quality and release verification passed.",
+          "run_id": "20260829T203902Z_483b18a1191e",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-134",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Ordered entity-first School Profile UI now discloses stable identity, rolling activity, Topic profile, exact per-school partners/geography, separately bounded annual network and citation evidence, research proximity, and explicit coverage/missingness; full quality and release verification passed.",
+      "status_updated_at_utc": "2026-08-30T01:10:36Z",
       "title": "Build School Profile UI",
       "work": [
         "Present identity, recent activity/trend, Topic profile, partners/geography, network position, citation influence, research neighbours, and quality context.",

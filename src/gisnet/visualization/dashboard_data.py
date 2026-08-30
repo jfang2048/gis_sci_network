@@ -14,10 +14,11 @@ from gisnet.artifacts import write_json_artifact
 from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256, parquet_metrics
 
-_STAGE_VERSION = "public-dashboard-bundle-2026-08-29-v8"
+_STAGE_VERSION = "public-dashboard-bundle-2026-08-29-v9"
 _GEOGRAPHIC_FLOW_VERSION = "geographic-flow-explorer-2026-08-28-v2"
 _GEOGRAPHIC_ANCHOR_VERSION = "geographic-display-anchors-2026-08-29-v3"
 _SCHOOL_EGO_VERSION = "school-ego-map-2026-08-29-v1"
+_SCHOOL_PROFILE_VERSION = "school-profile-ui-2026-08-29-v1"
 _SCHOOL_EGO_TOP_K = 50
 _OPENALEX_LICENSE = "CC0 1.0 Universal"
 _OPENALEX_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/"
@@ -57,6 +58,8 @@ def build_dashboard_bundle(
         "quarter_edges",
         "month_edges",
         "quarter_outputs",
+        "school_profiles",
+        "school_topic_profiles",
     }
     missing = required.difference(sources)
     if missing:
@@ -76,6 +79,8 @@ def build_dashboard_bundle(
     destinations["geography_outputs"] = output / "geography_outputs.parquet"
     destinations["school_index"] = output / "school_index.parquet"
     destinations["school_ego_partners"] = output / "school_ego_partners.parquet"
+    destinations["school_profiles"] = output / "school_profiles.parquet"
+    destinations["school_topic_profiles"] = output / "school_topic_profiles.parquet"
     temporary = {name: path.with_suffix(".parquet.tmp") for name, path in destinations.items()}
     metadata = Path(metadata_path)
     metadata.parent.mkdir(parents=True, exist_ok=True)
@@ -130,6 +135,16 @@ def build_dashboard_bundle(
             quarter_outputs_path=paths["quarter_outputs"],
             destination=temporary["school_ego_partners"],
             top_k=_SCHOOL_EGO_TOP_K,
+        )
+        _write_school_profile_table(
+            connection,
+            source=paths["school_profiles"],
+            destination=temporary["school_profiles"],
+        )
+        _write_school_profile_table(
+            connection,
+            source=paths["school_topic_profiles"],
+            destination=temporary["school_topic_profiles"],
         )
         connection.execute(
             f"""
@@ -413,6 +428,59 @@ def build_dashboard_bundle(
             },
             None,
         ),
+        "school_profiles": (
+            [
+                "school_id",
+                "corpus_view",
+                "hierarchy_view",
+                "window_start",
+                "window_end",
+                "window_months",
+            ],
+            {
+                "school_id",
+                "display_name",
+                "country_name",
+                "corpus_view",
+                "window_start",
+                "window_end",
+                "window_months",
+                "coverage_ratio",
+                "profile_support_status",
+                "full_work_count",
+                "topic_profile_support_status",
+                "annual_network_support_status",
+                "citation_flow_support_status",
+                "topic_similarity_support_status",
+                "date_coverage_status",
+                "quality_flags",
+            },
+            None,
+        ),
+        "school_topic_profiles": (
+            [
+                "school_id",
+                "corpus_view",
+                "hierarchy_view",
+                "window_start",
+                "window_end",
+                "window_months",
+                "topic_family",
+            ],
+            {
+                "school_id",
+                "corpus_view",
+                "window_start",
+                "window_end",
+                "window_months",
+                "topic_family",
+                "topic_family_share",
+                "topic_rank",
+                "provisional_topic_registry",
+                "topic_profile_support_status",
+            },
+            None,
+        ),
         "topics": (
             ["year", "corpus_view", "hierarchy_view", "topic_family"],
             {"year", "topic_family", "full_count", "fractional_count"},
@@ -468,6 +536,15 @@ def build_dashboard_bundle(
             """,
             [str(temporary["school_ego_partners"])],
         ).fetchone()
+        profile_window_rows = metadata_connection.execute(
+            """
+            SELECT window_months, min(window_start), max(window_end), count(*)
+            FROM read_parquet(?)
+            GROUP BY window_months
+            ORDER BY window_months
+            """,
+            [str(temporary["school_profiles"])],
+        ).fetchall()
     finally:
         metadata_connection.close()
     if outside_core_ego_schools is None or ego_coordinate_coverage is None:
@@ -588,6 +665,58 @@ def build_dashboard_bundle(
                 ".agent/manifests/institution_outputs_quarter.json",
             ],
         },
+        "school_profile": {
+            "policy_version": _SCHOOL_PROFILE_VERSION,
+            "identity_view": "school",
+            "default_rolling_window_months": 24,
+            "supported_rolling_windows": [
+                {
+                    "window_months": int(row[0]),
+                    "earliest_window_start": str(row[1]),
+                    "latest_window_end": str(row[2]),
+                    "profile_row_count": int(row[3]),
+                }
+                for row in profile_window_rows
+            ],
+            "section_order": [
+                "identity_geography",
+                "recent_activity_trend",
+                "topic_profile",
+                "institutional_partners",
+                "partner_geography",
+                "annual_network_position",
+                "citation_influence",
+                "research_neighbor_institutions",
+                "date_data_quality",
+            ],
+            "time_policy": (
+                "recent activity uses source-stored rolling 12-, 24-, and 36-month horizons; "
+                "network, citation-flow, and research-proximity context use separately labelled "
+                "latest complete annual evidence"
+            ),
+            "evidence_boundary": (
+                "Topic similarity is research proximity and never collaboration; citation flow "
+                "is a directed knowledge-flow proxy and never co-authorship or research quality"
+            ),
+            "missing_data_policy": (
+                "unsupported, empty, incomplete, and low-coverage evidence remains explicit; "
+                "no value is imputed"
+            ),
+            "low_date_coverage_display_threshold": 0.8,
+            "low_date_coverage_threshold_semantics": (
+                "dashboard diagnostic warning only; not a scientific inclusion or exclusion rule"
+            ),
+            "query_policy": (
+                "DuckDB Parquet predicate pushdown by stable school ID, corpus, school hierarchy, "
+                "and rolling-window length"
+            ),
+            "profile_row_count": int(metrics["school_profiles"]["row_count"]),
+            "topic_profile_row_count": int(metrics["school_topic_profiles"]["row_count"]),
+            "source_manifests": [
+                ".agent/manifests/school_profiles.json",
+                ".agent/manifests/school_topic_profiles.json",
+            ],
+        },
         "tables": {
             name: {
                 "path": f"dashboard/data/{destinations[name].name}",
@@ -686,8 +815,29 @@ def write_dashboard_artifact(
             ".agent/manifests/collaboration_edges_quarter.json",
             ".agent/manifests/collaboration_edges_month.json",
             ".agent/manifests/institution_outputs_quarter.json",
+            ".agent/manifests/school_profiles.json",
+            ".agent/manifests/school_topic_profiles.json",
         ],
         command=command,
+    )
+
+
+def _write_school_profile_table(
+    connection: duckdb.DuckDBPyConnection,
+    *,
+    source: Path,
+    destination: Path,
+) -> None:
+    """Publish a profile table with the dashboard's stable ``school_id`` field name."""
+    connection.execute(
+        f"""
+        COPY (
+            SELECT canonical_school_id AS school_id, * EXCLUDE (canonical_school_id)
+            FROM read_parquet(?)
+        ) TO '{_literal(destination)}'
+        (FORMAT PARQUET, COMPRESSION ZSTD)
+        """,
+        [str(source)],
     )
 
 

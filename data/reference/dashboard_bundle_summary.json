@@ -1,18 +1,18 @@
 {
   "api_requests_during_viewing": false,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "generated_at_utc": "2026-08-29T10:19:43.725681Z",
-  "logical_input_hash": "435edd43f0e35d982c5be9f3567ffb19104a06c53f42e2dcb4180c3b6577d469",
-  "methods_version": "public-dashboard-bundle-2026-08-29-v8",
+  "generated_at_utc": "2026-08-30T01:04:34.517539Z",
+  "logical_input_hash": "15fdf7434d709ab61b81433754f3733ba0f343427ff38543147360113c73cad5",
+  "methods_version": "public-dashboard-bundle-2026-08-29-v9",
   "outputs": {
     "dashboard_data_directory": "dashboard/data",
     "dashboard_metadata": "dashboard/data/metadata.json"
   },
   "public_snapshot": true,
-  "row_count": 1845967,
+  "row_count": 2257111,
   "schema_version": 1,
-  "stage_version": "public-dashboard-bundle-2026-08-29-v8",
-  "table_count": 20,
+  "stage_version": "public-dashboard-bundle-2026-08-29-v9",
+  "table_count": 22,
   "table_hashes": {
     "community_continuity": "bd44d0c924a42cb79c2dcfea91759dc526d898bc5523f997a2e1285f2e40bf9f",
     "community_transitions": "101ff09480e97791a5ab7b3f00d0a389b75e3f4109a0c568788ee27656ffe7ec",
@@ -31,6 +31,8 @@
     "network_nodes": "9b1c868476190886318b2cdae037511724990530e52ecf905c382762cf503bf7",
     "school_ego_partners": "18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0",
     "school_index": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21",
+    "school_profiles": "5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed",
+    "school_topic_profiles": "d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199",
     "sensitivity": "b3c90024e653a8df4a27d3d46278cb12b4763063fdc3153029d38727a31bf168",
     "topics": "d9fe8030f216267d1c8924151aecf020734aadaa459d1e03498e8ee26ae180e9",
     "trends": "0efa8771cd5e4c3554b888b181b0daa4786fd5cce39e887db9b6667669b7a820"

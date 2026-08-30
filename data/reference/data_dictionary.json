@@ -1,11 +1,11 @@
 {
-  "column_entry_count": 420,
+  "column_entry_count": 517,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "dictionary_version": "public-data-dictionary-2026-08-29-v5",
-  "methods_version": "public-dashboard-bundle-2026-08-29-v8",
+  "dictionary_version": "public-data-dictionary-2026-08-29-v6",
+  "methods_version": "public-dashboard-bundle-2026-08-29-v9",
   "privacy_policy": "No API key, raw response, or private local path is included.",
   "schema_version": 1,
-  "table_count": 20,
+  "table_count": 22,
   "tables": [
     {
       "code_commit": "568bbdbf6b3f",
@@ -28,7 +28,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -169,7 +169,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -339,7 +339,7 @@
       "transformation_command": "python -m gisnet.cli match-communities --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 5,
       "columns": [
         {
@@ -359,7 +359,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -420,16 +420,18 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "filter_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 17,
       "columns": [
         {
@@ -603,16 +605,18 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "geography_anchors",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 4,
       "columns": [
         {
@@ -681,16 +685,18 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "geography_dimensions",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 8,
       "columns": [
         {
@@ -710,7 +716,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -734,7 +740,7 @@
           "type": "string"
         },
         {
-          "description": "Sum of institution full Work-count denominators in the declared geography and scope.",
+          "description": "Full Work count under the row's declared identity, time, and corpus scope.",
           "name": "full_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -795,10 +801,12 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "geography_outputs",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
@@ -824,7 +832,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1114,7 +1122,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1247,7 +1255,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1646,7 +1654,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -1972,7 +1980,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2131,7 +2139,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2266,7 +2274,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2651,7 +2659,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -2999,7 +3007,7 @@
       "transformation_command": "python -m gisnet.cli build-network-view --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 43,
       "columns": [
         {
@@ -3083,7 +3091,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3383,16 +3391,18 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "school_ego_partners",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
     },
     {
-      "code_commit": "5ed646022421",
+      "code_commit": "483b18a1191e",
       "column_count": 33,
       "columns": [
         {
@@ -3580,7 +3590,7 @@
           "type": "int64"
         },
         {
-          "description": "Broad-corpus Work count in the declared latest 24-month window.",
+          "description": "Work count in the declared corpus and latest rolling 24-month window.",
           "name": "recent_24m_work_count",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3693,13 +3703,882 @@
         ".agent/manifests/edges_metrics_year.json",
         ".agent/manifests/collaboration_edges_quarter.json",
         ".agent/manifests/collaboration_edges_month.json",
-        ".agent/manifests/institution_outputs_quarter.json"
+        ".agent/manifests/institution_outputs_quarter.json",
+        ".agent/manifests/school_profiles.json",
+        ".agent/manifests/school_topic_profiles.json"
       ],
       "source_versions": {
-        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"
+        "dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"
       },
       "table": "school_index",
       "transformation_command": "python -m gisnet.cli build-dashboard-data --resume"
+    },
+    {
+      "code_commit": "77ec76e590be",
+      "column_count": 75,
+      "columns": [
+        {
+          "description": "Stable canonical school identifier used for entity-first dashboard selection.",
+          "name": "school_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source country code associated with the institution.",
+          "name": "country_code",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen country or territory display name.",
+          "name": "country_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style subregion analytical grouping.",
+          "name": "subregion",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Configured analytical category for the source institution type.",
+          "name": "institution_category",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Audited school-identity resolution status.",
+          "name": "identity_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Evidence-bounded identity-resolution confidence label.",
+          "name": "identity_resolution_confidence",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Sorted identity caveats retained for the school.",
+          "name": "identity_quality_flags",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive first publication month in the rolling profile window.",
+          "name": "window_start",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive last publication month in the rolling profile window.",
+          "name": "window_end",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of publication months represented by the selected period.",
+          "name": "window_months",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Publication months observed within the requested rolling window.",
+          "name": "observed_month_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Publication months eligible within the requested rolling window.",
+          "name": "eligible_month_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Observed publication months divided by eligible months for the period.",
+          "name": "coverage_ratio",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Whether every eligible month is observed in the rolling window.",
+          "name": "is_complete_window",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Overall support status for the selected school profile window.",
+          "name": "profile_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Full Work count under the row's declared identity, time, and corpus scope.",
+          "name": "full_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Distinct primary-corpus Works affiliated with the institution.",
+          "name": "work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Institutional Work output under the stored fractional allocation.",
+          "name": "fractional_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Work count in the source-stored latest rolling 12-month horizon.",
+          "name": "recent_12m_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Work count in the declared corpus and latest rolling 24-month window.",
+          "name": "recent_24m_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Work count in the source-stored latest rolling 36-month horizon.",
+          "name": "recent_36m_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "International Works divided by all included Works.",
+          "name": "international_collaboration_share",
+          "null_count": 87077,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Cross-region Works divided by all included Works.",
+          "name": "cross_region_collaboration_share",
+          "null_count": 87077,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Distinct partner institutions in the selected rolling window.",
+          "name": "partner_institution_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Number of distinct partner countries.",
+          "name": "partner_country_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Sum of fractional collaboration weight in the selected rolling window.",
+          "name": "fractional_collaboration_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Partners active in more than one source-defined persistence unit.",
+          "name": "repeat_partner_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Repeat partners divided by distinct partners in the window.",
+          "name": "repeat_partner_ratio",
+          "null_count": 92890,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Inverse-concentration effective count of collaboration partners in the window.",
+          "name": "effective_partner_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Ordered stable IDs of the source-stored top institutional partners.",
+          "name": "top_partner_ids",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Ordered display names corresponding to top_partner_ids.",
+          "name": "top_partner_names",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Ordered fractional weights corresponding to the source-stored top partners.",
+          "name": "top_partner_fractional_counts",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: double>"
+        },
+        {
+          "description": "Distinct configured Topic families represented in the profile.",
+          "name": "topic_family_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Highest-share configured Topic family in the profile window.",
+          "name": "top_topic_family",
+          "null_count": 87085,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Work-weight share of the highest-share Topic family.",
+          "name": "top_topic_family_share",
+          "null_count": 87085,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Support status for rolling Topic-profile evidence.",
+          "name": "topic_profile_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Relative change in full Work count between the current and preceding rolling 12 months.",
+          "name": "rolling_12m_activity_change",
+          "null_count": 124356,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Relative change in fractional Work activity between current and preceding 12 months.",
+          "name": "rolling_12m_fractional_activity_change",
+          "null_count": 124356,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Support status for the rolling 12-month activity-change metrics.",
+          "name": "momentum_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Complete calendar year supplying annual network-position evidence.",
+          "name": "annual_graph_year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored graph boundary for annual network-position metrics.",
+          "name": "annual_graph_boundary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Support status for annual network-position evidence.",
+          "name": "annual_network_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of distinct institutional partners in the annual graph.",
+          "name": "degree",
+          "null_count": 106398,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "int64"
+        },
+        {
+          "description": "Weighted PageRank centrality normalized within the annual graph.",
+          "name": "pagerank",
+          "null_count": 106398,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Stored weighted betweenness centrality under the disclosed method.",
+          "name": "betweenness",
+          "null_count": 106398,
+          "null_semantics": "Null means the graph statistic is undefined for that annual graph.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Exact or cutoff weighted shortest-path method used for betweenness.",
+          "name": "betweenness_method",
+          "null_count": 106398,
+          "null_semantics": "Null means the graph statistic is undefined for that annual graph.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Documented cross-community/cross-region bridging indicator.",
+          "name": "bridge_score",
+          "null_count": 106398,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Stable annual primary-resolution community label; isolates are explicit.",
+          "name": "community_id",
+          "null_count": 112191,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Deterministic longitudinal community ID linked to the annual community, when supported.",
+          "name": "community_continuity_id",
+          "null_count": 112191,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "string"
+        },
+        {
+          "description": "Stored support or assignment status of annual community evidence.",
+          "name": "community_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Complete calendar year supplying directed citation-flow evidence.",
+          "name": "citation_flow_year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored directed boundary for citation-flow metrics.",
+          "name": "citation_flow_boundary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Support status for directed citation-flow evidence.",
+          "name": "citation_flow_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Full incoming directed citation-flow proxy count.",
+          "name": "citation_flow_in_full",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional incoming directed citation-flow proxy weight.",
+          "name": "citation_flow_in_fractional",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Sum of incoming fractional citation-flow proxy weight.",
+          "name": "citation_flow_fractional_in_strength",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Full outgoing directed citation-flow proxy count.",
+          "name": "citation_flow_out_full",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Fractional outgoing directed citation-flow proxy weight.",
+          "name": "citation_flow_out_fractional",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Complete calendar year supplying research-proximity evidence.",
+          "name": "topic_similarity_year",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Stored Topic-vector comparison boundary.",
+          "name": "topic_similarity_boundary",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Support status for research-proximity evidence.",
+          "name": "topic_similarity_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Schools with a supported Topic-similarity comparison.",
+          "name": "topic_similarity_neighbor_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Maximum supported Topic-vector similarity to another school.",
+          "name": "topic_similarity_maximum",
+          "null_count": 165252,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Mean supported Topic-vector similarity to other schools.",
+          "name": "topic_similarity_mean",
+          "null_count": 165252,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Ordered stable IDs of the closest schools by Topic research proximity, not collaboration.",
+          "name": "topic_similarity_top_neighbor_ids",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Exact-date-eligible Works divided by all eligible Works for the school.",
+          "name": "date_coverage_ratio",
+          "null_count": 87077,
+          "null_semantics": "Null means the source or derived value is unavailable; it is not coerced to zero.",
+          "nullable_in_release": true,
+          "type": "double"
+        },
+        {
+          "description": "Support label for exact publication-date coverage.",
+          "name": "date_coverage_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Stored denominator and scope definition for date coverage.",
+          "name": "date_coverage_basis",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Sorted profile-level source or derivation quality caveats.",
+          "name": "quality_flags",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "list<element: string>"
+        },
+        {
+          "description": "Stored statement distinguishing rolling publication time from complete-year context.",
+          "name": "publication_time_interpretation",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+        "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03",
+        "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
+      },
+      "description": "Stable-ID school profiles combining rolling activity, partner, complete-year network, citation-flow, research-proximity, and quality evidence.",
+      "known_data_quality_issue": "Evidence layers have independent support statuses and time boundaries; null or unsupported values are not imputed.",
+      "path": "dashboard/data/school_profiles.parquet",
+      "primary_key": [
+        "school_id",
+        "corpus_view",
+        "hierarchy_view",
+        "window_start",
+        "window_end",
+        "window_months"
+      ],
+      "row_count": 168252,
+      "sha256": "5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed",
+      "source_manifest": ".agent/manifests/school_profiles.json",
+      "source_manifests": [
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_identities.json",
+        ".agent/manifests/institution_outputs_rolling.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/institution_topic_vectors_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/work_institutions.json",
+        ".agent/manifests/work_publication_dates.json",
+        ".agent/manifests/work_topics.json"
+      ],
+      "source_versions": {
+        "school_profile_policy": "school-profiles-2026-08-28-v1"
+      },
+      "table": "school_profiles",
+      "transformation_command": "python -m gisnet.cli build-school-profiles --corpus all --top-partners 10 --top-similarities 10 --resume"
+    },
+    {
+      "code_commit": "77ec76e590be",
+      "column_count": 22,
+      "columns": [
+        {
+          "description": "Stable canonical school identifier used for entity-first dashboard selection.",
+          "name": "school_id",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source-provided or canonically selected institution display name.",
+          "name": "display_name",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Source country code associated with the institution.",
+          "name": "country_code",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Frozen UN M49-style macro-region analytical grouping.",
+          "name": "macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "GIS corpus definition: strict or broad.",
+          "name": "corpus_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
+          "name": "hierarchy_view",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive first publication month in the rolling profile window.",
+          "name": "window_start",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Inclusive last publication month in the rolling profile window.",
+          "name": "window_end",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Number of publication months represented by the selected period.",
+          "name": "window_months",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Configured Topic-family label.",
+          "name": "topic_family",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        },
+        {
+          "description": "Fractional Work-topic weight assigned to the Topic family.",
+          "name": "topic_weight",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Distinct Works contributing weight to the Topic-family row.",
+          "name": "contributing_work_count",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int64"
+        },
+        {
+          "description": "Topic-family weight divided by total supported profile Topic weight.",
+          "name": "topic_family_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Global Topic-family share under the same corpus and window.",
+          "name": "global_baseline_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "School Topic share divided by the global baseline share.",
+          "name": "specialization_lift_global",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Topic-family share for the school's macro-region under the same scope.",
+          "name": "macro_region_baseline_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "School Topic share divided by the macro-region baseline share.",
+          "name": "specialization_lift_macro_region",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "Topic-family share for the school's country under the same scope.",
+          "name": "country_baseline_share",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "School Topic share divided by the country baseline share.",
+          "name": "specialization_lift_country",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "double"
+        },
+        {
+          "description": "One-based Topic-family rank by school profile weight and stable label.",
+          "name": "topic_rank",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "int32"
+        },
+        {
+          "description": "Whether the configured Topic registry remains provisional.",
+          "name": "provisional_topic_registry",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "bool"
+        },
+        {
+          "description": "Support status for rolling Topic-profile evidence.",
+          "name": "topic_profile_support_status",
+          "null_count": 0,
+          "null_semantics": "Not null in this public release.",
+          "nullable_in_release": false,
+          "type": "string"
+        }
+      ],
+      "configuration_hashes": {
+        "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
+        "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03",
+        "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
+      },
+      "description": "Rolling stable-ID school Topic-family shares and contextual specialization lifts.",
+      "known_data_quality_issue": "The Topic registry remains provisional, and Topic similarity or specialization is research proximity rather than observed collaboration.",
+      "path": "dashboard/data/school_topic_profiles.parquet",
+      "primary_key": [
+        "school_id",
+        "corpus_view",
+        "hierarchy_view",
+        "window_start",
+        "window_end",
+        "window_months",
+        "topic_family"
+      ],
+      "row_count": 242892,
+      "sha256": "d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199",
+      "source_manifest": ".agent/manifests/school_topic_profiles.json",
+      "source_manifests": [
+        ".agent/manifests/school_index.json",
+        ".agent/manifests/school_identities.json",
+        ".agent/manifests/institution_outputs_rolling.json",
+        ".agent/manifests/school_partner_index.json",
+        ".agent/manifests/nodes_year.json",
+        ".agent/manifests/communities_year.json",
+        ".agent/manifests/community_continuity_year.json",
+        ".agent/manifests/citation_edges_year.json",
+        ".agent/manifests/institution_topic_vectors_year.json",
+        ".agent/manifests/topic_similarity_edges_year.json",
+        ".agent/manifests/work_institutions.json",
+        ".agent/manifests/work_publication_dates.json",
+        ".agent/manifests/work_topics.json"
+      ],
+      "source_versions": {
+        "school_profile_policy": "school-profiles-2026-08-28-v1"
+      },
+      "table": "school_topic_profiles",
+      "transformation_command": "python -m gisnet.cli build-school-profiles --corpus all --top-partners 10 --top-similarities 10 --resume"
     },
     {
       "code_commit": "568bbdbf6b3f",
@@ -3857,7 +4736,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",
@@ -3961,7 +4840,7 @@
           "type": "string"
         },
         {
-          "description": "Institution identity view: organization or documented umbrella.",
+          "description": "Institution identity view: school, organization, or documented umbrella as declared.",
           "name": "hierarchy_view",
           "null_count": 0,
           "null_semantics": "Not null in this public release.",

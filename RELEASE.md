@@ -16,7 +16,8 @@ The development prerelease does not replace the stable annual release. At that t
 did not claim that the School Finder or rolling-window datasets were complete. Since the tag,
 publication-date QA, subannual facts, and rolling 12/24/36-month facts have become available on
 `main`. The complete-index School Finder and seven-page institution-first information architecture
-are also available; richer School Profile and comparison evidence remains planned.
+are also available. The ordered, multi-evidence School Profile is available; advanced comparison
+evidence remains planned.
 
 [![Current architecture showing available annual and temporal foundations plus the remaining planned school-decision product](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
@@ -90,8 +91,8 @@ The API key is not written to configuration, manifests, datasets, or logs.
 - 2025 is the last complete calendar year; partial 2026 observations are excluded.
 - The school-decision analytical contract, publication-date QA, subannual facts, and rolling
   12/24/36-month facts are available on `main`. Safe partial-current-year acquisition, complete
-  school search, baseline profile/ego-map and two-to-four-school comparison pages are available.
-  The expanded profile, advanced comparison, and surfaced citation/Topic-proximity interfaces
+  school search, expanded profile/ego-map, and baseline two-to-four-school comparison pages are
+  available. Advanced comparison and dedicated cross-layer citation/Topic-proximity interfaces
   remain planned work.
 - The optional citation layer is corpus-internal. Its coverage table reports references whose
   cited Work or in-scope cited institution is unavailable, and preserves negative citation lags

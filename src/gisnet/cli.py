@@ -3946,6 +3946,8 @@ def _build_dashboard_data(args: argparse.Namespace) -> int:
         "quarter_edges": "data/processed/collaboration_edges_quarter.parquet",
         "month_edges": "data/processed/collaboration_edges_month.parquet",
         "quarter_outputs": "data/processed/institution_outputs_quarter.parquet",
+        "school_profiles": "data/processed/school_profiles.parquet",
+        "school_topic_profiles": "data/processed/school_topic_profiles.parquet",
     }
     try:
         with RunLock(run_id=run_id, task_id="GISNET-095"):

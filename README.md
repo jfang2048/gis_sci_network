@@ -46,7 +46,8 @@ semantics and snapshot rebuild instructions.
 | Geographic Flow Explorer | Available with thresholded, filter-comparable arcs at macro-region, subregion, and country levels |
 | School Finder and seven-page decision-oriented navigation | Available |
 | School Profile collaboration map | Available from the complete stable-ID index with institution/country/region partners and exact tables |
-| Expanded School Profile and advanced comparison UI | Planned: GISNET-134–135 |
+| Expanded School Profile UI | Available with ordered rolling activity, Topic, partner, annual network, citation-flow, research-proximity, and quality evidence |
+| Advanced comparison UI | Planned: GISNET-135 |
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 

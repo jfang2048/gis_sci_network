@@ -14,7 +14,7 @@ from gisnet.config import config_file_hash, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-29-v5"
+_STAGE_VERSION = "public-data-dictionary-2026-08-29-v6"
 
 TABLES: dict[str, dict[str, Any]] = {
     "community_continuity": {
@@ -172,6 +172,44 @@ TABLES: dict[str, dict[str, Any]] = {
             "institution and does not imply degree-granting status or research quality."
         ),
     },
+    "school_profiles": {
+        "primary_key": [
+            "school_id",
+            "corpus_view",
+            "hierarchy_view",
+            "window_start",
+            "window_end",
+            "window_months",
+        ],
+        "source_manifest": ".agent/manifests/school_profiles.json",
+        "description": (
+            "Stable-ID school profiles combining rolling activity, partner, complete-year "
+            "network, citation-flow, research-proximity, and quality evidence."
+        ),
+        "known_issue": (
+            "Evidence layers have independent support statuses and time boundaries; null or "
+            "unsupported values are not imputed."
+        ),
+    },
+    "school_topic_profiles": {
+        "primary_key": [
+            "school_id",
+            "corpus_view",
+            "hierarchy_view",
+            "window_start",
+            "window_end",
+            "window_months",
+            "topic_family",
+        ],
+        "source_manifest": ".agent/manifests/school_topic_profiles.json",
+        "description": (
+            "Rolling stable-ID school Topic-family shares and contextual specialization lifts."
+        ),
+        "known_issue": (
+            "The Topic registry remains provisional, and Topic similarity or specialization is "
+            "research proximity rather than observed collaboration."
+        ),
+    },
     "sensitivity": {
         "primary_key": ["comparison_id"],
         "source_manifest": ".agent/manifests/sensitivity_matrix.json",
@@ -209,7 +247,9 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "institution_type": "Configured analytical institution type for an edge endpoint.",
     "year": "Complete publication calendar year.",
     "corpus_view": "GIS corpus definition: strict or broad.",
-    "hierarchy_view": "Institution identity view: organization or documented umbrella.",
+    "hierarchy_view": (
+        "Institution identity view: school, organization, or documented umbrella as declared."
+    ),
     "institution_id": "Stable source institution identifier used as the node key.",
     "organization_id": "Stable source identifier for the uncollapsed organization identity.",
     "organization_name": "Display name associated with the organization identity.",
@@ -296,9 +336,7 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "coordinate_license_url": "Public URL for the recorded coordinate license.",
     "source_manifest": "Repository-relative manifest recording source dataset provenance.",
     "source_dataset_sha256": "Exact SHA-256 checksum of the anchor source dataset.",
-    "full_work_count": (
-        "Sum of institution full Work-count denominators in the declared geography and scope."
-    ),
+    "full_work_count": "Full Work count under the row's declared identity, time, and corpus scope.",
     "denominator_definition": "Stored definition of the geography output denominator.",
     "source_geography": "Stable first endpoint label of the undirected geographic cell.",
     "target_geography": "Stable second endpoint label of the undirected geographic cell.",
@@ -405,7 +443,9 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
     "latest_supported_month": "Latest complete publication month supported by the source facts.",
     "broad_work_count": "Complete historical Broad-corpus Work count for the school.",
     "strict_work_count": "Complete historical Strict-corpus Work count for the school.",
-    "recent_24m_work_count": "Broad-corpus Work count in the declared latest 24-month window.",
+    "recent_24m_work_count": (
+        "Work count in the declared corpus and latest rolling 24-month window."
+    ),
     "date_coverage_ratio": (
         "Exact-date-eligible Works divided by all eligible Works for the school."
     ),
@@ -457,6 +497,86 @@ EXACT_DESCRIPTIONS: dict[str, str] = {
         "Whether the full fixed persistence denominator is available for this row."
     ),
     "source_partner_index": "Named validated source or extension supplying the retained row.",
+    "window_start": "Inclusive first publication month in the rolling profile window.",
+    "window_end": "Inclusive last publication month in the rolling profile window.",
+    "observed_month_count": "Publication months observed within the requested rolling window.",
+    "eligible_month_count": "Publication months eligible within the requested rolling window.",
+    "is_complete_window": "Whether every eligible month is observed in the rolling window.",
+    "profile_support_status": "Overall support status for the selected school profile window.",
+    "recent_12m_work_count": "Work count in the source-stored latest rolling 12-month horizon.",
+    "recent_36m_work_count": "Work count in the source-stored latest rolling 36-month horizon.",
+    "partner_institution_count": "Distinct partner institutions in the selected rolling window.",
+    "fractional_collaboration_strength": (
+        "Sum of fractional collaboration weight in the selected rolling window."
+    ),
+    "repeat_partner_count": "Partners active in more than one source-defined persistence unit.",
+    "repeat_partner_ratio": "Repeat partners divided by distinct partners in the window.",
+    "effective_partner_count": (
+        "Inverse-concentration effective count of collaboration partners in the window."
+    ),
+    "top_partner_ids": "Ordered stable IDs of the source-stored top institutional partners.",
+    "top_partner_names": "Ordered display names corresponding to top_partner_ids.",
+    "top_partner_fractional_counts": (
+        "Ordered fractional weights corresponding to the source-stored top partners."
+    ),
+    "topic_family_count": "Distinct configured Topic families represented in the profile.",
+    "top_topic_family": "Highest-share configured Topic family in the profile window.",
+    "top_topic_family_share": "Work-weight share of the highest-share Topic family.",
+    "topic_profile_support_status": "Support status for rolling Topic-profile evidence.",
+    "rolling_12m_activity_change": (
+        "Relative change in full Work count between the current and preceding rolling 12 months."
+    ),
+    "rolling_12m_fractional_activity_change": (
+        "Relative change in fractional Work activity between current and preceding 12 months."
+    ),
+    "momentum_support_status": "Support status for the rolling 12-month activity-change metrics.",
+    "annual_graph_year": "Complete calendar year supplying annual network-position evidence.",
+    "annual_graph_boundary": "Stored graph boundary for annual network-position metrics.",
+    "annual_network_support_status": "Support status for annual network-position evidence.",
+    "community_continuity_id": (
+        "Deterministic longitudinal community ID linked to the annual community, when supported."
+    ),
+    "community_status": "Stored support or assignment status of annual community evidence.",
+    "citation_flow_year": "Complete calendar year supplying directed citation-flow evidence.",
+    "citation_flow_boundary": "Stored directed boundary for citation-flow metrics.",
+    "citation_flow_support_status": "Support status for directed citation-flow evidence.",
+    "citation_flow_in_full": "Full incoming directed citation-flow proxy count.",
+    "citation_flow_in_fractional": "Fractional incoming directed citation-flow proxy weight.",
+    "citation_flow_fractional_in_strength": (
+        "Sum of incoming fractional citation-flow proxy weight."
+    ),
+    "citation_flow_out_full": "Full outgoing directed citation-flow proxy count.",
+    "citation_flow_out_fractional": "Fractional outgoing directed citation-flow proxy weight.",
+    "topic_similarity_year": "Complete calendar year supplying research-proximity evidence.",
+    "topic_similarity_boundary": "Stored Topic-vector comparison boundary.",
+    "topic_similarity_support_status": "Support status for research-proximity evidence.",
+    "topic_similarity_neighbor_count": "Schools with a supported Topic-similarity comparison.",
+    "topic_similarity_maximum": "Maximum supported Topic-vector similarity to another school.",
+    "topic_similarity_mean": "Mean supported Topic-vector similarity to other schools.",
+    "topic_similarity_top_neighbor_ids": (
+        "Ordered stable IDs of the closest schools by Topic research proximity, not collaboration."
+    ),
+    "date_coverage_status": "Support label for exact publication-date coverage.",
+    "date_coverage_basis": "Stored denominator and scope definition for date coverage.",
+    "quality_flags": "Sorted profile-level source or derivation quality caveats.",
+    "publication_time_interpretation": (
+        "Stored statement distinguishing rolling publication time from complete-year context."
+    ),
+    "topic_weight": "Fractional Work-topic weight assigned to the Topic family.",
+    "contributing_work_count": "Distinct Works contributing weight to the Topic-family row.",
+    "topic_family_share": "Topic-family weight divided by total supported profile Topic weight.",
+    "global_baseline_share": "Global Topic-family share under the same corpus and window.",
+    "specialization_lift_global": "School Topic share divided by the global baseline share.",
+    "macro_region_baseline_share": (
+        "Topic-family share for the school's macro-region under the same scope."
+    ),
+    "specialization_lift_macro_region": (
+        "School Topic share divided by the macro-region baseline share."
+    ),
+    "country_baseline_share": ("Topic-family share for the school's country under the same scope."),
+    "specialization_lift_country": "School Topic share divided by the country baseline share.",
+    "topic_rank": "One-based Topic-family rank by school profile weight and stable label.",
+    "provisional_topic_registry": "Whether the configured Topic registry remains provisional.",
 }
 
 

@@ -4,7 +4,7 @@
   "corpus_scientific_status": "blocked_pending_human_corpus_review",
   "data_version": "gisnet-0.1.0-2026-08-28",
   "filter_dimension_scope": "complete annual network nodes, including missing coordinates",
-  "generated_at_utc": "2026-08-29T10:19:43.641611Z",
+  "generated_at_utc": "2026-08-30T01:04:34.390714Z",
   "geographic_flow_explorer": {
     "anchor_method": "unweighted spherical mean of distinct organization coordinates supplied by OpenAlex; display anchor only, not a geographic centroid",
     "arc_geometry": "32-point spherical great-circle interpolation between sourced display anchors",
@@ -51,7 +51,7 @@
     "Visualization score is non-primary and used only to rank visible edges.",
     "Community continuity matches below Jaccard 0.25 are explicitly uncertain."
   ],
-  "methods_version": "public-dashboard-bundle-2026-08-29-v8",
+  "methods_version": "public-dashboard-bundle-2026-08-29-v9",
   "public_snapshot": true,
   "schema_version": 1,
   "school_ego_map": {
@@ -142,6 +142,54 @@
       "persistence"
     ]
   },
+  "school_profile": {
+    "default_rolling_window_months": 24,
+    "evidence_boundary": "Topic similarity is research proximity and never collaboration; citation flow is a directed knowledge-flow proxy and never co-authorship or research quality",
+    "identity_view": "school",
+    "low_date_coverage_display_threshold": 0.8,
+    "low_date_coverage_threshold_semantics": "dashboard diagnostic warning only; not a scientific inclusion or exclusion rule",
+    "missing_data_policy": "unsupported, empty, incomplete, and low-coverage evidence remains explicit; no value is imputed",
+    "policy_version": "school-profile-ui-2026-08-29-v1",
+    "profile_row_count": 168252,
+    "query_policy": "DuckDB Parquet predicate pushdown by stable school ID, corpus, school hierarchy, and rolling-window length",
+    "section_order": [
+      "identity_geography",
+      "recent_activity_trend",
+      "topic_profile",
+      "institutional_partners",
+      "partner_geography",
+      "annual_network_position",
+      "citation_influence",
+      "research_neighbor_institutions",
+      "date_data_quality"
+    ],
+    "source_manifests": [
+      ".agent/manifests/school_profiles.json",
+      ".agent/manifests/school_topic_profiles.json"
+    ],
+    "supported_rolling_windows": [
+      {
+        "earliest_window_start": "2025-01",
+        "latest_window_end": "2025-12",
+        "profile_row_count": 56084,
+        "window_months": 12
+      },
+      {
+        "earliest_window_start": "2024-01",
+        "latest_window_end": "2025-12",
+        "profile_row_count": 56084,
+        "window_months": 24
+      },
+      {
+        "earliest_window_start": "2023-01",
+        "latest_window_end": "2025-12",
+        "profile_row_count": 56084,
+        "window_months": 36
+      }
+    ],
+    "time_policy": "recent activity uses source-stored rolling 12-, 24-, and 36-month horizons; network, citation-flow, and research-proximity context use separately labelled latest complete annual evidence",
+    "topic_profile_row_count": 242892
+  },
   "source_policy": "processed aggregate datasets only; no API requests during viewing",
   "tables": {
     "community_continuity": {
@@ -228,6 +276,16 @@
       "path": "dashboard/data/school_index.parquet",
       "row_count": 28042,
       "sha256": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21"
+    },
+    "school_profiles": {
+      "path": "dashboard/data/school_profiles.parquet",
+      "row_count": 168252,
+      "sha256": "5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed"
+    },
+    "school_topic_profiles": {
+      "path": "dashboard/data/school_topic_profiles.parquet",
+      "row_count": 242892,
+      "sha256": "d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199"
     },
     "sensitivity": {
       "path": "dashboard/data/sensitivity.parquet",

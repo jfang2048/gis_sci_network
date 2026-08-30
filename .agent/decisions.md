@@ -235,3 +235,18 @@ and its incomplete human review must be disclosed on all school-oriented results
   coverage, exact companion values, identity context, and Broad recent-24-month context. Do not
   add per-school hidden normalization or a universal-quality ranking. GISNET-134 and GISNET-135
   own the richer profile and comparison evidence.
+
+## 2026-08-30 — School Profile evidence and time boundaries
+
+- Present the stable-ID School Profile in the contract order: identity/geography, recent rolling
+  activity, Topic profile, institutional partners, partner geography, complete-year network
+  position, citation influence, research neighbours, and date/data quality.
+- Keep rolling 12/24/36-month publication evidence separate from the latest complete-year network,
+  directed citation-flow, and Topic-similarity evidence. Never relabel Topic research proximity as
+  collaboration or citation flow as co-authorship.
+- Reuse the complete per-school partner index for institutional and geography views, preserve the
+  existing period/metric/Top-partner controls, and keep exact unmapped rows rather than inventing
+  coordinates or values.
+- Publish the validated profile and Topic-profile tables with `school_id` as the dashboard field
+  name while retaining every source evidence column and explicit support status. No scientific
+  value is recomputed in the UI and no cross-layer quality score is created.

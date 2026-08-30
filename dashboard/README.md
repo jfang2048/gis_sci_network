@@ -5,8 +5,10 @@
 > inclusive complete-year windows. The dashboard now opens with the complete stable-ID School
 > Finder and provides the seven required decision-oriented pages. School Profile retains the
 > school-centered institution, country, and macro-region partner map over rolling 12/24/36-month,
-> complete-quarter, and complete-year periods. GISNET-134 and GISNET-135 will expand the profile
-> and comparison evidence without changing this navigation contract.
+> complete-quarter, and complete-year periods, and now presents rolling activity, Topic,
+> complete-year network, citation-flow, research-proximity, and quality evidence in explicit
+> sections. GISNET-135 will expand the comparison evidence without changing this navigation
+> contract.
 
 Launch from the repository root:
 
@@ -34,9 +36,11 @@ The primary navigation is deliberately institution-first:
 1. **School Finder** searches the complete eligible index by searchable name/country/ID labels,
    keeps the stable school ID visible, and exposes Strict/Broad historical counts, Broad recent
    24-month activity, exact-date coverage, and identity quality.
-2. **School Profile** starts from one stable-ID institution and currently contains the validated
-   School Ego Map. Rich activity, Topic, citation, proximity, and quality sections are the next
-   GISNET-134 increment.
+2. **School Profile** starts from one stable-ID institution and presents identity/geography,
+   recent rolling activity, Topic profile, institutional partners, partner geography, complete-year
+   network position, citation influence, research-neighbour institutions, and date/data quality in
+   that order. Each layer retains its own support status and time boundary; unsupported values are
+   not imputed.
 3. **Compare Schools** accepts two to four stable IDs. Complete historical Strict/Broad Work counts
    and exact-date coverage use shared per-metric axes, with exact identity, time, corpus, and quality
    fields in the companion table. No per-school hidden normalization or universal ranking is used.
@@ -51,7 +55,14 @@ dense global network. The annual 2010–2025 scientific views remain unchanged i
 navigation. Corpus boundaries are provisional and all school pages retain time, identity, and
 data-quality context.
 
-## School Profile collaboration-map semantics
+## School Profile evidence and collaboration-map semantics
+
+Recent activity and Topic evidence use selectable rolling 12-, 24-, or 36-month publication
+windows with exact start/end months and coverage. Annual network position, citation flow, and Topic
+similarity remain separately labelled complete-year evidence. Topic similarity is research
+proximity, not collaboration; citation flow is a directed knowledge-flow proxy, not co-authorship.
+Empty, incomplete, and low-coverage evidence remains explicit, and the page does not combine these
+dimensions into a university-quality score.
 
 The School Profile collaboration map is entity-first: its search options come from the complete
 eligible school index, not the 500-node fixed-layout core. Selection and queries use the stable

@@ -1,13 +1,13 @@
 {
-  "checksum_sha256": "b76f0a5f130b55c3ed156593b4be6ef411c41af92e863d15bd7d50fe99cda915",
+  "checksum_sha256": "908ae5210f792e20b73b23e0494077c8f68c553d004b9f4bffe60b1a368de2eb",
   "column_count": 1,
   "command": "python -m gisnet.cli build-data-dictionary --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
   },
-  "created_at_utc": "2026-08-29T10:19:47.882916Z",
+  "created_at_utc": "2026-08-30T01:07:38.582346Z",
   "dataset_name": "data_provenance_report",
-  "git_commit": "5ed646022421",
+  "git_commit": "483b18a1191e",
   "max_year": null,
   "min_year": null,
   "null_counts": {
@@ -17,7 +17,7 @@
     "checksum_sha256"
   ],
   "row_count": 1,
-  "run_id": "20260828T215634Z_5ed646022421",
+  "run_id": "20260829T203902Z_483b18a1191e",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/collaboration_matrix_year.json",
@@ -32,11 +32,13 @@
     ".agent/manifests/network_accessibility_year.json",
     ".agent/manifests/network_view_edges_year.json",
     ".agent/manifests/network_view_nodes_year.json",
+    ".agent/manifests/school_profiles.json",
+    ".agent/manifests/school_topic_profiles.json",
     ".agent/manifests/sensitivity_matrix.json",
     ".agent/manifests/trend_series_year.json"
   ],
   "source_versions": {
-    "data_dictionary": "public-data-dictionary-2026-08-29-v5"
+    "data_dictionary": "public-data-dictionary-2026-08-29-v6"
   },
   "status": "valid"
 }

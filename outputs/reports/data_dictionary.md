@@ -1,9 +1,9 @@
 # Public Data Dictionary and Provenance
 
 Data version: `gisnet-0.1.0-2026-08-28`
-Methods version: `public-dashboard-bundle-2026-08-29-v8`
-Released tables: 20
-Documented table-column entries: 420
+Methods version: `public-dashboard-bundle-2026-08-29-v9`
+Released tables: 22
+Documented table-column entries: 517
 
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
@@ -28,7 +28,7 @@ Annual community labels linked to stable longitudinal continuity IDs.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `annual_community_id` | `string` | Annual Leiden label; not assumed stable between calendar years. | Not null in this public release. | 0 |
 | `continuity_id` | `string` | Deterministic longitudinal ID inherited through selected annual matches. | Not null in this public release. | 0 |
 | `community_size` | `int64` | Number of nodes assigned to the labelled annual community. | Not null in this public release. | 0 |
@@ -61,7 +61,7 @@ Adjacent-year overlap assignments and split/merge/birth/death events.
 | `transition_year` | `int64` | Current year in an adjacent-year community comparison. | Not null in this public release. | 0 |
 | `previous_year` | `int64` | Previous year in an adjacent-year community comparison. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `previous_community_id` | `string` | Matched prior-year annual community label, when selected. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,302 |
 | `current_community_id` | `string` | Current-year annual community label, when present. | Null means the source or derived value is unavailable; it is not coerced to zero. | 8,317 |
 | `previous_community_key` | `string` | Non-null primary-key surrogate for prior community or birth. | Not null in this public release. | 0 |
@@ -89,10 +89,10 @@ Complete annual country, subregion, and institution-type dashboard choices.
 - Primary key: `year, corpus_view, hierarchy_view, dimension, value`
 - SHA-256: `42783af95e23a275f62d98db599a7b8669a97f8a029b6024d426694a6abc82f1`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Topic-family choices come from the separate thresholded Topic table.
 
@@ -100,7 +100,7 @@ Complete annual country, subregion, and institution-type dashboard choices.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `dimension` | `string` | Dashboard filter dimension: country, subregion, or institution type. | Not null in this public release. | 0 |
 | `value` | `string` | Observed display value belonging to the named dashboard filter dimension. | Not null in this public release. | 0 |
 
@@ -113,10 +113,10 @@ Versioned display anchors derived from source-provided institution coordinates.
 - Primary key: `geographic_level, geography`
 - SHA-256: `9b0b0c134b586b94eef7eb5df66a60768f7860744914b1971c2223f2f447d354`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Anchors are spherical means of observed research-institution locations, not geographic or political centroids.
 
@@ -149,10 +149,10 @@ Country-code labels used to join complete country flows to dashboard geography.
 - Primary key: `country_code`
 - SHA-256: `05c43d004c46c479f96d3fc6fa9b9b25b00ae253271a90fc160261c1a1359b08`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Only countries observed in complete annual network nodes are included.
 
@@ -172,10 +172,10 @@ Annual geography-level institutional output denominators for flow normalization.
 - Primary key: `year, corpus_view, hierarchy_view, geographic_level, geography`
 - SHA-256: `1c93f12d67d009b9958d9961a96f450603bd0babd67bb59df442fe5233a37b6e`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Full Work counts sum institution-level contributions and therefore are denominators, not deduplicated geographic Work totals.
 
@@ -183,10 +183,10 @@ Annual geography-level institutional output denominators for flow normalization.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `geographic_level` | `string` | Matrix level: macro_region, subregion, or country. | Not null in this public release. | 0 |
 | `geography` | `string` | Stable geography identifier at the declared geographic level. | Not null in this public release. | 0 |
-| `full_work_count` | `int64` | Sum of institution full Work-count denominators in the declared geography and scope. | Not null in this public release. | 0 |
+| `full_work_count` | `int64` | Full Work count under the row's declared identity, time, and corpus scope. | Not null in this public release. | 0 |
 | `fractional_work_count` | `double` | Institutional Work output under the stored fractional allocation. | Not null in this public release. | 0 |
 | `denominator_definition` | `string` | Stored definition of the geography output denominator. | Not null in this public release. | 0 |
 
@@ -210,7 +210,7 @@ Annual graph-level topology, connectivity, mixing, and turnover metrics.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `node_count` | `int64` | Number of nodes in the annual graph or public view. | Not null in this public release. | 0 |
 | `edge_count` | `int64` | Number of undirected edges in the annual graph or public view. | Not null in this public release. | 0 |
 | `density` | `double` | Observed edges divided by possible undirected edges. | Not null in this public release. | 0 |
@@ -277,7 +277,7 @@ Annual sourced-coordinate coverage and default map display limits.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `total_node_count` | `int64` | All annual nodes before coordinate filtering. | Not null in this public release. | 0 |
 | `coordinate_node_count` | `int64` | Annual nodes with source-provided coordinates. | Not null in this public release. | 0 |
 | `total_edge_count` | `int64` | All annual edges before coordinate filtering. | Not null in this public release. | 0 |
@@ -309,7 +309,7 @@ Top display-ranked collaboration edges whose endpoints have sourced coordinates.
 |---|---|---|---|---:|
 | `year` | `int32` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `source_id` | `string` | Source endpoint value: stable institution identifier for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `target_id` | `string` | Target endpoint value: stable institution identifier for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `source_name` | `string` | Source endpoint value: institution display name for an undirected edge endpoint. | Not null in this public release. | 0 |
@@ -374,7 +374,7 @@ Annual institution metrics for nodes with source-provided coordinates.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `institution_id` | `string` | Stable source institution identifier used as the node key. | Not null in this public release. | 0 |
 | `display_name` | `string` | Source-provided or canonically selected institution display name. | Not null in this public release. | 0 |
 | `ror_id` | `string` | Source-linked Research Organization Registry identifier, when available. | Not null in this public release. | 0 |
@@ -430,7 +430,7 @@ Sparse macro-region, subregion, and country collaboration matrix cells.
 |---|---|---|---|---:|
 | `year` | `int32` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `geographic_level` | `string` | Matrix level: macro_region, subregion, or country. | Not null in this public release. | 0 |
 | `source_geography` | `string` | Stable first endpoint label of the undirected geographic cell. | Not null in this public release. | 0 |
 | `target_geography` | `string` | Stable second endpoint label of the undirected geographic cell. | Not null in this public release. | 0 |
@@ -465,7 +465,7 @@ Plain-language annual summaries and visible network thresholds.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `node_count` | `int64` | Number of nodes in the annual graph or public view. | Not null in this public release. | 0 |
 | `top_institution` | `string` | Display name of the highest fractional-strength node in the view. | Not null in this public release. | 0 |
 | `top_fractional_strength` | `double` | Fractional strength of the reported top institution. | Not null in this public release. | 0 |
@@ -497,7 +497,7 @@ Top fixed-layout core edges with weights, persistence, details, and coordinates.
 |---|---|---|---|---:|
 | `year` | `int32` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `source_id` | `string` | Source endpoint value: stable institution identifier for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `target_id` | `string` | Target endpoint value: stable institution identifier for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `source_name` | `string` | Source endpoint value: institution display name for an undirected edge endpoint. | Not null in this public release. | 0 |
@@ -560,7 +560,7 @@ Fixed-coordinate annual core-node metrics and primary communities.
 |---|---|---|---|---:|
 | `year` | `int64` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `institution_id` | `string` | Stable source institution identifier used as the node key. | Not null in this public release. | 0 |
 | `display_name` | `string` | Source-provided or canonically selected institution display name. | Not null in this public release. | 0 |
 | `ror_id` | `string` | Source-linked Research Organization Registry identifier, when available. | Not null in this public release. | 0 |
@@ -610,10 +610,10 @@ Predicate-friendly retained partner rows for stable-ID school ego maps across th
 - Primary key: `period_key, corpus_view, school_id, partner_id`
 - SHA-256: `18839fa18f7a1bd43a5e05f261f1f7b7f729cd671f1f6b31679e695d23d8dda0`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: Country and macro-region views aggregate only these retained institution partners; missing source coordinates remain in exact companion rows but cannot be mapped.
 
@@ -629,7 +629,7 @@ Predicate-friendly retained partner rows for stable-ID school ego maps across th
 | `persistence_denominator` | `int32` | Fixed month or year count used by the persistence calculation. | Not null in this public release. | 0 |
 | `persistence_definition` | `string` | Exact stored definition of the period-specific persistence value. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `school_id` | `string` | Stable canonical school identifier used for entity-first dashboard selection. | Not null in this public release. | 0 |
 | `school_name` | `string` | Display name of the selected stable-ID school. | Not null in this public release. | 0 |
 | `school_country` | `string` | Frozen source-school country code. | Not null in this public release. | 0 |
@@ -672,10 +672,10 @@ Complete eligible stable-ID school search index independent of global map and ne
 - Primary key: `school_id`
 - SHA-256: `41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21`
 - Direct source manifest: `.agent/manifests/dashboard_bundle_summary.json`
-- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json`
+- Source manifests: `.agent/manifests/trend_series_year.json, .agent/manifests/collaboration_matrix_year.json, .agent/manifests/map_nodes_year.json, .agent/manifests/map_edges_year.json, .agent/manifests/map_coverage_year.json, .agent/manifests/network_view_nodes_year.json, .agent/manifests/network_view_edges_year.json, .agent/manifests/network_accessibility_year.json, .agent/manifests/graph_metrics_year.json, .agent/manifests/sensitivity_matrix.json, .agent/manifests/community_continuity_year.json, .agent/manifests/community_transitions_year.json, .agent/manifests/institution_hierarchy.json, .agent/manifests/institutions.json, .agent/manifests/nodes_year.json, .agent/manifests/school_index.json, .agent/manifests/school_partner_index.json, .agent/manifests/edges_metrics_year.json, .agent/manifests/collaboration_edges_quarter.json, .agent/manifests/collaboration_edges_month.json, .agent/manifests/institution_outputs_quarter.json, .agent/manifests/school_profiles.json, .agent/manifests/school_topic_profiles.json`
 - Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"}`
-- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v8"}`
-- Code commit: `5ed646022421`
+- Source versions: `{"dashboard_bundle_policy": "public-dashboard-bundle-2026-08-29-v9"}`
+- Code commit: `483b18a1191e`
 - Transformation: `python -m gisnet.cli build-dashboard-data --resume`
 - Known issue: School is concise interface language for an eligible university or research institution and does not imply degree-granting status or research quality.
 
@@ -704,7 +704,7 @@ Complete eligible stable-ID school search index independent of global map and ne
 | `latest_supported_month` | `string` | Latest complete publication month supported by the source facts. | Not null in this public release. | 0 |
 | `broad_work_count` | `int64` | Complete historical Broad-corpus Work count for the school. | Not null in this public release. | 0 |
 | `strict_work_count` | `int64` | Complete historical Strict-corpus Work count for the school. | Not null in this public release. | 0 |
-| `recent_24m_work_count` | `int64` | Broad-corpus Work count in the declared latest 24-month window. | Not null in this public release. | 0 |
+| `recent_24m_work_count` | `int64` | Work count in the declared corpus and latest rolling 24-month window. | Not null in this public release. | 0 |
 | `topic_families` | `list<element: string>` | Sorted distinct configured Topic families observed on contributing Works. | Not null in this public release. | 0 |
 | `date_coverage_ratio` | `double` | Exact-date-eligible Works divided by all eligible Works for the school. | Not null in this public release. | 0 |
 | `identity_status` | `string` | Audited school-identity resolution status. | Not null in this public release. | 0 |
@@ -714,6 +714,141 @@ Complete eligible stable-ID school search index independent of global map and ne
 | `support_status` | `string` | Whether the row has sufficient validated source support for this view. | Not null in this public release. | 0 |
 | `in_prior_visualization_core` | `bool` | Whether the school appears in any prior thresholded fixed-layout network node table. | Not null in this public release. | 0 |
 | `has_retained_ego_partners` | `bool` | Whether the GISNET-128 rolling per-school index retains at least one partner. | Not null in this public release. | 0 |
+
+## `school_profiles`
+
+Stable-ID school profiles combining rolling activity, partner, complete-year network, citation-flow, research-proximity, and quality evidence.
+
+- Path: `dashboard/data/school_profiles.parquet`
+- Rows: 168,252
+- Primary key: `school_id, corpus_view, hierarchy_view, window_start, window_end, window_months`
+- SHA-256: `5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed`
+- Direct source manifest: `.agent/manifests/school_profiles.json`
+- Source manifests: `.agent/manifests/school_index.json, .agent/manifests/school_identities.json, .agent/manifests/institution_outputs_rolling.json, .agent/manifests/school_partner_index.json, .agent/manifests/nodes_year.json, .agent/manifests/communities_year.json, .agent/manifests/community_continuity_year.json, .agent/manifests/citation_edges_year.json, .agent/manifests/institution_topic_vectors_year.json, .agent/manifests/topic_similarity_edges_year.json, .agent/manifests/work_institutions.json, .agent/manifests/work_publication_dates.json, .agent/manifests/work_topics.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1", "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03", "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"}`
+- Source versions: `{"school_profile_policy": "school-profiles-2026-08-28-v1"}`
+- Code commit: `77ec76e590be`
+- Transformation: `python -m gisnet.cli build-school-profiles --corpus all --top-partners 10 --top-similarities 10 --resume`
+- Known issue: Evidence layers have independent support statuses and time boundaries; null or unsupported values are not imputed.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `school_id` | `string` | Stable canonical school identifier used for entity-first dashboard selection. | Not null in this public release. | 0 |
+| `display_name` | `string` | Source-provided or canonically selected institution display name. | Not null in this public release. | 0 |
+| `country_code` | `string` | Source country code associated with the institution. | Not null in this public release. | 0 |
+| `country_name` | `string` | Frozen country or territory display name. | Not null in this public release. | 0 |
+| `macro_region` | `string` | Frozen UN M49-style macro-region analytical grouping. | Not null in this public release. | 0 |
+| `subregion` | `string` | Frozen UN M49-style subregion analytical grouping. | Not null in this public release. | 0 |
+| `institution_category` | `string` | Configured analytical category for the source institution type. | Not null in this public release. | 0 |
+| `identity_status` | `string` | Audited school-identity resolution status. | Not null in this public release. | 0 |
+| `identity_resolution_confidence` | `string` | Evidence-bounded identity-resolution confidence label. | Not null in this public release. | 0 |
+| `identity_quality_flags` | `list<element: string>` | Sorted identity caveats retained for the school. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
+| `window_start` | `string` | Inclusive first publication month in the rolling profile window. | Not null in this public release. | 0 |
+| `window_end` | `string` | Inclusive last publication month in the rolling profile window. | Not null in this public release. | 0 |
+| `window_months` | `int32` | Number of publication months represented by the selected period. | Not null in this public release. | 0 |
+| `observed_month_count` | `int32` | Publication months observed within the requested rolling window. | Not null in this public release. | 0 |
+| `eligible_month_count` | `int32` | Publication months eligible within the requested rolling window. | Not null in this public release. | 0 |
+| `coverage_ratio` | `double` | Observed publication months divided by eligible months for the period. | Not null in this public release. | 0 |
+| `is_complete_window` | `bool` | Whether every eligible month is observed in the rolling window. | Not null in this public release. | 0 |
+| `profile_support_status` | `string` | Overall support status for the selected school profile window. | Not null in this public release. | 0 |
+| `full_work_count` | `int64` | Full Work count under the row's declared identity, time, and corpus scope. | Not null in this public release. | 0 |
+| `work_count` | `int64` | Distinct primary-corpus Works affiliated with the institution. | Not null in this public release. | 0 |
+| `fractional_work_count` | `double` | Institutional Work output under the stored fractional allocation. | Not null in this public release. | 0 |
+| `recent_12m_work_count` | `int64` | Work count in the source-stored latest rolling 12-month horizon. | Not null in this public release. | 0 |
+| `recent_24m_work_count` | `int64` | Work count in the declared corpus and latest rolling 24-month window. | Not null in this public release. | 0 |
+| `recent_36m_work_count` | `int64` | Work count in the source-stored latest rolling 36-month horizon. | Not null in this public release. | 0 |
+| `international_collaboration_share` | `double` | International Works divided by all included Works. | Null means the source or derived value is unavailable; it is not coerced to zero. | 87,077 |
+| `cross_region_collaboration_share` | `double` | Cross-region Works divided by all included Works. | Null means the source or derived value is unavailable; it is not coerced to zero. | 87,077 |
+| `partner_institution_count` | `int64` | Distinct partner institutions in the selected rolling window. | Not null in this public release. | 0 |
+| `partner_country_count` | `int64` | Number of distinct partner countries. | Not null in this public release. | 0 |
+| `fractional_collaboration_strength` | `double` | Sum of fractional collaboration weight in the selected rolling window. | Not null in this public release. | 0 |
+| `repeat_partner_count` | `int64` | Partners active in more than one source-defined persistence unit. | Not null in this public release. | 0 |
+| `repeat_partner_ratio` | `double` | Repeat partners divided by distinct partners in the window. | Null means the source or derived value is unavailable; it is not coerced to zero. | 92,890 |
+| `effective_partner_count` | `double` | Inverse-concentration effective count of collaboration partners in the window. | Not null in this public release. | 0 |
+| `top_partner_ids` | `list<element: string>` | Ordered stable IDs of the source-stored top institutional partners. | Not null in this public release. | 0 |
+| `top_partner_names` | `list<element: string>` | Ordered display names corresponding to top_partner_ids. | Not null in this public release. | 0 |
+| `top_partner_fractional_counts` | `list<element: double>` | Ordered fractional weights corresponding to the source-stored top partners. | Not null in this public release. | 0 |
+| `topic_family_count` | `int32` | Distinct configured Topic families represented in the profile. | Not null in this public release. | 0 |
+| `top_topic_family` | `string` | Highest-share configured Topic family in the profile window. | Null means the source or derived value is unavailable; it is not coerced to zero. | 87,085 |
+| `top_topic_family_share` | `double` | Work-weight share of the highest-share Topic family. | Null means the source or derived value is unavailable; it is not coerced to zero. | 87,085 |
+| `topic_profile_support_status` | `string` | Support status for rolling Topic-profile evidence. | Not null in this public release. | 0 |
+| `rolling_12m_activity_change` | `double` | Relative change in full Work count between the current and preceding rolling 12 months. | Null means the source or derived value is unavailable; it is not coerced to zero. | 124,356 |
+| `rolling_12m_fractional_activity_change` | `double` | Relative change in fractional Work activity between current and preceding 12 months. | Null means the source or derived value is unavailable; it is not coerced to zero. | 124,356 |
+| `momentum_support_status` | `string` | Support status for the rolling 12-month activity-change metrics. | Not null in this public release. | 0 |
+| `annual_graph_year` | `int32` | Complete calendar year supplying annual network-position evidence. | Not null in this public release. | 0 |
+| `annual_graph_boundary` | `string` | Stored graph boundary for annual network-position metrics. | Not null in this public release. | 0 |
+| `annual_network_support_status` | `string` | Support status for annual network-position evidence. | Not null in this public release. | 0 |
+| `degree` | `int64` | Number of distinct institutional partners in the annual graph. | Null means the source or derived value is unavailable; it is not coerced to zero. | 106,398 |
+| `pagerank` | `double` | Weighted PageRank centrality normalized within the annual graph. | Null means the source or derived value is unavailable; it is not coerced to zero. | 106,398 |
+| `betweenness` | `double` | Stored weighted betweenness centrality under the disclosed method. | Null means the graph statistic is undefined for that annual graph. | 106,398 |
+| `betweenness_method` | `string` | Exact or cutoff weighted shortest-path method used for betweenness. | Null means the graph statistic is undefined for that annual graph. | 106,398 |
+| `bridge_score` | `double` | Documented cross-community/cross-region bridging indicator. | Null means the source or derived value is unavailable; it is not coerced to zero. | 106,398 |
+| `community_id` | `string` | Stable annual primary-resolution community label; isolates are explicit. | Null means the source or derived value is unavailable; it is not coerced to zero. | 112,191 |
+| `community_continuity_id` | `string` | Deterministic longitudinal community ID linked to the annual community, when supported. | Null means the source or derived value is unavailable; it is not coerced to zero. | 112,191 |
+| `community_status` | `string` | Stored support or assignment status of annual community evidence. | Not null in this public release. | 0 |
+| `citation_flow_year` | `int32` | Complete calendar year supplying directed citation-flow evidence. | Not null in this public release. | 0 |
+| `citation_flow_boundary` | `string` | Stored directed boundary for citation-flow metrics. | Not null in this public release. | 0 |
+| `citation_flow_support_status` | `string` | Support status for directed citation-flow evidence. | Not null in this public release. | 0 |
+| `citation_flow_in_full` | `int64` | Full incoming directed citation-flow proxy count. | Not null in this public release. | 0 |
+| `citation_flow_in_fractional` | `double` | Fractional incoming directed citation-flow proxy weight. | Not null in this public release. | 0 |
+| `citation_flow_fractional_in_strength` | `double` | Sum of incoming fractional citation-flow proxy weight. | Not null in this public release. | 0 |
+| `citation_flow_out_full` | `int64` | Full outgoing directed citation-flow proxy count. | Not null in this public release. | 0 |
+| `citation_flow_out_fractional` | `double` | Fractional outgoing directed citation-flow proxy weight. | Not null in this public release. | 0 |
+| `topic_similarity_year` | `int32` | Complete calendar year supplying research-proximity evidence. | Not null in this public release. | 0 |
+| `topic_similarity_boundary` | `string` | Stored Topic-vector comparison boundary. | Not null in this public release. | 0 |
+| `topic_similarity_support_status` | `string` | Support status for research-proximity evidence. | Not null in this public release. | 0 |
+| `topic_similarity_neighbor_count` | `int64` | Schools with a supported Topic-similarity comparison. | Not null in this public release. | 0 |
+| `topic_similarity_maximum` | `double` | Maximum supported Topic-vector similarity to another school. | Null means the source or derived value is unavailable; it is not coerced to zero. | 165,252 |
+| `topic_similarity_mean` | `double` | Mean supported Topic-vector similarity to other schools. | Null means the source or derived value is unavailable; it is not coerced to zero. | 165,252 |
+| `topic_similarity_top_neighbor_ids` | `list<element: string>` | Ordered stable IDs of the closest schools by Topic research proximity, not collaboration. | Not null in this public release. | 0 |
+| `date_coverage_ratio` | `double` | Exact-date-eligible Works divided by all eligible Works for the school. | Null means the source or derived value is unavailable; it is not coerced to zero. | 87,077 |
+| `date_coverage_status` | `string` | Support label for exact publication-date coverage. | Not null in this public release. | 0 |
+| `date_coverage_basis` | `string` | Stored denominator and scope definition for date coverage. | Not null in this public release. | 0 |
+| `quality_flags` | `list<element: string>` | Sorted profile-level source or derivation quality caveats. | Not null in this public release. | 0 |
+| `publication_time_interpretation` | `string` | Stored statement distinguishing rolling publication time from complete-year context. | Not null in this public release. | 0 |
+
+## `school_topic_profiles`
+
+Rolling stable-ID school Topic-family shares and contextual specialization lifts.
+
+- Path: `dashboard/data/school_topic_profiles.parquet`
+- Rows: 242,892
+- Primary key: `school_id, corpus_view, hierarchy_view, window_start, window_end, window_months, topic_family`
+- SHA-256: `d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199`
+- Direct source manifest: `.agent/manifests/school_topic_profiles.json`
+- Source manifests: `.agent/manifests/school_index.json, .agent/manifests/school_identities.json, .agent/manifests/institution_outputs_rolling.json, .agent/manifests/school_partner_index.json, .agent/manifests/nodes_year.json, .agent/manifests/communities_year.json, .agent/manifests/community_continuity_year.json, .agent/manifests/citation_edges_year.json, .agent/manifests/institution_topic_vectors_year.json, .agent/manifests/topic_similarity_edges_year.json, .agent/manifests/work_institutions.json, .agent/manifests/work_publication_dates.json, .agent/manifests/work_topics.json`
+- Configuration hashes: `{"project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1", "school_decision": "1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03", "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"}`
+- Source versions: `{"school_profile_policy": "school-profiles-2026-08-28-v1"}`
+- Code commit: `77ec76e590be`
+- Transformation: `python -m gisnet.cli build-school-profiles --corpus all --top-partners 10 --top-similarities 10 --resume`
+- Known issue: The Topic registry remains provisional, and Topic similarity or specialization is research proximity rather than observed collaboration.
+
+| Column | Arrow type | Description | Null semantics | Null count |
+|---|---|---|---|---:|
+| `school_id` | `string` | Stable canonical school identifier used for entity-first dashboard selection. | Not null in this public release. | 0 |
+| `display_name` | `string` | Source-provided or canonically selected institution display name. | Not null in this public release. | 0 |
+| `country_code` | `string` | Source country code associated with the institution. | Not null in this public release. | 0 |
+| `macro_region` | `string` | Frozen UN M49-style macro-region analytical grouping. | Not null in this public release. | 0 |
+| `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
+| `window_start` | `string` | Inclusive first publication month in the rolling profile window. | Not null in this public release. | 0 |
+| `window_end` | `string` | Inclusive last publication month in the rolling profile window. | Not null in this public release. | 0 |
+| `window_months` | `int32` | Number of publication months represented by the selected period. | Not null in this public release. | 0 |
+| `topic_family` | `string` | Configured Topic-family label. | Not null in this public release. | 0 |
+| `topic_weight` | `double` | Fractional Work-topic weight assigned to the Topic family. | Not null in this public release. | 0 |
+| `contributing_work_count` | `int64` | Distinct Works contributing weight to the Topic-family row. | Not null in this public release. | 0 |
+| `topic_family_share` | `double` | Topic-family weight divided by total supported profile Topic weight. | Not null in this public release. | 0 |
+| `global_baseline_share` | `double` | Global Topic-family share under the same corpus and window. | Not null in this public release. | 0 |
+| `specialization_lift_global` | `double` | School Topic share divided by the global baseline share. | Not null in this public release. | 0 |
+| `macro_region_baseline_share` | `double` | Topic-family share for the school's macro-region under the same scope. | Not null in this public release. | 0 |
+| `specialization_lift_macro_region` | `double` | School Topic share divided by the macro-region baseline share. | Not null in this public release. | 0 |
+| `country_baseline_share` | `double` | Topic-family share for the school's country under the same scope. | Not null in this public release. | 0 |
+| `specialization_lift_country` | `double` | School Topic share divided by the country baseline share. | Not null in this public release. | 0 |
+| `topic_rank` | `int32` | One-based Topic-family rank by school profile weight and stable label. | Not null in this public release. | 0 |
+| `provisional_topic_registry` | `bool` | Whether the configured Topic registry remains provisional. | Not null in this public release. | 0 |
+| `topic_profile_support_status` | `string` | Support status for rolling Topic-profile evidence. | Not null in this public release. | 0 |
 
 ## `sensitivity`
 
@@ -767,7 +902,7 @@ Topic-family aggregates derived from the visible fixed-layout edge core.
 |---|---|---|---|---:|
 | `year` | `int32` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `topic_family` | `string` | Configured Topic-family label. | Not null in this public release. | 0 |
 | `visible_edge_count` | `int64` | Number of visible fixed-layout edges in the aggregate. | Not null in this public release. | 0 |
 | `full_count` | `int64` | Full-count collaboration weight: one per institution pair per Work. | Not null in this public release. | 0 |
@@ -795,7 +930,7 @@ Annual macro-region collaboration trend series for complete calendar years.
 |---|---|---|---|---:|
 | `year` | `int32` | Complete publication calendar year. | Not null in this public release. | 0 |
 | `corpus_view` | `string` | GIS corpus definition: strict or broad. | Not null in this public release. | 0 |
-| `hierarchy_view` | `string` | Institution identity view: organization or documented umbrella. | Not null in this public release. | 0 |
+| `hierarchy_view` | `string` | Institution identity view: school, organization, or documented umbrella as declared. | Not null in this public release. | 0 |
 | `source_region` | `string` | Source endpoint value: frozen macro-region label for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `target_region` | `string` | Target endpoint value: frozen macro-region label for an undirected edge endpoint. | Not null in this public release. | 0 |
 | `region_pair` | `string` | Stable unordered macro-region pair display label. | Not null in this public release. | 0 |

@@ -3740,3 +3740,117 @@ result was persisted.
 Task: GISNET-134 — Build School Profile UI. Expand the entity-first profile in the required order
 with rolling recent context, separate annual history, Topic profile, partners/geography, network
 position, citation influence, research proximity, and explicit coverage/missingness semantics.
+
+## Run 20260829T203902Z_483b18a1191e
+
+Started UTC: 2026-08-29T20:39:07Z
+Ended UTC: 2026-08-30T01:10:36Z
+Task: GISNET-134 — Build School Profile UI
+Initial git status: Resumed an interrupted GISNET-134 worktree on `main` at `483b18a`; the recorded active run, stale dead-PID lock, state transition, and modified files all aligned with this task. `main` was synchronized with `origin/main` before the task changes.
+Final git status: Pre-commit GISNET-134 implementation, public profile tables, documentation, generated dictionary/release artifacts, tests, and audit-state changes only.
+
+### Objective
+
+Build the ordered, entity-first School Profile from validated school-profile and per-school partner
+facts, keep rolling and annual evidence boundaries explicit, preserve the prior School Ego Map
+behavior, and never impute missing/low-coverage evidence or conflate Topic proximity with
+collaboration.
+
+### Work completed
+
+- Added predicate-pushed stable-ID profile and Topic-profile queries, source-stored rolling-horizon
+  views, research-neighbour ID resolution, and explicit low/incomplete-coverage messages.
+- Published 168,252 School Profile rows covering all 28,042 eligible stable school IDs across
+  Strict/Broad and rolling 12/24/36-month views, plus 242,892 supported Topic-family rows.
+- Implemented the required nine-section UI order: identity/geography, recent activity/trend, Topic
+  profile, institutional partners, partner geography, annual network position, citation influence,
+  research-neighbour institutions, and date/data quality.
+- Preserved rolling/quarter/annual School Ego Map controls, per-school outside-core partner access,
+  exact map/table reconciliation, stable IDs, sourced coordinates, and explicit unmapped rows.
+- Kept complete-year network, directed citation-flow, and Topic-similarity evidence separately
+  labelled. Topic similarity is always research proximity, not collaboration; no composite score
+  or universal-quality claim was introduced.
+- Extended dashboard bundle metadata, public table contracts, generated data dictionary/provenance,
+  README/dashboard/release guidance, and checksum-complete release integrity.
+
+### Files changed
+
+- Audit/state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`,
+  `.agent/RUNLOG.md`, `.agent/manifests/dashboard_bundle_summary.json`,
+  `.agent/manifests/data_dictionary_summary.json`, `.agent/manifests/data_provenance_report.json`,
+  and `.agent/manifests/public_data_dictionary.json`.
+- Implementation: `dashboard/app.py`, `src/gisnet/cli.py`,
+  `src/gisnet/reporting/data_dictionary.py`, `src/gisnet/visualization/dashboard_data.py`, and
+  `src/gisnet/visualization/school_profile.py`.
+- Public data/artifacts: `dashboard/data/metadata.json`,
+  `dashboard/data/school_profiles.parquet`, `dashboard/data/school_topic_profiles.parquet`,
+  `data/reference/dashboard_bundle_summary.json`, `data/reference/data_dictionary.json`,
+  `data/reference/data_dictionary_summary.json`, and `outputs/reports/data_dictionary.md`.
+- Documentation/integrity: `README.md`, `dashboard/README.md`, `RELEASE.md`,
+  `release/manifest.json`, and `release/manifest.json.sha256`.
+- Tests: `tests/integration/test_dashboard.py`, `tests/unit/test_dashboard_data.py`, and
+  `tests/unit/test_school_profile_view.py`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full-backlog/agent-state/run-log/lock inspection and interrupted
+  GISNET-134 worktree audit; the prior lock PID was confirmed absent before `RunLock` quarantined it.
+- Targeted Ruff, strict mypy, School Profile query/view tests, dashboard-data/dictionary tests, and
+  Streamlit AppTest integration tests during implementation.
+- Lock-aware forced `build-dashboard-data` and `build-data-dictionary` commands using the resumed run
+  ID, followed by production Parquet schema, key, null/range, row-count, and metadata audits.
+- Complete `scripts/quality-gate.sh`, release-manifest build/verify, privacy scan,
+  `git diff --check`, checksum capture, and temporary-output inspection.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 160 files, strict mypy for 81 source
+  files, all 214 offline tests, dashboard integration smoke tests, and CLI status.
+- Focused profile/dashboard suite passed 16 tests, including ordered independent evidence,
+  outside-prior-core partner access, exact controls/tables, explicit coverage, and data publication.
+- Dashboard profile tables have zero duplicate primary keys, null stable IDs, invalid coverage
+  ratios, or invalid Topic shares. Profile/Topic row counts are 168,252/242,892.
+- The profile renderer exposes exact corpus/window/coverage semantics; low or absent evidence stays
+  explicit in unit and runtime paths, and the previous School Ego Map behavior remains regression
+  covered after the ordered activity and Topic sections.
+- Release verification covered 225 public files / 65,994,709 bytes with zero privacy findings.
+
+### Data and configuration hashes
+
+- School profiles dashboard table: `5a3f7a0dcaaaa8522e24d12901b1a2001eca9b892fb3a488e50863a7f52c85ed`
+- School Topic profiles dashboard table: `d77324e67f8b944bcaec9abd68fa60677af35a468c7f2acd243636681d485199`
+- Dashboard metadata: `1d98ed19ae29c7e0fbe4c813cf28ff1ba461194349c1645721d2d69beacd30d8`
+- Public data dictionary: `e7d6f00e6ae1db2408bda741b44b4b5b9b295b481f8c5675bbc85ca49532446c`
+- Release manifest: `04ba2490b321fc11ab9832d669674da3aa680250db26750c8eca382124febbc9`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+
+### Checkpoints written
+
+Dashboard profile tables, metadata, dashboard/data-dictionary summaries and manifests, generated
+column documentation, release checksums, backlog state, project state, decisions, and this run record
+were atomically written under repository run locks. No API request, API key, raw source page,
+invented source identifier, coordinate, metric, or measured result was persisted.
+
+### Failures or blockers
+
+- The resumed worktree had a stale lock whose recorded local PID was absent; `RunLock` quarantined it
+  before the first write. No concurrent writer remained.
+- The first new integration run failed because the partial worktree had data/query code but no
+  School Profile renderer. The renderer was implemented and the regression passed.
+- Two preserved GISNET-132 tests initially expected the old selector label and first plotted chart;
+  the UI retained the controls/behavior, and the plot assertion now finds the stable-ID ego marker
+  trace after the required earlier activity/Topic charts. No blocker remains.
+
+### Decisions made
+
+- Recent profile evidence uses explicit rolling publication windows; annual graph, citation-flow,
+  and research-proximity evidence remains independently bounded and labelled.
+- The UI queries validated public profile/partner tables and does not recompute scientific layers.
+- Missing, unsupported, incomplete, low-coverage, or unmapped evidence remains visible and is never
+  imputed. No cross-layer university-quality score exists.
+
+### Exact next action
+
+Task: GISNET-135 — Improve school comparison visualization. Reuse the same School Profile source
+metrics for two to four stable IDs, disclose aligned denominators and common scales, expose exact
+values, and preserve the prohibition on a universal-best-school claim.

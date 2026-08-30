@@ -13,6 +13,7 @@ from gisnet.visualization.dashboard_data import (
     _write_geography_outputs,
     _write_school_dashboard_index,
     _write_school_ego_partners,
+    _write_school_profile_table,
 )
 
 
@@ -22,6 +23,52 @@ def test_dashboard_metadata_rejects_secrets_and_private_paths() -> None:
         _validate_public_metadata({"path": "/home/person/private"})
     with pytest.raises(ValueError, match="forbidden"):
         _validate_public_metadata({"value": "OPENALEX_API_KEY=secret"})
+
+
+def test_school_profile_publication_uses_stable_school_id_without_changing_evidence(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.parquet"
+    destination = tmp_path / "dashboard.parquet"
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                {
+                    "canonical_school_id": "I1",
+                    "corpus_view": "broad",
+                    "hierarchy_view": "school",
+                    "window_start": "2024-01",
+                    "window_end": "2025-12",
+                    "window_months": 24,
+                    "full_work_count": 7,
+                    "profile_support_status": "supported",
+                }
+            ]
+        ),
+        source,
+    )
+    connection = duckdb.connect()
+    try:
+        _write_school_profile_table(
+            connection,
+            source=source,
+            destination=destination,
+        )
+    finally:
+        connection.close()
+
+    assert pq.read_table(destination).to_pylist() == [
+        {
+            "school_id": "I1",
+            "corpus_view": "broad",
+            "hierarchy_view": "school",
+            "window_start": "2024-01",
+            "window_end": "2025-12",
+            "window_months": 24,
+            "full_work_count": 7,
+            "profile_support_status": "supported",
+        }
+    ]
 
 
 def test_filter_dimensions_include_nodes_without_coordinates(tmp_path: Path) -> None:
