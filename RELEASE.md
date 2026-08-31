@@ -1,9 +1,9 @@
 # Release guide
 
-The stable `v0.1.0` release is the first reproducible public release of the 2010–2025 GIS
-institutional collaboration network. It includes source code, frozen configuration, compact
-processed aggregates, static figures, the interactive annual dashboard, methods, the data
-dictionary, provenance manifests, limitations, and reproduction commands.
+The stable `v0.1.0` tag is the first reproducible public release of the 2010–2025 GIS institutional
+collaboration network. The current `main` snapshot preserves that historical scientific mode and
+adds the validated current school-decision mode, including exact subannual facts, rolling windows,
+complete stable-ID school access, profiles, comparisons, and separate scientific layers.
 
 ## Published channels
 
@@ -11,15 +11,13 @@ dictionary, provenance manifests, limitations, and reproduction commands.
 | --- | --- | --- |
 | Stable scientific release | [`v0.1.0`](https://github.com/jfang2048/gis_sci_network/releases/tag/v0.1.0) | Reproducible complete-year annual analysis |
 | Development prerelease | [`school-decision-contract-v1`](https://github.com/jfang2048/gis_sci_network/releases/tag/school-decision-contract-v1) | Immutable contract snapshot; later temporal facts on `main` are not part of this tag |
+| Current validated snapshot | [`main`](https://github.com/jfang2048/gis_sci_network) | Historical mode plus the completed GISNET-120–139 school-decision extension |
 
-The development prerelease does not replace the stable annual release. At that tagged snapshot it
-did not claim that the School Finder or rolling-window datasets were complete. Since the tag,
-publication-date QA, subannual facts, and rolling 12/24/36-month facts have become available on
-`main`. The complete-index School Finder and seven-page institution-first information architecture
-are also available. The ordered, multi-evidence School Profile and aligned two-to-four-school
-comparison views are available.
+Neither the contract prerelease nor the current snapshot replaces the stable annual tag. The
+contract tag records the initial analytical specification. The current snapshot implements both
+declared modes and preserves their time and interpretation boundaries.
 
-[![Current architecture showing available annual and temporal foundations plus the remaining planned school-decision product](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
+[![Current architecture showing validated annual and school-decision modes](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
 ## See the result
 
@@ -44,6 +42,10 @@ provenance manifest. `release/manifest.json.sha256` protects the manifest itself
 The manifest checked in on `main` follows the current public asset set; immutable release tags
 retain the manifest that was published at their tagged commit.
 
+The stored GISNET-138 artifact at `data/reference/school_decision_validation.json` passed all 13
+acceptance checks and is included with its provenance manifest and checksum. The quality gate reruns
+the real-snapshot acceptance test when local processed sources are available.
+
 ## Reproduce the data pipeline
 
 Raw API responses and the full local processed layer are intentionally excluded from
@@ -56,20 +58,22 @@ export OPENALEX_API_KEY='...'
 uv run python -m gisnet.cli check-env
 uv run python -m gisnet.cli run-pipeline \
   --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume
-# Current temporal foundations for school-decision work.
+# Current school-decision mode from the validated historical layer.
+uv run python -m gisnet.cli validate-school-contract --resume
 uv run python -m gisnet.cli build-publication-date-qa --resume
 uv run python -m gisnet.cli build-subannual-facts --resume
 uv run python -m gisnet.cli build-rolling-facts --resume
+uv run python -m gisnet.cli build-school-identities --resume
+uv run python -m gisnet.cli build-school-index --resume
+uv run python -m gisnet.cli build-school-partners --resume
+uv run python -m gisnet.cli build-school-profiles --resume
+uv run python -m gisnet.cli build-dashboard-data --resume
+uv run python -m gisnet.cli validate-school-decision --resume
 uv run python -m gisnet.cli report --resume
 uv run python -m gisnet.cli build-data-dictionary --resume
-# Optional knowledge-flow extension; this is not a collaboration layer.
-uv run python -m gisnet.cli build-citation-flows --resume
-# Optional research-proximity extension; this is not a collaboration layer.
-uv run python -m gisnet.cli build-topic-similarity --resume
-# Optional separate-layer comparison; this does not define a composite network.
-uv run python -m gisnet.cli build-multiplex --resume
-uv run python -m gisnet.release build
-uv run python -m gisnet.release verify
+uv run python -m gisnet.release build --root .
+uv run python -m gisnet.release verify --root .
+scripts/quality-gate.sh
 ```
 
 Interrupted downloads resume from checkpoints; valid raw pages are never deleted.
@@ -84,17 +88,19 @@ The API key is not written to configuration, manifests, datasets, or logs.
 ## Known limitations
 
 - The Topic registry is provisional and has not received human review.
-- Institution coordinates are sparse and are never imputed.
-- Network and Topic dashboard pages use a thresholded public visualization core.
+- `School` means an eligible university or research institution; it does not assert degree-
+  granting status, programme availability, admissions suitability, teaching quality, cost, or fit.
+- The project defines no universal institutional-quality score. Activity, specialization,
+  collaboration, centrality, citation, proximity, and data quality remain separate.
+- Publication time is bibliographic observation time, not collaboration, research, project, or
+  author-mobility start time. The source has no independent date-precision flag.
+- Institution coordinates are sparse and are never imputed. Missing dates and unsupported layer
+  values are also not imputed.
+- Network, map, citation, Topic-proximity, and retained partner views are thresholded or bounded;
+  absence from a display does not prove absence from source facts.
 - Community matches below Jaccard 0.25 are retained but explicitly uncertain.
 - The visualization score ranks display edges only and is not a primary research metric.
 - 2025 is the last complete calendar year; partial 2026 observations are excluded.
-- The school-decision analytical contract, publication-date QA, subannual facts, and rolling
-  12/24/36-month facts are available on `main`. Safe partial-current-year acquisition, complete
-  school search, expanded profile/ego-map, and aligned two-to-four-school rolling, Topic,
-  collaboration, network-position, and citation-flow comparison views are available. Dedicated
-  separate-layer co-authorship, directed citation-flow, and Topic research-proximity interfaces
-  are also available with explicit coverage and display thresholds; no composite network exists.
 - The optional citation layer is corpus-internal. Its coverage table reports references whose
   cited Work or in-scope cited institution is unavailable, and preserves negative citation lags
   as source-data anomalies rather than silently excluding them.

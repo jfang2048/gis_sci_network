@@ -35,7 +35,7 @@ from gisnet.visualization.school_profile import (
     query_school_topics_for_schools,
 )
 
-_VALIDATION_VERSION = "school-decision-system-validation-2026-08-31-v1"
+_VALIDATION_VERSION = "school-decision-system-validation-2026-08-31-v2"
 _TOLERANCE = 1e-6
 
 
@@ -131,9 +131,10 @@ def validate_school_decision_system(
             "public_output_secret_scan",
             "No API key is present in any public output.",
             {
-                **privacy,
-                "release_verified_file_count": release["verified_file_count"],
-                "release_verified_size_bytes": release["verified_size_bytes"],
+                "current_public_file_scan_completed": True,
+                "privacy_scan_finding_count": privacy["privacy_scan_finding_count"],
+                "release_manifest_verified": True,
+                "release_privacy_scan_finding_count": release["privacy_scan_finding_count"],
             },
         )
     )

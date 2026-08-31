@@ -1,4 +1,5 @@
 {
+  "admissions_and_quality_limits_disclosed": true,
   "all_figures_from_processed_data": true,
   "composite_score_non_primary_disclosed": true,
   "figure_count": 3,
@@ -7,14 +8,17 @@
     "figures/view_comparison.svg",
     "figures/region_matrix.svg"
   ],
-  "generated_at_utc": "2026-08-17T10:15:37.374531Z",
-  "logical_input_hash": "5ab358a5002faac0c3599a13b9b44faaf854120b7afe6cdab92ce4aa28addebd",
+  "generated_at_utc": "2026-08-31T07:58:59.356994Z",
+  "historical_mode_disclosed": true,
+  "logical_input_hash": "757ddbd0554954dc0f292f4ba61c6143855553a6db1fad815f118692194f56a8",
   "output": "outputs/reports/methodology.md",
   "partial_year_policy_disclosed": true,
   "present_section_count": 12,
   "provisional_topic_decisions_disclosed": true,
-  "report_sha256": "476cfafd19db336198d8989247242556fd28c6d8f596958525a5141121394c19",
+  "report_sha256": "e461ec3221b613fe21ebc2712d5308209124cdf60ea53c3cede2ec837136980c",
   "required_section_count": 12,
   "schema_version": 1,
-  "stage_version": "methodology-report-2026-08-17-v2"
+  "school_decision_mode_disclosed": true,
+  "school_validation_passed": true,
+  "stage_version": "methodology-report-2026-08-31-v3"
 }

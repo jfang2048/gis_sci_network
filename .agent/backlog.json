@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-30T23:22:23Z",
+  "last_updated_utc": "2026-08-31T08:02:02Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2306,12 +2306,27 @@
       "dependencies": [
         "GISNET-138"
       ],
-      "history": [],
+      "history": [
+        {
+          "changed_at_utc": "2026-08-30T23:26:57Z",
+          "from": "TODO",
+          "reason": "Updating final school-decision documentation, dictionaries, provenance, manifests, and release verification.",
+          "run_id": "20260830T232657Z_e23e78b81d9e",
+          "to": "IN_PROGRESS"
+        },
+        {
+          "changed_at_utc": "2026-08-31T08:02:02Z",
+          "from": "IN_PROGRESS",
+          "reason": "Documented and reproduced both analytical modes; regenerated formula-aligned methodology/dictionary/provenance and the checksum-complete release; 13/13 acceptance checks, privacy scan, release verification, and full quality gate passed.",
+          "run_id": "20260830T232657Z_e23e78b81d9e",
+          "to": "DONE"
+        }
+      ],
       "id": "GISNET-139",
       "priority": "P1",
-      "status": "TODO",
-      "status_reason": null,
-      "status_updated_at_utc": null,
+      "status": "DONE",
+      "status_reason": "Documented and reproduced both analytical modes; regenerated formula-aligned methodology/dictionary/provenance and the checksum-complete release; 13/13 acceptance checks, privacy scan, release verification, and full quality gate passed.",
+      "status_updated_at_utc": "2026-08-31T08:02:02Z",
       "title": "Update release and documentation",
       "work": [
         "Update documentation, limitations, dictionaries, manifests, release, and agent audit state.",

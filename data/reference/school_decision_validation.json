@@ -122,11 +122,10 @@
     {
       "check_id": "public_output_secret_scan",
       "evidence": {
+        "current_public_file_scan_completed": true,
         "privacy_scan_finding_count": 0,
-        "release_verified_file_count": 230,
-        "release_verified_size_bytes": 67384410,
-        "scanned_file_count": 230,
-        "scanned_size_bytes": 67384410
+        "release_manifest_verified": true,
+        "release_privacy_scan_finding_count": 0
       },
       "passed": true,
       "requirement": "No API key is present in any public output."
@@ -177,8 +176,8 @@
       "requirement": "Existing annual pipeline regression evidence remains valid."
     }
   ],
-  "generated_at_utc": "2026-08-30T23:20:47.428212Z",
-  "logical_input_hash": "b5aca92cff902f6d35bb753b01f6addfd18a26403dcd04433ecf4f374d1e705d",
+  "generated_at_utc": "2026-08-31T07:58:58.638944Z",
+  "logical_input_hash": "4502bd34b258f295a8bb07b2a2599fb6738a4f70b832492d04a33cd61ce331a2",
   "passed_check_count": 13,
   "required_regression_commands": [
     "uv run pytest tests/unit/test_school_decision_validation.py",
@@ -188,5 +187,5 @@
   ],
   "schema_version": 1,
   "status": "passed",
-  "validation_version": "school-decision-system-validation-2026-08-31-v1"
+  "validation_version": "school-decision-system-validation-2026-08-31-v2"
 }

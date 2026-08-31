@@ -53,10 +53,28 @@ semantics and snapshot rebuild instructions.
 
 [![Current architecture and delivery status](figures/school_decision_architecture.svg)](figures/school_decision_architecture.svg)
 
-The school-decision extension remains in progress. It will preserve the released annual
-analysis and will not convert independent research dimensions into an unexplained university
-ranking. The contract is documented in
+The current `main` snapshot includes the validated school-decision extension while the immutable
+`v0.1.0` tag remains the complete-year annual scientific release. Independent research dimensions
+remain separate; the project does not create an unexplained university ranking. The contract is
+documented in
 [`docs/school_decision_analytical_contract.md`](docs/school_decision_analytical_contract.md).
+
+## Two analytical modes
+
+1. **Historical scientific mode** uses complete calendar years 2010–2025 for longitudinal
+   collaboration, geographic-flow, community, citation-flow, Topic-proximity, and sensitivity
+   analysis.
+2. **Current school-decision mode** uses exact publication months/quarters and rolling 12/24/36-
+   month windows through the checked-in snapshot endpoint, `2025-12`. School Finder, Profile, and
+   Compare use stable IDs and keep activity, specialization, collaboration, centrality, citation,
+   proximity, and data quality separate.
+
+The stored GISNET-138 acceptance matrix passed all 13 checks. See
+[`data/reference/school_decision_validation.json`](data/reference/school_decision_validation.json)
+and its
+[`manifest`](.agent/manifests/school_decision_validation.json). `School` is interface shorthand
+for an eligible university or research institution; it is not an admissions recommendation,
+degree-program claim, or universal institutional-quality score.
 
 ## Recent completed-month acquisition
 
@@ -94,13 +112,31 @@ Rebuild the two compact README gallery figures from the public dashboard snapsho
 uv run python -m gisnet.visualization.gallery
 ```
 
-The complete pipeline is resumable and validates every output before replacement:
+Reproduce the historical scientific mode first, then the current school-decision mode from those
+validated sources:
 
 ```bash
 uv run python -m gisnet.cli run-pipeline \
   --start-year 2010 --end-year 2025 \
   --corpus all --hierarchy all --resume
+uv run python -m gisnet.cli validate-school-contract --resume
+uv run python -m gisnet.cli build-publication-date-qa --resume
+uv run python -m gisnet.cli build-subannual-facts --resume
+uv run python -m gisnet.cli build-rolling-facts --resume
+uv run python -m gisnet.cli build-school-identities --resume
+uv run python -m gisnet.cli build-school-index --resume
+uv run python -m gisnet.cli build-school-partners --resume
+uv run python -m gisnet.cli build-school-profiles --resume
+uv run python -m gisnet.cli build-dashboard-data --resume
+uv run python -m gisnet.cli validate-school-decision --resume
+uv run python -m gisnet.cli report --resume
+uv run python -m gisnet.cli build-data-dictionary --resume
+uv run python -m gisnet.release build --root .
+uv run python -m gisnet.release verify --root .
 ```
+
+Every data-producing command is lock-aware, resumable, and validates temporary output before
+atomic replacement. See [`RELEASE.md`](RELEASE.md) for clean-clone prerequisites and ordering.
 
 The authoritative task and acceptance contract is
 [`AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md`](AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md).
@@ -113,6 +149,10 @@ The authoritative task and acceptance contract is
   prove that no collaboration exists in the full processed data.
 - Publication month is bibliographic observation time, not research or project start time.
 - The GIS Topic registry is provisional and still awaits human review.
+- School profiles are bibliometric research evidence, not admissions, teaching-quality, cost, or
+  degree-program evidence.
+- Retained partner and thresholded map/network displays are not complete global edge matrices.
+- Missing dates, coordinates, and unsupported layer values are not imputed.
 - Credentials, raw API responses, caches, and large local processed files are not committed.
 
 ## Documentation and data
@@ -125,6 +165,7 @@ The authoritative task and acceptance contract is
 - [Publication-date QA summary](data/reference/publication_date_qa_summary.json)
 - [Subannual summary](data/reference/subannual_temporal_summary.json)
 - [Rolling summary](data/reference/rolling_temporal_summary.json)
+- [School-decision acceptance matrix](data/reference/school_decision_validation.json)
 
 The bibliographic source is [OpenAlex](https://openalex.org/). Set `OPENALEX_API_KEY` only
 in the environment when running network-dependent acquisition commands; the project never

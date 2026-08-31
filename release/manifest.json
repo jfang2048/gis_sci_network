@@ -1,8 +1,8 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 131,
-      "size_bytes": 211238
+      "file_count": 132,
+      "size_bytes": 214372
     },
     "config": {
       "file_count": 12,
@@ -13,8 +13,8 @@
       "size_bytes": 65477887
     },
     "data/reference": {
-      "file_count": 49,
-      "size_bytes": 1233820
+      "file_count": 50,
+      "size_bytes": 1245067
     },
     "figures": {
       "file_count": 6,
@@ -22,7 +22,7 @@
     },
     "outputs/reports": {
       "file_count": 4,
-      "size_bytes": 202726
+      "size_bytes": 211781
     }
   },
   "dashboard_table_count": 27,
@@ -153,13 +153,13 @@
     },
     {
       "path": ".agent/manifests/data_dictionary_summary.json",
-      "sha256": "900fb11c3f630a5948bf42bee719117cd7c2dfc1cb84fcfd20a038e063bf3373",
-      "size_bytes": 1980
+      "sha256": "cfa07b8242bd33e210c8e8e344651e8dcf23a4e0021f381445c701e1d1fceb8f",
+      "size_bytes": 2296
     },
     {
       "path": ".agent/manifests/data_provenance_report.json",
-      "sha256": "32833a0e7e9cd25f9edbf741423dcce2a88033aedc89374087431a656074e2dd",
-      "size_bytes": 1583
+      "sha256": "f08db1eecbc0817ec2fc3d37c25e7cfd7f2410308c13474073203bb4b65a12b0",
+      "size_bytes": 1784
     },
     {
       "path": ".agent/manifests/download_plan.json",
@@ -338,13 +338,13 @@
     },
     {
       "path": ".agent/manifests/methodology_report.json",
-      "sha256": "cd2525345cc4cece686e502cf0ebfc813ea9d9982a3d0952edb0e1533242b405",
-      "size_bytes": 1696
+      "sha256": "2e9d5180e758d643e676a0b56d947a06b7905d775658b942efcfb55d5ca92b66",
+      "size_bytes": 2132
     },
     {
       "path": ".agent/manifests/methodology_report_summary.json",
-      "sha256": "0df3a38f53e0081f252308fc5a7c00f65a1263966c30d7bf154249f63e0ecd07",
-      "size_bytes": 2121
+      "sha256": "9f2f02e97341b43ad6800fd74acba69f3188611c5dbd3bb4bff45a5d790538dd",
+      "size_bytes": 2719
     },
     {
       "path": ".agent/manifests/multiplex_comparison_summary.json",
@@ -408,8 +408,8 @@
     },
     {
       "path": ".agent/manifests/public_data_dictionary.json",
-      "sha256": "b057dd33f5aa4d475f1a0ad954e1787f1dd65b5854c73752cc771df5aac8ab40",
-      "size_bytes": 1583
+      "sha256": "3a4a66f27a12e7e5feef622942f1c4710c02db7cd2415e78c907e74984ffd8e8",
+      "size_bytes": 1784
     },
     {
       "path": ".agent/manifests/publication_date_coverage_corpus.json",
@@ -480,6 +480,11 @@
       "path": ".agent/manifests/school_decision_contract.json",
       "sha256": "a57b3f61e6c5ddf7fb988f4d0e36d4999fe6e93100269480edd6e6a388243845",
       "size_bytes": 1815
+    },
+    {
+      "path": ".agent/manifests/school_decision_validation.json",
+      "sha256": "da185d899eb7d418d5f307ef4526fb771834583d204e21152cfa05604d37a035",
+      "size_bytes": 1382
     },
     {
       "path": ".agent/manifests/school_identities.json",
@@ -953,13 +958,13 @@
     },
     {
       "path": "data/reference/data_dictionary.json",
-      "sha256": "cfd302e066033e830128df0f52a6ab12d52a4f48c0d4b6c74b2671dfb083d921",
-      "size_bytes": 246501
+      "sha256": "0ac75a5feebce372e158f1e061297fa6dd2c82bc08f1f56f2a963cb50fd28928",
+      "size_bytes": 251211
     },
     {
       "path": "data/reference/data_dictionary_summary.json",
-      "sha256": "3083e329a3caa976c9f1a4a687d89a5215b321cacb484180691a1b6ec7741dca",
-      "size_bytes": 800
+      "sha256": "38d454420de69ff756a29b6bbf4c292c3ddddeb7ea7ecb7aafa8e79eac110c28",
+      "size_bytes": 940
     },
     {
       "path": "data/reference/download_plan.json",
@@ -1018,8 +1023,8 @@
     },
     {
       "path": "data/reference/methodology_report_summary.json",
-      "sha256": "11200d0f219cffd834c1686abd43eb4f5c616df72477a6516415063eea0efd92",
-      "size_bytes": 757
+      "sha256": "1b8995cb4d50fe11d31d5c7536f4cfb2fbe76fcd589ab57201cefbdff3de1a9f",
+      "size_bytes": 923
     },
     {
       "path": "data/reference/multiplex_comparison_summary.json",
@@ -1070,6 +1075,11 @@
       "path": "data/reference/rolling_temporal_summary.json",
       "sha256": "722ec6a05f5eafbc1b3916ca81c13cff3faef7d8a19d31de76b41fe098ea48d4",
       "size_bytes": 2867
+    },
+    {
+      "path": "data/reference/school_decision_validation.json",
+      "sha256": "2f1c6263b73dc34a49d70d7130d5832fb1270fdef5e60c18e43f5c1bda44e881",
+      "size_bytes": 6231
     },
     {
       "path": "data/reference/school_identity_summary.json",
@@ -1178,13 +1188,13 @@
     },
     {
       "path": "outputs/reports/data_dictionary.md",
-      "sha256": "5801ca3ebd20aacb8e092cd5a7f80e2a813fa16330ed115ea830e8fb34a30842",
-      "size_bytes": 131120
+      "sha256": "fd7bc585d0acde0000a12fec9a3a2e49909a20436b983003587b77361cbe455e",
+      "size_bytes": 134514
     },
     {
       "path": "outputs/reports/methodology.md",
-      "sha256": "476cfafd19db336198d8989247242556fd28c6d8f596958525a5141121394c19",
-      "size_bytes": 8939
+      "sha256": "e461ec3221b613fe21ebc2712d5308209124cdf60ea53c3cede2ec837136980c",
+      "size_bytes": 14600
     },
     {
       "path": "outputs/reports/topic_review.md",
@@ -1192,11 +1202,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-30T17:47:58Z",
+  "generated_at_utc": "2026-08-31T07:59:05Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 230,
-  "public_size_bytes": 67384410,
+  "public_file_count": 232,
+  "public_size_bytes": 67407846,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

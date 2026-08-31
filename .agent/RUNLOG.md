@@ -4256,3 +4256,106 @@ The validation artifact and manifest, backlog transition, project state, decisio
 ### Exact next action
 
 Task: GISNET-139 — Update release and documentation. Add the GISNET-138 validation artifact to the public dictionary/provenance and checksum-complete release bundle; align README, methodology, dashboard/release guidance, known limitations, state, decisions, and run log; then rerun the 13-check matrix, privacy scan, release verification, and full quality gate.
+
+## Run 20260830T232657Z_e23e78b81d9e
+
+Started UTC: 2026-08-30T23:26:57Z
+Ended UTC: 2026-08-31T08:02:02Z
+Task: GISNET-139 — Update release and documentation
+Initial git status: Resumed a coherent interrupted GISNET-139 worktree on `main` at `e23e78b`; `main` matched `origin/main`, the durable state named this task and run, no live writer lock existed, and all five preserved modified files aligned with the documentation/release task.
+Final git status: Pre-commit GISNET-139 implementation, documentation, generated methodology/dictionary/provenance, 13-check validation evidence, release checksums, tests, decisions, backlog/state, and this run record only.
+
+### Objective
+
+Publish a checksum-complete, privacy-clean school-decision release boundary that documents and
+reproduces both analytical modes, aligns formulas with the GISNET-120 contract, preserves limitations,
+and incorporates the completed GISNET-138 acceptance evidence.
+
+### Work completed
+
+- Documented historical scientific mode (complete years 2010–2025) and current school-decision mode
+  (exact subannual facts and rolling 12/24/36-month windows through the checked-in 2025-12 endpoint)
+  across README, release, dashboard, contract-status, methodology, and dictionary surfaces.
+- Extended the methodology with school identity/index/profile evidence, exact pair/share/intensity/
+  persistence formulas, separate scientific-layer boundaries, admissions/quality limits, the full
+  current-mode reproduction sequence, and fail-closed 13/13 validation gating.
+- Extended the machine-readable and Markdown dictionary with both analytical modes, GISNET-120
+  contract checksum/provenance, formula definitions, release limitations, and GISNET-138 artifact/
+  manifest checksums while retaining column-level keys, null semantics, lineage, and table issues.
+- Made privacy acceptance evidence independent of release file counts, preventing a validation-to-
+  manifest checksum cycle while retaining separate current-file scanning and manifest verification.
+- Regenerated the school validation artifact/manifest, methodology summary/manifests, public
+  dictionary/provenance summary/manifests, and checksum-complete release bundle.
+
+### Files changed
+
+- Implementation/tests: `src/gisnet/reporting/data_dictionary.py`,
+  `src/gisnet/reporting/methodology.py`, `src/gisnet/validation/school_decision.py`,
+  `tests/unit/test_data_dictionary.py`, `tests/unit/test_methodology.py`, and
+  `tests/integration/test_school_decision_acceptance.py`.
+- Public documentation: `README.md`, `RELEASE.md`, `dashboard/README.md`,
+  `docs/school_decision_analytical_contract.md`, `outputs/reports/methodology.md`, and
+  `outputs/reports/data_dictionary.md`.
+- Evidence/provenance: `data/reference/school_decision_validation.json`,
+  `data/reference/methodology_report_summary.json`, `data/reference/data_dictionary.json`,
+  `data/reference/data_dictionary_summary.json`, the seven corresponding `.agent/manifests/*.json`
+  files, `release/manifest.json`, and `release/manifest.json.sha256`.
+- Audit state: `.agent/backlog.json`, `.agent/state.json`, `.agent/decisions.md`, and
+  `.agent/RUNLOG.md`.
+
+### Commands executed
+
+- Mandatory git/tree/AGENTS/README/full 2,497-line backlog/agent-state/run-log/lock inspection and
+  interrupted-worktree audit; exact remaining-task and task-139 acceptance inspection.
+- Focused Ruff lint/format, strict mypy, methodology/dictionary/release/validation unit tests, and
+  the real-snapshot GISNET-138 integration acceptance test while completing the preserved diff.
+- Lock-aware `validate-school-decision`, `report`, and `build-data-dictionary` commands with the
+  resumed run ID, followed by release-manifest build and verify.
+- Full `scripts/quality-gate.sh`, independent current-public-file privacy scan, two deterministic
+  read-only GISNET-138 validations, release verification, stale-wording scan, `git diff --check`,
+  checksum capture, and temporary-output/lock inspection.
+
+### Validation results
+
+- Full quality gate passed Ruff lint, Ruff formatting for 176 files, strict mypy for 84 source files,
+  all 229 offline tests, dashboard integration, the real-snapshot GISNET-138 test, and CLI status.
+- GISNET-138 passed 13/13 checks twice with deterministic logical hash
+  `4502bd34b258f295a8bb07b2a2599fb6738a4f70b832492d04a33cd61ce331a2`.
+- The dictionary documents all 27 released tables and 629 table-column entries; every table retains
+  a primary key, manifest, checksum, provenance, null semantics, and known-issue limitation.
+- Release verification and the independent current-public-file scan each covered 232 files /
+  67,407,846 bytes with zero privacy findings.
+- `git diff --check` passed; no live run lock, incomplete temporary output, API key, invented source
+  identifier, coordinate, metric, or measured result remains.
+
+### Data and configuration hashes
+
+- School-decision validation artifact: `2f1c6263b73dc34a49d70d7130d5832fb1270fdef5e60c18e43f5c1bda44e881`
+- School-decision validation manifest: `da185d899eb7d418d5f307ef4526fb771834583d204e21152cfa05604d37a035`
+- Methodology report: `e461ec3221b613fe21ebc2712d5308209124cdf60ea53c3cede2ec837136980c`
+- Public data dictionary: `0ac75a5feebce372e158f1e061297fa6dd2c82bc08f1f56f2a963cb50fd28928`
+- Data-dictionary Markdown report: `fd7bc585d0acde0000a12fec9a3a2e49909a20436b983003587b77361cbe455e`
+- Release manifest: `9501c2601496875f12f17e9e429c64c274ab9f8a1e29c78da7a60401b29ee887`
+- Project semantic config: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`
+- School-decision contract config: `1f144a3ff77fad416e734260f7f2b27bf606ae939b4400bd4cd368d1d9dd0e03`
+
+### Checkpoints written
+
+The validation, methodology, dictionary/provenance, release, backlog, project state, decisions, and
+this run record were written atomically under repository run locks. Scientific Parquet facts, raw
+source pages, source identifiers, and credentials were not changed.
+
+### Failures or blockers
+
+Two preserved draft lines initially exceeded Ruff's configured width and the Markdown renderer
+needed canonical formatting; both were corrected before artifact generation. No blocker remains.
+
+### Decisions made
+
+See `.agent/decisions.md`. The immutable v1 requirements contract remains unchanged; current
+implementation status is proven by the v2 GISNET-138 artifact and current release documentation.
+
+### Exact next action
+
+Optional task: GISNET-113 — Author mobility layer. Begin only if explicitly desired; preserve strong
+identity-disambiguation and uncertainty warnings. Command: `uv run python -m gisnet.cli next-task`.

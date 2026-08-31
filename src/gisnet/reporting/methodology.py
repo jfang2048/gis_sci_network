@@ -12,7 +12,7 @@ from gisnet.config import config_file_hash, load_yaml, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "methodology-report-2026-08-17-v2"
+_STAGE_VERSION = "methodology-report-2026-08-31-v3"
 
 SUMMARY_PATHS: dict[str, Path] = {
     "corpus": Path("data/reference/work_corpus_summary.json"),
@@ -29,6 +29,14 @@ SUMMARY_PATHS: dict[str, Path] = {
     "versions": Path("data/reference/work_version_diagnostics_summary.json"),
     "trends": Path("data/reference/annual_trends_summary.json"),
     "matrix": Path("data/reference/collaboration_matrix_summary.json"),
+    "publication_dates": Path("data/reference/publication_date_qa_summary.json"),
+    "subannual": Path("data/reference/subannual_temporal_summary.json"),
+    "rolling": Path("data/reference/rolling_temporal_summary.json"),
+    "school_identity": Path("data/reference/school_identity_summary.json"),
+    "school_index": Path("data/reference/school_index_summary.json"),
+    "school_partners": Path("data/reference/school_partner_index_summary.json"),
+    "school_profiles": Path("data/reference/school_profile_summary.json"),
+    "school_validation": Path("data/reference/school_decision_validation.json"),
 }
 
 REQUIRED_HEADINGS = (
@@ -61,6 +69,13 @@ def build_methodology_report(
     regions = _load_mapping(regions_path)
     paths = SUMMARY_PATHS if summary_paths is None else summary_paths
     summaries = {name: _load_json(path) for name, path in paths.items()}
+    school_validation = summaries["school_validation"]
+    if (
+        school_validation.get("status") != "passed"
+        or school_validation.get("acceptance_check_count") != 13
+        or school_validation.get("passed_check_count") != 13
+    ):
+        raise ValueError("school-decision release validation has not passed all 13 checks")
     figures = _validated_figures(summaries)
     report = render_methodology(project, registry, regions, summaries)
     _validate_report(report)
@@ -87,6 +102,17 @@ def build_methodology_report(
         "provisional_topic_decisions_disclosed": "No human review has occurred" in report,
         "partial_year_policy_disclosed": "No partial 2026 data" in report,
         "composite_score_non_primary_disclosed": "not a primary scientific metric" in report,
+        "historical_mode_disclosed": "Historical scientific mode" in report,
+        "school_decision_mode_disclosed": "Current school-decision mode" in report,
+        "school_validation_passed": (
+            school_validation["status"] == "passed"
+            and school_validation["acceptance_check_count"] == 13
+            and school_validation["passed_check_count"] == 13
+            and "passed all 13 of 13 acceptance checks" in report
+        ),
+        "admissions_and_quality_limits_disclosed": (
+            "not an admissions ranking" in report and "no universal institutional-quality" in report
+        ),
         "report_sha256": report_hash,
         "output": str(destination),
         "generated_at_utc": utc_timestamp(),
@@ -116,6 +142,14 @@ def render_methodology(
     versions = summaries["versions"]
     trends = summaries["trends"]
     matrix = summaries["matrix"]
+    publication_dates = summaries["publication_dates"]
+    subannual = summaries["subannual"]
+    rolling = summaries["rolling"]
+    school_identity = summaries["school_identity"]
+    school_index = summaries["school_index"]
+    school_partners = summaries["school_partners"]
+    school_profiles = summaries["school_profiles"]
+    school_validation = summaries["school_validation"]
     country_count = len(regions.get("countries", []))
     persistence = " and ".join(str(value) for value in network["persistence_windows"])
     strict_topics = len(registry["strict_topic_ids"])
@@ -126,11 +160,25 @@ def render_methodology(
 Generated from validated repository artifacts. Data version: `gisnet-{project["project_version"]}`.
 The numerical statements below are taken from the cited relative-path summaries and manifests.
 
+## Analytical modes
+
+**Historical scientific mode** uses complete calendar-year evidence from
+{analysis["start_year"]} through {analysis["end_year"]}. It is the stable longitudinal mode for
+annual outputs, networks, communities, geographic flows, citation flow, Topic proximity, and
+sensitivity analysis.
+
+**Current school-decision mode** adds exact publication month and quarter facts plus rolling 12-,
+24-, and 36-month publication windows. The released snapshot ends at
+{rolling["observation_end_month"]}; it does not mix a partial 2026 overlay into the historical
+annual series. `School` is concise interface language for an eligible university or research
+institution, not an admissions ranking, degree-program claim, or universal measure of quality.
+
 ## 1. Research questions
 
 This project asks how institutional GIS and broader geospatial research collaboration changed
 annually, which institutions connected regional communities, how patterns differ between Strict
-and Broad corpus definitions, and how conclusions respond to documented analytical choices.
+and Broad corpus definitions, how current school profiles differ across declared rolling windows,
+and how conclusions respond to documented analytical choices.
 The unit of collaboration is an observed co-authored Work affiliation pair, not a citation or an
 inferred relationship.
 
@@ -162,6 +210,19 @@ enrichment, and UN Statistics Division M49 is the source for the geographic conv
 dashboard viewing uses {summaries["dashboard"]["table_count"]} processed public tables and makes
 no OpenAlex or ROR request.
 
+School-decision publication time is bibliographic observation time, not collaboration, research,
+project, or author-mobility start time. The source supplies a full date string without an
+independent precision flag, so January-first values are retained and measured rather than
+heuristically removed.
+In this snapshot, {publication_dates["work_fact_row_count"]:,} normalized Works have date-QA facts;
+missing, malformed, conflicting, or out-of-range dates would remain annual-only and are never given
+fabricated months or days.
+
+Validated sparse subannual facts contain {subannual["row_counts"]["institution_outputs_month"]:,}
+positive institution-month rows and
+{subannual["row_counts"]["collaboration_edges_month"]:,} positive collaboration-edge-month rows.
+Zeros are derived from declared entity/period denominators rather than materialized or imputed.
+
 ## 5. Institution resolution
 
 Stable OpenAlex institution IDs are the primary keys; source ROR IDs are preserved when present.
@@ -173,16 +234,30 @@ organization and umbrella. The hierarchy contains {hierarchy["hierarchy_row_coun
 {hierarchy["explicit_collapse_count"]}. Similar names therefore do not silently resolve to one
 record.
 
+The school-identity layer contains {school_identity["canonical_school_count"]:,} canonical source
+institutions and performs {school_identity["automatic_collapse_count"]} automatic and
+{school_identity["explicit_collapse_count"]} explicit collapses. The eligible search index contains
+{school_index["eligible_school_count"]:,} stable IDs across every stored macro-region, including
+{school_index["outside_prior_core_count"]:,} outside the prior 500-node visualization core.
+Eligibility depends on Broad-primary research evidence, not visualization rank, coordinate
+availability, admissions status, or a quality threshold.
+
 ## 6. Counting methods
 
 For a Work with *k* distinct institutions, every undirected pair receives full weight 1 and
-fractional weight `1 / choose(k, 2)`. Fractional contributions therefore sum to 1 per collaborative
-Work. The stored maximum fractional reconciliation error is
+fractional weight `1 / choose(k, 2) = 2 / (k * (k - 1))`. Fractional contributions therefore sum
+to 1 per collaborative Work. The stored maximum fractional reconciliation error is
 {edges["maximum_fractional_sum_absolute_error"]:.3g}. The consortium warning and exclusion
 thresholds are {consortium["warning_institution_count"]} and
 {consortium["exclusion_institution_count"]} institutions. Primary annual output contains
 {edges["annual_edge_count"]:,} edge observations. Normalized intensity divides fractional edge
 weight by the geometric mean of the two institutions' full Work counts.
+
+International collaboration share is the number of included institutional Works spanning more than
+one country divided by **all included institutional Works** in the declared period. Cross-region
+collaboration share uses the same denominator and counts Works spanning more than one macro-region.
+Bridge score is cross-macro-region fractional strength divided by total fractional strength. These
+shares are descriptive research metrics, not quality scores.
 
 ## 7. Dynamic network metrics
 
@@ -195,6 +270,10 @@ use `{metrics["large_graph_betweenness_method"]}` and disclose that approximatio
 use seed {metrics["random_seed"]}. Leiden resolutions are
 {", ".join(str(value) for value in communities["resolutions"])}; 1.0 is primary. Persistence uses
 fixed-denominator trailing windows of {persistence} years and flags incomplete early windows.
+For school-decision evidence, rolling persistence is active publication months divided by 12, 24,
+or 36; complete-quarter persistence is active publication months divided by 3; and annual ego
+persistence is active years in the trailing five-year window divided by 5. Publication persistence
+does not identify a relationship start date or continuous relationship duration.
 Adjacent-year communities use `{continuity["assignment_algorithm"]}`. Matches below Jaccard
 {continuity["confident_match_threshold"]:.2f} are uncertain; the release records
 {continuity["uncertain_match_count"]:,} such matches plus explicit split, merge, birth, and
@@ -211,6 +290,19 @@ reproducibility check validated {reproducibility["dataset_check_count"]} core da
 pagination resumption, failed atomic validation, corrupt-cache quarantine, invalid-state backup,
 and deterministic normalization. The stored PageRank sum error is
 {metrics["maximum_pagerank_sum_error"]:.3g}.
+
+The final cross-layer school-decision matrix passed all {school_validation["passed_check_count"]} of
+{school_validation["acceptance_check_count"]} acceptance checks. The stored release therefore
+passed all 13 of 13 acceptance checks. It covers outside-core search and partner availability,
+subannual and rolling reconciliation, publication-date safety, geographic map/matrix and width
+equality, Profile/Compare source equality, Strict-within-Broad, privacy, deterministic checksums,
+and annual regressions.
+The complete index has {school_index["eligible_school_count"]:,} schools; the compact partner index
+has {school_partners["directed_partner_row_count"]:,} directed rows for
+{school_partners["school_count"]:,} schools, including
+{school_partners["outside_prior_global_edge_core_count"]:,} outside the former global edge core.
+Profiles retain {school_profiles["profile_row_count"]:,} explicit school/corpus/window rows,
+including unsupported or no-recent-activity states rather than fabricated values.
 
 ## 9. Sensitivity analysis
 
@@ -234,6 +326,15 @@ coordinate coverage ranges from {map_summary["minimum_node_coordinate_coverage_s
 network dashboard is a thresholded view and must not be used to infer absence from a hidden edge.
 No partial 2026 data are included; {trends["year_maximum"]} is the last complete calendar year.
 
+`School` does not assert degree-granting status, programme availability, admissions likelihood,
+teaching quality, cost, or student fit. School Finder and comparison ordering are not an admissions
+ranking, and the release defines no universal institutional-quality score. Rolling values can be
+sparse or incomplete and inherit publication-date precision limits. The partner index retains at
+most {school_partners["top_k"]} partners per school, corpus, and latest rolling window; country and
+macro-region ego summaries therefore aggregate retained partners rather than a complete global
+edge matrix. The current school identity is byte-equivalent to organization identity; future
+evidence-backed collapses require rebuilding dependent facts.
+
 Optional layer analysis preserves three distinct network meanings. Co-authorship is an undirected
 fractional collaboration layer; citation flow is directed from citing to cited institution; and
 cosine Topic similarity is an undirected research-proximity layer over a deterministic annual
@@ -247,9 +348,26 @@ annual-core coverage boundary.
 Run from the repository root:
 
 ```bash
+# Historical scientific mode.
 uv run python -m gisnet.cli run-pipeline \\
   --start-year {analysis["start_year"]} --end-year {analysis["end_year"]} \\
   --corpus all --hierarchy all --resume
+
+# Current school-decision mode from the validated historical layer.
+uv run python -m gisnet.cli validate-school-contract --resume
+uv run python -m gisnet.cli build-publication-date-qa --resume
+uv run python -m gisnet.cli build-subannual-facts --resume
+uv run python -m gisnet.cli build-rolling-facts --resume
+uv run python -m gisnet.cli build-school-identities --resume
+uv run python -m gisnet.cli build-school-index --resume
+uv run python -m gisnet.cli build-school-partners --resume
+uv run python -m gisnet.cli build-school-profiles --resume
+uv run python -m gisnet.cli build-dashboard-data --resume
+uv run python -m gisnet.cli validate-school-decision --resume
+uv run python -m gisnet.cli report --resume
+uv run python -m gisnet.cli build-data-dictionary --resume
+uv run python -m gisnet.release build --root .
+uv run python -m gisnet.release verify --root .
 ```
 
 The command validates hashes and provenance, skips valid stages, resumes incomplete downloads,
@@ -291,6 +409,14 @@ Unknown rather than being guessed.
 - Community continuity: `data/reference/community_continuity_summary.json`
 - Sensitivity: `data/reference/sensitivity_summary.json`
 - Reproducibility: `data/reference/reproducibility_validation.json`
+- Publication-date QA: `data/reference/publication_date_qa_summary.json`
+- Month and quarter facts: `data/reference/subannual_temporal_summary.json`
+- Rolling 12/24/36-month facts: `data/reference/rolling_temporal_summary.json`
+- School identity/index: `data/reference/school_identity_summary.json` and
+  `data/reference/school_index_summary.json`
+- School partners/profiles: `data/reference/school_partner_index_summary.json` and
+  `data/reference/school_profile_summary.json`
+- School-decision acceptance: `data/reference/school_decision_validation.json`
 - Optional multiplex comparison: `data/reference/multiplex_comparison_summary.json`
 - Figures: `data/reference/annual_trends_summary.json` and
   `data/reference/collaboration_matrix_summary.json`
@@ -367,6 +493,11 @@ def _validate_report(report: str) -> None:
         "No partial 2026 data",
         "not a primary scientific metric",
         "All reported figures are generated from processed data",
+        "Historical scientific mode",
+        "Current school-decision mode",
+        "passed all 13 of 13 acceptance checks",
+        "not an admissions ranking",
+        "no universal institutional-quality score",
     )
     missing_disclosures = [value for value in disclosures if value not in report]
     if missing_disclosures:

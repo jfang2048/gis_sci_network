@@ -308,3 +308,20 @@ and its incomplete human review must be disclosed on all school-oriented results
   public-file privacy scanning, checksum-backed determinism, and complete-year annual ranges.
 - Keep the validation artifact outside the existing 0.1.0 release manifest until GISNET-139 updates
   documentation, dictionary/provenance coverage, and the checksum-complete release bundle together.
+
+## 2026-08-31 — Final school-decision release and documentation boundary
+
+- Preserve the immutable `school-decision-2026-08-17-v1` requirements contract and document current
+  implementation status through the GISNET-138 validation artifact rather than changing the
+  contract hash and invalidating every dependent school-decision dataset.
+- Treat historical scientific mode as complete calendar-year 2010–2025 evidence and current
+  school-decision mode as exact month/quarter plus rolling 12/24/36-month evidence through the
+  checked-in endpoint `2025-12`; the optional completed-month acquisition overlay remains separate.
+- Keep fractional pair weight, full-Work normalized-intensity denominators, all-Work collaboration-
+  share denominators, bridge score, and persistence formulas aligned across the GISNET-120 contract,
+  generated methodology, and generated dictionary.
+- Include the 13-check GISNET-138 artifact and manifest in dictionary/provenance and release
+  checksums. Validation evidence omits release file counts so rebuilding the manifest cannot create
+  a self-invalidating logical-hash cycle; release integrity and privacy still must pass independently.
+- Retain provisional Topic warnings, stable-ID school semantics, missingness, threshold boundaries,
+  and the prohibition on admissions or universal institutional-quality claims.

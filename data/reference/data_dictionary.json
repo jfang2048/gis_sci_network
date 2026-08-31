@@ -1,10 +1,62 @@
 {
+  "analytical_modes": [
+    {
+      "label": "Historical scientific mode",
+      "mode": "historical_scientific",
+      "reproduction_command": "uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume",
+      "scope": "Annual outputs, co-authorship networks, geographic flows, communities, sensitivity, and separate annual citation-flow and Topic-proximity evidence.",
+      "time_basis": "Complete calendar years 2010-2025"
+    },
+    {
+      "label": "Current school-decision mode",
+      "mode": "current_school_decision",
+      "reproduction_commands": [
+        "uv run python -m gisnet.cli build-publication-date-qa --resume",
+        "uv run python -m gisnet.cli build-subannual-facts --resume",
+        "uv run python -m gisnet.cli build-rolling-facts --resume",
+        "uv run python -m gisnet.cli build-school-identities --resume",
+        "uv run python -m gisnet.cli build-school-index --resume",
+        "uv run python -m gisnet.cli build-school-partners --resume",
+        "uv run python -m gisnet.cli build-school-profiles --resume",
+        "uv run python -m gisnet.cli build-dashboard-data --resume",
+        "uv run python -m gisnet.cli validate-school-decision --resume"
+      ],
+      "scope": "Complete stable-ID school search, profiles, retained partner evidence, comparison, and separately labelled complete-year scientific context.",
+      "time_basis": "Exact publication month/quarter and rolling 12/24/36-month windows through 2025-12"
+    }
+  ],
   "column_entry_count": 629,
   "data_version": "gisnet-0.1.0-2026-08-28",
-  "dictionary_version": "public-data-dictionary-2026-08-30-v7",
+  "dictionary_version": "public-data-dictionary-2026-08-31-v8",
+  "formula_contract": {
+    "annual_ego_persistence": "active years in the trailing five-year window divided by 5",
+    "bridge_score": "cross-macro-region fractional strength divided by total fractional strength",
+    "cross_region_collaboration_share": "cross-macro-region institutional Works divided by all included institutional Works",
+    "fractional_institution_weight": "1 / k for each distinct in-scope institution on a Work",
+    "fractional_pair_weight": "1 / choose(k, 2) = 2 / (k * (k - 1))",
+    "international_collaboration_share": "international institutional Works divided by all included institutional Works",
+    "normalized_coauthorship_intensity": "fractional edge count divided by the geometric mean of both endpoint full Work counts",
+    "quarter_persistence": "active publication months divided by 3",
+    "rolling_persistence": "active publication months divided by 12, 24, or 36"
+  },
   "methods_version": "public-dashboard-bundle-2026-08-30-v11",
   "privacy_policy": "No API key, raw response, or private local path is included.",
+  "release_limitations": [
+    "The GIS Topic registry is provisional and has not received human review.",
+    "School is interface shorthand for an eligible university or research institution; it does not assert degree-granting status, programme availability, or admissions suitability.",
+    "No universal institutional-quality score or ranking is defined; activity, specialization, collaboration, centrality, citation, proximity, and data quality remain separate.",
+    "Publication time is bibliographic observation time, not collaboration, research, project, or author-mobility start time.",
+    "Maps, fixed-layout networks, citation/proximity displays, and retained school-partner tables are thresholded; absence from a display does not prove absence from source facts.",
+    "Missing coordinates, dates, and unsupported layer values are not imputed."
+  ],
   "schema_version": 1,
+  "school_decision_contract": {
+    "contract_version": "school-decision-2026-08-17-v1",
+    "manifest_path": ".agent/manifests/school_decision_contract.json",
+    "manifest_sha256": "a57b3f61e6c5ddf7fb988f4d0e36d4999fe6e93100269480edd6e6a388243845",
+    "path": "config/school_decision.yml",
+    "sha256": "f6e7416db1b51a62725b1ecb84476ee79fd8f2ede1ac81a772e14a62adc97901"
+  },
   "table_count": 27,
   "tables": [
     {
@@ -6167,5 +6219,26 @@
       "table": "trends",
       "transformation_command": "python -m gisnet.cli build-figures --resume"
     }
-  ]
+  ],
+  "validation_evidence": {
+    "acceptance_check_count": 13,
+    "artifact_path": "data/reference/school_decision_validation.json",
+    "artifact_sha256": "2f1c6263b73dc34a49d70d7130d5832fb1270fdef5e60c18e43f5c1bda44e881",
+    "logical_input_hash": "4502bd34b258f295a8bb07b2a2599fb6738a4f70b832492d04a33cd61ce331a2",
+    "manifest_path": ".agent/manifests/school_decision_validation.json",
+    "manifest_sha256": "da185d899eb7d418d5f307ef4526fb771834583d204e21152cfa05604d37a035",
+    "passed_check_count": 13,
+    "source_manifests": [
+      ".agent/manifests/school_index.json",
+      ".agent/manifests/school_partner_index.json",
+      ".agent/manifests/subannual_reconciliation.json",
+      ".agent/manifests/rolling_reconciliation.json",
+      ".agent/manifests/region_flow_reconciliation.json",
+      ".agent/manifests/work_corpus.json",
+      ".agent/manifests/dashboard_bundle_summary.json",
+      ".agent/manifests/reproducibility_validation.json",
+      "release/manifest.json"
+    ],
+    "status": "passed"
+  }
 }

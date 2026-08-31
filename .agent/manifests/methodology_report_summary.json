@@ -1,23 +1,25 @@
 {
-  "checksum_sha256": "11200d0f219cffd834c1686abd43eb4f5c616df72477a6516415063eea0efd92",
-  "column_count": 14,
+  "checksum_sha256": "1b8995cb4d50fe11d31d5c7536f4cfb2fbe76fcd589ab57201cefbdff3de1a9f",
+  "column_count": 18,
   "command": "python -m gisnet.cli report --resume",
   "config_hashes": {
     "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1",
     "regions": "22e7d59645b2b19933610b22d5c136e04e083dcd4a4a4d6ab1e65d9de9c9ae0e",
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377"
   },
-  "created_at_utc": "2026-08-17T10:15:37.468172Z",
+  "created_at_utc": "2026-08-31T07:58:59.451218Z",
   "dataset_name": "methodology_report_summary",
-  "git_commit": "47ae09a41f59",
+  "git_commit": "e23e78b81d9e",
   "max_year": null,
   "min_year": null,
   "null_counts": {
+    "admissions_and_quality_limits_disclosed": 0,
     "all_figures_from_processed_data": 0,
     "composite_score_non_primary_disclosed": 0,
     "figure_count": 0,
     "figure_paths": 0,
     "generated_at_utc": 0,
+    "historical_mode_disclosed": 0,
     "logical_input_hash": 0,
     "output": 0,
     "partial_year_policy_disclosed": 0,
@@ -26,13 +28,15 @@
     "report_sha256": 0,
     "required_section_count": 0,
     "schema_version": 0,
+    "school_decision_mode_disclosed": 0,
+    "school_validation_passed": 0,
     "stage_version": 0
   },
   "primary_key": [
     "logical_input_hash"
   ],
   "row_count": 1,
-  "run_id": "20260817T095315Z_47ae09a41f59",
+  "run_id": "20260830T232657Z_e23e78b81d9e",
   "schema_version": 1,
   "source_manifests": [
     ".agent/manifests/work_corpus_summary.json",
@@ -48,10 +52,18 @@
     ".agent/manifests/institution_hierarchy_summary.json",
     ".agent/manifests/work_version_diagnostics_summary.json",
     ".agent/manifests/annual_trends_summary.json",
-    ".agent/manifests/collaboration_matrix_summary.json"
+    ".agent/manifests/collaboration_matrix_summary.json",
+    ".agent/manifests/publication_date_qa_summary.json",
+    ".agent/manifests/subannual_temporal_summary.json",
+    ".agent/manifests/rolling_temporal_summary.json",
+    ".agent/manifests/school_identity_summary.json",
+    ".agent/manifests/school_index_summary.json",
+    ".agent/manifests/school_partner_index_summary.json",
+    ".agent/manifests/school_profile_summary.json",
+    ".agent/manifests/school_decision_validation.json"
   ],
   "source_versions": {
-    "methodology_report": "methodology-report-2026-08-17-v2"
+    "methodology_report": "methodology-report-2026-08-31-v3"
   },
   "status": "valid"
 }

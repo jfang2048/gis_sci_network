@@ -43,11 +43,17 @@ view has zero active collapses and is therefore non-informative until supported 
 ## Two temporal modes
 
 1. **Historical scientific mode** uses complete-calendar-year annual outputs for 2010-2025.
-2. **Current school-decision mode** remains dependency-gated through GISNET-124. GISNET-121
-   provides validated publication-date facts and coverage QA, GISNET-122 provides sparse
-   month/quarter institution and collaboration facts across the complete primary-research scope,
-   and GISNET-123 provides exact rolling 12/24/36-month facts. GISNET-124 will add safe incremental
-   current-year acquisition. A raw partial year is never compared with a complete year.
+2. **Current school-decision mode** is implemented on `main`: GISNET-121 provides validated
+   publication-date facts and coverage QA, GISNET-122 provides sparse month/quarter institution and
+   collaboration facts across the complete primary-research scope, GISNET-123 provides exact
+   rolling 12/24/36-month facts, and GISNET-124 provides a separate safe completed-month
+   acquisition overlay. The checked-in school-decision snapshot ends at `2025-12`; the historical
+   annual layer remains unchanged, and a raw partial year is never compared with a complete year.
+
+The version-1 machine-readable contract is an immutable requirements snapshot, so its original
+`availability` fields record what existed when GISNET-120 was approved. Current implementation
+status is established by the GISNET-138 13-check artifact and current release documentation rather
+than rewriting that dependency hash and invalidating its derived datasets.
 
 The primary stored keys are `publication_month`, `publication_quarter`, `publication_year`,
 `window_start`, `window_end`, and `window_months`. Missing month/day values are never fabricated.
@@ -107,8 +113,7 @@ Current code semantics retained by the contract include:
 - PageRank and betweenness are graph-relative and cannot be compared without matching graph and
   method boundaries.
 
-Remaining school-decision tasks must reconcile any legacy report wording that differs from these
-implemented definitions.
+Generated methodology and dictionary wording is regression-tested against these definitions.
 
 ## Separate evidence layers
 
@@ -117,8 +122,8 @@ implemented definitions.
 - **Topic similarity** is cosine research-profile proximity.
 
 These layers are never merged into a single scientific edge weight. Topic similarity never means
-collaboration. Existing core limits remain disclosed until complete school-oriented products are
-built.
+collaboration. Annual core and public display limits remain disclosed even though complete
+school-oriented search, profiles, and retained ego partners are now available.
 
 ## Score policy
 

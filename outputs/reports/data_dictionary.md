@@ -8,6 +8,60 @@ Documented table-column entries: 629
 Nulls are never silently converted to zero unless a page explicitly states a zero-fill
 display rule. Source and transformation paths below are repository-relative.
 
+## Analytical modes
+
+### Historical scientific mode
+
+- Time basis: Complete calendar years 2010-2025
+- Scope: Annual outputs, co-authorship networks, geographic flows, communities, sensitivity, and separate annual citation-flow and Topic-proximity evidence.
+- Reproduction:
+  - `uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 --corpus all --hierarchy all --resume`
+
+### Current school-decision mode
+
+- Time basis: Exact publication month/quarter and rolling 12/24/36-month windows through 2025-12
+- Scope: Complete stable-ID school search, profiles, retained partner evidence, comparison, and separately labelled complete-year scientific context.
+- Reproduction:
+  - `uv run python -m gisnet.cli build-publication-date-qa --resume`
+  - `uv run python -m gisnet.cli build-subannual-facts --resume`
+  - `uv run python -m gisnet.cli build-rolling-facts --resume`
+  - `uv run python -m gisnet.cli build-school-identities --resume`
+  - `uv run python -m gisnet.cli build-school-index --resume`
+  - `uv run python -m gisnet.cli build-school-partners --resume`
+  - `uv run python -m gisnet.cli build-school-profiles --resume`
+  - `uv run python -m gisnet.cli build-dashboard-data --resume`
+  - `uv run python -m gisnet.cli validate-school-decision --resume`
+
+## Formula and interpretation contract
+
+Contract version: `school-decision-2026-08-17-v1`
+Contract path: `config/school_decision.yml`
+Contract SHA-256: `f6e7416db1b51a62725b1ecb84476ee79fd8f2ede1ac81a772e14a62adc97901`
+
+- `fractional_pair_weight`: 1 / choose(k, 2) = 2 / (k * (k - 1))
+- `fractional_institution_weight`: 1 / k for each distinct in-scope institution on a Work
+- `normalized_coauthorship_intensity`: fractional edge count divided by the geometric mean of both endpoint full Work counts
+- `international_collaboration_share`: international institutional Works divided by all included institutional Works
+- `cross_region_collaboration_share`: cross-macro-region institutional Works divided by all included institutional Works
+- `bridge_score`: cross-macro-region fractional strength divided by total fractional strength
+- `rolling_persistence`: active publication months divided by 12, 24, or 36
+- `quarter_persistence`: active publication months divided by 3
+- `annual_ego_persistence`: active years in the trailing five-year window divided by 5
+
+## Release validation and limitations
+
+GISNET-138 status: `passed`; 13/13 checks passed.
+Validation artifact: `data/reference/school_decision_validation.json` (`2f1c6263b73dc34a49d70d7130d5832fb1270fdef5e60c18e43f5c1bda44e881`).
+
+- The GIS Topic registry is provisional and has not received human review.
+- School is interface shorthand for an eligible university or research institution; it does not assert degree-granting status, programme availability, or admissions suitability.
+- No universal institutional-quality score or ranking is defined; activity, specialization, collaboration, centrality, citation, proximity, and data quality remain separate.
+- Publication time is bibliographic observation time, not collaboration, research, project, or author-mobility start time.
+- Maps, fixed-layout networks, citation/proximity displays, and retained school-partner tables are thresholded; absence from a display does not prove absence from source facts.
+- Missing coordinates, dates, and unsupported layer values are not imputed.
+
+## Released tables
+
 ## `citation_coverage`
 
 Complete annual coverage accounting for the directed institution citation-flow knowledge-flow proxy.

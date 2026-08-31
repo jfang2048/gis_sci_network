@@ -10,11 +10,92 @@ import pyarrow.parquet as pq  # type: ignore[import-untyped]
 
 from gisnet.artifacts import current_git_commit, utc_timestamp, write_json_artifact
 from gisnet.atomic import atomic_write_json, atomic_write_text
-from gisnet.config import config_file_hash, semantic_hash
+from gisnet.config import config_file_hash, load_yaml, semantic_hash
 from gisnet.dataset import file_sha256
 from gisnet.manifest import DatasetManifest
 
-_STAGE_VERSION = "public-data-dictionary-2026-08-30-v7"
+_STAGE_VERSION = "public-data-dictionary-2026-08-31-v8"
+_SCHOOL_CONTRACT_PATH = Path("config/school_decision.yml")
+_SCHOOL_CONTRACT_MANIFEST_PATH = Path(".agent/manifests/school_decision_contract.json")
+_SCHOOL_VALIDATION_PATH = Path("data/reference/school_decision_validation.json")
+_SCHOOL_VALIDATION_MANIFEST_PATH = Path(".agent/manifests/school_decision_validation.json")
+
+ANALYTICAL_MODES: list[dict[str, Any]] = [
+    {
+        "mode": "historical_scientific",
+        "label": "Historical scientific mode",
+        "time_basis": "Complete calendar years 2010-2025",
+        "scope": (
+            "Annual outputs, co-authorship networks, geographic flows, communities, sensitivity, "
+            "and separate annual citation-flow and Topic-proximity evidence."
+        ),
+        "reproduction_command": (
+            "uv run python -m gisnet.cli run-pipeline --start-year 2010 --end-year 2025 "
+            "--corpus all --hierarchy all --resume"
+        ),
+    },
+    {
+        "mode": "current_school_decision",
+        "label": "Current school-decision mode",
+        "time_basis": (
+            "Exact publication month/quarter and rolling 12/24/36-month windows through 2025-12"
+        ),
+        "scope": (
+            "Complete stable-ID school search, profiles, retained partner evidence, comparison, "
+            "and separately labelled complete-year scientific context."
+        ),
+        "reproduction_commands": [
+            "uv run python -m gisnet.cli build-publication-date-qa --resume",
+            "uv run python -m gisnet.cli build-subannual-facts --resume",
+            "uv run python -m gisnet.cli build-rolling-facts --resume",
+            "uv run python -m gisnet.cli build-school-identities --resume",
+            "uv run python -m gisnet.cli build-school-index --resume",
+            "uv run python -m gisnet.cli build-school-partners --resume",
+            "uv run python -m gisnet.cli build-school-profiles --resume",
+            "uv run python -m gisnet.cli build-dashboard-data --resume",
+            "uv run python -m gisnet.cli validate-school-decision --resume",
+        ],
+    },
+]
+
+FORMULA_CONTRACT = {
+    "fractional_pair_weight": "1 / choose(k, 2) = 2 / (k * (k - 1))",
+    "fractional_institution_weight": "1 / k for each distinct in-scope institution on a Work",
+    "normalized_coauthorship_intensity": (
+        "fractional edge count divided by the geometric mean of both endpoint full Work counts"
+    ),
+    "international_collaboration_share": (
+        "international institutional Works divided by all included institutional Works"
+    ),
+    "cross_region_collaboration_share": (
+        "cross-macro-region institutional Works divided by all included institutional Works"
+    ),
+    "bridge_score": ("cross-macro-region fractional strength divided by total fractional strength"),
+    "rolling_persistence": "active publication months divided by 12, 24, or 36",
+    "quarter_persistence": "active publication months divided by 3",
+    "annual_ego_persistence": "active years in the trailing five-year window divided by 5",
+}
+
+RELEASE_LIMITATIONS = [
+    "The GIS Topic registry is provisional and has not received human review.",
+    (
+        "School is interface shorthand for an eligible university or research institution; it "
+        "does not assert degree-granting status, programme availability, or admissions suitability."
+    ),
+    (
+        "No universal institutional-quality score or ranking is defined; activity, specialization, "
+        "collaboration, centrality, citation, proximity, and data quality remain separate."
+    ),
+    (
+        "Publication time is bibliographic observation time, not collaboration, research, project, "
+        "or author-mobility start time."
+    ),
+    (
+        "Maps, fixed-layout networks, citation/proximity displays, and retained school-partner "
+        "tables are thresholded; absence from a display does not prove absence from source facts."
+    ),
+    "Missing coordinates, dates, and unsupported layer values are not imputed.",
+]
 
 TABLES: dict[str, dict[str, Any]] = {
     "citation_coverage": {
@@ -739,6 +820,18 @@ def build_public_data_dictionary(
     """Inspect every released table and atomically write complete dictionaries."""
     root = Path(data_directory)
     metadata = _load_json(Path(metadata_path))
+    school_contract = load_yaml(_SCHOOL_CONTRACT_PATH)
+    if not isinstance(school_contract, dict):
+        raise ValueError("school-decision contract must be a mapping")
+    _validate_contract_alignment(school_contract)
+    school_validation = _load_json(_SCHOOL_VALIDATION_PATH)
+    school_validation_manifest = _load_json(_SCHOOL_VALIDATION_MANIFEST_PATH)
+    if (
+        school_validation.get("status") != "passed"
+        or school_validation.get("acceptance_check_count") != 13
+        or school_validation.get("passed_check_count") != 13
+    ):
+        raise ValueError("school-decision release validation has not passed all 13 checks")
     table_index = metadata.get("tables")
     if not isinstance(table_index, dict) or set(table_index) != set(TABLES):
         raise ValueError("public table index does not match the dictionary contract")
@@ -801,6 +894,27 @@ def build_public_data_dictionary(
         "table_count": len(tables),
         "column_entry_count": total_columns,
         "privacy_policy": "No API key, raw response, or private local path is included.",
+        "school_decision_contract": {
+            "contract_version": school_contract["contract_version"],
+            "path": str(_SCHOOL_CONTRACT_PATH),
+            "sha256": file_sha256(_SCHOOL_CONTRACT_PATH),
+            "manifest_path": str(_SCHOOL_CONTRACT_MANIFEST_PATH),
+            "manifest_sha256": file_sha256(_SCHOOL_CONTRACT_MANIFEST_PATH),
+        },
+        "analytical_modes": ANALYTICAL_MODES,
+        "formula_contract": FORMULA_CONTRACT,
+        "release_limitations": RELEASE_LIMITATIONS,
+        "validation_evidence": {
+            "status": school_validation["status"],
+            "acceptance_check_count": school_validation["acceptance_check_count"],
+            "passed_check_count": school_validation["passed_check_count"],
+            "logical_input_hash": school_validation["logical_input_hash"],
+            "artifact_path": str(_SCHOOL_VALIDATION_PATH),
+            "artifact_sha256": file_sha256(_SCHOOL_VALIDATION_PATH),
+            "manifest_path": str(_SCHOOL_VALIDATION_MANIFEST_PATH),
+            "manifest_sha256": file_sha256(_SCHOOL_VALIDATION_MANIFEST_PATH),
+            "source_manifests": school_validation_manifest.get("source_manifests", []),
+        },
         "tables": tables,
     }
     _validate_dictionary(payload)
@@ -815,6 +929,10 @@ def build_public_data_dictionary(
             {
                 "stage_version": _STAGE_VERSION,
                 "metadata_sha256": file_sha256(metadata_path),
+                "school_contract_sha256": file_sha256(_SCHOOL_CONTRACT_PATH),
+                "school_contract_manifest_sha256": file_sha256(_SCHOOL_CONTRACT_MANIFEST_PATH),
+                "school_validation_sha256": file_sha256(_SCHOOL_VALIDATION_PATH),
+                "school_validation_manifest_sha256": file_sha256(_SCHOOL_VALIDATION_MANIFEST_PATH),
                 "table_hashes": {row["table"]: row["sha256"] for row in tables},
             }
         ),
@@ -827,6 +945,9 @@ def build_public_data_dictionary(
             bool(row["known_data_quality_issue"]) for row in tables
         ),
         "private_path_or_key_count": 0,
+        "analytical_mode_count": len(ANALYTICAL_MODES),
+        "school_decision_contract_version": school_contract["contract_version"],
+        "school_validation_check_count": school_validation["acceptance_check_count"],
         "dictionary_sha256": file_sha256(output_json),
         "report_sha256": file_sha256(output_markdown),
         "outputs": {
@@ -847,8 +968,17 @@ def write_data_dictionary_artifacts(
     project_path: str | Path,
     command: str,
 ) -> None:
-    config_hashes = {"project": config_file_hash(project_path)}
-    source_manifests = sorted({str(value["source_manifest"]) for value in TABLES.values()})
+    config_hashes = {
+        "project": config_file_hash(project_path),
+        "school_decision": config_file_hash(_SCHOOL_CONTRACT_PATH),
+    }
+    source_manifests = sorted(
+        {
+            *(str(value["source_manifest"]) for value in TABLES.values()),
+            str(_SCHOOL_CONTRACT_MANIFEST_PATH),
+            str(_SCHOOL_VALIDATION_MANIFEST_PATH),
+        }
+    )
     for dataset_name, artifact_path in (
         ("public_data_dictionary", dictionary_path),
         ("data_provenance_report", report_path),
@@ -930,6 +1060,42 @@ def _validate_dictionary(payload: dict[str, Any]) -> None:
             raise ValueError(f"not every column is documented: {table['table']}")
         if not table["source_manifest"] or not table["primary_key"]:
             raise ValueError(f"provenance or primary key missing: {table['table']}")
+    if len(payload["analytical_modes"]) != 2:
+        raise ValueError("both analytical modes must be documented")
+    if set(payload["formula_contract"]) != set(FORMULA_CONTRACT):
+        raise ValueError("formula contract is incomplete")
+    if not payload["release_limitations"]:
+        raise ValueError("release limitations are missing")
+    validation = payload["validation_evidence"]
+    if validation["status"] != "passed" or validation["passed_check_count"] != 13:
+        raise ValueError("release validation evidence is incomplete")
+
+
+def _validate_contract_alignment(contract: dict[str, Any]) -> None:
+    modes = contract.get("analytical_modes")
+    metrics = contract.get("metrics")
+    if not isinstance(modes, dict) or not isinstance(metrics, dict):
+        raise ValueError("school-decision contract lacks analytical modes or metrics")
+    expected_labels = {mode["label"] for mode in ANALYTICAL_MODES}
+    actual_labels = {value.get("label") for value in modes.values() if isinstance(value, dict)}
+    if actual_labels != expected_labels:
+        raise ValueError("data-dictionary analytical modes diverge from the school contract")
+    expected_metric_fragments = {
+        "international_collaboration_share": "divided by all",
+        "cross_region_collaboration_share": "divided by all",
+        "bridge_score": "divided by total fractional strength",
+        "edge_persistence": "divided by window_months",
+    }
+    for metric_id, fragment in expected_metric_fragments.items():
+        definition = metrics.get(metric_id, {}).get("definition")
+        if not isinstance(definition, str) or fragment not in definition:
+            raise ValueError(f"school contract formula is unavailable or changed: {metric_id}")
+    fit_policy = contract.get("fit_score_policy")
+    if (
+        not isinstance(fit_policy, dict)
+        or fit_policy.get("global_quality_score_allowed") is not False
+    ):
+        raise ValueError("school contract must prohibit a global quality score")
 
 
 def _validate_privacy(text: str) -> None:
@@ -951,7 +1117,56 @@ def _render_markdown(payload: dict[str, Any]) -> str:
         "",
         "Nulls are never silently converted to zero unless a page explicitly states a zero-fill",
         "display rule. Source and transformation paths below are repository-relative.",
+        "",
+        "## Analytical modes",
+        "",
     ]
+    for mode in payload["analytical_modes"]:
+        lines.extend(
+            [
+                f"### {mode['label']}",
+                "",
+                f"- Time basis: {mode['time_basis']}",
+                f"- Scope: {mode['scope']}",
+                "- Reproduction:",
+            ]
+        )
+        commands = mode.get("reproduction_commands") or [mode["reproduction_command"]]
+        lines.extend(f"  - `{command}`" for command in commands)
+        lines.append("")
+    contract = payload["school_decision_contract"]
+    validation = payload["validation_evidence"]
+    lines.extend(
+        [
+            "## Formula and interpretation contract",
+            "",
+            f"Contract version: `{contract['contract_version']}`",
+            f"Contract path: `{contract['path']}`",
+            f"Contract SHA-256: `{contract['sha256']}`",
+            "",
+        ]
+    )
+    for name, definition in payload["formula_contract"].items():
+        lines.append(f"- `{name}`: {definition}")
+    validation_counts = f"{validation['passed_check_count']}/{validation['acceptance_check_count']}"
+    lines.extend(
+        [
+            "",
+            "## Release validation and limitations",
+            "",
+            f"GISNET-138 status: `{validation['status']}`; {validation_counts} checks passed.",
+            f"Validation artifact: `{validation['artifact_path']}` "
+            f"(`{validation['artifact_sha256']}`).",
+            "",
+        ]
+    )
+    lines.extend(f"- {limitation}" for limitation in payload["release_limitations"])
+    lines.extend(
+        [
+            "",
+            "## Released tables",
+        ]
+    )
     for table in payload["tables"]:
         lines.extend(
             [

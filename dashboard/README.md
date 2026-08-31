@@ -43,6 +43,23 @@ Ordinary dashboard viewing makes no OpenAlex or ROR requests. The checked-in sna
 public-source aggregate or thresholded scholarly-network data; it contains no API key or raw response
 cache.
 
+## Analytical modes and release validation
+
+- **Historical scientific mode** uses complete annual evidence for 2010–2025. It remains the
+  longitudinal reference for collaboration, communities, geographic flows, citation flow, Topic
+  proximity, and sensitivity analysis.
+- **Current school-decision mode** uses exact publication months/quarters and rolling 12/24/36-
+  month windows through the checked-in endpoint, `2025-12`. It never compares a raw partial year
+  with a complete year.
+
+The stored cross-layer acceptance matrix passed 13/13 checks, including outside-core School Finder
+and ego-partner access, temporal/geographic reconciliation, no fabricated publication months,
+Profile/Compare source equality, Strict-within-Broad, privacy, deterministic checksums, and annual
+regressions. See
+[`data/reference/school_decision_validation.json`](../data/reference/school_decision_validation.json).
+The dashboard is exploratory bibliometric research evidence, not an admissions ranking or a
+universal institutional-quality score.
+
 ## Information architecture
 
 The primary navigation is deliberately institution-first:

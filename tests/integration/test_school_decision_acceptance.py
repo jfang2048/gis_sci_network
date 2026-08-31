@@ -40,3 +40,12 @@ def test_complete_school_decision_acceptance_matrix_is_stable() -> None:
         "annual_pipeline_regression_evidence",
     }
     assert first["logical_input_hash"] == second["logical_input_hash"]
+    privacy = next(
+        check for check in first["checks"] if check["check_id"] == "public_output_secret_scan"
+    )["evidence"]
+    assert privacy == {
+        "current_public_file_scan_completed": True,
+        "privacy_scan_finding_count": 0,
+        "release_manifest_verified": True,
+        "release_privacy_scan_finding_count": 0,
+    }
