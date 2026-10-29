@@ -2378,6 +2378,23 @@ Acceptance:
 2. Every released table has a data dictionary, manifest, checksum, provenance, and limitation.
 3. Release verification, privacy scan, quality gate, and all GISNET-138 checks pass.
 
+#### GISNET-140: Publish complete institution catalogue
+
+Priority: P1
+Dependencies: GISNET-139
+
+Work:
+
+1. Expose every eligible university and research institution in the checked-in complete school index as a browsable School Finder table.
+2. Offer a deterministic CSV export retaining stable school and source IDs, institution category, geography, Work evidence, and identity status.
+3. Document that the catalogue is the Broad-primary 2010–2025 research-scope snapshot, not a top-N visualization subset or a universal list of degree-granting schools.
+
+Acceptance:
+
+1. The unfiltered list and CSV contain exactly the same unique stable IDs as the complete dashboard school index, including institutions outside the visualization core.
+2. Geographic/category filters never truncate the underlying full export; empty matches are explicit.
+3. The listing uses only the checked-in snapshot and tests, Ruff, formatting, and dashboard smoke checks pass.
+
 ## 9. Backlog scheduling rules
 
 The agent must select work using this order:

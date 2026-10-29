@@ -1,5 +1,5 @@
 {
-  "active_run_id": null,
+  "active_run_id": "20261029T015322Z_ca38753d0c83",
   "blocked_task_ids": [],
   "completed_task_ids": [
     "GISNET-001",
@@ -93,7 +93,7 @@
     "topic_registry": "930dca492181b169adcab68aa2966efae4e51c8082cdd1db0e5f54af15267377",
     "work_types": "c3f641eff35e4e90c1a24da98286422619e64ba692059479ff4338e078c573ff"
   },
-  "current_task_id": null,
+  "current_task_id": "GISNET-140",
   "dataset_manifests": {
     "annual_graph_catalogue": ".agent/manifests/annual_graph_catalogue.json",
     "annual_trends_summary": ".agent/manifests/annual_trends_summary.json",
@@ -236,7 +236,7 @@
     "openalex_works": ".agent/checkpoints/openalex"
   },
   "last_successful_run_id": "20260830T232657Z_e23e78b81d9e",
-  "last_updated_utc": "2026-08-31T08:02:02Z",
+  "last_updated_utc": "2026-10-29T01:53:22Z",
   "project_version": "0.1.0",
   "schema_version": 1,
   "source_versions": {

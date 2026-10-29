@@ -65,8 +65,11 @@ universal institutional-quality score.
 The primary navigation is deliberately institution-first:
 
 1. **School Finder** searches the complete eligible index by searchable name/country/ID labels,
-   keeps the stable school ID visible, and exposes Strict/Broad historical counts, Broad recent
-   24-month activity, exact-date coverage, and identity quality.
+   lists all matching institutions in a sortable table, and offers an unfiltered complete CSV
+   download. It keeps the stable school ID visible and exposes Strict/Broad historical counts,
+   Broad recent 24-month activity, exact-date coverage, and identity quality. The CSV includes
+   every eligible institution across all regions, not only the displayed visualization core;
+   filter choices change the table but not the complete download.
 2. **School Profile** starts from one stable-ID institution and presents identity/geography,
    recent rolling activity, Topic profile, institutional partners, partner geography, complete-year
    network position, citation influence, research-neighbour institutions, and date/data quality in

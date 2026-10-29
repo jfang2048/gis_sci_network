@@ -421,6 +421,12 @@ def test_school_finder_is_primary_and_compare_uses_two_to_four_stable_ids() -> N
     app = AppTest.from_file(root / "dashboard/app.py", default_timeout=30).run()
     page_widget = next(widget for widget in app.sidebar.selectbox if widget.label == "Page")
     assert page_widget.value == "School Finder"
+    assert any(header.value == "Complete institution list" for header in app.subheader)
+    assert any(
+        f"Showing {len(index):,} of {len(index):,} institutions." in item.value
+        for item in app.markdown
+    )
+    assert len(app.dataframe[0].value) == len(index)
     assert any(
         widget.label == "School (type a name, country, or stable ID)" for widget in app.selectbox
     )

@@ -6,6 +6,8 @@ import pandas as pd
 
 SCHOOL_INDEX_COLUMNS = {
     "school_id",
+    "openalex_id",
+    "ror_id",
     "display_name",
     "country_code",
     "country_name",

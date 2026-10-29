@@ -25,6 +25,12 @@ The interactive dashboard opens with the complete stable-ID School Finder and or
 released views into School Profile, Compare Schools, Geographic Flows, Institutional Network,
 Global Trends, and Methods and Data Quality pages.
 
+**Complete institution list:** School Finder displays every eligible university and research
+institution in a filterable table and provides **Download all institutions (CSV)**. The checked-in
+snapshot contains 28,042 stable-ID entities across all regions, including institutions outside
+the visualization core. The CSV includes names, institution categories, geography, OpenAlex/ROR
+IDs where available, Work counts, and identity status for later per-institution analysis.
+
 ```bash
 uv sync
 uv run streamlit run dashboard/app.py

@@ -4,14 +4,51 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 from dashboard_components import human_label, show_data, show_empty
 from dashboard_data_access import require_table
 from dashboard_school_common import SCHOOL_INDEX_COLUMNS, school_selector_records
 
+CATALOG_COLUMNS = [
+    "school_id",
+    "display_name",
+    "institution_category",
+    "country_code",
+    "country_name",
+    "subregion",
+    "macro_region",
+    "openalex_id",
+    "ror_id",
+    "broad_work_count",
+    "strict_work_count",
+    "recent_24m_work_count",
+    "identity_status",
+]
+
+
+def institution_catalog(frame: pd.DataFrame) -> pd.DataFrame:
+    """List every supplied stable ID once, without a visualization-core threshold."""
+    missing = sorted(set(CATALOG_COLUMNS).difference(frame.columns))
+    if missing:
+        raise ValueError(f"school index lacks catalogue columns: {', '.join(missing)}")
+    if frame["school_id"].isna().any() or frame["school_id"].duplicated().any():
+        raise ValueError("school index requires unique, non-null stable school IDs")
+    return (
+        frame.loc[:, CATALOG_COLUMNS]
+        .sort_values(
+            ["macro_region", "country_name", "display_name", "school_id"],
+            kind="stable",
+            na_position="last",
+        )
+        .reset_index(drop=True)
+    )
+
 
 def render_school_finder(*, data_dir: Path) -> None:
-    school_index = require_table(data_dir, "school_index", columns=SCHOOL_INDEX_COLUMNS)
+    school_index = require_table(
+        data_dir, "school_index", columns=SCHOOL_INDEX_COLUMNS | set(CATALOG_COLUMNS)
+    )
     finder_columns = st.columns(3)
     macro_regions = sorted(str(value) for value in school_index["macro_region"].dropna().unique())
     selected_macro_region = finder_columns[0].selectbox(
@@ -42,6 +79,24 @@ def render_school_finder(*, data_dir: Path) -> None:
         finder_view = finder_view.loc[finder_view["country_name"] == selected_country]
     if selected_category != "All":
         finder_view = finder_view.loc[finder_view["institution_category"] == selected_category]
+    st.subheader("Complete institution list")
+    st.caption(
+        "All eligible universities and research institutions matching the geography/category "
+        "filters are listed below, not just the visualization core. The CSV always contains "
+        "the entire checked-in Broad-primary 2010-2025 catalogue, including Africa, Oceania, "
+        "and Unknown geography. Stable school IDs support later institution-by-institution "
+        "analysis."
+    )
+    complete_catalog = institution_catalog(school_index)
+    st.write(f"Showing {len(finder_view):,} of {len(complete_catalog):,} institutions.")
+    if not finder_view.empty:
+        show_data(institution_catalog(finder_view))
+    st.download_button(
+        "Download all institutions (CSV)",
+        data=complete_catalog.to_csv(index=False, lineterminator="\n").encode("utf-8"),
+        file_name="gis_research_institutions_2010_2025.csv",
+        mime="text/csv; charset=utf-8",
+    )
     if finder_view.empty:
         show_empty("Broaden the School Finder geography or institution-category filters.")
     else:

@@ -1,5 +1,5 @@
 {
-  "last_updated_utc": "2026-08-31T08:02:02Z",
+  "last_updated_utc": "2026-10-29T01:53:22Z",
   "schema_version": 1,
   "source": "AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md",
   "tasks": [
@@ -2333,6 +2333,25 @@
         "Document historical scientific and current school-decision modes.",
         "Verify methodology and data-dictionary wording remains aligned with implemented GISNET-120 definitions."
       ]
+    },
+    {
+      "dependencies": [
+        "GISNET-139"
+      ],
+      "history": [
+        {
+          "changed_at_utc": "2026-10-29T01:53:22Z",
+          "from": "TODO",
+          "reason": "User-requested complete institution listing and CSV export.",
+          "run_id": "20261029T015322Z_ca38753d0c83",
+          "to": "IN_PROGRESS"
+        }
+      ],
+      "id": "GISNET-140",
+      "priority": "P1",
+      "status": "IN_PROGRESS",
+      "status_reason": "User-requested complete institution listing and CSV export.",
+      "status_updated_at_utc": "2026-10-29T01:53:22Z"
     }
   ]
 }
