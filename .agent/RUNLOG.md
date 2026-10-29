@@ -4359,3 +4359,65 @@ implementation status is proven by the v2 GISNET-138 artifact and current releas
 
 Optional task: GISNET-113 — Author mobility layer. Begin only if explicitly desired; preserve strong
 identity-disambiguation and uncertainty warnings. Command: `uv run python -m gisnet.cli next-task`.
+
+## Run 20261029T015322Z_ca38753d0c83
+
+Started UTC: 2026-10-29T01:53:22Z
+Ended UTC: 2026-10-29T01:56:08Z
+Task: GISNET-140
+Initial git status: clean
+Final git status: clean after local audit completion commit
+
+### Objective
+
+Expose every eligible research institution, with stable IDs for later one-by-one analysis.
+
+### Work completed
+
+- Added an unthresholded, sortable School Finder table and always-complete CSV download.
+- Preserved geography/category filters for the table without truncating the CSV.
+- Added deterministic catalogue validation and documentation.
+
+### Files changed
+
+`AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md`, `README.md`, `dashboard/README.md`,
+`dashboard/dashboard_school_common.py`, `dashboard/school_finder_page.py`,
+`tests/unit/test_institution_catalog.py`, `tests/integration/test_dashboard.py`,
+`.agent/backlog.json`, `.agent/state.json`, `.agent/RUNLOG.md`.
+
+### Commands executed
+
+Repository/status/backlog/source inspection; focused pytest; `scripts/quality-gate.sh`;
+`uv run ruff check .`; `uv run ruff format --check .`; `uv run mypy`;
+`uv run python -m gisnet.release verify --root .`; `git diff --check`.
+
+### Validation results
+
+- Source and catalogue: 28,042 rows, 28,042 unique stable IDs, exact ID-set equality.
+- All outside-visualization-core IDs included in the catalogue and CSV.
+- Focused dashboard/catalogue suite: 10 passed. Full quality gate: 232 passed, Ruff,
+  format, mypy, and CLI status passed. Release verification: 232 files, zero privacy findings.
+- `git diff --check` passed; no API request or scientific source-data rewrite.
+
+### Data and configuration hashes
+
+Checked-in dashboard school index SHA-256: `41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21`. No config hash changed.
+
+### Checkpoints written
+
+Backlog and project state updated atomically under the run lock.
+
+### Failures or blockers
+
+None remain. An initial UI assertion targeted the wrong Streamlit test element and was
+corrected. The first audit-finalization command lacked the dashboard import path; it made
+no state write. This recovery command completed the audit under the run lock.
+
+### Decisions made
+
+The catalogue is the Broad-primary 2010-2025 eligible research-scope index across all
+regions. It is not a degree-granting-university registry or a visualization Top-N list.
+
+### Exact next action
+
+No required work remains for GISNET-140. Optional GISNET-113/114 remain separately scoped.
