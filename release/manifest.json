@@ -1,8 +1,8 @@
 {
   "categories": {
     ".agent/manifests": {
-      "file_count": 132,
-      "size_bytes": 214372
+      "file_count": 134,
+      "size_bytes": 216902
     },
     "config": {
       "file_count": 12,
@@ -21,8 +21,8 @@
       "size_bytes": 80004
     },
     "outputs/reports": {
-      "file_count": 4,
-      "size_bytes": 211781
+      "file_count": 6,
+      "size_bytes": 8287548
     }
   },
   "dashboard_table_count": 27,
@@ -195,6 +195,16 @@
       "path": ".agent/manifests/geographic_map_summary.json",
       "sha256": "b2c7220c1d8485426f76ee00769121aa5021735c3eaf925ea6c8e3edb0f6320f",
       "size_bytes": 1378
+    },
+    {
+      "path": ".agent/manifests/gis_strict_activity_ranking_csv.json",
+      "sha256": "8deaa9a38c1740b3661284d9fff77dfd4fb84be66b9de1d278bb0c062bde5ecf",
+      "size_bytes": 1263
+    },
+    {
+      "path": ".agent/manifests/gis_strict_activity_ranking_markdown.json",
+      "sha256": "fed9ee43482a6363ecc489837dfb2900b106d2cbf091a9dfb78013266b14e59f",
+      "size_bytes": 1267
     },
     {
       "path": ".agent/manifests/graph_metrics_year.json",
@@ -1192,6 +1202,16 @@
       "size_bytes": 134514
     },
     {
+      "path": "outputs/reports/gis_strict_activity_ranking.csv",
+      "sha256": "c44899ce406246f1eba8482a194db41233e157f6cd0fe043e31836206cbc7abc",
+      "size_bytes": 4989790
+    },
+    {
+      "path": "outputs/reports/gis_strict_activity_ranking.md",
+      "sha256": "2e20559674dd6b2fecdf956c5a8034eaace65a80aaa20237e089c069d0b470d4",
+      "size_bytes": 3085977
+    },
+    {
       "path": "outputs/reports/methodology.md",
       "sha256": "e461ec3221b613fe21ebc2712d5308209124cdf60ea53c3cede2ec837136980c",
       "size_bytes": 14600
@@ -1202,11 +1222,11 @@
       "size_bytes": 61449
     }
   ],
-  "generated_at_utc": "2026-08-31T07:59:05Z",
+  "generated_at_utc": "2026-10-29T01:59:17Z",
   "hash_algorithm": "sha256",
   "privacy_scan_finding_count": 0,
-  "public_file_count": 232,
-  "public_size_bytes": 67407846,
+  "public_file_count": 236,
+  "public_size_bytes": 75486143,
   "raw_api_responses_included": false,
   "release_version": "0.1.0",
   "schema_version": 1

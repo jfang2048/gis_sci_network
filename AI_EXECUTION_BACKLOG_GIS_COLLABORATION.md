@@ -2395,6 +2395,24 @@ Acceptance:
 2. Geographic/category filters never truncate the underlying full export; empty matches are explicit.
 3. The listing uses only the checked-in snapshot and tests, Ruff, formatting, and dashboard smoke checks pass.
 
+#### GISNET-141: Publish complete Strict GIS publication-activity ordering
+
+Priority: P1
+Dependencies: GISNET-140
+
+Work:
+
+1. Generate a complete Markdown document and companion CSV from the checked-in school index, ordered by 2010-2025 Strict GIS Work count descending.
+2. Retain every eligible Broad-primary institution, including those with zero Strict GIS Works, with stable IDs, institution category, geography, and independent Broad Work count.
+3. State the metric, deterministic tie rule, provenance, snapshot window, provisional Topic boundary, and why publication activity is not institutional quality.
+4. Rebuild and verify public release manifests, then push the completed work when requested.
+
+Acceptance:
+
+1. Document and CSV each contain exactly the same unique stable IDs as the complete school index, with no top-N cutoff.
+2. Strict counts match the source, are non-increasing, and ties are sorted by display name then stable ID.
+3. Generated outputs are deterministic, atomically validated, have checksummed manifests, and pass tests, Ruff, formatting, type checking, release verification, and privacy checks.
+
 ## 9. Backlog scheduling rules
 
 The agent must select work using this order:

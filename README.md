@@ -31,6 +31,11 @@ snapshot contains 28,042 stable-ID entities across all regions, including instit
 the visualization core. The CSV includes names, institution categories, geography, OpenAlex/ROR
 IDs where available, Work counts, and identity status for later per-institution analysis.
 
+For a complete, reproducible ordering by **Strict GIS publication activity** (2010-2025), see
+the [all-institution Markdown document](outputs/reports/gis_strict_activity_ranking.md) or its
+[CSV companion](outputs/reports/gis_strict_activity_ranking.csv). This is a single disclosed
+Work-count measure, not a composite institutional-quality ranking; ties have no strength order.
+
 ```bash
 uv sync
 uv run streamlit run dashboard/app.py
@@ -134,6 +139,7 @@ uv run python -m gisnet.cli build-school-index --resume
 uv run python -m gisnet.cli build-school-partners --resume
 uv run python -m gisnet.cli build-school-profiles --resume
 uv run python -m gisnet.cli build-dashboard-data --resume
+uv run python -m gisnet.reporting.gis_activity_ranking --root .
 uv run python -m gisnet.cli validate-school-decision --resume
 uv run python -m gisnet.cli report --resume
 uv run python -m gisnet.cli build-data-dictionary --resume
@@ -166,6 +172,7 @@ The authoritative task and acceptance contract is
 - [Release and clean-clone guide](RELEASE.md)
 - [Generated methodology](outputs/reports/methodology.md)
 - [Generated data dictionary](outputs/reports/data_dictionary.md)
+- [Complete Strict GIS publication-activity ordering](outputs/reports/gis_strict_activity_ranking.md)
 - [Subannual fact definitions](docs/subannual_facts.md)
 - [Rolling fact definitions](docs/rolling_facts.md)
 - [Publication-date QA summary](data/reference/publication_date_qa_summary.json)

@@ -1,0 +1,43 @@
+{
+  "checksum_sha256": "2e20559674dd6b2fecdf956c5a8034eaace65a80aaa20237e089c069d0b470d4",
+  "column_count": 8,
+  "command": "python -m gisnet.reporting.gis_activity_ranking --root .",
+  "config_hashes": {
+    "project": "e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1"
+  },
+  "created_at_utc": "2026-10-29T01:59:09.621466Z",
+  "dataset_name": "gis_strict_activity_ranking_markdown",
+  "git_commit": "4b978a2b8d86",
+  "max_year": 2025,
+  "min_year": 2010,
+  "null_counts": {
+    "broad_work_count": 0,
+    "country_code": 0,
+    "country_name": 0,
+    "display_name": 0,
+    "identity_status": 0,
+    "institution_category": 0,
+    "macro_region": 0,
+    "openalex_id": 0,
+    "position": 0,
+    "ror_id": 0,
+    "school_id": 0,
+    "strict_work_count": 0,
+    "subregion": 0
+  },
+  "primary_key": [
+    "school_id"
+  ],
+  "row_count": 28042,
+  "run_id": "20261029T015810Z_4b978a2b8d86",
+  "schema_version": 1,
+  "source_manifests": [
+    ".agent/manifests/dashboard_bundle_summary.json",
+    ".agent/manifests/school_index.json"
+  ],
+  "source_versions": {
+    "ranking_policy": "strict-gis-publication-activity-2010-2025-v1",
+    "school_index_sha256": "41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21"
+  },
+  "status": "valid"
+}

@@ -4421,3 +4421,73 @@ regions. It is not a degree-granting-university registry or a visualization Top-
 ### Exact next action
 
 No required work remains for GISNET-140. Optional GISNET-113/114 remain separately scoped.
+
+## Run 20261029T015810Z_4b978a2b8d86
+
+Started UTC: 2026-10-29T01:58:10Z
+Ended UTC: 2026-10-29T02:00:36Z
+Task: GISNET-141
+Initial git status: clean
+Final git status: pending local commit and requested push
+
+### Objective
+
+Publish a complete Strict GIS publication-activity-ordered document for every eligible institution.
+
+### Work completed
+
+- Added deterministic Markdown and CSV generation from the checked-in 2010-2025 school index.
+- Retained all 28,042 stable IDs, including 10,339 with zero Strict GIS Works.
+- Documented single-metric ordering, name/ID tie rule, Broad count, provenance, and quality limits.
+- Added output manifests, README discovery/rebuild command, and release checksums.
+
+### Files changed
+
+`AI_EXECUTION_BACKLOG_GIS_COLLABORATION.md`, `README.md`,
+`src/gisnet/reporting/gis_activity_ranking.py`, `tests/unit/test_gis_activity_ranking.py`,
+`outputs/reports/gis_strict_activity_ranking.md`,
+`outputs/reports/gis_strict_activity_ranking.csv`,
+`.agent/manifests/gis_strict_activity_ranking_markdown.json`,
+`.agent/manifests/gis_strict_activity_ranking_csv.json`, `.agent/backlog.json`,
+`.agent/state.json`, `.agent/RUNLOG.md`, `release/manifest.json`,
+`release/manifest.json.sha256`.
+
+### Commands executed
+
+Repository/status/backlog/source/remote inspection; `git fetch origin main`;
+`uv run python -m gisnet.reporting.gis_activity_ranking --root .`;
+focused pytest; `scripts/quality-gate.sh`; Ruff lint/format; mypy;
+`uv run python -m gisnet.release build --root .`;
+`uv run python -m gisnet.release verify --root .`; `git diff --check`.
+
+### Validation results
+
+- Full stable-ID equality, nonincreasing Strict count, deterministic tie order, CSV/Markdown
+  byte equality against renderer, and manifest checksums passed.
+- Focused tests: 3 passed. Full quality gate: 235 passed, Ruff/format/mypy/CLI passed.
+- Release verification: 236 files / 75,486,143 bytes, zero privacy findings.
+- Remote origin/main was two commits behind local HEAD before this task; no remote divergence.
+
+### Data and configuration hashes
+
+- Source school index SHA-256: `41be91ea0c48bfcaaa4398c9ae3ecce252f5e31e72cf86207ee404af26b14d21`.
+- Ranked CSV SHA-256: `c44899ce406246f1eba8482a194db41233e157f6cd0fe043e31836206cbc7abc`.
+- Ranked Markdown SHA-256: `2e20559674dd6b2fecdf956c5a8034eaace65a80aaa20237e089c069d0b470d4`.
+- Project config hash: `e736ea3adad86f85e79b7fe87c031fd1b103f2a9c45b80df12d39cf80dad14b1`.
+
+### Checkpoints written
+
+Atomic validated outputs and manifests; backlog and project state under run lock.
+
+### Failures or blockers
+
+None remain. Initial Ruff punctuation/type-check findings were corrected before final validation.
+
+### Decisions made
+
+"GIS strength" is operationalized only as Strict GIS included Work count, not a
+composite or institutional-quality score. Equal counts have no strength order.
+
+### Exact next action
+
+Commit the completed task, push local `main` to `origin/main`, and verify the remote ref.
